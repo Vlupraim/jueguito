@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/player/player_controller.gd" id="1_player_controller"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.42
+height = 1.85
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
+radius = 0.42
+height = 1.85
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.18, 0.34, 0.88, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_forward"]
+size = Vector3(0.22, 0.18, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_forward"]
+albedo_color = Color(0.96, 0.86, 0.25, 1)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 1
+collision_mask = 5
+script = ExtResource("1_player_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Visual"]
+mesh = SubResource("CapsuleMesh_player")
+surface_material_override/0 = SubResource("StandardMaterial3D_body")
+
+[node name="ForwardMarker" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -0.52)
+mesh = SubResource("BoxMesh_forward")
+surface_material_override/0 = SubResource("StandardMaterial3D_forward")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 1.2, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.573576, -0.819152, 0, 0.819152, 0.573576, 0, 0, 0)
+spring_length = 32.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+far = 12000.0
+fov = 58.0

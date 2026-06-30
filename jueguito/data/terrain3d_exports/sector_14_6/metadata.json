@@ -1,0 +1,28 @@
+{
+	"effective_biome_id": 1,
+	"effective_source_biome_id": 5,
+	"export_resolution": 513,
+	"height_max": 27.1244068264961,
+	"height_min": -1.67311769139292,
+	"height_preview": "height_preview.png",
+	"height_units": "meters",
+	"heightmap": "height.exr",
+	"meters_per_export_pixel": 9.765625,
+	"meters_per_source_pixel": 200.0,
+	"override_biome_id": -1,
+	"override_surface_id": -1,
+	"sector": [
+		14,
+		6
+	],
+	"sector_side_meters": 5000.0,
+	"source": "terrain3d_sector_exporter",
+	"source_biome": "Montana",
+	"source_biome_id": 5,
+	"source_surface": "land",
+	"source_surface_id": 1,
+	"surface_reference": "surface_reference.png",
+	"terrain3d_note": "Importa height.exr como base de altura. Usa sector_side_meters como escala horizontal y esta metadata para recordar el rango vertical.",
+	"use_biomes": false,
+	"version": 1
+}

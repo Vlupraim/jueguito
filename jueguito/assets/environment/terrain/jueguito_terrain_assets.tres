@@ -1,0 +1,87 @@
+[gd_resource type="Terrain3DAssets" format=3 uid="uid://bdcq6cea5pvor"]
+
+[ext_resource type="Texture2D" uid="uid://bw0f6lb5tf6at" path="res://assets/environment/terrain/textures/ground/Ground103_1K-JPG_Color.jpg" id="1_2km3p"]
+[ext_resource type="Texture2D" uid="uid://b11aaf2l3x70s" path="res://assets/environment/terrain/textures/ground/Ground103_1K-JPG_NormalGL.jpg" id="2_k2uym"]
+[ext_resource type="Texture2D" uid="uid://bps05018gfomi" path="res://assets/environment/terrain/textures/sand/Ground054_1K-JPG_Color.jpg" id="3_epnha"]
+[ext_resource type="Texture2D" uid="uid://bflf25sxebrf2" path="res://assets/environment/terrain/textures/sand/Ground054_1K-JPG_NormalGL.jpg" id="4_x610r"]
+[ext_resource type="Texture2D" uid="uid://nahp37c451kb" path="res://assets/environment/terrain/textures/grass-2/Grass005_1K-JPG_Color.jpg" id="5_f518s"]
+[ext_resource type="Texture2D" uid="uid://b4scrw1lym0vv" path="res://assets/environment/terrain/textures/grass-2/Grass005_1K-JPG_NormalGL.jpg" id="6_4iwij"]
+[ext_resource type="Texture2D" uid="uid://b1rwfqee5ck7a" path="res://assets/environment/terrain/textures/grass/Grass001_1K-JPG_Color.jpg" id="7_rjpw7"]
+[ext_resource type="Texture2D" uid="uid://cc6td5t7cr2t8" path="res://assets/environment/terrain/textures/grass/Grass001_1K-JPG_NormalGL.jpg" id="8_1sa4c"]
+[ext_resource type="Texture2D" uid="uid://btt0ucgkt3hv" path="res://assets/environment/terrain/textures/rock/Rock030_1K-JPG_Color.jpg" id="9_7ypq1"]
+[ext_resource type="Texture2D" uid="uid://c4e853b3bn5fq" path="res://assets/environment/terrain/textures/rock/Rock030_1K-JPG_NormalGL.jpg" id="10_7au15"]
+[ext_resource type="Texture2D" uid="uid://cm2y35tp6r37x" path="res://assets/environment/terrain/textures/rock-2/Rock028_1K-JPG_Color.jpg" id="11_aku3s"]
+[ext_resource type="Texture2D" uid="uid://cagjgtct52cg5" path="res://assets/environment/terrain/textures/rock-2/Rock028_1K-JPG_NormalGL.jpg" id="12_rlavl"]
+[ext_resource type="Texture2D" uid="uid://dlu6rg7w0m1v2" path="res://assets/environment/terrain/textures/snow/Snow014_1K-JPG_Color.jpg" id="13_80gp5"]
+[ext_resource type="Texture2D" uid="uid://cvd77fmoqp5j" path="res://assets/environment/terrain/textures/snow/Snow014_1K-JPG_NormalGL.jpg" id="14_7y1bf"]
+[ext_resource type="Texture2D" uid="uid://dabmta4ppdy33" path="res://assets/environment/terrain/textures/swamp/Moss002_1K-JPG_Color.jpg" id="15_mgue1"]
+[ext_resource type="Texture2D" uid="uid://bieqyv330gkvy" path="res://assets/environment/terrain/textures/swamp/Moss002_1K-JPG_NormalGL.jpg" id="16_wit6c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2km3p"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 128.0
+distance_fade_max_distance = 96.0
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_k2uym"]
+generated_type = 1
+height_offset = 0.5
+material_override = SubResource("StandardMaterial3D_2km3p")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_oo2ne"]
+name = "00_TierraSeca"
+albedo_texture = ExtResource("1_2km3p")
+normal_texture = ExtResource("2_k2uym")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_f8nrl"]
+name = "01_Arena"
+id = 1
+albedo_texture = ExtResource("3_epnha")
+normal_texture = ExtResource("4_x610r")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_73f6d"]
+name = "02_Pasto"
+id = 2
+albedo_texture = ExtResource("5_f518s")
+normal_texture = ExtResource("6_4iwij")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_sx67w"]
+name = "03_TierraHumeda"
+id = 3
+albedo_texture = ExtResource("7_rjpw7")
+normal_texture = ExtResource("8_1sa4c")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_2alk7"]
+name = "04_Roca"
+id = 4
+albedo_texture = ExtResource("9_7ypq1")
+normal_texture = ExtResource("10_7au15")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_mx8tf"]
+name = "05_RocaSecundaria"
+id = 5
+albedo_texture = ExtResource("11_aku3s")
+normal_texture = ExtResource("12_rlavl")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_eny44"]
+name = "06_Nieve"
+id = 6
+albedo_texture = ExtResource("13_80gp5")
+normal_texture = ExtResource("14_7y1bf")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_7chev"]
+name = "07_Pantano"
+id = 7
+albedo_texture = ExtResource("15_mgue1")
+normal_texture = ExtResource("16_wit6c")
+
+[resource]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_k2uym")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_oo2ne"), SubResource("Terrain3DTextureAsset_f8nrl"), SubResource("Terrain3DTextureAsset_73f6d"), SubResource("Terrain3DTextureAsset_sx67w"), SubResource("Terrain3DTextureAsset_2alk7"), SubResource("Terrain3DTextureAsset_mx8tf"), SubResource("Terrain3DTextureAsset_eny44"), SubResource("Terrain3DTextureAsset_7chev")])

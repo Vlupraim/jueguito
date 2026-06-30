@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bb1kd5hn3105s"]
+
+[ext_resource type="PackedScene" uid="uid://blaieaqp413k7" path="res://addons/terrain_3d/tools/importer.tscn" id="1_importer"]
+[ext_resource type="Script" uid="uid://dovao3onwcvpo" path="res://scripts/tools/editor/terrain3d_sector_guide.gd" id="2_guide"]
+[ext_resource type="Terrain3DMaterial" uid="uid://bawc1rfkg2itm" path="res://assets/environment/terrain/jueguito_terrain_material.tres" id="3_material"]
+[ext_resource type="Terrain3DAssets" uid="uid://bdcq6cea5pvor" path="res://assets/environment/terrain/jueguito_terrain_assets.tres" id="4_assets"]
+
+[node name="Terrain3DSectorWorkspace" type="Node3D" unique_id=1772857410]
+
+[node name="WorkspaceCamera" type="Camera3D" parent="." unique_id=855196988]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 8200, 9200)
+current = true
+far = 42000.0
+
+[node name="WorkspaceLight" type="DirectionalLight3D" parent="." unique_id=937034337]
+transform = Transform3D(0.819152, -0.40558, 0.40558, 0, 0.707107, 0.707107, -0.573576, -0.579228, 0.579228, 0, 0, 0)
+light_energy = 1.2
+
+[node name="Importer" parent="." unique_id=1935549813 instance=ExtResource("1_importer")]
+data_directory = ""
+material = ExtResource("3_material")
+assets = ExtResource("4_assets")
+
+[node name="SectorGuide" type="Node3D" parent="." unique_id=726682606]
+script = ExtResource("2_guide")
+origin_sector = Vector2i(5, 13)
