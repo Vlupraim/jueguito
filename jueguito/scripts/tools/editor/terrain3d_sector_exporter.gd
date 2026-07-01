@@ -9,7 +9,7 @@ const MAP_IMAGE_SIZE := Vector2i(1672, 941)
 const SECTOR_SIDE_METERS := 5000.0
 const METERS_PER_PIXEL := 200.0
 const SECTOR_PIXELS := 25
-const EXPORT_RESOLUTION := 513
+const EXPORT_RESOLUTION := 512  # multiplo de region_size (256) -> sector = 2x2 regiones limpias
 const AUTO_BEACH_RADIUS_PIXELS := 4
 const WATER_SHORE_RADIUS_PIXELS := 9
 const UNKNOWN_SURFACE_SEARCH_RADIUS_PIXELS := 4

@@ -17,10 +17,12 @@ transform = Transform3D(0.819152, -0.40558, 0.40558, 0, 0.707107, 0.707107, -0.5
 light_energy = 1.2
 
 [node name="Importer" parent="." unique_id=1935549813 instance=ExtResource("1_importer")]
-data_directory = ""
+data_directory = "res://data/terrain3d_edits/sector_12_5"
 material = ExtResource("3_material")
 assets = ExtResource("4_assets")
+height_file_name = "C:/Users/dzzav/OneDrive/Documentos/jueguitop/jueguito/data/terrain3d_exports/sector_12_5/height.exr"
+control_file_name = "C:/Users/dzzav/OneDrive/Documentos/jueguitop/jueguito/data/terrain3d_exports/sector_12_5/control.exr"
 
 [node name="SectorGuide" type="Node3D" parent="." unique_id=726682606]
 script = ExtResource("2_guide")
-origin_sector = Vector2i(5, 13)
+origin_sector = Vector2i(12, 5)

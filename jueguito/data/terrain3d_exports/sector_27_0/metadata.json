@@ -1,0 +1,40 @@
+{
+	"control_preview": "control_preview.png",
+	"controlmap": "control.exr",
+	"effective_biome_id": 1,
+	"effective_source_biome_id": 4,
+	"export_resolution": 512,
+	"height_max": 27.1319412112236,
+	"height_min": 1.5197702050209,
+	"height_preview": "height_preview.png",
+	"height_units": "meters",
+	"heightmap": "height.exr",
+	"meters_per_export_pixel": 9.78473581213307,
+	"meters_per_source_pixel": 200.0,
+	"override_biome_id": -1,
+	"override_surface_id": -1,
+	"sector": [
+		27,
+		0
+	],
+	"sector_side_meters": 5000.0,
+	"source": "terrain3d_sector_exporter",
+	"source_biome": "Nieve / polar",
+	"source_biome_id": 4,
+	"source_surface": "land",
+	"source_surface_id": 1,
+	"surface_reference": "surface_reference.png",
+	"terrain3d_note": "Importa height.exr como base de altura. Usa sector_side_meters como escala horizontal y esta metadata para recordar el rango vertical.",
+	"texture_convention": {
+		"0": "tierra seca / desierto",
+		"1": "arena / costa / fondo bajo",
+		"2": "pasto / pradera",
+		"3": "tierra humeda / selva",
+		"4": "roca / acantilado",
+		"5": "roca secundaria / arcano provisional",
+		"6": "nieve",
+		"7": "barro / pantano"
+	},
+	"use_biomes": false,
+	"version": 1
+}

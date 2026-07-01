@@ -1,15 +1,15 @@
 {
 	"control_preview": "control_preview.png",
 	"controlmap": "control.exr",
-	"effective_biome_id": 1,
+	"effective_biome_id": 0,
 	"effective_source_biome_id": 0,
-	"export_resolution": 513,
-	"height_max": -8.70818864107132,
-	"height_min": -11.2490784883499,
+	"export_resolution": 512,
+	"height_max": -8.70553220510483,
+	"height_min": -11.2612582564354,
 	"height_preview": "height_preview.png",
 	"height_units": "meters",
 	"heightmap": "height.exr",
-	"meters_per_export_pixel": 9.765625,
+	"meters_per_export_pixel": 9.78473581213307,
 	"meters_per_source_pixel": 200.0,
 	"override_biome_id": -1,
 	"override_surface_id": -1,
@@ -35,6 +35,6 @@
 		"6": "nieve",
 		"7": "barro / pantano"
 	},
-	"use_biomes": false,
+	"use_biomes": true,
 	"version": 1
 }

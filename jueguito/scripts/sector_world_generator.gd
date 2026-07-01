@@ -30,7 +30,7 @@ const EDITOR_MINIMAP_PANEL_SIZE := Vector2(296.0, 416.0)
 const EDITOR_MINIMAP_SAMPLES := 64
 const EDITOR_MINIMAP_GRID_STEP_METERS := 1000.0
 const TERRAIN3D_EXPORT_DIR := "res://data/terrain3d_exports"
-const TERRAIN3D_EXPORT_RESOLUTION := 513
+const TERRAIN3D_EXPORT_RESOLUTION := 512  # multiplo de region_size (256) -> sector = 2x2 regiones limpias
 
 const SURFACE_UNKNOWN := 0
 const SURFACE_LAND := 1
