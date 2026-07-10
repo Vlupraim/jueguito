@@ -1,11 +1,11 @@
 {
 	"control_preview": "control_preview.png",
 	"controlmap": "control.exr",
-	"effective_biome_id": 1,
+	"effective_biome_id": 5,
 	"effective_source_biome_id": 5,
 	"export_resolution": 512,
-	"height_max": 26.3140486717224,
-	"height_min": -2.29005543018074,
+	"height_max": 38.9605499872987,
+	"height_min": -2.1629690863468,
 	"height_preview": "height_preview.png",
 	"height_units": "meters",
 	"heightmap": "height.exr",
@@ -35,6 +35,6 @@
 		"6": "nieve",
 		"7": "barro / pantano"
 	},
-	"use_biomes": false,
+	"use_biomes": true,
 	"version": 1
 }

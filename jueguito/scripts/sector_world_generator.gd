@@ -18,6 +18,8 @@ const AUTO_BEACH_RADIUS_PIXELS := 4
 const WATER_SHORE_RADIUS_PIXELS := 9
 const UNKNOWN_SURFACE_SEARCH_RADIUS_PIXELS := 4
 const SECTOR_EDGE_BLEND_RATIO := 0.10
+const MOUNTAIN_BROAD_OFFSET := 0.24
+const MOUNTAIN_BROAD_SCALE := 0.55
 
 const BASE_SPEED := 520.0
 const FAST_MULTIPLIER := 4.0
@@ -148,6 +150,8 @@ func _input(event: InputEvent) -> void:
 				_reset_camera()
 			else:
 				_place_player_at_spawn()
+		elif key_event.keycode == KEY_B:
+			_cycle_player_camera_mode()
 		elif key_event.keycode == KEY_G:
 			show_grid = not show_grid
 			grid_instance.visible = show_grid
@@ -1278,57 +1282,57 @@ func _height_for(
 	var noise_z := float(selected_sector.y) * SECTOR_SIDE_METERS + z_ratio * SECTOR_SIDE_METERS
 	var broad := height_noise.get_noise_2d(noise_x, noise_z)
 	var detail := detail_noise.get_noise_2d(noise_x, noise_z)
-	var base_height := 7.0
-	var biome_height := 20.0
-	var detail_height := 2.2
+	var base_height := 6.5
+	var biome_height := 16.0
+	var detail_height := 1.3
 	match biome_id:
 		2:
-			base_height = 5.0
-			biome_height = 12.0
-			detail_height = 1.4
+			base_height = 4.5
+			biome_height = 9.0
+			detail_height = 0.9
 		3:
-			base_height = 8.0
-			biome_height = 28.0
-			detail_height = 3.0
+			base_height = 7.5
+			biome_height = 22.0
+			detail_height = 1.6
 		4:
-			base_height = 12.0
-			biome_height = 42.0
-			detail_height = 4.0
+			base_height = 10.0
+			biome_height = 30.0
+			detail_height = 1.8
 		5:
-			base_height = 22.0
-			biome_height = 82.0
-			detail_height = 4.5
+			base_height = 16.0
+			biome_height = 36.0
+			detail_height = 1.8
 		6:
-			base_height = 4.0
-			biome_height = 8.0
-			detail_height = 1.2
+			base_height = 3.5
+			biome_height = 6.0
+			detail_height = 0.8
 		7:
-			base_height = 13.0
-			biome_height = 55.0
-			detail_height = 5.0
+			base_height = 11.0
+			biome_height = 38.0
+			detail_height = 2.0
 
 	if surface_id == SURFACE_DEEP_WATER:
-		var deep_floor := -10.0 + detail * 1.4
+		var deep_floor := -10.0 + detail * 1.0
 		var shallow_floor := 0.8 + broad * 1.2 + detail * 0.6
 		return lerpf(deep_floor, shallow_floor, shore_influence)
 	if surface_id == SURFACE_WATER:
-		var open_water_floor := -4.0 + detail * 1.0
+		var open_water_floor := -4.0 + detail * 0.7
 		var near_shore_floor := 1.4 + broad * 1.0 + detail * 0.5
 		return lerpf(open_water_floor, near_shore_floor, shore_influence)
 	if surface_id == SURFACE_COAST:
-		return 5.0 + broad * 5.0 + detail * 2.0
+		return 5.0 + broad * 3.5 + detail * 1.1
 	if surface_id == SURFACE_LAND:
 		var broad_lift := maxf(0.0, broad + 0.12)
 		if biome_id == 5:
-			broad_lift = _smooth01(clampf((broad + 0.28) * 0.78, 0.0, 1.0))
+			broad_lift = _smooth01(clampf((broad + MOUNTAIN_BROAD_OFFSET) * MOUNTAIN_BROAD_SCALE, 0.0, 1.0))
 		var land_height := base_height + broad_lift * biome_height + detail * detail_height
 		var beach_strength := _beach_strength(surface_id, shore_influence)
 		if beach_strength > 0.0:
-			var beach_height := 6.0 + broad * 4.0 + detail * 2.0
+			var beach_height := 6.0 + broad * 3.0 + detail * 1.0
 			land_height = lerpf(land_height, beach_height, beach_strength)
 
 		if edge_falloff < 1.0:
-			var edge_cap := 46.0 + maxf(0.0, broad + 0.2) * 42.0 + detail * 5.0
+			var edge_cap := 34.0 + maxf(0.0, broad + 0.2) * 30.0 + detail * 2.0
 			if land_height > edge_cap:
 				land_height = lerpf(edge_cap, land_height, edge_falloff)
 		return land_height
@@ -1666,6 +1670,19 @@ func _make_player_camera_current() -> void:
 		player_instance.call("make_camera_current")
 
 
+func _cycle_player_camera_mode() -> void:
+	if player_instance == null or not player_instance.has_method("cycle_camera_mode"):
+		return
+	player_instance.call("cycle_camera_mode")
+	if not free_camera_enabled:
+		_make_player_camera_current()
+	var camera_label := "desconocida"
+	if player_instance.has_method("get_camera_mode_label"):
+		camera_label = str(player_instance.call("get_camera_mode_label"))
+	editor_status_text = "Camara del jugador: " + camera_label + "."
+	_update_ui()
+
+
 func _update_ui() -> void:
 	var sector := _get_sector_dict(selected_sector)
 	var biome_name := str(sector.get("biome", "Sin bioma"))
@@ -1673,11 +1690,13 @@ func _update_ui() -> void:
 	var camera_mode := "Jugador"
 	if free_camera_enabled:
 		camera_mode = "Libre debug"
+	elif player_instance != null and player_instance.has_method("get_camera_mode_label"):
+		camera_mode = "Jugador - " + str(player_instance.call("get_camera_mode_label"))
 	info_label.text = "Generador local v0.1 - sector 5 km x 5 km\n" \
 		+ "Sector: [" + str(selected_sector.x) + ", " + str(selected_sector.y) + "] | Bioma: " + biome_name + " | Superficie dominante: " + surface_name + "\n" \
 		+ selection_note + "\n" \
 		+ "N/P: sector jugable | 1-7: biomas | 0: sin bioma | T/C/O/F: tierra/costa/agua/profunda\n" \
-		+ "Camara: " + camera_mode + " | V: alternar | WASD/Flechas: mover jugador o camara libre | R: reset | G: grilla 5 km\n" \
+		+ "Camara: " + camera_mode + " | V: alternar | B: preset jugador | WASD/Flechas: mover jugador o camara libre | R: reset | G: grilla 5 km\n" \
 		+ "Minimapa editor: click mueve vista activa | derecho/doble click fuerza camara libre.\n" \
 		+ "Jugador: Shift corre | rueda ajusta zoom. Camara libre: Q/E altura, derecho + mouse mira.\n" \
 		+ "Colliders: tierra/costa caminable, agua detectable, bloqueo de agua para personaje > " + str(int(MAX_WADE_DISTANCE_METERS)) + " m.\n" \

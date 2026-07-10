@@ -7,10 +7,12 @@ const SURFACE_MASK_PATH := "res://data/map_design_surface_mask.png"
 const SECTOR_OVERRIDES_PATH := "res://data/terrain3d_sector_overrides.json"
 const TERRAIN3D_EXPORT_DIR := "res://data/terrain3d_exports"
 const TERRAIN3D_EDIT_DIR := "res://data/terrain3d_edits"
+const TERRAIN3D_EDIT_BACKUP_DIR := "res://data/terrain3d_edit_backups"
 const TERRAIN3D_ASSETS_PATH := "res://assets/environment/terrain/jueguito_terrain_assets.tres"
 const TERRAIN3D_MATERIAL_PATH := "res://assets/environment/terrain/jueguito_terrain_material.tres"
 const NO_SECTOR := Vector2i(-9999, -9999)
 const SECTOR_EXPORTER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_sector_exporter.gd")
+const HEIGHTMAP_NORMALIZER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_heightmap_normalizer.gd")
 const MAP_IMAGE_SIZE := Vector2(1672.0, 941.0)
 const MAP_WORLD_SCALE := 200.0
 const MAP_WORLD_SIZE := MAP_IMAGE_SIZE * MAP_WORLD_SCALE
@@ -54,6 +56,16 @@ var generate_selection_button: Button
 var regenerate_selection_button: Button
 var clear_selection_button: Button
 var load_sector_button: Button
+var fresh_load_button: Button
+var smooth_iterations_spin: SpinBox
+var smooth_strength_spin: SpinBox
+var repair_threshold_spin: SpinBox
+var smooth_preserve_edges_check: CheckBox
+var allow_intentional_cuts_check: CheckBox
+var smooth_loaded_button: Button
+var smooth_selection_button: Button
+var repair_loaded_button: Button
+var repair_selection_button: Button
 var exported_sectors: Dictionary = {}
 var multi_selected_sectors: Dictionary = {}
 var selected_sector := Vector2i(33, 19)
@@ -228,29 +240,34 @@ func _build_ui() -> void:
 	sector_options_row.add_child(open_painter_button)
 
 	var terrain_section := _make_section("Terrain3D")
-	var button_row := HBoxContainer.new()
-	button_row.add_theme_constant_override("separation", 6)
-	terrain_section.add_child(button_row)
+	var terrain_button_grid := _make_button_grid(terrain_section, 2)
 
 	var refresh_button := Button.new()
 	refresh_button.text = "Actualizar exports"
 	refresh_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	refresh_button.pressed.connect(_refresh_exports)
-	button_row.add_child(refresh_button)
+	terrain_button_grid.add_child(refresh_button)
 
 	load_sector_button = Button.new()
 	load_sector_button.text = "Cargar sector"
 	load_sector_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	load_sector_button.tooltip_text = "Carga el sector. Si tiene ediciones guardadas, las recupera; si no, importa el terreno generado."
 	load_sector_button.pressed.connect(_import_selected_sector_centered.bind(false))
-	button_row.add_child(load_sector_button)
+	terrain_button_grid.add_child(load_sector_button)
+
+	fresh_load_button = Button.new()
+	fresh_load_button.text = "Base fresca"
+	fresh_load_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	fresh_load_button.tooltip_text = "Importa el export actual y respalda cualquier edicion guardada del sector."
+	fresh_load_button.pressed.connect(_import_selected_sector_centered.bind(true))
+	terrain_button_grid.add_child(fresh_load_button)
 
 	var save_sector_button := Button.new()
-	save_sector_button.text = "Guardar sector"
+	save_sector_button.text = "Guardar"
 	save_sector_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	save_sector_button.tooltip_text = "Guarda tus ediciones manuales del sector y la libreria compartida de texturas Terrain3D."
 	save_sector_button.pressed.connect(_save_current_sector_pressed)
-	button_row.add_child(save_sector_button)
+	terrain_button_grid.add_child(save_sector_button)
 
 	var generation_section := _make_section("Generacion")
 	use_biomes_check = CheckBox.new()
@@ -295,23 +312,21 @@ func _build_ui() -> void:
 	_populate_surface_override_option()
 	surface_row.add_child(surface_override_option)
 
-	var override_button_row := HBoxContainer.new()
-	override_button_row.add_theme_constant_override("separation", 6)
-	generation_section.add_child(override_button_row)
+	var override_button_grid := _make_button_grid(generation_section, 2)
 
 	apply_override_button = Button.new()
 	apply_override_button.text = "Aplicar correccion"
 	apply_override_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	apply_override_button.tooltip_text = "Guarda la correccion para el sector o seleccion multiple. Luego usa Generar para reexportar."
 	apply_override_button.pressed.connect(_apply_generation_overrides)
-	override_button_row.add_child(apply_override_button)
+	override_button_grid.add_child(apply_override_button)
 
 	clear_override_button = Button.new()
 	clear_override_button.text = "Limpiar correccion"
 	clear_override_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	clear_override_button.tooltip_text = "Quita la correccion y vuelve a usar el mapa base."
 	clear_override_button.pressed.connect(_clear_generation_overrides)
-	override_button_row.add_child(clear_override_button)
+	override_button_grid.add_child(clear_override_button)
 
 	generate_import_button = Button.new()
 	generate_import_button.text = "Generar + cargar"
@@ -320,22 +335,20 @@ func _build_ui() -> void:
 	generate_import_button.pressed.connect(_request_generate_and_import_selected_sector)
 	generation_section.add_child(generate_import_button)
 
-	var batch_row := HBoxContainer.new()
-	batch_row.add_theme_constant_override("separation", 6)
-	generation_section.add_child(batch_row)
+	var batch_button_grid := _make_button_grid(generation_section, 2)
 
 	generate_selection_button = Button.new()
 	generate_selection_button.text = "Generar faltantes"
 	generate_selection_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	generate_selection_button.tooltip_text = "Genera solo los sectores seleccionados que aun no tienen export. Es la opcion segura para selecciones grandes."
 	generate_selection_button.pressed.connect(_request_generate_multi_selection.bind(true))
-	batch_row.add_child(generate_selection_button)
+	batch_button_grid.add_child(generate_selection_button)
 
 	clear_selection_button = Button.new()
 	clear_selection_button.text = "Limpiar"
 	clear_selection_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	clear_selection_button.pressed.connect(_clear_multi_selection)
-	batch_row.add_child(clear_selection_button)
+	batch_button_grid.add_child(clear_selection_button)
 
 	regenerate_selection_button = Button.new()
 	regenerate_selection_button.text = "Regenerar seleccion"
@@ -358,10 +371,102 @@ func _build_ui() -> void:
 	generation_section.add_child(progress_label)
 
 	var generator_button := Button.new()
-	generator_button.text = "Abrir generador para exportar sector"
+	generator_button.text = "Abrir generador"
 	generator_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	generator_button.tooltip_text = "Abre la escena generadora para exportar sectores Terrain3D."
 	generator_button.pressed.connect(_open_sector_generator)
 	terrain_section.add_child(generator_button)
+
+	var smooth_section := _make_section("Normalizar terreno", false)
+	var smooth_settings_grid := GridContainer.new()
+	smooth_settings_grid.columns = 2
+	smooth_settings_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_settings_grid.add_theme_constant_override("h_separation", 8)
+	smooth_settings_grid.add_theme_constant_override("v_separation", 6)
+	smooth_section.add_child(smooth_settings_grid)
+
+	var smooth_iterations_label := Label.new()
+	smooth_iterations_label.text = "Pasadas"
+	smooth_iterations_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_settings_grid.add_child(smooth_iterations_label)
+
+	smooth_iterations_spin = SpinBox.new()
+	smooth_iterations_spin.min_value = 1.0
+	smooth_iterations_spin.max_value = 24.0
+	smooth_iterations_spin.step = 1.0
+	smooth_iterations_spin.value = 4.0
+	smooth_iterations_spin.tooltip_text = "Cuantas veces se promedia el heightmap. Evitar cortes usa una pasada estricta extra."
+	smooth_iterations_spin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_settings_grid.add_child(smooth_iterations_spin)
+
+	var smooth_strength_label := Label.new()
+	smooth_strength_label.text = "Fuerza"
+	smooth_strength_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_settings_grid.add_child(smooth_strength_label)
+
+	smooth_strength_spin = SpinBox.new()
+	smooth_strength_spin.min_value = 0.05
+	smooth_strength_spin.max_value = 1.0
+	smooth_strength_spin.step = 0.05
+	smooth_strength_spin.value = 0.65
+	smooth_strength_spin.tooltip_text = "0.05 suaviza poco; 1.0 lleva cada punto al promedio local."
+	smooth_strength_spin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_settings_grid.add_child(smooth_strength_spin)
+
+	var repair_threshold_label := Label.new()
+	repair_threshold_label.text = "Corte m"
+	repair_threshold_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_settings_grid.add_child(repair_threshold_label)
+
+	repair_threshold_spin = SpinBox.new()
+	repair_threshold_spin.min_value = 0.25
+	repair_threshold_spin.max_value = 30.0
+	repair_threshold_spin.step = 0.25
+	repair_threshold_spin.value = 1.5
+	repair_threshold_spin.tooltip_text = "Diferencia vertical minima para detectar un corte. Bajalo para ser mas estricto; subilo para conservar relieve duro."
+	repair_threshold_spin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_settings_grid.add_child(repair_threshold_spin)
+
+	smooth_preserve_edges_check = CheckBox.new()
+	smooth_preserve_edges_check.text = "Proteger bordes externos"
+	smooth_preserve_edges_check.button_pressed = true
+	smooth_preserve_edges_check.tooltip_text = "Mantiene intactos los bordes sin region vecina. Las costuras internas igual se normalizan."
+	smooth_section.add_child(smooth_preserve_edges_check)
+
+	allow_intentional_cuts_check = CheckBox.new()
+	allow_intentional_cuts_check.text = "Permitir cortes intencionales"
+	allow_intentional_cuts_check.button_pressed = false
+	allow_intentional_cuts_check.tooltip_text = "Activalo solo si quieres conservar acantilados o terrazas duras. Apagado repara cortes por defecto."
+	smooth_section.add_child(allow_intentional_cuts_check)
+
+	var smooth_button_grid := _make_button_grid(smooth_section, 2)
+	smooth_loaded_button = Button.new()
+	smooth_loaded_button.text = "Suavizar cargado"
+	smooth_loaded_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_loaded_button.tooltip_text = "Suaviza el Terrain3D cargado y lo guarda como edicion del sector."
+	smooth_loaded_button.pressed.connect(_smooth_loaded_sector_pressed)
+	smooth_button_grid.add_child(smooth_loaded_button)
+
+	repair_loaded_button = Button.new()
+	repair_loaded_button.text = "Evitar cortes"
+	repair_loaded_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	repair_loaded_button.tooltip_text = "Detecta lineas duras, expande el area afectada y las normaliza con una pasada estricta."
+	repair_loaded_button.pressed.connect(_repair_loaded_sector_pressed)
+	smooth_button_grid.add_child(repair_loaded_button)
+
+	smooth_selection_button = Button.new()
+	smooth_selection_button.text = "Suavizar seleccion"
+	smooth_selection_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	smooth_selection_button.tooltip_text = "Carga, suaviza y guarda cada sector seleccionado."
+	smooth_selection_button.pressed.connect(_smooth_multi_selection_pressed)
+	smooth_button_grid.add_child(smooth_selection_button)
+
+	repair_selection_button = Button.new()
+	repair_selection_button.text = "Evitar cortes seleccion"
+	repair_selection_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	repair_selection_button.tooltip_text = "Carga cada sector seleccionado y normaliza cortes con una pasada estricta."
+	repair_selection_button.pressed.connect(_repair_multi_selection_pressed)
+	smooth_button_grid.add_child(repair_selection_button)
 
 	status_label = Label.new()
 	status_label.text = "Abre el workspace Terrain3D y carga sectores exportados."
@@ -377,7 +482,7 @@ func _build_ui() -> void:
 	add_child(confirm_dialog)
 
 
-func _make_section(title_text: String) -> VBoxContainer:
+func _make_section(title_text: String, expanded: bool = true) -> VBoxContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if options_layout != null:
@@ -396,11 +501,36 @@ func _make_section(title_text: String) -> VBoxContainer:
 	box.add_theme_constant_override("separation", 6)
 	margin.add_child(box)
 
-	var title := Label.new()
-	title.text = title_text
-	title.add_theme_font_size_override("font_size", 13)
-	box.add_child(title)
-	return box
+	var header := Button.new()
+	header.text = ("[-] " if expanded else "[+] ") + title_text
+	header.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	header.flat = true
+	header.tooltip_text = "Expandir/contraer " + title_text
+	box.add_child(header)
+
+	var body := VBoxContainer.new()
+	body.visible = expanded
+	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 6)
+	box.add_child(body)
+
+	header.pressed.connect(_toggle_section.bind(header, body, title_text))
+	return body
+
+
+func _toggle_section(header: Button, body: Control, title_text: String) -> void:
+	body.visible = not body.visible
+	header.text = ("[-] " if body.visible else "[+] ") + title_text
+
+
+func _make_button_grid(parent: Control, columns: int = 2) -> GridContainer:
+	var grid := GridContainer.new()
+	grid.columns = columns
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	grid.add_theme_constant_override("h_separation", 6)
+	grid.add_theme_constant_override("v_separation", 6)
+	parent.add_child(grid)
+	return grid
 
 
 func _populate_biome_override_option() -> void:
@@ -724,8 +854,10 @@ func _clear_hover() -> void:
 
 func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
 	var export_dir := str(exported_sectors.get(_sector_key(selected_sector), ""))
-	if export_dir.is_empty():
-		_set_status("Ese sector no tiene export Terrain3D. Usa Generar e importar sector.")
+	var edit_dir := _sector_edit_dir(selected_sector)
+	var has_saved_edits := _edit_dir_has_data(edit_dir)
+	if export_dir.is_empty() and (force_fresh or not has_saved_edits):
+		_set_status("Ese sector no tiene export Terrain3D. Usa Generar + cargar.")
 		return false
 
 	var importer := _find_importer_node()
@@ -738,10 +870,8 @@ func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
 	if loaded_sector != NO_SECTOR and loaded_sector != selected_sector:
 		_save_loaded_sector()
 
-	var edit_dir := _sector_edit_dir(selected_sector)
-
 	# Si el sector ya tiene ediciones guardadas y no estamos regenerando, cargarlas.
-	if not force_fresh and _edit_dir_has_data(edit_dir):
+	if not force_fresh and has_saved_edits:
 		if importer.has_method("reset_terrain"):
 			importer.call("reset_terrain", true)
 		importer.set("data_directory", edit_dir)
@@ -783,7 +913,7 @@ func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
 
 	loaded_sector = selected_sector
 	if force_fresh:
-		_set_status("Generado e importado " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base.") + " Listo para editar.")
+		_set_status("Base fresca importada " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base.") + " Ediciones anteriores respaldadas.")
 	else:
 		_set_status("Cargado " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base. Regeneralo para crear control.exr."))
 	return true
@@ -873,13 +1003,278 @@ func _clear_edit_dir(edit_dir: String) -> void:
 	var dir := DirAccess.open(ProjectSettings.globalize_path(edit_dir))
 	if dir == null:
 		return
+	var backup_dir := _make_edit_backup_dir(edit_dir)
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
 	while file_name != "":
 		if not dir.current_is_dir() and file_name.get_extension() == "res":
-			dir.remove(file_name)
+			var can_remove := true
+			if not backup_dir.is_empty():
+				var source_abs := ProjectSettings.globalize_path(edit_dir).path_join(file_name)
+				var backup_abs := backup_dir.path_join(file_name)
+				can_remove = _copy_file(source_abs, backup_abs) == OK
+			if can_remove:
+				dir.remove(file_name)
 		file_name = dir.get_next()
 	dir.list_dir_end()
+
+
+func _make_edit_backup_dir(edit_dir: String) -> String:
+	var stamp := Time.get_datetime_string_from_system(false, true)
+	stamp = stamp.replace(":", "").replace("-", "").replace("T", "_")
+	var backup_abs := ProjectSettings.globalize_path(TERRAIN3D_EDIT_BACKUP_DIR).path_join(stamp).path_join(edit_dir.get_file())
+	if DirAccess.make_dir_recursive_absolute(backup_abs) != OK:
+		return ""
+	return backup_abs
+
+
+func _copy_file(source_abs: String, target_abs: String) -> Error:
+	var bytes := FileAccess.get_file_as_bytes(source_abs)
+	if bytes.is_empty() and FileAccess.get_open_error() != OK:
+		return FileAccess.get_open_error()
+	var file := FileAccess.open(target_abs, FileAccess.WRITE)
+	if file == null:
+		return FileAccess.get_open_error()
+	file.store_buffer(bytes)
+	return OK
+
+
+func _smooth_loaded_sector_pressed() -> void:
+	if generation_in_progress:
+		return
+	if loaded_sector == NO_SECTOR:
+		if not _import_selected_sector_centered(false):
+			_set_status("Carga un sector Terrain3D antes de suavizar.")
+			return
+	var importer := _find_importer_node()
+	if importer == null:
+		_set_status("No encontre nodo Importer para suavizar.")
+		return
+	generation_in_progress = true
+	_set_generation_buttons_enabled(false)
+	_show_generation_progress(0.0, "Suavizando terreno cargado...")
+	await get_tree().process_frame
+	var result := _smooth_importer_terrain(importer)
+	if bool(result.get("ok", false)):
+		_save_loaded_sector_to(importer, _sector_edit_dir(loaded_sector))
+		var pixels := int(result.get("pixels", 0))
+		var regions := int(result.get("regions", 0))
+		_set_status("Suavizado " + _sector_label(loaded_sector) + " | regiones " + str(regions) + " | pixeles tocados " + str(pixels) + ".")
+	else:
+		_set_status(str(result.get("message", "No pude suavizar el terreno cargado.")))
+	_show_generation_progress(100.0, "Listo.")
+	await get_tree().process_frame
+	_hide_generation_progress()
+	generation_in_progress = false
+	_set_generation_buttons_enabled(true)
+
+
+func _repair_loaded_sector_pressed() -> void:
+	if generation_in_progress:
+		return
+	if loaded_sector == NO_SECTOR:
+		if not _import_selected_sector_centered(false):
+			_set_status("Carga un sector Terrain3D antes de reparar cortes.")
+			return
+	var importer := _find_importer_node()
+	if importer == null:
+		_set_status("No encontre nodo Importer para reparar cortes.")
+		return
+	generation_in_progress = true
+	_set_generation_buttons_enabled(false)
+	_show_generation_progress(0.0, "Reparando cortes del terreno cargado...")
+	await get_tree().process_frame
+	var result := _repair_importer_terrain(importer)
+	if bool(result.get("ok", false)):
+		_save_loaded_sector_to(importer, _sector_edit_dir(loaded_sector))
+		var pixels := int(result.get("pixels", 0))
+		var regions := int(result.get("regions", 0))
+		_set_status("Cortes reparados en " + _sector_label(loaded_sector) + " | regiones " + str(regions) + " | pixeles tocados " + str(pixels) + ".")
+	else:
+		_set_status(str(result.get("message", "No pude reparar cortes del terreno cargado.")))
+	_show_generation_progress(100.0, "Listo.")
+	await get_tree().process_frame
+	_hide_generation_progress()
+	generation_in_progress = false
+	_set_generation_buttons_enabled(true)
+
+
+func _smooth_multi_selection_pressed() -> void:
+	if generation_in_progress:
+		return
+	var selected_queue := _multi_selected_sector_list()
+	if selected_queue.is_empty():
+		_set_status("No hay seleccion multiple. Arrastra sobre el mapa o usa Ctrl+click para elegir sectores.")
+		return
+
+	generation_in_progress = true
+	batch_current_index = 0
+	batch_total_count = selected_queue.size()
+	_set_generation_buttons_enabled(false)
+	_show_generation_progress(0.0, "Preparando suavizado de " + str(batch_total_count) + " sectores...")
+	await get_tree().process_frame
+
+	var smoothed_count := 0
+	var skipped_count := 0
+	var touched_pixels := 0
+	for sector in selected_queue:
+		batch_current_index += 1
+		selected_sector = sector
+		_update_labels()
+		_update_sector_guide()
+		_queue_map_redraw()
+		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Cargando " + _sector_label(sector) + "...")
+		await get_tree().process_frame
+		if not _import_selected_sector_centered(false):
+			skipped_count += 1
+			continue
+		var importer := _find_importer_node()
+		if importer == null:
+			skipped_count += 1
+			continue
+		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Suavizando " + _sector_label(sector) + "...")
+		await get_tree().process_frame
+		var result := _smooth_importer_terrain(importer)
+		if bool(result.get("ok", false)):
+			_save_loaded_sector_to(importer, _sector_edit_dir(loaded_sector))
+			smoothed_count += 1
+			touched_pixels += int(result.get("pixels", 0))
+		else:
+			skipped_count += 1
+		_show_generation_progress(float(batch_current_index) / float(batch_total_count) * 100.0, "Procesados " + str(batch_current_index) + "/" + str(batch_total_count) + ".")
+		await get_tree().process_frame
+
+	_hide_generation_progress()
+	generation_in_progress = false
+	_set_generation_buttons_enabled(true)
+	_set_status("Suavizado aplicado a " + str(smoothed_count) + " sector(es). Omitidos: " + str(skipped_count) + ". Pixeles tocados: " + str(touched_pixels) + ".")
+	_update_labels()
+	_queue_map_redraw()
+
+
+func _repair_multi_selection_pressed() -> void:
+	if generation_in_progress:
+		return
+	var selected_queue := _multi_selected_sector_list()
+	if selected_queue.is_empty():
+		_set_status("No hay seleccion multiple. Arrastra sobre el mapa o usa Ctrl+click para elegir sectores.")
+		return
+
+	generation_in_progress = true
+	batch_current_index = 0
+	batch_total_count = selected_queue.size()
+	_set_generation_buttons_enabled(false)
+	_show_generation_progress(0.0, "Preparando reparacion de " + str(batch_total_count) + " sectores...")
+	await get_tree().process_frame
+
+	var repaired_count := 0
+	var skipped_count := 0
+	var touched_pixels := 0
+	for sector in selected_queue:
+		batch_current_index += 1
+		selected_sector = sector
+		_update_labels()
+		_update_sector_guide()
+		_queue_map_redraw()
+		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Cargando " + _sector_label(sector) + "...")
+		await get_tree().process_frame
+		if not _import_selected_sector_centered(false):
+			skipped_count += 1
+			continue
+		var importer := _find_importer_node()
+		if importer == null:
+			skipped_count += 1
+			continue
+		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Reparando " + _sector_label(sector) + "...")
+		await get_tree().process_frame
+		var result := _repair_importer_terrain(importer)
+		if bool(result.get("ok", false)):
+			_save_loaded_sector_to(importer, _sector_edit_dir(loaded_sector))
+			repaired_count += 1
+			touched_pixels += int(result.get("pixels", 0))
+		else:
+			skipped_count += 1
+		_show_generation_progress(float(batch_current_index) / float(batch_total_count) * 100.0, "Procesados " + str(batch_current_index) + "/" + str(batch_total_count) + ".")
+		await get_tree().process_frame
+
+	_hide_generation_progress()
+	generation_in_progress = false
+	_set_generation_buttons_enabled(true)
+	_set_status("Reparacion aplicada a " + str(repaired_count) + " sector(es). Omitidos: " + str(skipped_count) + ". Pixeles tocados: " + str(touched_pixels) + ".")
+	_update_labels()
+	_queue_map_redraw()
+
+
+func _smooth_importer_terrain(importer: Node) -> Dictionary:
+	return _process_importer_height_maps(importer, false)
+
+
+func _repair_importer_terrain(importer: Node) -> Dictionary:
+	return _process_importer_height_maps(importer, true)
+
+
+func _process_importer_height_maps(importer: Node, repair_cuts: bool) -> Dictionary:
+	var terrain_data: Variant = importer.get("data")
+	if terrain_data == null:
+		return {"ok": false, "message": "El Importer no tiene Terrain3DData cargado."}
+	var normalizer: RefCounted = HEIGHTMAP_NORMALIZER_SCRIPT.new()
+	var result: Dictionary = normalizer.call("process_terrain_data", terrain_data, _normalizer_options(repair_cuts))
+	if not bool(result.get("ok", false)):
+		return result
+	if importer.has_method("update_heights"):
+		importer.call("update_heights", true)
+	return result
+
+
+func _normalizer_options(repair_cuts: bool) -> Dictionary:
+	var iterations := _smooth_iterations()
+	var strength := _smooth_strength()
+	var repair_radius := 0
+	var smooth_radius := 1
+	var limit_radius := 0
+	var strict_passes := iterations
+	var target_step_factor := 1.0
+	if repair_cuts:
+		iterations = maxi(iterations, 8)
+		strength = maxf(strength, 0.95)
+		repair_radius = 22
+		smooth_radius = 4
+		limit_radius = 4
+		strict_passes = maxi(iterations + 4, 12)
+		target_step_factor = 0.45
+	return {
+		"mode": HEIGHTMAP_NORMALIZER_SCRIPT.MODE_REPAIR_CUTS if repair_cuts else HEIGHTMAP_NORMALIZER_SCRIPT.MODE_SMOOTH,
+		"iterations": iterations,
+		"strength": strength,
+		"max_step": _repair_threshold(),
+		"preserve_outer_edges": smooth_preserve_edges_check == null or smooth_preserve_edges_check.button_pressed,
+		"allow_intentional_cuts": allow_intentional_cuts_check != null and allow_intentional_cuts_check.button_pressed,
+		"repair_seams": repair_cuts,
+		"seam_band": 6,
+		"repair_radius": repair_radius,
+		"smooth_radius": smooth_radius,
+		"limit_radius": limit_radius,
+		"strict_passes": strict_passes,
+		"target_step_factor": target_step_factor,
+	}
+
+
+func _smooth_iterations() -> int:
+	if smooth_iterations_spin == null:
+		return 4
+	return clampi(int(round(smooth_iterations_spin.value)), 1, 24)
+
+
+func _smooth_strength() -> float:
+	if smooth_strength_spin == null:
+		return 0.65
+	return clampf(float(smooth_strength_spin.value), 0.05, 1.0)
+
+
+func _repair_threshold() -> float:
+	if repair_threshold_spin == null:
+		return 1.5
+	return clampf(float(repair_threshold_spin.value), 0.25, 30.0)
 
 
 func _request_generate_and_import_selected_sector() -> void:
@@ -1150,6 +1545,8 @@ func _set_generation_buttons_enabled(enabled: bool) -> void:
 		generate_import_button.disabled = not enabled
 	if load_sector_button != null:
 		load_sector_button.disabled = not enabled
+	if fresh_load_button != null:
+		fresh_load_button.disabled = not enabled
 	if generate_selection_button != null:
 		generate_selection_button.disabled = not enabled
 	if regenerate_selection_button != null:
@@ -1166,6 +1563,24 @@ func _set_generation_buttons_enabled(enabled: bool) -> void:
 		apply_override_button.disabled = not enabled
 	if clear_override_button != null:
 		clear_override_button.disabled = not enabled
+	if smooth_iterations_spin != null:
+		smooth_iterations_spin.editable = enabled
+	if smooth_strength_spin != null:
+		smooth_strength_spin.editable = enabled
+	if repair_threshold_spin != null:
+		repair_threshold_spin.editable = enabled
+	if smooth_preserve_edges_check != null:
+		smooth_preserve_edges_check.disabled = not enabled
+	if allow_intentional_cuts_check != null:
+		allow_intentional_cuts_check.disabled = not enabled
+	if smooth_loaded_button != null:
+		smooth_loaded_button.disabled = not enabled
+	if smooth_selection_button != null:
+		smooth_selection_button.disabled = not enabled
+	if repair_loaded_button != null:
+		repair_loaded_button.disabled = not enabled
+	if repair_selection_button != null:
+		repair_selection_button.disabled = not enabled
 
 
 func _show_generation_progress(value: float, message: String) -> void:
@@ -1353,6 +1768,8 @@ func _sector_details_text(sector: Vector2i) -> String:
 	if not override.is_empty():
 		lines.append("Correccion: " + _override_summary(override))
 	lines.append("Generacion: " + ("superficies + biomas" if _generation_uses_biomes() else "solo superficies"))
+	var has_edits := _edit_dir_has_data(_sector_edit_dir(sector))
+	lines.append("Edicion guardada: " + ("si (se carga antes que el export)" if has_edits else "no"))
 	if _has_export(sector):
 		var metadata := _export_metadata_for_sector(sector)
 		if metadata.is_empty():

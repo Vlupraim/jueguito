@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://c6bhvxkhurtxj"]
 
-[ext_resource type="Script" path="res://scripts/terrain3d_walk_preview.gd" id="1_walk_preview"]
+[ext_resource type="Script" uid="uid://dkskucnpbeje8" path="res://scripts/terrain3d_walk_preview.gd" id="1_walk_preview"]
 
-[node name="Terrain3DWalkPreview" type="Node3D"]
+[node name="Terrain3DWalkPreview" type="Node3D" unique_id=1717142246]
 script = ExtResource("1_walk_preview")

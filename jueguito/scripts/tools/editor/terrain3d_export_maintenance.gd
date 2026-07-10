@@ -2,6 +2,7 @@
 extends SceneTree
 
 const EXPORTER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_sector_exporter.gd")
+const SECTOR_DATA_PATH := "res://data/map_design_sectors_5km.json"
 const TERRAIN3D_EXPORT_DIR := "res://data/terrain3d_exports"
 const TERRAIN3D_EDIT_DIR := "res://data/terrain3d_edits"
 const TERRAIN3D_EDIT_BACKUP_DIR := "res://data/terrain3d_edit_backups"
@@ -38,12 +39,15 @@ func _initialize() -> void:
 	var regenerate := bool(options.get("regenerate", false))
 	var edit_mode := str(options.get("edit_mode", "none"))
 	var use_biomes := bool(options.get("use_biomes", true))
+	var only_biome := int(options.get("only_biome", -1))
 	var backup_root := ""
 	if edit_mode != "none":
 		backup_root = _make_backup_root(dry_run)
 
 	print("Terrain3D maintenance")
 	print("  sectores: " + str(sectors.size()))
+	if only_biome >= 0:
+		print("  solo bioma: " + str(only_biome))
 	print("  regenerar exports: " + str(regenerate))
 	print("  ediciones: " + edit_mode)
 	print("  dry-run: " + str(dry_run))
@@ -87,6 +91,7 @@ func _parse_options(args: PackedStringArray) -> Dictionary:
 		"use_biomes": true,
 		"all_exported": false,
 		"only_old": false,
+		"only_biome": -1,
 		"limit": 0,
 		"sectors": [],
 	}
@@ -111,6 +116,11 @@ func _parse_options(args: PackedStringArray) -> Dictionary:
 				options["only_old"] = true
 			"--no-biomes":
 				options["use_biomes"] = false
+			"--only-biome":
+				if index + 1 >= args.size():
+					return {"ok": false, "message": "--only-biome necesita un id de bioma."}
+				options["only_biome"] = int(args[index + 1])
+				index += 1
 			"--sector":
 				if index + 2 >= args.size():
 					return {"ok": false, "message": "--sector necesita X Y."}
@@ -153,12 +163,46 @@ func _resolve_sectors(options: Dictionary) -> Array[Vector2i]:
 				old_sectors.append(sector)
 		sectors = old_sectors
 
+	var only_biome := int(options.get("only_biome", -1))
+	if only_biome >= 0:
+		sectors = _filter_sectors_by_biome(sectors, only_biome)
+
 	sectors.sort_custom(func(a: Vector2i, b: Vector2i) -> bool:
 		if a.x == b.x:
 			return a.y < b.y
 		return a.x < b.x
 	)
 	return sectors
+
+
+func _filter_sectors_by_biome(sectors: Array[Vector2i], biome_id: int) -> Array[Vector2i]:
+	var sector_data := _load_sector_data()
+	var filtered: Array[Vector2i] = []
+	for sector in sectors:
+		if _sector_biome_id(sector, sector_data) == biome_id:
+			filtered.append(sector)
+	return filtered
+
+
+func _load_sector_data() -> Dictionary:
+	var path := ProjectSettings.globalize_path(SECTOR_DATA_PATH)
+	if not FileAccess.file_exists(path):
+		return {}
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if parsed is Dictionary:
+		return parsed as Dictionary
+	return {}
+
+
+func _sector_biome_id(sector: Vector2i, sector_data: Dictionary) -> int:
+	var sectors_value: Variant = sector_data.get("sectors", {})
+	if not (sectors_value is Dictionary):
+		return -1
+	var sectors: Dictionary = sectors_value as Dictionary
+	var value: Variant = sectors.get(_sector_key(sector), {})
+	if value is Dictionary:
+		return int((value as Dictionary).get("biome_id", -1))
+	return -1
 
 
 func _list_exported_sectors() -> Array[Vector2i]:
@@ -259,6 +303,10 @@ func _sector_dir_name(sector: Vector2i) -> String:
 	return "sector_%d_%d" % [sector.x, sector.y]
 
 
+func _sector_key(sector: Vector2i) -> String:
+	return str(sector.x) + "," + str(sector.y)
+
+
 func _sector_label(sector: Vector2i) -> String:
 	return "[" + str(sector.x) + ", " + str(sector.y) + "]"
 
@@ -267,6 +315,7 @@ func _print_usage() -> void:
 	print("Uso:")
 	print("  godot --headless --path . --script res://scripts/tools/editor/terrain3d_export_maintenance.gd -- --sector 12 9 --regenerate --clear-edits --apply")
 	print("  godot --headless --path . --script res://scripts/tools/editor/terrain3d_export_maintenance.gd -- --all-exported --only-old --regenerate --apply")
+	print("  godot --headless --path . --script res://scripts/tools/editor/terrain3d_export_maintenance.gd -- --all-exported --only-biome 5 --regenerate --apply")
 	print("Opciones:")
 	print("  --dry-run       Solo muestra lo que haria. Es el modo por defecto.")
 	print("  --apply         Aplica cambios reales.")
@@ -274,4 +323,5 @@ func _print_usage() -> void:
 	print("  --clear-edits   Mueve todas las regiones guardadas del sector a backup.")
 	print("  --trim-edits    Mueve solo regiones fuera del 2x2 a backup.")
 	print("  --all-exported  Procesa todas las carpetas en data/terrain3d_exports.")
+	print("  --only-biome N  Filtra los sectores por bioma del mapa; Montana = 5.")
 	print("  --only-old      Procesa solo exports con resolucion distinta de 512.")

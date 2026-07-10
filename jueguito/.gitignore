@@ -6,3 +6,5 @@
 
 # Local Terrain3D working backups
 data/terrain3d_edit_backups/
+data/terrain3d_export_backups/
+_incoming_assets/

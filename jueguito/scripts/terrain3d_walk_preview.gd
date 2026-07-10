@@ -34,7 +34,7 @@ var saved_textures: Array = []  # respaldo de la lista de texturas para reconstr
 var cam_pivot: Node3D
 var cam_arm: SpringArm3D
 var cam_yaw := 45.0
-var cam_pitch := -45.0  # negativo = camara arriba mirando hacia abajo
+var cam_pitch := -55.0  # negativo = camara arriba mirando hacia abajo
 var orbiting := false
 const CAM_SENSITIVITY := 0.25
 
@@ -104,6 +104,34 @@ func _update_debug_hud() -> void:
 		lines.append("Camara: " + str(cam.global_position.round()) + " | nombre: " + cam.name)
 	else:
 		lines.append("Camara: NINGUNA")
+	if cam_arm != null:
+		var zoom_label := "Dist"
+		var zoom_value := cam_arm.spring_length
+		var zoom_min := float(player.get("min_camera_distance")) if player != null else 0.0
+		var zoom_max := float(player.get("max_camera_distance")) if player != null else 0.0
+		if player != null and player.has_method("get_camera_zoom_value"):
+			zoom_label = str(player.call("get_camera_zoom_label"))
+			zoom_value = float(player.call("get_camera_zoom_value"))
+			zoom_min = float(player.call("get_camera_zoom_min"))
+			zoom_max = float(player.call("get_camera_zoom_max"))
+		var camera_mode_label := "desconocida"
+		if player != null and player.has_method("get_camera_mode_label"):
+			camera_mode_label = str(player.call("get_camera_mode_label"))
+		lines.append("%s zoom: %.1f / %.1f-%.1f | dist %.1f | yaw %.1f | pitch %.1f" % [
+			zoom_label,
+			zoom_value,
+			zoom_min,
+			zoom_max,
+			cam_arm.spring_length,
+			cam_yaw,
+			cam_pitch,
+		])
+		lines.append("Modo camara: " + camera_mode_label + " | C cambia preset")
+	if player != null:
+		lines.append("Velocidad: %.1f caminar | %.1f correr | snap suelo Terrain3D" % [
+			float(player.get("walk_speed")),
+			float(player.get("sprint_speed")),
+		])
 	debug_label.text = "\n".join(lines)
 
 
@@ -238,7 +266,25 @@ func _apply_camera_angles() -> void:
 		cam_arm.rotation_degrees.x = cam_pitch
 
 
+func get_player_ground_info(requested_position: Vector3) -> Dictionary:
+	if terrain == null or terrain.data == null:
+		return {"walkable": false}
+	var terrain_height := terrain.data.get_height(Vector3(requested_position.x, 0.0, requested_position.z))
+	if is_nan(terrain_height):
+		return {"walkable": false}
+	return {
+		"walkable": true,
+		"position": Vector3(requested_position.x, terrain_height, requested_position.z),
+	}
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		var key_event := event as InputEventKey
+		if key_event.pressed and not key_event.echo and key_event.keycode == KEY_C:
+			_cycle_player_camera_mode()
+			return
+
 	# Boton derecho mantenido + mover mouse = orbitar la camara.
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
 		orbiting = event.pressed
@@ -246,6 +292,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		cam_yaw -= event.relative.x * CAM_SENSITIVITY
 		cam_pitch = clampf(cam_pitch - event.relative.y * CAM_SENSITIVITY, -85.0, -5.0)
 		_apply_camera_angles()
+
+
+func _cycle_player_camera_mode() -> void:
+	if player == null or not player.has_method("cycle_camera_mode"):
+		return
+	player.call("cycle_camera_mode")
+	if cam_arm != null:
+		cam_pitch = cam_arm.rotation_degrees.x
+	var cam := _player_camera()
+	if cam != null and terrain != null and terrain.has_method("set_camera"):
+		terrain.set_camera(cam)
 
 
 func _place_player_on_ground() -> void:
