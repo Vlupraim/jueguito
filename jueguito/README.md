@@ -239,6 +239,16 @@ Nota de costas: el exportador suaviza agua y costa para evitar pozos o paredes d
 Nota de biomas: el bioma de montana se calibro usando `[9, 12]` como referencia jugable. Los exports antiguos con picos de 300-400 m fueron reexportados hacia un techo cercano a 100-105 m.
 Nota de correcciones: una correccion de `Terreno` fuerza el sector completo como tierra, costa/arena, agua o agua profunda al regenerar. Una correccion de `Bioma` cambia la lectura del bioma para ese sector; solo afecta la altura si `Usar biomas` esta encendido. Estas correcciones no modifican `map_design_sectors_5km.json` ni la mascara pintada, son una capa reversible para iterar rapido en Terrain3D.
 
+### Walk preview Terrain3D
+
+La escena `res://scenes/terrain3d_walk_preview.tscn` permite recorrer un sector usando sus datos Terrain3D reales y cambiar rapidamente entre sectores disponibles desde el minimapa.
+
+- Clic izquierdo en un sector verde: cargar y viajar a ese sector.
+- Rueda del mouse o botones `Zoom - / 100% / Zoom +`: cambiar el zoom del minimapa alrededor del cursor o del centro.
+- Boton medio o derecho + arrastrar: desplazar la vista ampliada sin salir de los bordes del mapa.
+- Campos `Sector X, Y` + `Ir`: escribir manualmente la coordenada del sector que se quiere revisar.
+- Si la coordenada no tiene edicion ni export disponible, el encabezado muestra `sin datos` y conserva el terreno actual.
+
 Sectores candidatos para pruebas de spawn/tutorial:
 
 - `[14, 5]`, `[15, 5]`, `[14, 15]`, `[15, 15]`: sectores de prueba generados para comparar lectura.

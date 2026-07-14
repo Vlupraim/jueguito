@@ -18,6 +18,9 @@ const MAP_IMAGE_SIZE := Vector2(1672.0, 941.0)
 const SECTOR_PIXELS := 25.0
 const MINIMAP_SIZE := Vector2(300.0, 169.0)
 const MINIMAP_MARGIN := 12.0
+const MINIMAP_MIN_ZOOM := 1.0
+const MINIMAP_MAX_ZOOM := 18.0
+const MINIMAP_ZOOM_FACTOR := 1.35
 
 ## Sector a previsualizar. Si no tiene ediciones guardadas, busca el primero que exista.
 @export var sector := Vector2i(15, 6)
@@ -45,6 +48,13 @@ var minimap: Control
 var minimap_texture: Texture2D
 var progress_bar: ProgressBar
 var sector_label: Label
+var minimap_zoom_label: Label
+var sector_x_spin: SpinBox
+var sector_y_spin: SpinBox
+var minimap_zoom := 1.0
+var minimap_center_px := MAP_IMAGE_SIZE * 0.5
+var minimap_dragging := false
+var minimap_drag_last := Vector2.ZERO
 var traveling := false
 
 
@@ -421,10 +431,86 @@ func _setup_minimap() -> void:
 	minimap = Control.new()
 	minimap.custom_minimum_size = MINIMAP_SIZE
 	minimap.mouse_filter = Control.MOUSE_FILTER_STOP
-	minimap.tooltip_text = "Clic en un sector verde para viajar ahi."
+	minimap.clip_contents = true
+	minimap.tooltip_text = "Clic: viajar | rueda: zoom | boton medio/derecho: mover mapa."
 	minimap.draw.connect(_on_minimap_draw)
 	minimap.gui_input.connect(_on_minimap_gui_input)
+	minimap.mouse_exited.connect(_stop_minimap_drag)
 	box.add_child(minimap)
+
+	var zoom_row := HBoxContainer.new()
+	zoom_row.add_theme_constant_override("separation", 4)
+	box.add_child(zoom_row)
+
+	var zoom_out_button := Button.new()
+	zoom_out_button.text = "Zoom -"
+	zoom_out_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	zoom_out_button.pressed.connect(_zoom_minimap_from_center.bind(1.0 / MINIMAP_ZOOM_FACTOR))
+	zoom_row.add_child(zoom_out_button)
+
+	var reset_zoom_button := Button.new()
+	reset_zoom_button.text = "100%"
+	reset_zoom_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	reset_zoom_button.pressed.connect(_reset_minimap_view)
+	zoom_row.add_child(reset_zoom_button)
+
+	var zoom_in_button := Button.new()
+	zoom_in_button.text = "Zoom +"
+	zoom_in_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	zoom_in_button.pressed.connect(_zoom_minimap_from_center.bind(MINIMAP_ZOOM_FACTOR))
+	zoom_row.add_child(zoom_in_button)
+
+	minimap_zoom_label = Label.new()
+	minimap_zoom_label.custom_minimum_size = Vector2(42.0, 0.0)
+	minimap_zoom_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	minimap_zoom_label.add_theme_color_override("font_color", Color.WHITE)
+	minimap_zoom_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	minimap_zoom_label.add_theme_constant_override("outline_size", 3)
+	zoom_row.add_child(minimap_zoom_label)
+
+	var coordinate_row := HBoxContainer.new()
+	coordinate_row.add_theme_constant_override("separation", 4)
+	box.add_child(coordinate_row)
+
+	var coordinate_label := Label.new()
+	coordinate_label.text = "Sector"
+	coordinate_label.add_theme_color_override("font_color", Color.WHITE)
+	coordinate_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	coordinate_label.add_theme_constant_override("outline_size", 3)
+	coordinate_row.add_child(coordinate_label)
+
+	sector_x_spin = _make_sector_coordinate_spin(_sector_columns() - 1)
+	sector_x_spin.prefix = "X "
+	sector_x_spin.tooltip_text = "Coordenada X del sector."
+	coordinate_row.add_child(sector_x_spin)
+
+	var comma_label := Label.new()
+	comma_label.text = ","
+	comma_label.add_theme_color_override("font_color", Color.WHITE)
+	coordinate_row.add_child(comma_label)
+
+	sector_y_spin = _make_sector_coordinate_spin(_sector_rows() - 1)
+	sector_y_spin.prefix = "Y "
+	sector_y_spin.tooltip_text = "Coordenada Y del sector."
+	coordinate_row.add_child(sector_y_spin)
+
+	var travel_button := Button.new()
+	travel_button.text = "Ir"
+	travel_button.tooltip_text = "Carga el sector escrito si tiene datos disponibles."
+	travel_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	travel_button.pressed.connect(_travel_from_coordinate_inputs)
+	coordinate_row.add_child(travel_button)
+	sector_x_spin.get_line_edit().text_submitted.connect(_travel_from_submitted_coordinate)
+	sector_y_spin.get_line_edit().text_submitted.connect(_travel_from_submitted_coordinate)
+
+	var help_label := Label.new()
+	help_label.text = "Rueda: zoom | medio/derecho: mover | clic: viajar"
+	help_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	help_label.add_theme_font_size_override("font_size", 11)
+	help_label.add_theme_color_override("font_color", Color(0.88, 0.90, 0.92))
+	help_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	help_label.add_theme_constant_override("outline_size", 3)
+	box.add_child(help_label)
 
 	progress_bar = ProgressBar.new()
 	progress_bar.custom_minimum_size = Vector2(MINIMAP_SIZE.x, 16.0)
@@ -434,6 +520,8 @@ func _setup_minimap() -> void:
 	progress_bar.visible = false
 	box.add_child(progress_bar)
 
+	_sync_sector_inputs(current_sector)
+	_update_minimap_zoom_label()
 	minimap.queue_redraw()
 
 
@@ -446,22 +534,24 @@ func _sector_caption(sec: Vector2i) -> String:
 func _on_minimap_draw() -> void:
 	if minimap == null:
 		return
-	var rect := Rect2(Vector2.ZERO, MINIMAP_SIZE)
+	var rect := _minimap_view_rect()
+	var source_rect := _minimap_source_rect()
+	minimap.draw_rect(rect, Color(0.05, 0.08, 0.09), true)
 	if minimap_texture != null:
-		minimap.draw_texture_rect(minimap_texture, rect, false)
+		minimap.draw_texture_rect_region(minimap_texture, rect, source_rect)
 	else:
 		minimap.draw_rect(rect, Color(0.18, 0.22, 0.28), true)
 
-	var scale := MINIMAP_SIZE / MAP_IMAGE_SIZE
-	var cell := Vector2(SECTOR_PIXELS, SECTOR_PIXELS) * scale
 	for key in available_sectors:
 		var s: Vector2i = available_sectors[key]
-		var top_left := Vector2(s.x * SECTOR_PIXELS, s.y * SECTOR_PIXELS) * scale
-		minimap.draw_rect(Rect2(top_left, cell), Color(0.2, 0.8, 0.35, 0.45), true)
+		var source_cell := _sector_source_rect(s).intersection(source_rect)
+		if source_cell.has_area():
+			minimap.draw_rect(_source_rect_to_minimap(source_cell, source_rect, rect), Color(0.2, 0.8, 0.35, 0.45), true)
 
 	if current_sector.x >= 0:
-		var cur := Vector2(current_sector.x * SECTOR_PIXELS, current_sector.y * SECTOR_PIXELS) * scale
-		minimap.draw_rect(Rect2(cur, cell), Color(1.0, 0.85, 0.1, 1.0), false, 2.0)
+		var current_source_rect := _sector_source_rect(current_sector).intersection(source_rect)
+		if current_source_rect.has_area():
+			minimap.draw_rect(_source_rect_to_minimap(current_source_rect, source_rect, rect), Color(1.0, 0.85, 0.1, 1.0), false, 2.0)
 
 	minimap.draw_rect(rect, Color(0.0, 0.0, 0.0, 0.85), false, 2.0)
 
@@ -469,14 +559,179 @@ func _on_minimap_draw() -> void:
 func _on_minimap_gui_input(event: InputEvent) -> void:
 	if traveling:
 		return
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var scale := MINIMAP_SIZE / MAP_IMAGE_SIZE
-		var px: Vector2 = event.position / scale
-		var sec := Vector2i(int(px.x / SECTOR_PIXELS), int(px.y / SECTOR_PIXELS))
-		if available_sectors.has(_sector_key(sec)):
-			_travel_to_sector(sec)
-		elif sector_label != null:
-			sector_label.text = "Sector [%d, %d] sin datos" % [sec.x, sec.y]
+	if event is InputEventMouseMotion:
+		var mouse_motion := event as InputEventMouseMotion
+		if minimap_dragging:
+			_pan_minimap(mouse_motion.position - minimap_drag_last)
+			minimap_drag_last = mouse_motion.position
+			minimap.accept_event()
+	elif event is InputEventMouseButton:
+		var mouse_button := event as InputEventMouseButton
+		if mouse_button.pressed and mouse_button.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_zoom_minimap_at(mouse_button.position, MINIMAP_ZOOM_FACTOR)
+			minimap.accept_event()
+		elif mouse_button.pressed and mouse_button.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_zoom_minimap_at(mouse_button.position, 1.0 / MINIMAP_ZOOM_FACTOR)
+			minimap.accept_event()
+		elif mouse_button.button_index == MOUSE_BUTTON_MIDDLE or mouse_button.button_index == MOUSE_BUTTON_RIGHT:
+			minimap_dragging = mouse_button.pressed
+			minimap_drag_last = mouse_button.position
+			minimap.accept_event()
+		elif mouse_button.pressed and mouse_button.button_index == MOUSE_BUTTON_LEFT:
+			_request_sector_travel(_minimap_sector_at_position(mouse_button.position), false)
+			minimap.accept_event()
+
+
+func _make_sector_coordinate_spin(maximum: int) -> SpinBox:
+	var spin := SpinBox.new()
+	spin.custom_minimum_size = Vector2(62.0, 0.0)
+	spin.min_value = 0.0
+	spin.max_value = float(maxi(0, maximum))
+	spin.step = 1.0
+	spin.rounded = true
+	spin.allow_greater = false
+	spin.allow_lesser = false
+	return spin
+
+
+func _sector_columns() -> int:
+	return int(ceil(MAP_IMAGE_SIZE.x / SECTOR_PIXELS))
+
+
+func _sector_rows() -> int:
+	return int(ceil(MAP_IMAGE_SIZE.y / SECTOR_PIXELS))
+
+
+func _minimap_view_rect() -> Rect2:
+	if minimap == null or minimap.size.x <= 1.0 or minimap.size.y <= 1.0:
+		return Rect2(Vector2.ZERO, MINIMAP_SIZE)
+	return Rect2(Vector2.ZERO, minimap.size)
+
+
+func _minimap_source_rect() -> Rect2:
+	var visible_size := MAP_IMAGE_SIZE / minimap_zoom
+	var position := minimap_center_px - visible_size * 0.5
+	position.x = clampf(position.x, 0.0, MAP_IMAGE_SIZE.x - visible_size.x)
+	position.y = clampf(position.y, 0.0, MAP_IMAGE_SIZE.y - visible_size.y)
+	return Rect2(position, visible_size)
+
+
+func _clamp_minimap_center() -> void:
+	var half_visible := MAP_IMAGE_SIZE / minimap_zoom * 0.5
+	minimap_center_px.x = clampf(minimap_center_px.x, half_visible.x, MAP_IMAGE_SIZE.x - half_visible.x)
+	minimap_center_px.y = clampf(minimap_center_px.y, half_visible.y, MAP_IMAGE_SIZE.y - half_visible.y)
+
+
+func _source_rect_to_minimap(source_value: Rect2, source_view: Rect2, target_view: Rect2) -> Rect2:
+	var normalized_position := (source_value.position - source_view.position) / source_view.size
+	var normalized_size := source_value.size / source_view.size
+	return Rect2(target_view.position + normalized_position * target_view.size, normalized_size * target_view.size)
+
+
+func _sector_source_rect(sec: Vector2i) -> Rect2:
+	var position := Vector2(float(sec.x), float(sec.y)) * SECTOR_PIXELS
+	var end := Vector2(
+		minf(position.x + SECTOR_PIXELS, MAP_IMAGE_SIZE.x),
+		minf(position.y + SECTOR_PIXELS, MAP_IMAGE_SIZE.y)
+	)
+	return Rect2(position, end - position)
+
+
+func _minimap_sector_at_position(local_position: Vector2) -> Vector2i:
+	var target_view := _minimap_view_rect()
+	var source_view := _minimap_source_rect()
+	var normalized := Vector2(
+		clampf((local_position.x - target_view.position.x) / target_view.size.x, 0.0, 0.9999),
+		clampf((local_position.y - target_view.position.y) / target_view.size.y, 0.0, 0.9999)
+	)
+	var source_position := source_view.position + normalized * source_view.size
+	return Vector2i(
+		clampi(int(floor(source_position.x / SECTOR_PIXELS)), 0, _sector_columns() - 1),
+		clampi(int(floor(source_position.y / SECTOR_PIXELS)), 0, _sector_rows() - 1)
+	)
+
+
+func _zoom_minimap_from_center(factor: float) -> void:
+	var target_view := _minimap_view_rect()
+	_zoom_minimap_at(target_view.get_center(), factor)
+
+
+func _zoom_minimap_at(local_position: Vector2, factor: float) -> void:
+	var target_view := _minimap_view_rect()
+	var old_source := _minimap_source_rect()
+	var normalized := Vector2(
+		clampf((local_position.x - target_view.position.x) / target_view.size.x, 0.0, 1.0),
+		clampf((local_position.y - target_view.position.y) / target_view.size.y, 0.0, 1.0)
+	)
+	var anchor_source := old_source.position + normalized * old_source.size
+	minimap_zoom = clampf(minimap_zoom * factor, MINIMAP_MIN_ZOOM, MINIMAP_MAX_ZOOM)
+	var new_size := MAP_IMAGE_SIZE / minimap_zoom
+	minimap_center_px = anchor_source - normalized * new_size + new_size * 0.5
+	_clamp_minimap_center()
+	_update_minimap_zoom_label()
+	minimap.queue_redraw()
+
+
+func _pan_minimap(screen_delta: Vector2) -> void:
+	var target_view := _minimap_view_rect()
+	var source_view := _minimap_source_rect()
+	minimap_center_px -= screen_delta / target_view.size * source_view.size
+	_clamp_minimap_center()
+	minimap.queue_redraw()
+
+
+func _reset_minimap_view() -> void:
+	minimap_zoom = MINIMAP_MIN_ZOOM
+	minimap_center_px = MAP_IMAGE_SIZE * 0.5
+	_update_minimap_zoom_label()
+	if minimap != null:
+		minimap.queue_redraw()
+
+
+func _stop_minimap_drag() -> void:
+	minimap_dragging = false
+
+
+func _update_minimap_zoom_label() -> void:
+	if minimap_zoom_label != null:
+		minimap_zoom_label.text = "x%.1f" % minimap_zoom
+
+
+func _focus_minimap_on_sector(sec: Vector2i) -> void:
+	minimap_center_px = _sector_source_rect(sec).get_center()
+	_clamp_minimap_center()
+	if minimap != null:
+		minimap.queue_redraw()
+
+
+func _sync_sector_inputs(sec: Vector2i) -> void:
+	if sec.x < 0 or sec.y < 0:
+		return
+	if sector_x_spin != null:
+		sector_x_spin.value = sec.x
+	if sector_y_spin != null:
+		sector_y_spin.value = sec.y
+
+
+func _travel_from_submitted_coordinate(_text: String) -> void:
+	_travel_from_coordinate_inputs()
+
+
+func _travel_from_coordinate_inputs() -> void:
+	if sector_x_spin == null or sector_y_spin == null:
+		return
+	var sec := Vector2i(int(round(sector_x_spin.value)), int(round(sector_y_spin.value)))
+	_request_sector_travel(sec, true)
+
+
+func _request_sector_travel(sec: Vector2i, focus_map: bool) -> void:
+	_sync_sector_inputs(sec)
+	if available_sectors.has(_sector_key(sec)):
+		if focus_map:
+			_focus_minimap_on_sector(sec)
+		_travel_to_sector(sec)
+	elif sector_label != null:
+		sector_label.text = "Sector [%d, %d] sin datos" % [sec.x, sec.y]
 
 
 func _travel_to_sector(sec: Vector2i) -> void:
@@ -508,6 +763,7 @@ func _travel_to_sector(sec: Vector2i) -> void:
 		progress_bar.visible = false
 	if sector_label != null:
 		sector_label.text = _sector_caption(sec)
+	_sync_sector_inputs(sec)
 	if minimap != null:
 		minimap.queue_redraw()
 	traveling = false
