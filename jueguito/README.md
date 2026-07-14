@@ -204,8 +204,9 @@ Funciones actuales del dock:
 - `Aplicar correccion`: guarda la correccion elegida en `res://data/terrain3d_sector_overrides.json`.
 - `Limpiar correccion`: quita la correccion del sector o seleccion multiple y vuelve al mapa base.
 - `Pin`: evita minimizar accidentalmente el panel mientras se trabaja.
+- El ancho del dock se ajusta arrastrando su borde en Godot; el separador bajo el mapa permite repartir la altura entre el mapa y las opciones.
 - Zoom con rueda o botones `Zoom - / 100% / Zoom +`.
-- Boton medio o derecho: arrastrar el mapa.
+- Boton medio o derecho: arrastrar el mapa. El paneo se detiene en los bordes para que el mapa no pueda perderse fuera de la vista.
 - Click normal: selecciona sector y limpia seleccion multiple.
 - `Ctrl + click`: suma o quita un sector de la seleccion multiple.
 - Arrastrar con click izquierdo: seleccion rectangular de sectores.

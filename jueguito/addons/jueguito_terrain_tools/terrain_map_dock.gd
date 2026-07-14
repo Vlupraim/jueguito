@@ -18,6 +18,9 @@ const MAP_WORLD_SCALE := 200.0
 const MAP_WORLD_SIZE := MAP_IMAGE_SIZE * MAP_WORLD_SCALE
 const SECTOR_SIDE_METERS := 5000.0
 const MAP_VIEW_SIZE := Vector2(320.0, 184.0)
+const MAP_VIEW_MIN_SIZE := Vector2(260.0, 146.0)
+const DOCK_EXPANDED_MIN_SIZE := Vector2(300.0, 420.0)
+const DOCK_COLLAPSED_MIN_SIZE := Vector2(180.0, 44.0)
 const SELECTION_DRAG_THRESHOLD := 6.0
 const SURFACE_UNKNOWN := 0
 const SURFACE_LAND := 1
@@ -37,6 +40,7 @@ var details_label: Label
 var status_label: Label
 var confirm_dialog: ConfirmationDialog
 var root_layout: VBoxContainer
+var content_split: VSplitContainer
 var options_scroll: ScrollContainer
 var options_layout: VBoxContainer
 var collapse_button: Button
@@ -95,7 +99,7 @@ func setup(p_editor_interface) -> void:
 
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(420.0, 560.0)
+	custom_minimum_size = DOCK_EXPANDED_MIN_SIZE
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	map_texture = load(MAP_TEXTURE_PATH) as Texture2D
 	if ResourceLoader.exists(SURFACE_MASK_PATH):
@@ -148,21 +152,38 @@ func _build_ui() -> void:
 	collapse_button.pressed.connect(_toggle_collapsed)
 	header.add_child(collapse_button)
 
+	var resize_hint := Label.new()
+	resize_hint.text = "Arrastra el separador bajo el mapa para cambiar su tamaño."
+	resize_hint.tooltip_text = "El ancho también se ajusta arrastrando el borde del dock de Godot."
+	resize_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	resize_hint.modulate = Color(0.72, 0.74, 0.76, 1.0)
+	resize_hint.add_theme_font_size_override("font_size", 11)
+	root_layout.add_child(resize_hint)
+
+	content_split = VSplitContainer.new()
+	content_split.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_split.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content_split.split_offset = int(MAP_VIEW_SIZE.y)
+	content_split.tooltip_text = "Arrastra el separador para repartir espacio entre el mapa y las opciones."
+	root_layout.add_child(content_split)
+
 	map_view = Control.new()
-	map_view.custom_minimum_size = MAP_VIEW_SIZE
+	map_view.custom_minimum_size = MAP_VIEW_MIN_SIZE
 	map_view.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	map_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	map_view.mouse_filter = Control.MOUSE_FILTER_STOP
 	map_view.clip_contents = true
 	map_view.draw.connect(_draw_map)
 	map_view.gui_input.connect(_handle_map_input)
 	map_view.mouse_exited.connect(_clear_hover)
-	root_layout.add_child(map_view)
+	map_view.resized.connect(_on_map_view_resized)
+	content_split.add_child(map_view)
 
 	options_scroll = ScrollContainer.new()
 	options_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	options_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	options_scroll.custom_minimum_size = Vector2(0.0, 180.0)
-	root_layout.add_child(options_scroll)
+	options_scroll.custom_minimum_size = Vector2(0.0, 160.0)
+	content_split.add_child(options_scroll)
 
 	options_layout = VBoxContainer.new()
 	options_layout.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -720,6 +741,7 @@ func _handle_map_input(event: InputEvent) -> void:
 			_queue_map_redraw()
 		elif map_dragging:
 			map_pan += mouse_motion.position - map_drag_last
+			_clamp_map_pan()
 			map_drag_last = mouse_motion.position
 			_queue_map_redraw()
 		else:
@@ -1625,7 +1647,7 @@ func _toggle_collapsed() -> void:
 			var child := root_layout.get_child(index) as Control
 			if child != null and child != root_layout.get_child(0):
 				child.visible = not dock_collapsed
-	custom_minimum_size = Vector2(220.0, 44.0) if dock_collapsed else Vector2(420.0, 560.0)
+	custom_minimum_size = DOCK_COLLAPSED_MIN_SIZE if dock_collapsed else DOCK_EXPANDED_MIN_SIZE
 
 
 func _toggle_pinned() -> void:
@@ -1641,7 +1663,7 @@ func _toggle_pinned() -> void:
 				var child := root_layout.get_child(index) as Control
 				if child != null:
 					child.visible = true
-		custom_minimum_size = Vector2(420.0, 560.0)
+		custom_minimum_size = DOCK_EXPANDED_MIN_SIZE
 	_set_status("Panel pineado." if dock_pinned else "Panel sin pin.")
 
 
@@ -1986,6 +2008,26 @@ func _queue_map_redraw() -> void:
 		map_view.queue_redraw()
 
 
+func _on_map_view_resized() -> void:
+	_clamp_map_pan()
+	_queue_map_redraw()
+
+
+func _clamp_map_pan() -> void:
+	if map_view == null:
+		return
+	var view_size := map_view.size
+	if view_size.x <= 1.0 or view_size.y <= 1.0:
+		return
+	var zoomed_size := _base_map_content_rect().size * map_zoom
+	var max_pan := Vector2(
+		maxf(0.0, (zoomed_size.x - view_size.x) * 0.5),
+		maxf(0.0, (zoomed_size.y - view_size.y) * 0.5)
+	)
+	map_pan.x = clampf(map_pan.x, -max_pan.x, max_pan.x)
+	map_pan.y = clampf(map_pan.y, -max_pan.y, max_pan.y)
+
+
 func _map_content_rect() -> Rect2:
 	var base_rect := _base_map_content_rect()
 	var zoomed_size := base_rect.size * map_zoom
@@ -2018,15 +2060,20 @@ func _zoom_map_from_center(factor: float) -> void:
 
 func _zoom_map_at_position(factor: float, pivot: Vector2) -> void:
 	var old_rect := _map_content_rect()
+	if old_rect.size.x <= 0.0 or old_rect.size.y <= 0.0:
+		return
 	var normalized := Vector2(
 		(pivot.x - old_rect.position.x) / old_rect.size.x,
 		(pivot.y - old_rect.position.y) / old_rect.size.y
 	)
+	normalized.x = clampf(normalized.x, 0.0, 1.0)
+	normalized.y = clampf(normalized.y, 0.0, 1.0)
 	map_zoom = clampf(map_zoom * factor, 1.0, 18.0)
 	var base_rect := _base_map_content_rect()
 	var new_size := base_rect.size * map_zoom
 	var new_position := pivot - Vector2(normalized.x * new_size.x, normalized.y * new_size.y)
 	map_pan = new_position + new_size * 0.5 - base_rect.get_center()
+	_clamp_map_pan()
 	_update_labels()
 	_queue_map_redraw()
 
