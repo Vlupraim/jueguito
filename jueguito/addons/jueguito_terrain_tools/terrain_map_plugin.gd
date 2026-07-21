@@ -18,3 +18,11 @@ func _exit_tree() -> void:
 		remove_control_from_docks(dock)
 		dock.queue_free()
 		dock = null
+
+
+# Godot llama este hook al guardar la escena/proyecto desde el editor (Ctrl+S).
+# Terrain3D mantiene datos externos a la escena, por lo que se los delegamos al
+# dock para que el guardado normal incluya el sector activo y sus recursos.
+func _save_external_data() -> void:
+	if dock != null and dock.has_method("save_external_data"):
+		dock.call("save_external_data")

@@ -1,10 +1,7 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/characters/player/player_controller.gd" id="1_player_controller"]
-[ext_resource type="PackedScene" uid="uid://cmxvb6pgx63jd" path="res://assets/characters/erika_archer/Erika Archer With Bow Arrow.fbx" id="2_erika"]
-[ext_resource type="PackedScene" uid="uid://b4sq5jrh8i7b5" path="res://assets/characters/erika_archer/standing idle 01.fbx" id="3_idle"]
-[ext_resource type="PackedScene" uid="uid://cd75gr5ts35cj" path="res://assets/characters/erika_archer/standing walk forward.fbx" id="4_walk"]
-[ext_resource type="PackedScene" uid="uid://dygvpk536fp7s" path="res://assets/characters/erika_archer/standing run forward.fbx" id="5_run"]
+[ext_resource type="PackedScene" path="res://assets/characters/player/models/char_6_c583a7dd/strong_man.glb" id="2_character"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.32
@@ -39,14 +36,12 @@ initial_orthographic_size = 9.5
 camera_zoom_step = 6.0
 max_camera_distance = 260.0
 min_camera_distance = 5.0
-initial_camera_distance = 24.0
+initial_camera_distance = 18.0
 close_camera_distance = 11.0
 ground_clearance = 0.78
-character_scene = ExtResource("2_erika")
-idle_animation_scene = ExtResource("3_idle")
-walk_animation_scene = ExtResource("4_walk")
-run_animation_scene = ExtResource("5_run")
-character_visual_scale = 0.82
+character_scene = ExtResource("2_character")
+animation_source_path = "res://assets/characters/player/models/char_6_c583a7dd/strong_man.glb"
+character_visual_scale = 1.0
 character_visual_y_offset = -0.78
 character_visual_yaw_degrees = 180.0
 show_placeholder_visual = false
@@ -70,7 +65,7 @@ transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.615662, -0.788011, 0, 0.788011, 0.615662, 0, 0, 0)
-spring_length = 24.0
+spring_length = 18.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
 far = 12000.0

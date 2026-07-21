@@ -1,0 +1,358 @@
+[gd_scene load_steps=8 format=3 uid="uid://c6a8b79f0122e"]
+
+[ext_resource type="Script" path="res://scripts/ui/character_selection_3d.gd" id="1_script"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_sky"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_env"]
+background_mode = 2
+sky = SubResource("Sky_sky")
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pedestal"]
+top_radius = 1.2
+bottom_radius = 1.3
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pedestal"]
+albedo_color = Color(0.180392, 0.2, 0.235294, 1)
+roughness = 0.8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
+bg_color = Color(0.0627451, 0.0823529, 0.12549, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.231373, 0.352941, 0.54902, 0.55)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action"]
+bg_color = Color(0.105882, 0.321569, 0.65098, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.392157, 0.662745, 1, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="CharacterSelection3D" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+sky_mode = 1
+
+[node name="SpotLight3D_Key" type="SpotLight3D" parent="."]
+transform = Transform3D(0.965926, 0.0669873, -0.25, 0, 0.965926, 0.258819, 0.258819, -0.25, 0.933013, -1.2, 2.3, 3.2)
+light_color = Color(1, 0.980392, 0.941176, 1)
+light_energy = 4.0
+spot_range = 10.0
+spot_angle = 35.0
+
+[node name="SpotLight3D_Rim" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.965926, -0.0669873, 0.25, 0, 0.965926, 0.258819, -0.258819, 0.25, -0.933013, 1.2, 2.2, -2.5)
+light_color = Color(0.705882, 0.823529, 1, 1)
+light_energy = 3.5
+spot_range = 8.0
+spot_angle = 40.0
+
+[node name="Pedestal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("CylinderMesh_pedestal")
+surface_material_override/0 = SubResource("StandardMaterial3D_pedestal")
+
+[node name="CharacterSpawn" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 1.3, 2.8)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RotateArea" type="Control" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+
+[node name="ScreenTitle" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 26.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.82, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Elige tu personaje"
+horizontal_alignment = 1
+
+[node name="ListPanel" type="PanelContainer" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 500)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 34.0
+offset_top = 80.0
+offset_right = 384.0
+offset_bottom = -54.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/ListPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 22
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/ListPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.392157, 0.662745, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Tus personajes"
+
+[node name="SlotCounterLabel" type="Label" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.68, 0.78, 1)
+theme_override_font_sizes/font_size = 13
+text = "0 de 4 espacios utilizados"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CharacterListContainer" type="VBoxContainer" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="ListHint" type="Label" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54, 0.6, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "Selecciona un espacio para continuar."
+autowrap_mode = 2
+
+[node name="SelectionPanel" type="PanelContainer" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(470, 154)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -235.0
+offset_top = -198.0
+offset_right = 235.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/SelectionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/SelectionPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="SelectedNameLabel" type="Label" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87, 0.92, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Espacio vacío"
+horizontal_alignment = 1
+
+[node name="SelectedDetailsLabel" type="Label" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.78, 1)
+theme_override_font_sizes/font_size = 13
+text = "Crea un personaje para comenzar tu aventura."
+horizontal_alignment = 1
+
+[node name="PrimaryActionButton" type="Button" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_action")
+text = "Crear personaje"
+
+[node name="CreationPanel" type="PanelContainer" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(370, 500)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -404.0
+offset_top = 76.0
+offset_right = -34.0
+offset_bottom = -54.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/CreationPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/CreationPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 9
+alignment = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.392157, 0.662745, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Crear personaje"
+horizontal_alignment = 1
+
+[node name="CreationSubtitle" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.78, 1)
+theme_override_font_sizes/font_size = 12
+text = "Personaliza el cuerpo y revisa el resultado en la plataforma."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CharNameInput" type="LineEdit" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+placeholder_text = "Nombre del personaje"
+alignment = 1
+max_length = 24
+
+[node name="ModelLabel" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Tipo de cuerpo"
+
+[node name="ModelOptionButton" type="OptionButton" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+alignment = 1
+
+[node name="HairLabel" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Cabello"
+
+[node name="HairOptionButton" type="OptionButton" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+alignment = 1
+
+[node name="HairColorLabel" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Color del cabello"
+
+[node name="HairColorPickerButton" type="ColorPickerButton" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+color = Color(0.403922, 0.258824, 0.160784, 1)
+
+[node name="CreateErrorLabel" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92549, 0.337255, 0.337255, 1)
+theme_override_font_sizes/font_size = 13
+text = "Error al crear"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ActionButtons" type="HBoxContainer" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BackButton" type="Button" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer/ActionButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+text = "Volver"
+
+[node name="CreateButton" type="Button" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer/ActionButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_action")
+text = "Crear"
+
+[node name="RotateHint" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -34.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.56, 0.62, 0.72, 1)
+theme_override_font_sizes/font_size = 12
+text = "Arrastra sobre el personaje para rotarlo"
+horizontal_alignment = 1

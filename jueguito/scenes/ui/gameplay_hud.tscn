@@ -1,0 +1,199 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/gameplay_hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
+bg_color = Color(0.0627451, 0.0823529, 0.12549, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.231373, 0.352941, 0.54902, 0.7)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.38)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action"]
+bg_color = Color(0.105882, 0.321569, 0.65098, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.392157, 0.662745, 1, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary"]
+bg_color = Color(0.0980392, 0.117647, 0.156863, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.28, 0.33, 0.42, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="GameplayHUD" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_hud")
+
+[node name="Screen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InventoryPanel" type="PanelContainer" parent="Screen"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 500)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = -270.0
+offset_right = -24.0
+offset_bottom = 270.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="Screen/InventoryPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="Content" type="VBoxContainer" parent="Screen/InventoryPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Screen/InventoryPanel/Margin/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.392157, 0.662745, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Inventario"
+
+[node name="InventoryCloseButton" type="Button" parent="Screen/InventoryPanel/Margin/Content/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+text = "×"
+tooltip_text = "Cerrar inventario (I o Esc)"
+
+[node name="Hint" type="Label" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.68, 0.78, 1)
+theme_override_font_sizes/font_size = 13
+text = "Pulsa I para abrir o cerrar"
+
+[node name="HSeparator" type="HSeparator" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="EmptyInventoryLabel" type="Label" parent="Screen/InventoryPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.56, 0.62, 0.72, 1)
+text = "Tu inventario está vacío."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InventoryScroll" type="ScrollContainer" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="InventoryGrid" type="GridContainer" parent="Screen/InventoryPanel/Margin/Content/InventoryScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="PauseBackdrop" type="ColorRect" parent="Screen"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.015, 0.02, 0.035, 0.68)
+
+[node name="Center" type="CenterContainer" parent="Screen/PauseBackdrop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuPanel" type="PanelContainer" parent="Screen/PauseBackdrop/Center"]
+custom_minimum_size = Vector2(410, 280)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="Screen/PauseBackdrop/Center/MenuPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 38
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 38
+theme_override_constants/margin_bottom = 32
+
+[node name="Content" type="VBoxContainer" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "Menú"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.65, 0.76, 1)
+text = "La aventura está en pausa"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="ContinueButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_action")
+text = "Continuar"
+
+[node name="MainMenuButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+text = "Salir al menú principal"

@@ -111,6 +111,18 @@ func _exit_tree() -> void:
 		_save_loaded_sector()
 
 
+# Lo invoca EditorPlugin._save_external_data() cuando el usuario pulsa Ctrl+S.
+# No intenta guardar durante una generacion ni cuando el dock no tiene un sector
+# activo, para evitar persistir datos parciales o una escena que no corresponde.
+func save_external_data() -> void:
+	if loaded_sector == NO_SECTOR or generation_in_progress:
+		return
+	if _save_loaded_sector():
+		_set_status("Guardado con Ctrl+S: " + _sector_label(loaded_sector) + " y recursos Terrain3D.")
+	else:
+		_set_status("Ctrl+S guardo la escena, pero no pude guardar el sector Terrain3D activo.")
+
+
 func _build_ui() -> void:
 	var margin := MarginContainer.new()
 	margin.add_theme_constant_override("margin_left", 8)

@@ -9,6 +9,7 @@ const TERRAIN3D_EDIT_DIR := "res://data/terrain3d_edits"
 const TERRAIN3D_EXPORT_DIR := "res://data/terrain3d_exports"
 const TEMP_DATA_DIR := "user://walk_preview_temp"
 const PLAYER_SCENE := preload("res://scenes/characters/player/player.tscn")
+const GAMEPLAY_HUD_SCENE := preload("res://scenes/ui/gameplay_hud.tscn")
 const TERRAIN_ASSETS := preload("res://assets/environment/terrain/jueguito_terrain_assets.tres")
 const TERRAIN_MATERIAL := preload("res://assets/environment/terrain/jueguito_terrain_material.tres")
 
@@ -30,13 +31,11 @@ var spawn_position := Vector3.ZERO
 var debug_label: Label
 var saved_textures: Array = []  # respaldo de la lista de texturas para reconstruir el array
 
-# Control de camara orbital para revisar el mundo.
+# Camara tactica fija. El giro libre queda reservado para un futuro modo cine.
 var cam_pivot: Node3D
 var cam_arm: SpringArm3D
 var cam_yaw := 45.0
 var cam_pitch := -55.0  # negativo = camara arriba mirando hacia abajo
-var orbiting := false
-const CAM_SENSITIVITY := 0.25
 
 # Minimapa navegable.
 var current_sector := Vector2i(-1, -1)
@@ -49,8 +48,10 @@ var traveling := false
 
 
 func _ready() -> void:
+	_apply_character_sector()
 	_setup_environment()
 	_setup_debug_hud()
+	_setup_gameplay_hud()
 	_scan_available_sectors()
 	# Crear el jugador y activar su camara ANTES del terreno, para que Terrain3D
 	# la encuentre en su primer frame y no detenga su procesamiento (quedaria invisible).
@@ -68,6 +69,14 @@ func _ready() -> void:
 	if active_cam != null:
 		active_name = active_cam.name
 	print("Terrain3DWalkPreview: camara activa = ", active_name)
+
+
+func _apply_character_sector() -> void:
+	if GameManager == null or GameManager.current_character.is_empty():
+		return
+	var requested_sector: Variant = GameManager.current_character.get("current_sector")
+	if requested_sector is Vector2i:
+		sector = requested_sector
 
 
 func _process(_delta: float) -> void:
@@ -126,7 +135,7 @@ func _update_debug_hud() -> void:
 			cam_yaw,
 			cam_pitch,
 		])
-		lines.append("Modo camara: " + camera_mode_label + " | C cambia preset")
+		lines.append("Modo camara: " + camera_mode_label + " | orientacion fija")
 	if player != null:
 		lines.append("Velocidad: %.1f caminar | %.1f correr | snap suelo Terrain3D" % [
 			float(player.get("walk_speed")),
@@ -152,6 +161,18 @@ func _setup_environment() -> void:
 	env.ambient_light_energy = 0.45
 	world_env.environment = env
 	add_child(world_env)
+
+
+func _setup_gameplay_hud() -> void:
+	var gameplay_hud := GAMEPLAY_HUD_SCENE.instantiate()
+	gameplay_hud.name = "GameplayHUD"
+	add_child(gameplay_hud)
+	gameplay_hud.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
+
+
+func _on_inventory_visibility_changed(is_visible: bool) -> void:
+	if player != null and player.has_method("set_gameplay_input_enabled"):
+		player.call("set_gameplay_input_enabled", not is_visible)
 
 
 func _setup_terrain() -> void:
@@ -276,33 +297,6 @@ func get_player_ground_info(requested_position: Vector3) -> Dictionary:
 		"walkable": true,
 		"position": Vector3(requested_position.x, terrain_height, requested_position.z),
 	}
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		var key_event := event as InputEventKey
-		if key_event.pressed and not key_event.echo and key_event.keycode == KEY_C:
-			_cycle_player_camera_mode()
-			return
-
-	# Boton derecho mantenido + mover mouse = orbitar la camara.
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
-		orbiting = event.pressed
-	elif event is InputEventMouseMotion and orbiting:
-		cam_yaw -= event.relative.x * CAM_SENSITIVITY
-		cam_pitch = clampf(cam_pitch - event.relative.y * CAM_SENSITIVITY, -85.0, -5.0)
-		_apply_camera_angles()
-
-
-func _cycle_player_camera_mode() -> void:
-	if player == null or not player.has_method("cycle_camera_mode"):
-		return
-	player.call("cycle_camera_mode")
-	if cam_arm != null:
-		cam_pitch = cam_arm.rotation_degrees.x
-	var cam := _player_camera()
-	if cam != null and terrain != null and terrain.has_method("set_camera"):
-		terrain.set_camera(cam)
 
 
 func _place_player_on_ground() -> void:

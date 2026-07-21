@@ -3,7 +3,15 @@
 Prototipo Godot para construir un MMO territorial por capas: primero mapa macro, luego sectores locales de 5 km x 5 km, despues edicion Terrain3D y finalmente gameplay.
 El proyecto usa `Boceto.png` como silueta continental base y lo convierte en datos editables: superficie, bioma, sectores y exports de terreno.
 
-La estructura de carpetas futura esta documentada en `res://docs/technical/project_structure.md`.
+Documentacion tecnica principal:
+
+- Estructura futura: `res://docs/technical/project_structure.md`.
+- Pipeline de personajes GLB con animaciones propias:
+  `res://docs/technical/character_glb_animation_pipeline.md`.
+- Flujo de roster y creacion de personajes:
+  `res://docs/technical/character_roster_flow.md`.
+- Alcance inicial del tutorial:
+  `res://docs/design/tutorial_scope.md`.
 
 ## Contexto para colaboradores
 
@@ -33,8 +41,9 @@ Archivos clave:
 
 1. Abre Godot 4.
 2. Importa o abre `project.godot` desde esta carpeta.
-3. Presiona `F5` para ejecutar la escena principal de capas: `res://scenes/map_layer_painter.tscn`.
+3. Presiona `F5` para abrir el login y el selector 3D de personajes.
 
+El editor de capas sigue disponible en `res://scenes/map_layer_painter.tscn`.
 La escena 3D plana sigue disponible en `res://scenes/map_flat_world_3d.tscn`.
 La escena de generacion local por sector sigue disponible en `res://scenes/sector_world_generator.tscn`.
 La escena 3D sigue disponible en `res://scenes/map_walk_3d.tscn`.
@@ -168,7 +177,7 @@ Orden fijo de texturas Terrain3D:
 
 Este orden debe mantenerse porque los `control.exr` guardan indices, no nombres. Si falta una textura en ese indice, Terrain3D puede mostrar negro aunque el terreno o la pintura sigan guardados.
 
-El recurso compartido que fija esta lista vive en `res://assets/environment/terrain/jueguito_terrain_assets.tres`. Si agregas, cambias o reordenas texturas desde Terrain3D, usa `Guardar sector` en el dock para persistir tambien esa libreria; `Ctrl+S` solo guarda la escena abierta y puede dejar cambios de Terrain3D sin escribir.
+El recurso compartido que fija esta lista vive en `res://assets/environment/terrain/jueguito_terrain_assets.tres`. Si agregas, cambias o reordenas texturas desde Terrain3D, `Guardar sector` y `Ctrl+S` persisten tanto el sector activo como la libreria/material compartidos.
 
 El dock `Mapa Sectores MMO` carga `control.exr` automaticamente si existe. Si un sector fue exportado antes de esta automatizacion y no tiene `control.exr`, usa `Generar + cargar` para un sector puntual o `Regenerar seleccion` para rehacer varios sectores.
 
@@ -216,7 +225,7 @@ Funciones actuales del dock:
 - `Guardar sector`: guarda el sector cargado en `res://data/terrain3d_edits/sector_X_Y/` y tambien persiste la libreria/material compartido de Terrain3D.
 - `Abrir pintor`: vuelve al editor de capas para corregir superficie/bioma antes de exportar.
 
-Nota de guardado: `Ctrl+S` de Godot guarda la escena abierta. Para persistir escultura/pintura de Terrain3D usa `Guardar sector`; el dock tambien intenta guardar el sector activo al cerrarse.
+Nota de guardado: con el plugin activo, `Ctrl+S` guarda la escena abierta, la escultura/pintura del sector Terrain3D activo y su libreria/material compartidos. `Guardar sector` sigue disponible como accion explicita y el dock tambien intenta guardar el sector al cerrarse.
 
 Flujo recomendado:
 
@@ -238,11 +247,15 @@ Nota de costas: el exportador suaviza agua y costa para evitar pozos o paredes d
 Nota de biomas: el bioma de montana se calibro usando `[9, 12]` como referencia jugable. Los exports antiguos con picos de 300-400 m fueron reexportados hacia un techo cercano a 100-105 m.
 Nota de correcciones: una correccion de `Terreno` fuerza el sector completo como tierra, costa/arena, agua o agua profunda al regenerar. Una correccion de `Bioma` cambia la lectura del bioma para ese sector; solo afecta la altura si `Usar biomas` esta encendido. Estas correcciones no modifican `map_design_sectors_5km.json` ni la mascara pintada, son una capa reversible para iterar rapido en Terrain3D.
 
-Sectores candidatos para pruebas de spawn/tutorial:
+Sector inicial de personajes:
+
+- `[27, 30]`: spawn oficial actual. Los personajes nuevos cargan este sector en
+  `res://scenes/terrain3d_walk_preview.tscn`.
+
+Otros sectores históricos de prueba:
 
 - `[14, 5]`, `[15, 5]`, `[14, 15]`, `[15, 15]`: sectores de prueba generados para comparar lectura.
-- `[14, 6]` y `[14, 16]`: candidatos mencionados para posible spawn/tutorial futuro.
-- Estos sectores no quedan decididos como spawn final; son puntos de referencia para prototipar ritmo, escala y primeras rutas.
+- `[14, 6]` y `[14, 16]`: referencias antiguas para comparar terreno.
 
 Convencion de importacion para vecinos:
 

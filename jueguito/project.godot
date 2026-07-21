@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="jueguito"
-run/main_scene="res://scenes/terrain3d_walk_preview.tscn"
+run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+NetworkManager="*res://scripts/systems/network_manager.gd"
+GameManager="*res://scripts/systems/game_manager.gd"
 
 [display]
 
@@ -22,7 +27,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg", "res://addons/jueguito_terrain_tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/jueguito_terrain_tools/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [filesystem]
 
