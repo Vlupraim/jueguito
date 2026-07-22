@@ -48,7 +48,7 @@ func _ready() -> void:
 func configure_for_sector(next_sector: Vector2i, terrain: Node = null) -> bool:
 	current_sector = next_sector
 	_terrain = terrain
-	sector_bounds = _terrain_bounds(terrain)
+	sector_bounds = _fixed_sector_bounds(next_sector, terrain)
 	var reference_path := "%s/sector_%d_%d/surface_reference.png" % [
 		EXPORT_DIR,
 		next_sector.x,
@@ -102,24 +102,29 @@ func get_water_info(world_position: Vector3, terrain_height := INF) -> Dictionar
 	}
 
 
-func _terrain_bounds(terrain: Node) -> Rect2:
-	if terrain == null or not ("data" in terrain) or terrain.data == null:
-		return Rect2(Vector2.ZERO, Vector2.ONE * fallback_sector_size)
-	var regions: Array = terrain.data.get_regions_active()
-	if regions.is_empty():
-		return Rect2(Vector2.ZERO, Vector2.ONE * fallback_sector_size)
-	var region_size := 256.0
-	if "region_size" in terrain:
-		region_size = float(terrain.region_size)
-	var minimum := Vector2(INF, INF)
-	var maximum := Vector2(-INF, -INF)
-	for region in regions:
-		var location: Vector2i = region.location
-		minimum.x = minf(minimum.x, float(location.x) * region_size)
-		minimum.y = minf(minimum.y, float(location.y) * region_size)
-		maximum.x = maxf(maximum.x, float(location.x + 1) * region_size)
-		maximum.y = maxf(maximum.y, float(location.y + 1) * region_size)
-	return Rect2(minimum, maximum - minimum)
+func _fixed_sector_bounds(sector: Vector2i, terrain: Node) -> Rect2:
+	# El footprint pertenece al export original, no a las regiones activas. Un
+	# pincel que cruza el borde puede crear regiones Terrain3D auxiliares; usarlas
+	# para calcular estos limites estiraria y desplazaria la mascara del oceano.
+	var export_resolution := fallback_sector_size
+	var metadata_path := "%s/sector_%d_%d/metadata.json" % [EXPORT_DIR, sector.x, sector.y]
+	if FileAccess.file_exists(metadata_path):
+		var metadata_file := FileAccess.open(metadata_path, FileAccess.READ)
+		if metadata_file != null:
+			var parsed: Variant = JSON.parse_string(metadata_file.get_as_text())
+			if parsed is Dictionary:
+				export_resolution = float((parsed as Dictionary).get("export_resolution", fallback_sector_size))
+
+	var import_scale := 1.0
+	var import_origin := Vector2.ZERO
+	if terrain != null:
+		if "import_scale" in terrain:
+			import_scale = maxf(float(terrain.get("import_scale")), 0.001)
+		if "import_position" in terrain:
+			var configured_position: Variant = terrain.get("import_position")
+			if configured_position is Vector2i:
+				import_origin = Vector2(configured_position)
+	return Rect2(import_origin, Vector2.ONE * export_resolution * import_scale)
 
 
 func _rebuild_surface() -> void:

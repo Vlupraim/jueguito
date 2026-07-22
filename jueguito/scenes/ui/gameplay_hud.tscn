@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/gameplay_hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/options_menu.tscn" id="2_options"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
 bg_color = Color(0.0627451, 0.0823529, 0.12549, 0.94)
@@ -150,7 +151,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MenuPanel" type="PanelContainer" parent="Screen/PauseBackdrop/Center"]
-custom_minimum_size = Vector2(410, 280)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(410, 400)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
 
@@ -190,10 +192,43 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_action")
 text = "Continuar"
 
+[node name="PauseOptionsButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+text = "Opciones"
+
 [node name="MainMenuButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
-text = "Salir al menú principal"
+text = "Salir a selección de personaje"
+
+[node name="QuitGameButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+text = "Salir del juego"
+
+[node name="OptionsMenu" parent="Screen" instance=ExtResource("2_options")]
+unique_name_in_owner = true
+
+[node name="LeaveWorldConfirmation" type="ConfirmationDialog" parent="Screen"]
+unique_name_in_owner = true
+title = "Salir del mundo"
+dialog_text = "Tu personaje se guardará y volverás a la selección de personaje."
+ok_button_text = "Salir del mundo"
+cancel_button_text = "Cancelar"
+
+[node name="QuitGameConfirmation" type="ConfirmationDialog" parent="Screen"]
+unique_name_in_owner = true
+title = "Salir del juego"
+dialog_text = "¿Seguro que quieres cerrar el juego?"
+ok_button_text = "Salir"
+cancel_button_text = "Cancelar"

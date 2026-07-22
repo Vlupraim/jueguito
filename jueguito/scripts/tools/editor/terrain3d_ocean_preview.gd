@@ -31,6 +31,7 @@ var _terrain: Terrain3D
 var _ocean: OceanWater
 var _connected_data: Object
 var _refresh_at_ms := -1
+var _observed_source_signature := ""
 
 
 func _ready() -> void:
@@ -50,6 +51,11 @@ func _process(_delta: float) -> void:
 	if _terrain == null or not is_instance_valid(_terrain):
 		_ensure_preview()
 		return
+	_connect_terrain_data()
+	var source_signature := _terrain_source_signature()
+	if source_signature != _observed_source_signature:
+		_observed_source_signature = source_signature
+		_schedule_refresh(brush_refresh_delay_ms)
 	if _refresh_at_ms >= 0 and Time.get_ticks_msec() >= _refresh_at_ms:
 		_refresh_at_ms = -1
 		_rebuild_preview()
@@ -90,6 +96,14 @@ func _on_terrain_maps_edited(_edited_aabb: AABB) -> void:
 	_schedule_refresh(brush_refresh_delay_ms)
 
 
+## El dock llama este metodo despues de terminar de cargar un sector. Hacerlo
+## explicitamente evita reconstruir con el data_directory del sector anterior.
+func refresh_for_sector(next_sector: Vector2i) -> void:
+	sector = next_sector
+	_observed_source_signature = _terrain_source_signature()
+	_schedule_refresh(100)
+
+
 func _schedule_refresh(delay_ms: int) -> void:
 	if not Engine.is_editor_hint() or not is_inside_tree():
 		return
@@ -104,6 +118,15 @@ func _rebuild_preview() -> void:
 		return
 	_ocean.water_level = water_level
 	_ocean.configure_for_sector(_sector_from_data_directory(), _terrain)
+
+
+func _terrain_source_signature() -> String:
+	if _terrain == null or not is_instance_valid(_terrain):
+		return ""
+	var data_id := 0
+	if _terrain.data != null:
+		data_id = _terrain.data.get_instance_id()
+	return "%s|%d" % [String(_terrain.data_directory), data_id]
 
 
 func _sector_from_data_directory() -> Vector2i:

@@ -58,8 +58,9 @@ resistencia, corriente de retorno, salpicaduras y respuesta de cámara.
 ## Fuente espacial
 
 Cada sector reutiliza `data/terrain3d_exports/sector_X_Y/surface_reference.png`.
-La máscara se adapta a los límites de las regiones Terrain3D activas, por lo que
-el océano acompaña tanto sectores importados como sectores editados.
+La máscara conserva el footprint original del export de `512 × 512`, por lo que
+el océano acompaña el sector correcto sin desplazarse si una edición accidental
+alcanza el exterior.
 
 ## Edición de costa
 
@@ -73,6 +74,16 @@ el océano acompaña tanto sectores importados como sectores editados.
 - El nodo `OceanPreview` actualiza el agua poco después de terminar una
   pincelada. Sus propiedades permiten ocultarla, cambiar temporalmente el nivel
   del mar o forzar `refresh_preview` desde el Inspector.
+- El rectángulo del océano se fija al footprint original del export (`512 ×
+  512` con la escala actual). Las regiones auxiliares que Terrain3D cree al
+  suavizar fuera del borde no pueden desplazar ni estirar la costa.
+- La creación automática de regiones de Terrain3D está bloqueada en este
+  proyecto. Esto aplica a altura, suavizado, materiales, color e instancias: una
+  brocha puede tocar el borde visualmente, pero solo guarda datos dentro de las
+  cuatro regiones del sector.
+- El dock `Mapa Sectores MMO` avisa si una edición antigua ya contiene regiones
+  exteriores. `Limpiar fuera de 512` respalda primero la carpeta completa del
+  sector y elimina solo esas regiones auxiliares.
 
 ## Arquitectura
 

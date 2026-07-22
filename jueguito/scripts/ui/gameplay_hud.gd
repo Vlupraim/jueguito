@@ -8,8 +8,14 @@ signal pause_visibility_changed(is_visible: bool)
 @onready var empty_inventory_label: Label = %EmptyInventoryLabel
 @onready var inventory_close_button: Button = %InventoryCloseButton
 @onready var pause_backdrop: ColorRect = %PauseBackdrop
+@onready var pause_menu_panel: PanelContainer = %MenuPanel
 @onready var continue_button: Button = %ContinueButton
+@onready var options_button: Button = %PauseOptionsButton
 @onready var main_menu_button: Button = %MainMenuButton
+@onready var quit_game_button: Button = %QuitGameButton
+@onready var options_menu: Control = %OptionsMenu
+@onready var leave_world_confirmation: ConfirmationDialog = %LeaveWorldConfirmation
+@onready var quit_game_confirmation: ConfirmationDialog = %QuitGameConfirmation
 
 var _owns_tree_pause := false
 
@@ -20,7 +26,12 @@ func _ready() -> void:
 	pause_backdrop.hide()
 	inventory_close_button.pressed.connect(close_inventory)
 	continue_button.pressed.connect(close_pause_menu)
-	main_menu_button.pressed.connect(_return_to_main_menu)
+	options_button.pressed.connect(_open_options)
+	main_menu_button.pressed.connect(_request_leave_world)
+	quit_game_button.pressed.connect(_request_quit_game)
+	options_menu.closed.connect(_on_options_closed)
+	leave_world_confirmation.confirmed.connect(_leave_world_to_roster)
+	quit_game_confirmation.confirmed.connect(_quit_game)
 	if not GameManager.inventory_changed.is_connected(_render_inventory):
 		GameManager.inventory_changed.connect(_render_inventory)
 	_render_inventory(GameManager.player_inventory)
@@ -44,7 +55,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			toggle_inventory()
 		get_viewport().set_input_as_handled()
 	elif _is_key(key_event, KEY_ESCAPE):
-		if inventory_panel.visible:
+		if options_menu.visible:
+			options_menu.call("close")
+		elif inventory_panel.visible:
 			close_inventory()
 		elif pause_backdrop.visible:
 			close_pause_menu()
@@ -78,6 +91,8 @@ func close_inventory() -> void:
 func open_pause_menu() -> void:
 	close_inventory()
 	pause_backdrop.show()
+	pause_menu_panel.show()
+	options_menu.hide()
 	_owns_tree_pause = true
 	get_tree().paused = true
 	continue_button.grab_focus()
@@ -87,6 +102,7 @@ func open_pause_menu() -> void:
 func close_pause_menu() -> void:
 	if not pause_backdrop.visible:
 		return
+	options_menu.hide()
 	pause_backdrop.hide()
 	if _owns_tree_pause:
 		get_tree().paused = false
@@ -94,11 +110,48 @@ func close_pause_menu() -> void:
 	pause_visibility_changed.emit(false)
 
 
-func _return_to_main_menu() -> void:
+func _open_options() -> void:
+	pause_menu_panel.hide()
+	options_menu.call("open")
+
+
+func _on_options_closed() -> void:
+	if pause_backdrop.visible:
+		pause_menu_panel.show()
+		options_button.grab_focus()
+
+
+func _request_leave_world() -> void:
+	if bool(SettingsManager.get_setting("general", "confirm_exit", true)):
+		leave_world_confirmation.popup_centered()
+	else:
+		_leave_world_to_roster()
+
+
+func _leave_world_to_roster() -> void:
 	if _owns_tree_pause:
 		get_tree().paused = false
 		_owns_tree_pause = false
-	GameManager.return_to_main_menu()
+	main_menu_button.disabled = true
+	main_menu_button.text = "Guardando personaje…"
+	GameManager.request_leave_world_to_roster()
+
+
+func _request_quit_game() -> void:
+	if bool(SettingsManager.get_setting("general", "confirm_exit", true)):
+		quit_game_confirmation.popup_centered()
+	else:
+		_quit_game()
+
+
+func _quit_game() -> void:
+	if _owns_tree_pause:
+		get_tree().paused = false
+		_owns_tree_pause = false
+	if not NetworkManager.current_character_name.is_empty():
+		NetworkManager.request_despawn()
+		await NetworkManager.player_despawned
+	get_tree().quit()
 
 
 func _render_inventory(inventory: Dictionary) -> void:

@@ -35,6 +35,21 @@ func _run() -> void:
 	if not pause.visible or not get_tree().paused:
 		_fail("El menu no pauso el arbol")
 		return
+	var pause_options := hud.find_child("PauseOptionsButton", true, false) as Button
+	var quit_game := hud.find_child("QuitGameButton", true, false) as Button
+	var options_menu := hud.find_child("OptionsMenu", true, false) as Control
+	var menu_panel := hud.find_child("MenuPanel", true, false) as PanelContainer
+	if pause_options == null or quit_game == null or options_menu == null:
+		_fail("El menu de pausa no contiene todas sus acciones")
+		return
+	hud.call("_open_options")
+	if not options_menu.visible or menu_panel.visible:
+		_fail("Opciones no reemplazo temporalmente al panel de pausa")
+		return
+	options_menu.call("close")
+	if options_menu.visible or not menu_panel.visible:
+		_fail("Cerrar opciones no regreso al menu de pausa")
+		return
 	hud.call("close_pause_menu")
 	if pause.visible or get_tree().paused:
 		_fail("Continuar no reanudo el arbol")

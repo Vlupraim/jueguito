@@ -1,0 +1,408 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/options_menu.gd" id="1_options"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.055, 0.07, 0.105, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.23, 0.35, 0.55, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="OptionsMenu" type="Control"]
+visible = false
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_options")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.01, 0.015, 0.025, 0.82)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsPanel" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 620)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Center/SettingsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="Content" type="VBoxContainer" parent="Center/SettingsPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Header" type="HBoxContainer" parent="Center/SettingsPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Center/SettingsPanel/Margin/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
+text = "Opciones"
+
+[node name="CloseOptionsButton" type="Button" parent="Center/SettingsPanel/Margin/Content/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(44, 40)
+layout_mode = 2
+text = "×"
+tooltip_text = "Cerrar opciones"
+
+[node name="SettingsTabs" type="TabContainer" parent="Center/SettingsPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="General" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Grid" type="GridContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General"]
+layout_mode = 2
+theme_override_constants/h_separation = 22
+theme_override_constants/v_separation = 18
+columns = 2
+
+[node name="LanguageLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+layout_mode = 2
+text = "Idioma"
+
+[node name="LanguageOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 38)
+layout_mode = 2
+
+[node name="TutorialLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+layout_mode = 2
+text = "Mostrar consejos del tutorial"
+
+[node name="TutorialHintsCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Activado"
+
+[node name="ConfirmExitLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+layout_mode = 2
+text = "Confirmar antes de salir"
+
+[node name="ConfirmExitCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Activado"
+
+[node name="UIScaleLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+layout_mode = 2
+text = "Escala de interfaz"
+
+[node name="UIScaleSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 30)
+layout_mode = 2
+min_value = 0.75
+max_value = 1.5
+step = 0.05
+value = 1.0
+
+[node name="Video" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Content" type="VBoxContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Grid" type="GridContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content"]
+layout_mode = 2
+theme_override_constants/h_separation = 22
+theme_override_constants/v_separation = 18
+columns = 2
+
+[node name="WindowModeLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+layout_mode = 2
+text = "Modo de pantalla"
+
+[node name="WindowModeOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 38)
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+layout_mode = 2
+text = "Resolución"
+
+[node name="ResolutionOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 38)
+layout_mode = 2
+
+[node name="VsyncLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+layout_mode = 2
+text = "Sincronización vertical"
+
+[node name="VsyncOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 38)
+layout_mode = 2
+
+[node name="FpsLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+layout_mode = 2
+text = "Límite de FPS"
+
+[node name="FpsOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 38)
+layout_mode = 2
+
+[node name="ApplyVideoButton" type="Button" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "Aplicar cambios de video"
+
+[node name="Audio" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Grid" type="GridContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio"]
+layout_mode = 2
+theme_override_constants/h_separation = 22
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="MasterLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+layout_mode = 2
+text = "Volumen general"
+
+[node name="MasterSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+layout_mode = 2
+text = "Música"
+
+[node name="MusicSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="SfxLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+layout_mode = 2
+text = "Efectos"
+
+[node name="SfxSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="AmbienceLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+layout_mode = 2
+text = "Ambiente"
+
+[node name="AmbienceSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="UILabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+layout_mode = 2
+text = "Interfaz"
+
+[node name="UISlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="VoiceLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+layout_mode = 2
+text = "Voces"
+
+[node name="VoiceSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Audio/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Controls" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Content" type="VBoxContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Info" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content"]
+layout_mode = 2
+text = "La reasignación de teclas se conectará cuando esté cerrado el esquema definitivo de controles."
+autowrap_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content"]
+layout_mode = 2
+theme_override_constants/h_separation = 22
+theme_override_constants/v_separation = 18
+columns = 2
+
+[node name="CameraLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+layout_mode = 2
+text = "Sensibilidad de cámara"
+
+[node name="CameraSensitivitySlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+min_value = 0.1
+max_value = 3.0
+step = 0.05
+value = 1.0
+
+[node name="ZoomLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+layout_mode = 2
+text = "Velocidad de zoom"
+
+[node name="ZoomSpeedSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+min_value = 0.1
+max_value = 3.0
+step = 0.05
+value = 1.0
+
+[node name="Accessibility" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Grid" type="GridContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility"]
+layout_mode = 2
+theme_override_constants/h_separation = 22
+theme_override_constants/v_separation = 18
+columns = 2
+
+[node name="ColorblindLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+layout_mode = 2
+text = "Filtro de daltonismo"
+
+[node name="ColorblindOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 38)
+layout_mode = 2
+
+[node name="ColorblindIntensityLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+layout_mode = 2
+text = "Intensidad del filtro"
+
+[node name="ColorblindIntensitySlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 30)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="TextScaleLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+layout_mode = 2
+text = "Tamaño de texto"
+
+[node name="TextScaleSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 30)
+layout_mode = 2
+min_value = 0.8
+max_value = 1.5
+step = 0.05
+value = 1.0
+
+[node name="ReduceMotionLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+layout_mode = 2
+text = "Reducir movimiento de cámara"
+
+[node name="ReduceMotionCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Activado"
+
+[node name="CameraShakeLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+layout_mode = 2
+text = "Sacudida de cámara"
+
+[node name="CameraShakeCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Activado"
+
+[node name="Footer" type="HBoxContainer" parent="Center/SettingsPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="PendingLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.58, 0.65, 0.76, 1)
+text = "La región del servidor se elegirá antes de crear personajes."
+
+[node name="ResetSettingsButton" type="Button" parent="Center/SettingsPanel/Margin/Content/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 40)
+layout_mode = 2
+text = "Restablecer ajustes"

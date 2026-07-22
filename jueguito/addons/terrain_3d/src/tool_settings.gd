@@ -166,8 +166,21 @@ func _ready() -> void:
 
 	## Advanced Settings Menu
 	advanced_list = create_submenu(main_list, "", Layout.VERTICAL, false)
+	# Jueguito edita un solo sector importado de 512 x 512 por vez. Si Terrain3D
+	# crea regiones automaticamente cuando una brocha cruza el borde, cada region
+	# extra guarda altura, control de materiales e instancias innecesarias. La
+	# proteccion se limita a este proyecto (detectado por su plugin de sectores).
+	var lock_sector_footprint := ResourceLoader.exists("res://addons/jueguito_terrain_tools/plugin.cfg")
+	if lock_sector_footprint:
+		plugin.set_setting(ES_TOOL_SETTINGS + "auto_regions", false)
 	add_setting({ "name":"auto_regions", "label":"Add regions while sculpting", "type":SettingType.CHECKBOX, 
-								"list":advanced_list, "default":true })
+								"list":advanced_list, "default":not lock_sector_footprint })
+	if lock_sector_footprint:
+		var auto_regions_check := settings.get("auto_regions") as CheckBox
+		if auto_regions_check != null:
+			auto_regions_check.set_pressed_no_signal(false)
+			auto_regions_check.disabled = true
+			auto_regions_check.tooltip_text = "Bloqueado por Jueguito: las brochas solo editan las cuatro regiones del sector 512 x 512."
 	add_setting({ "name":"align_to_view", "type":SettingType.CHECKBOX, "list":advanced_list, 
 								"default":true })
 	add_setting({ "name":"show_cursor_while_painting", "type":SettingType.CHECKBOX, "list":advanced_list, 
@@ -587,6 +600,8 @@ func get_setting(p_setting: String) -> Variant:
 
 
 func set_setting(p_setting: String, p_value: Variant) -> void:
+	if p_setting == "auto_regions" and ResourceLoader.exists("res://addons/jueguito_terrain_tools/plugin.cfg"):
+		p_value = false
 	var object: Object = settings.get(p_setting)
 	if object is DoubleSlider: # Expects p_value is Vector2
 		object.set_value(p_value)

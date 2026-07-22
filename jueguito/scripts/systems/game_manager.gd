@@ -14,6 +14,7 @@ var player_inventory: Dictionary = {}
 
 signal inventory_changed(new_inventory: Dictionary)
 signal character_list_refreshed(characters: Array)
+signal world_exit_completed(success: bool, error_msg: String)
 
 func _ready() -> void:
 	# Nos suscribimos a los eventos autoritativos de la red simulada
@@ -21,6 +22,7 @@ func _ready() -> void:
 	NetworkManager.character_list_received.connect(_on_character_list_received)
 	NetworkManager.character_created.connect(_on_character_created)
 	NetworkManager.player_spawned.connect(_on_player_spawned)
+	NetworkManager.player_despawned.connect(_on_player_despawned)
 	NetworkManager.inventory_updated.connect(_on_inventory_updated)
 
 func change_scene(scene_path: String) -> void:
@@ -29,11 +31,16 @@ func change_scene(scene_path: String) -> void:
 func return_to_main_menu() -> void:
 	current_character = {}
 	player_inventory = {}
+	current_username = ""
+	NetworkManager.logout()
 	change_scene(MAIN_MENU_SCENE)
 
-func request_login(username: String) -> void:
+func request_login(username: String, password: String = "") -> void:
 	current_username = username
-	NetworkManager.request_login(username)
+	NetworkManager.request_login(username, password)
+
+func request_leave_world_to_roster() -> void:
+	NetworkManager.request_despawn()
 
 func request_create_character(char_name: String, appearance: Dictionary) -> void:
 	NetworkManager.request_create_character(char_name, appearance)
@@ -65,6 +72,13 @@ func _on_player_spawned(sector_coord: Vector2i, spawn_position: Vector3, spawn_r
 	current_character["position"] = spawn_position
 	current_character["rotation"] = spawn_rotation
 	change_scene(WORLD_SCENE)
+
+func _on_player_despawned(success: bool, error_msg: String) -> void:
+	if success:
+		current_character = {}
+		player_inventory = {}
+		change_scene(CHAR_SELECT_SCENE)
+	world_exit_completed.emit(success, error_msg)
 
 func _on_inventory_updated(inventory: Dictionary) -> void:
 	player_inventory = inventory

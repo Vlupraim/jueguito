@@ -9,6 +9,7 @@ signal character_list_received(characters: Array)
 signal character_created(success: bool, char_data: Dictionary, error_msg: String)
 signal inventory_updated(inventory: Dictionary)
 signal player_spawned(sector_coord: Vector2i, spawn_position: Vector3, spawn_rotation: float)
+signal player_despawned(success: bool, error_msg: String)
 signal movement_approved(position: Vector3)
 
 const MAX_CHARACTERS_PER_ACCOUNT := 4
@@ -38,7 +39,7 @@ class ServerMock:
 	
 	var active_sessions: Dictionary = {} # token -> username
 	
-	func login(username: String) -> Dictionary:
+	func login(username: String, _password: String = "") -> Dictionary:
 		# Registro automático si la cuenta no existe
 		if not accounts.has(username):
 			accounts[username] = {
@@ -126,9 +127,9 @@ var current_character_name := ""
 
 # --- ENDPOINTS CLIENTE (CON SIMULACIÓN DE LATENCIA) ---
 
-func request_login(username: String) -> void:
+func request_login(username: String, password: String = "") -> void:
 	await get_tree().create_timer(0.15).timeout # Simular ping
-	var res = server.login(username)
+	var res = server.login(username, password)
 	if res["success"]:
 		session_token = res["token"]
 		login_completed.emit(true, "")
@@ -168,6 +169,21 @@ func request_spawn(char_name: String) -> void:
 	if found:
 		player_spawned.emit(char_data["current_sector"], char_data["position"], 0.0)
 		inventory_updated.emit(char_data["inventory"])
+
+
+func request_despawn() -> void:
+	# En producción, el servidor guardará el estado y liberará la entidad antes
+	# de permitir que el cliente vuelva al roster.
+	await get_tree().create_timer(0.1).timeout
+	current_character_name = ""
+	player_despawned.emit(true, "")
+
+
+func logout() -> void:
+	if server.active_sessions.has(session_token):
+		server.active_sessions.erase(session_token)
+	session_token = ""
+	current_character_name = ""
 
 func request_move(target_position: Vector3) -> void:
 	# El cliente le pide al servidor moverse a X posición.

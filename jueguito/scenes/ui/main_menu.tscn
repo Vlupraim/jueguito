@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5qyh3x2lye2y"]
+[gd_scene load_steps=4 format=3 uid="uid://c5qyh3x2lye2y"]
 
-[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_main_menu"]
+[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/ui/options_menu.tscn" id="2_options"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_main"]
+bg_color = Color(0.055, 0.07, 0.105, 0.96)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.23, 0.35, 0.55, 0.75)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,7 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_main_menu")
+script = ExtResource("1_main")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -18,9 +31,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0901961, 0.109804, 0.160784, 1)
+color = Color(0.035, 0.045, 0.07, 1)
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="TopShade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 180.0
+grow_horizontal = 2
+color = Color(0.07, 0.11, 0.19, 0.48)
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,58 +50,197 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(400, 300)
+[node name="MainPanel" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(520, 520)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_main")
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+[node name="Margin" type="MarginContainer" parent="Center/MainPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 42
+theme_override_constants/margin_bottom = 36
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+[node name="Content" type="VBoxContainer" parent="Center/MainPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 15
-alignment = 1
+theme_override_constants/separation = 14
 
-[node name="LogoText" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="LogoText" type="Label" parent="Center/MainPanel/Margin/Content"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.231373, 0.54902, 0.941176, 1)
-theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.45, 0.7, 1, 1)
+theme_override_font_sizes/font_size = 38
 text = "MMO Territorial"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="Subtitle" type="Label" parent="Center/MainPanel/Margin/Content"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.572549, 0.615686, 0.709804, 1)
-theme_override_font_sizes/font_size = 14
-text = "Crea tu héroe y comienza tu aventura"
+theme_override_colors/font_color = Color(0.62, 0.68, 0.78, 1)
+text = "Una aventura construida por sus habitantes"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="Separator" type="HSeparator" parent="Center/MainPanel/Margin/Content"]
 layout_mode = 2
 
-[node name="UsernameInput" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="LandingView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-placeholder_text = "Ingresa tu Cuenta / Usuario"
+size_flags_vertical = 3
+theme_override_constants/separation = 14
 alignment = 1
 
-[node name="LoginButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="EnterButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "Iniciar Aventura"
+text = "Ingresar"
 
-[node name="StatusLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "Opciones"
+
+[node name="CreditsButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "Créditos"
+
+[node name="ExitButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "Salir"
+
+[node name="LoginView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.92549, 0.337255, 0.337255, 1)
-theme_override_font_sizes/font_size = 13
-text = "Error al conectar"
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="Center/MainPanel/Margin/Content/LoginView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Iniciar sesión"
 horizontal_alignment = 1
+
+[node name="PrototypeNotice" type="Label" parent="Center/MainPanel/Margin/Content/LoginView"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.7, 0.8, 1)
+text = "Durante el prototipo, cualquier cuenta se registra automáticamente."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="EmailInput" type="LineEdit" parent="Center/MainPanel/Margin/Content/LoginView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+placeholder_text = "Correo o nombre de cuenta"
+clear_button_enabled = true
+
+[node name="PasswordInput" type="LineEdit" parent="Center/MainPanel/Margin/Content/LoginView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+placeholder_text = "Contraseña"
+secret = true
+secret_character = "•"
+
+[node name="LoginChecks" type="HBoxContainer" parent="Center/MainPanel/Margin/Content/LoginView"]
+layout_mode = 2
+
+[node name="RememberEmailCheck" type="CheckButton" parent="Center/MainPanel/Margin/Content/LoginView/LoginChecks"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Recordar correo"
+
+[node name="ShowPasswordCheck" type="CheckButton" parent="Center/MainPanel/Margin/Content/LoginView/LoginChecks"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Mostrar contraseña"
+
+[node name="StatusLabel" type="Label" parent="Center/MainPanel/Margin/Content/LoginView"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.38, 0.38, 1)
+text = "No se pudo iniciar sesión."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="LoginButton" type="Button" parent="Center/MainPanel/Margin/Content/LoginView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Ingresar"
+
+[node name="LoginBackButton" type="Button" parent="Center/MainPanel/Margin/Content/LoginView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+text = "Volver"
+
+[node name="CreditsView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="Center/MainPanel/Margin/Content/CreditsView"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Créditos"
+horizontal_alignment = 1
+
+[node name="Project" type="Label" parent="Center/MainPanel/Margin/Content/CreditsView"]
+layout_mode = 2
+text = "Diseño y desarrollo\nEquipo MMO Territorial\n\nConstruido con Godot Engine"
+horizontal_alignment = 1
+
+[node name="CreditsNote" type="Label" parent="Center/MainPanel/Margin/Content/CreditsView"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.66, 0.76, 1)
+text = "Los créditos completos se incorporarán junto con los recursos definitivos."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CreditsBackButton" type="Button" parent="Center/MainPanel/Margin/Content/CreditsView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Volver"
+
+[node name="VersionLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -36.0
+offset_right = -18.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.48, 0.54, 0.64, 1)
+text = "Prototipo 0.1"
+horizontal_alignment = 2
+
+[node name="OptionsMenu" parent="." instance=ExtResource("2_options")]
+unique_name_in_owner = true
+
+[node name="ExitConfirmation" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "Salir del juego"
+dialog_text = "¿Seguro que quieres cerrar el juego?"
+ok_button_text = "Salir"
+cancel_button_text = "Cancelar"

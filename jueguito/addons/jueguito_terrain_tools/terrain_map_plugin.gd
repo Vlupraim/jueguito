@@ -1,10 +1,17 @@
 @tool
 extends EditorPlugin
 
+const TERRAIN3D_AUTO_REGIONS_SETTING := "terrain3d/tool_settings/auto_regions"
+
 var dock: Control
 
 
 func _enter_tree() -> void:
+	# Este plugin se carga antes que Terrain3D en project.godot. Dejar la opcion
+	# apagada aqui garantiza que el editor C++ reciba auto_regions=false desde la
+	# primera pincelada, aunque el usuario la hubiese activado en otro proyecto.
+	var editor_settings := EditorInterface.get_editor_settings()
+	editor_settings.set_setting(TERRAIN3D_AUTO_REGIONS_SETTING, false)
 	var DockScript := preload("res://addons/jueguito_terrain_tools/terrain_map_dock.gd")
 	dock = DockScript.new()
 	dock.name = "Mapa Sectores MMO"

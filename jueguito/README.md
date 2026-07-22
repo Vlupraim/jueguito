@@ -12,6 +12,12 @@ Documentacion tecnica principal:
   `res://docs/technical/character_roster_flow.md`.
 - Alcance inicial del tutorial:
   `res://docs/design/tutorial_scope.md`.
+- Árbol de maestrías, enfoques y Legados de Gran Maestro:
+  `res://docs/design/mastery_tree.md`.
+- Flujo de portada, login, pausa, opciones, personajes y regiones:
+  `res://docs/design/menu_flow_and_settings.md`.
+- Agua, costa, natación limitada y navegación futura:
+  `res://docs/design/water_and_navigation_flow.md`.
 
 ## Contexto para colaboradores
 
@@ -150,7 +156,11 @@ Regla visual recomendada:
 - Pantano: barro/tierra humeda en zonas bajas.
 - Desierto: arena/tierra seca, con roca en cortes fuertes.
 
-El agua no deberia resolverse como textura Terrain3D principal. El exportador hunde o aplana el fondo donde hay agua, pero el agua final deberia ser un plano, mesh o sistema aparte con shader, colision y reglas de navegacion. Asi podemos impedir que el jugador entre mas de 5-10 m sin convertir todo el mar en terreno caminable.
+El agua no se resuelve como textura Terrain3D principal. `OceanWater` genera una
+malla separada desde `surface_reference.png`, aplica ondulación y espuma mediante
+shader, crea un `Area3D` detectable y reproduce ambiente costero. El personaje
+distingue tierra, vadeo, natación y mar abierto; este último bloquea el avance
+sin embarcación. Terrain3D continúa representando el fondo marino.
 
 Automatizacion actual:
 

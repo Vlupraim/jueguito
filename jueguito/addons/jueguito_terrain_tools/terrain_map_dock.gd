@@ -10,6 +10,8 @@ const TERRAIN3D_EDIT_DIR := "res://data/terrain3d_edits"
 const TERRAIN3D_EDIT_BACKUP_DIR := "res://data/terrain3d_edit_backups"
 const TERRAIN3D_ASSETS_PATH := "res://assets/environment/terrain/jueguito_terrain_assets.tres"
 const TERRAIN3D_MATERIAL_PATH := "res://assets/environment/terrain/jueguito_terrain_material.tres"
+const TERRAIN3D_SECTOR_RESOLUTION := 512
+const TERRAIN3D_REGION_SIZE := 256
 const NO_SECTOR := Vector2i(-9999, -9999)
 const SECTOR_EXPORTER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_sector_exporter.gd")
 const HEIGHTMAP_NORMALIZER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_heightmap_normalizer.gd")
@@ -57,6 +59,7 @@ var regenerate_selection_button: Button
 var clear_selection_button: Button
 var load_sector_button: Button
 var fresh_load_button: Button
+var cleanup_regions_button: Button
 var smooth_iterations_spin: SpinBox
 var smooth_strength_spin: SpinBox
 var repair_threshold_spin: SpinBox
@@ -280,6 +283,19 @@ func _build_ui() -> void:
 	save_sector_button.tooltip_text = "Guarda tus ediciones manuales del sector y la libreria compartida de texturas Terrain3D."
 	save_sector_button.pressed.connect(_save_current_sector_pressed)
 	terrain_button_grid.add_child(save_sector_button)
+
+	cleanup_regions_button = Button.new()
+	cleanup_regions_button.text = "Limpiar fuera de 512"
+	cleanup_regions_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cleanup_regions_button.disabled = true
+	cleanup_regions_button.tooltip_text = "Quita solamente las regiones Terrain3D creadas fuera del sector 512 x 512. Antes guarda un respaldo recuperable."
+	cleanup_regions_button.pressed.connect(_request_cleanup_outside_regions)
+	terrain_button_grid.add_child(cleanup_regions_button)
+
+	var footprint_hint := Label.new()
+	footprint_hint.text = "Limite activo: toda brocha edita solo las 4 regiones del sector 512 x 512."
+	footprint_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	terrain_section.add_child(footprint_hint)
 
 	var generation_section := _make_section("Generacion")
 	use_biomes_check = CheckBox.new()
@@ -888,7 +904,10 @@ func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
 			importer.call("reset_terrain", true)
 		importer.set("data_directory", edit_dir)
 		loaded_sector = selected_sector
-		_set_status("Cargado " + _sector_label(selected_sector) + " con tus ediciones guardadas.")
+		_update_ocean_preview(loaded_sector)
+		var saved_extra_count := _refresh_cleanup_regions_button(importer)
+		_set_status("Cargado " + _sector_label(selected_sector) + " con tus ediciones guardadas." + _outside_regions_warning(saved_extra_count))
+		call_deferred("_refresh_loaded_region_limit_state", importer)
 		return true
 
 	# Importacion fresca desde el height.exr generado por los scripts.
@@ -924,10 +943,13 @@ func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
 		importer.set("data_directory", edit_dir)
 
 	loaded_sector = selected_sector
+	_update_ocean_preview(loaded_sector)
+	var imported_extra_count := _refresh_cleanup_regions_button(importer)
 	if force_fresh:
-		_set_status("Base fresca importada " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base.") + " Ediciones anteriores respaldadas.")
+		_set_status("Base fresca importada " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base.") + " Ediciones anteriores respaldadas." + _outside_regions_warning(imported_extra_count))
 	else:
-		_set_status("Cargado " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base. Regeneralo para crear control.exr."))
+		_set_status("Cargado " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base. Regeneralo para crear control.exr.") + _outside_regions_warning(imported_extra_count))
+	call_deferred("_refresh_loaded_region_limit_state", importer)
 	return true
 
 
@@ -939,6 +961,132 @@ func _save_current_sector_pressed() -> void:
 		_set_status("Guardado " + _sector_label(loaded_sector) + " y libreria de texturas Terrain3D.")
 	else:
 		_set_status("No pude guardar el sector. Revisa que el nodo Importer este en la escena.")
+
+
+func _request_cleanup_outside_regions() -> void:
+	if generation_in_progress:
+		return
+	if loaded_sector == NO_SECTOR:
+		_set_status("Carga un sector antes de limpiar regiones auxiliares.")
+		return
+	var importer := _find_importer_node()
+	if importer == null:
+		_set_status("No encontre el nodo Importer del sector cargado.")
+		return
+	var outside_regions := _outside_sector_regions(importer)
+	if outside_regions.is_empty():
+		_refresh_cleanup_regions_button(importer)
+		_set_status("El sector cargado ya ocupa solo sus 4 regiones de 512 x 512.")
+		return
+	_ask_generation_confirmation(
+		"cleanup_regions",
+		true,
+		"El sector %s tiene %d region(es) fuera del cuadro 512 x 512.\n\nSe respaldara completa la edicion actual y luego se quitaran solo esas regiones auxiliares. Las cuatro regiones internas no se modifican.\n\nQuieres continuar?" % [
+			_sector_label(loaded_sector),
+			outside_regions.size(),
+		]
+	)
+
+
+func _cleanup_outside_regions() -> void:
+	if loaded_sector == NO_SECTOR:
+		return
+	var importer := _find_importer_node()
+	if importer == null:
+		_set_status("No encontre el nodo Importer para limpiar las regiones.")
+		return
+	var terrain_data: Variant = importer.get("data")
+	if terrain_data == null:
+		_set_status("El Terrain3D cargado no tiene datos para limpiar.")
+		return
+	var outside_regions := _outside_sector_regions(importer)
+	if outside_regions.is_empty():
+		_refresh_cleanup_regions_button(importer)
+		_set_status("No hay regiones fuera del sector 512 x 512.")
+		return
+
+	var edit_dir := _sector_edit_dir(loaded_sector)
+	# Guardamos primero para que el respaldo incluya el ultimo estado visible.
+	if not _save_loaded_sector_to(importer, edit_dir):
+		_set_status("No pude guardar el sector antes de limpiarlo; no se modifico nada.")
+		return
+	var backup_dir := _backup_edit_dir(edit_dir)
+	if backup_dir.is_empty():
+		_set_status("No pude crear el respaldo; no se modifico ninguna region.")
+		return
+
+	var paths_to_remove := _region_paths_for_regions(outside_regions)
+	for region in outside_regions:
+		terrain_data.call("remove_region", region, false)
+
+	var remove_failures := 0
+	var edit_abs := ProjectSettings.globalize_path(edit_dir).simplify_path().replace("\\", "/")
+	for resource_path in paths_to_remove:
+		var resource_abs := ProjectSettings.globalize_path(str(resource_path)).simplify_path().replace("\\", "/")
+		if resource_abs.get_base_dir() != edit_abs or DirAccess.remove_absolute(resource_abs) != OK:
+			remove_failures += 1
+
+	_save_loaded_sector_to(importer, edit_dir)
+	_update_ocean_preview(loaded_sector)
+	var remaining_count := _refresh_cleanup_regions_button(importer)
+	var message := "Limpieza lista: %d region(es) auxiliares quitadas. Respaldo: %s." % [
+		outside_regions.size(),
+		backup_dir,
+	]
+	if remove_failures > 0:
+		message += " %d archivo(s) no pudieron borrarse; revisa el respaldo y vuelve a cargar." % remove_failures
+	if remaining_count > 0:
+		message += _outside_regions_warning(remaining_count)
+	_set_status(message)
+
+
+func _outside_sector_regions(importer: Node) -> Array:
+	var outside: Array = []
+	if importer == null:
+		return outside
+	var terrain_data: Variant = importer.get("data")
+	if terrain_data == null or not terrain_data.has_method("get_regions_active"):
+		return outside
+	var regions_per_side := maxi(1, ceili(float(TERRAIN3D_SECTOR_RESOLUTION) / float(TERRAIN3D_REGION_SIZE)))
+	for region in terrain_data.call("get_regions_active"):
+		var location: Vector2i = region.location
+		if location.x < 0 or location.y < 0 or location.x >= regions_per_side or location.y >= regions_per_side:
+			outside.append(region)
+	return outside
+
+
+func _region_paths_for_regions(regions: Array) -> Array[String]:
+	var paths: Array[String] = []
+	for region in regions:
+		var resource_path := String(region.resource_path)
+		if not resource_path.is_empty():
+			paths.append(resource_path)
+	return paths
+
+
+func _refresh_cleanup_regions_button(importer: Node = null) -> int:
+	var current_importer := importer
+	if current_importer == null:
+		current_importer = _find_importer_node()
+	var count := _outside_sector_regions(current_importer).size() if loaded_sector != NO_SECTOR else 0
+	if cleanup_regions_button != null:
+		cleanup_regions_button.disabled = count == 0
+		cleanup_regions_button.text = "Limpiar fuera de 512" + (" (%d)" % count if count > 0 else "")
+	return count
+
+
+func _refresh_loaded_region_limit_state(importer: Node) -> void:
+	if not is_instance_valid(importer):
+		return
+	var count := _refresh_cleanup_regions_button(importer)
+	if count > 0 and status_label != null and not status_label.text.contains("regiones fuera"):
+		_set_status(status_label.text + _outside_regions_warning(count))
+
+
+func _outside_regions_warning(count: int) -> String:
+	if count <= 0:
+		return ""
+	return " Aviso: hay %d region(es) fuera de 512 x 512; usa Limpiar fuera de 512 para respaldarlas y quitarlas." % count
 
 
 func _save_loaded_sector() -> bool:
@@ -1038,6 +1186,26 @@ func _make_edit_backup_dir(edit_dir: String) -> String:
 	if DirAccess.make_dir_recursive_absolute(backup_abs) != OK:
 		return ""
 	return backup_abs
+
+
+func _backup_edit_dir(edit_dir: String) -> String:
+	var dir := DirAccess.open(ProjectSettings.globalize_path(edit_dir))
+	if dir == null:
+		return ""
+	var backup_dir := _make_edit_backup_dir(edit_dir)
+	if backup_dir.is_empty():
+		return ""
+	dir.list_dir_begin()
+	var file_name := dir.get_next()
+	while file_name != "":
+		if not dir.current_is_dir() and file_name.get_extension() == "res":
+			var source_abs := ProjectSettings.globalize_path(edit_dir).path_join(file_name)
+			if _copy_file(source_abs, backup_dir.path_join(file_name)) != OK:
+				dir.list_dir_end()
+				return ""
+		file_name = dir.get_next()
+	dir.list_dir_end()
+	return backup_dir
 
 
 func _copy_file(source_abs: String, target_abs: String) -> Error:
@@ -1348,6 +1516,8 @@ func _ask_generation_confirmation(action: String, skip_exported: bool, message: 
 	if confirm_dialog == null:
 		_run_pending_generation()
 		return
+	confirm_dialog.title = "Confirmar limpieza" if action == "cleanup_regions" else "Confirmar generacion"
+	confirm_dialog.ok_button_text = "Limpiar" if action == "cleanup_regions" else "Continuar"
 	confirm_dialog.dialog_text = message
 	confirm_dialog.popup_centered(Vector2i(520, 260))
 
@@ -1360,6 +1530,8 @@ func _run_pending_generation() -> void:
 		_generate_and_import_selected_sector()
 	elif action == "multi":
 		_generate_multi_selection(skip_exported)
+	elif action == "cleanup_regions":
+		_cleanup_outside_regions()
 
 
 func _clear_pending_generation() -> void:
@@ -1559,6 +1731,11 @@ func _set_generation_buttons_enabled(enabled: bool) -> void:
 		load_sector_button.disabled = not enabled
 	if fresh_load_button != null:
 		fresh_load_button.disabled = not enabled
+	if cleanup_regions_button != null:
+		if enabled:
+			_refresh_cleanup_regions_button()
+		else:
+			cleanup_regions_button.disabled = true
 	if generate_selection_button != null:
 		generate_selection_button.disabled = not enabled
 	if regenerate_selection_button != null:
@@ -1704,6 +1881,17 @@ func _update_sector_guide() -> void:
 		guide.set("origin_sector", selected_sector)
 
 
+func _update_ocean_preview(next_sector: Vector2i) -> void:
+	if editor_interface == null:
+		return
+	var root: Node = editor_interface.get_edited_scene_root()
+	if root == null:
+		return
+	var preview := root.find_child("OceanPreview", true, false)
+	if preview != null and preview.has_method("refresh_for_sector"):
+		preview.call("refresh_for_sector", next_sector)
+
+
 func _update_labels() -> void:
 	if hover_label != null:
 		var hover_text := "-"
@@ -1774,8 +1962,17 @@ func _sector_details_text(sector: Vector2i) -> String:
 		return "Sector: -"
 	var info := _get_sector_dict(sector)
 	var lines: Array[String] = []
-	lines.append("Superficie: " + _surface_name_for_sector(sector, info))
+	lines.append("Superficie dominante: " + _surface_name_for_sector(sector, info))
 	lines.append("Bioma: " + _biome_name_for_sector(sector, info))
+	var surface_counts_value: Variant = info.get("surface_counts", {})
+	if surface_counts_value is Dictionary:
+		var surface_counts := surface_counts_value as Dictionary
+		var water_count := int(surface_counts.get("water", 0)) + int(surface_counts.get("deep_water", 0))
+		lines.append("Mezcla mapa: tierra %d | costa %d | agua %d" % [
+			int(surface_counts.get("land", 0)),
+			int(surface_counts.get("coast", 0)),
+			water_count,
+		])
 	var override := _get_sector_override(sector)
 	if not override.is_empty():
 		lines.append("Correccion: " + _override_summary(override))
