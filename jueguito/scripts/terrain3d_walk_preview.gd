@@ -10,6 +10,7 @@ const TERRAIN3D_EXPORT_DIR := "res://data/terrain3d_exports"
 const TEMP_DATA_DIR := "user://walk_preview_temp"
 const PLAYER_SCENE := preload("res://scenes/characters/player/player.tscn")
 const GAMEPLAY_HUD_SCENE := preload("res://scenes/ui/gameplay_hud.tscn")
+const OCEAN_WATER_SCENE := preload("res://scenes/world/water/ocean_water.tscn")
 const TERRAIN_ASSETS := preload("res://assets/environment/terrain/jueguito_terrain_assets.tres")
 const TERRAIN_MATERIAL := preload("res://assets/environment/terrain/jueguito_terrain_material.tres")
 
@@ -27,6 +28,7 @@ const MINIMAP_MARGIN := 12.0
 
 var terrain: Terrain3D
 var player: CharacterBody3D
+var ocean_water: OceanWater
 var spawn_position := Vector3.ZERO
 var debug_label: Label
 var saved_textures: Array = []  # respaldo de la lista de texturas para reconstruir el array
@@ -57,6 +59,7 @@ func _ready() -> void:
 	# la encuentre en su primer frame y no detenga su procesamiento (quedaria invisible).
 	_create_player()
 	_setup_terrain()
+	_setup_ocean()
 	_setup_minimap()
 	await get_tree().process_frame
 	_place_player_on_ground()
@@ -141,6 +144,16 @@ func _update_debug_hud() -> void:
 			float(player.get("walk_speed")),
 			float(player.get("sprint_speed")),
 		])
+		if ocean_water != null and terrain != null and terrain.data != null:
+			var terrain_height := terrain.data.get_height(player.global_position)
+			var water_info := ocean_water.get_water_info(player.global_position, terrain_height)
+			lines.append("Agua: %s | profundidad %.2f m | nivel %.2f | celdas %d | espuma %d" % [
+				String(water_info.get("state", "dry")),
+				float(water_info.get("depth", 0.0)),
+				float(water_info.get("water_level", ocean_water.water_level)),
+				ocean_water.water_cell_count,
+				ocean_water.shoreline_cell_count,
+			])
 	debug_label.text = "\n".join(lines)
 
 
@@ -197,6 +210,20 @@ func _setup_terrain() -> void:
 	_load_sector_terrain(initial)
 	current_sector = initial
 	print("Terrain3DWalkPreview: cargado sector ", initial)
+
+
+func _setup_ocean() -> void:
+	ocean_water = OCEAN_WATER_SCENE.instantiate() as OceanWater
+	ocean_water.name = "OceanWater"
+	add_child(ocean_water)
+	var has_water := ocean_water.configure_for_sector(current_sector, terrain)
+	print(
+		"Terrain3DWalkPreview: oceano sector ",
+		current_sector,
+		" | agua=", has_water,
+		" | celdas=", ocean_water.water_cell_count,
+		" | colliders=", ocean_water.water_collision_shape_count
+	)
 
 
 # Reconstruye el array de texturas (en runtime no se reconstruye solo) y apaga el
@@ -293,9 +320,13 @@ func get_player_ground_info(requested_position: Vector3) -> Dictionary:
 	var terrain_height := terrain.data.get_height(Vector3(requested_position.x, 0.0, requested_position.z))
 	if is_nan(terrain_height):
 		return {"walkable": false}
+	var water_info := {"in_water": false, "state": "dry"}
+	if ocean_water != null:
+		water_info = ocean_water.get_water_info(requested_position, terrain_height)
 	return {
 		"walkable": true,
 		"position": Vector3(requested_position.x, terrain_height, requested_position.z),
+		"water": water_info,
 	}
 
 
@@ -494,6 +525,8 @@ func _travel_to_sector(sec: Vector2i) -> void:
 		traveling = false
 		return
 
+	if ocean_water != null:
+		ocean_water.configure_for_sector(sec, terrain)
 	_place_player_on_ground()
 	_set_progress(100.0)
 	await get_tree().create_timer(0.25).timeout

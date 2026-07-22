@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal water_state_changed(previous_state: String, next_state: String)
+
 enum CameraMode { PERSPECTIVE_TACTICAL, PERSPECTIVE_CLOSE, ORTHOGRAPHIC }
 
 const CAMERA_MODE_COUNT := 3
@@ -9,6 +11,12 @@ const AnimationRetargeter = preload("res://scripts/characters/player/character_a
 @export var sprint_speed := 9.1
 @export var acceleration := 18.0
 @export var gravity := 42.0
+@export_range(0.1, 1.0, 0.05) var wade_speed_multiplier := 0.55
+@export var swim_speed := 2.6
+## Distancia entre el origen del personaje y la superficie al nadar. Con el
+## modelo actual deja la linea del agua cerca de los hombros.
+@export var swimming_body_offset := 0.68
+@export var swim_vertical_speed := 1.4
 @export_enum("Perspectiva tactica", "Perspectiva cercana", "Ortografica") var camera_mode: int = CameraMode.PERSPECTIVE_TACTICAL
 @export var perspective_fov := 42.0
 @export var close_perspective_fov := 58.0
@@ -41,6 +49,7 @@ var character_instance: Node3D
 var character_animation_player: AnimationPlayer
 var last_safe_position := Vector3.ZERO
 var locomotion_state := ""
+var water_state := "dry"
 
 # Variables para movimiento tipo LoL (click-to-move)
 var target_pos := Vector3.ZERO
@@ -393,6 +402,12 @@ func _find_animation_player(root: Node) -> AnimationPlayer:
 func _update_locomotion(move_direction: Vector3, target_speed: float) -> void:
 	if character_animation_player == null:
 		return
+	if water_state == "swimming" or water_state == "open_water":
+		_play_locomotion("swim_idle")
+		return
+	if water_state == "wading":
+		_play_locomotion("walk" if move_direction.length_squared() >= 0.001 else "idle")
+		return
 	if move_direction.length_squared() < 0.001:
 		_play_locomotion("idle")
 	elif target_speed > walk_speed * 1.5:
@@ -470,23 +485,61 @@ func _has_generator_ground_provider() -> bool:
 
 func _move_on_generator_ground(move_direction: Vector3, target_speed: float, delta: float) -> void:
 	var parent := get_parent()
+	var current_info: Variant = parent.call("get_player_ground_info", global_position)
+	var current_water := {"in_water": false, "state": "dry"}
+	if current_info is Dictionary:
+		current_water = (current_info as Dictionary).get("water", current_water)
+	var current_state := String(current_water.get("state", "dry"))
+	var effective_speed := target_speed
+	if current_state == "wading":
+		effective_speed *= wade_speed_multiplier
+	elif current_state == "swimming" or current_state == "open_water":
+		effective_speed = minf(target_speed, swim_speed)
+
 	var requested_position := global_position
 	if move_direction != Vector3.ZERO:
-		requested_position += move_direction * target_speed * delta
+		requested_position += move_direction * effective_speed * delta
 
 	var ground_info: Variant = parent.call("get_player_ground_info", requested_position)
 	if not (ground_info is Dictionary):
 		return
 
 	var info := ground_info as Dictionary
+	var water_info: Dictionary = info.get("water", {"in_water": false, "state": "dry"})
+	var next_water_state := String(water_info.get("state", "dry"))
+	_set_water_state(next_water_state)
+
+	if next_water_state == "open_water":
+		global_position = last_safe_position
+		velocity = Vector3.ZERO
+		return
+	if next_water_state == "swimming":
+		var target_swim_y := float(water_info.get("water_level", global_position.y)) - swimming_body_offset
+		global_position = Vector3(
+			requested_position.x,
+			move_toward(global_position.y, target_swim_y, swim_vertical_speed * delta),
+			requested_position.z
+		)
+		velocity = move_direction * effective_speed
+		last_safe_position = global_position
+		return
+
 	if bool(info.get("walkable", false)):
 		var ground_position: Vector3 = info.get("position", global_position)
 		global_position = ground_position + Vector3.UP * ground_clearance
-		velocity = move_direction * target_speed
+		velocity = move_direction * effective_speed
 		last_safe_position = global_position
 	else:
 		global_position = last_safe_position
 		velocity = Vector3.ZERO
+
+
+func _set_water_state(next_state: String) -> void:
+	if water_state == next_state:
+		return
+	var previous_state := water_state
+	water_state = next_state
+	water_state_changed.emit(previous_state, water_state)
 
 
 func _attach_hair(character_node: Node3D, hair_path: String) -> void:

@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/water/ocean_water.gd" id="1_ocean"]
+[ext_resource type="Shader" path="res://shaders/ocean_surface.gdshader" id="2_shader"]
+[ext_resource type="Texture2D" path="res://assets/environment/water/textures/water-ocean-normal-map-1k/normal.png" id="3_normal"]
+[ext_resource type="Texture2D" path="res://assets/environment/water/textures/water-ocean-normal-map-1k/height.png" id="4_height"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/environment/ocean/shore_loop.wav" id="5_loop"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/environment/ocean/shore_lapping.wav" id="6_lapping"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/environment/ocean/wave_break.wav" id="7_break"]
+[ext_resource type="Texture2D" path="res://assets/environment/water/textures/foam003_1k/Foam003_1K-JPG_Opacity.jpg" id="8_foam"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocean"]
+render_priority = 0
+shader = ExtResource("2_shader")
+shader_parameter/wave_normal = ExtResource("3_normal")
+shader_parameter/wave_height = ExtResource("4_height")
+shader_parameter/foam_texture = ExtResource("8_foam")
+shader_parameter/shallow_color = Color(0.08, 0.43, 0.63, 0.62)
+shader_parameter/deep_color = Color(0.015, 0.12, 0.3, 0.88)
+shader_parameter/foam_color = Color(0.9, 0.97, 1, 0.94)
+shader_parameter/wave_tiling = 18.0
+shader_parameter/detail_tiling = 31.0
+shader_parameter/wave_speed = 0.018
+shader_parameter/displacement_strength = 0.16
+shader_parameter/normal_strength = 0.72
+shader_parameter/foam_amount = 0.58
+shader_parameter/foam_tiling = 22.0
+shader_parameter/foam_speed = 0.012
+
+[node name="OceanWater" type="Node3D"]
+script = ExtResource("1_ocean")
+
+[node name="WaterSurface" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_ocean")
+cast_shadow = 0
+
+[node name="WaterArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 1
+monitoring = true
+monitorable = true
+
+[node name="ShoreLoop" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_loop")
+volume_db = -9.0
+unit_size = 35.0
+max_distance = 460.0
+bus = &"Ambience"
+
+[node name="ShoreLapping" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_lapping")
+volume_db = -13.0
+unit_size = 24.0
+max_distance = 360.0
+bus = &"Ambience"
+
+[node name="WaveBreak" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("7_break")
+volume_db = -11.0
+unit_size = 18.0
+max_distance = 280.0
+bus = &"Ambience"
+
+[node name="WaveTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
