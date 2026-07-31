@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/harvestable_tree.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_04.glb" id="2_model"]
+
+[node name="Broadleaf01" instance=ExtResource("1_base")]
+display_name = "Arbol frondoso"
+model_scene = ExtResource("2_model")
+visual_height = 7.0
+trunk_radius = 0.46
+trunk_height = 4.0

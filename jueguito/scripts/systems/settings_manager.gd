@@ -4,6 +4,11 @@ signal setting_changed(section: String, key: String, value: Variant)
 signal settings_reset
 
 const CONFIG_PATH := "user://settings.cfg"
+const LEGACY_HUD_POSITIONS := {
+	"character_status_position": Vector2(0.018, 0.94),
+	"action_bar_position": Vector2(0.5, 0.98),
+	"minimap_position": Vector2(0.985, 0.94),
+}
 const DEFAULTS := {
 	"general": {
 		"language": "es",
@@ -29,7 +34,23 @@ const DEFAULTS := {
 	},
 	"controls": {
 		"camera_sensitivity": 1.0,
-		"zoom_speed": 1.0
+		"zoom_speed": 1.0,
+		"camera_pitch": -45.0
+	},
+	"map": {
+		"marker_color": Color("f3cf55"),
+		"tilt": 0.9,
+		"minimap_zoom": 1.0
+	},
+	"hud": {
+		"character_status_position": Vector2(0.5, 1.0),
+		"character_status_scale": 1.0,
+		"action_bar_position": Vector2(0.5, 1.0),
+		"action_bar_scale": 1.0,
+		"minimap_position": Vector2(1.0, 0.0),
+		"minimap_scale": 1.0,
+		"currency_position": Vector2(0.5, 0.0),
+		"currency_scale": 1.0
 	},
 	"accessibility": {
 		"colorblind_mode": 0,
@@ -76,6 +97,15 @@ func load_settings() -> void:
 				key,
 				DEFAULTS[section][key]
 			)
+	_migrate_legacy_hud_positions()
+
+
+func _migrate_legacy_hud_positions() -> void:
+	var hud_settings := _settings["hud"] as Dictionary
+	var hud_defaults := DEFAULTS["hud"] as Dictionary
+	for key in LEGACY_HUD_POSITIONS:
+		if hud_settings.get(key) == LEGACY_HUD_POSITIONS[key]:
+			hud_settings[key] = hud_defaults[key]
 
 
 func save_settings() -> void:

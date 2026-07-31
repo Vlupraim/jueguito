@@ -10,6 +10,12 @@ const SECTOR_SIDE_METERS := 5000.0
 const METERS_PER_PIXEL := 200.0
 const SECTOR_PIXELS := 25
 const EXPORT_RESOLUTION := 512  # multiplo de region_size (256) -> sector = 2x2 regiones limpias
+const WATER_LEVEL := 2.0
+const DEEP_SEABED_HEIGHT := -4.5
+const OPEN_WATER_SEABED_HEIGHT := -3.0
+const SHALLOW_SEABED_HEIGHT := WATER_LEVEL - 0.45
+const COAST_BASE_HEIGHT := WATER_LEVEL + 0.9
+const BEACH_BASE_HEIGHT := WATER_LEVEL + 1.5
 const AUTO_BEACH_RADIUS_PIXELS := 4
 const WATER_SHORE_RADIUS_PIXELS := 9
 const UNKNOWN_SURFACE_SEARCH_RADIUS_PIXELS := 4
@@ -401,15 +407,15 @@ func _height_for(
 			detail_height = 2.0
 
 	if surface_id == SURFACE_DEEP_WATER:
-		var deep_floor := -10.0 + detail * 1.0
-		var shallow_floor := 0.8 + broad * 1.2 + detail * 0.6
+		var deep_floor := DEEP_SEABED_HEIGHT + detail * 0.45
+		var shallow_floor := minf(WATER_LEVEL - 0.1, SHALLOW_SEABED_HEIGHT + broad * 0.25 + detail * 0.18)
 		return lerpf(deep_floor, shallow_floor, shore_influence)
 	if surface_id == SURFACE_WATER:
-		var open_water_floor := -4.0 + detail * 0.7
-		var near_shore_floor := 1.4 + broad * 1.0 + detail * 0.5
+		var open_water_floor := OPEN_WATER_SEABED_HEIGHT + detail * 0.35
+		var near_shore_floor := minf(WATER_LEVEL - 0.1, SHALLOW_SEABED_HEIGHT + broad * 0.25 + detail * 0.18)
 		return lerpf(open_water_floor, near_shore_floor, shore_influence)
 	if surface_id == SURFACE_COAST:
-		return 5.0 + broad * 3.5 + detail * 1.1
+		return maxf(WATER_LEVEL + 0.25, COAST_BASE_HEIGHT + broad * 0.8 + detail * 0.35)
 	if surface_id == SURFACE_LAND:
 		var broad_lift := maxf(0.0, broad + 0.12)
 		if biome_id == 5:
@@ -417,7 +423,7 @@ func _height_for(
 		var land_height := base_height + broad_lift * biome_height + detail * detail_height
 		var beach_strength := _beach_strength(surface_id, shore_influence)
 		if beach_strength > 0.0:
-			var beach_height := 6.0 + broad * 3.0 + detail * 1.0
+			var beach_height := BEACH_BASE_HEIGHT + maxf(0.0, broad) * 1.2 + detail * 0.35
 			land_height = lerpf(land_height, beach_height, beach_strength)
 
 		if edge_falloff < 1.0:

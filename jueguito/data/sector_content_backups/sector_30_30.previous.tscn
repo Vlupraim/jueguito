@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://6lxhfu5jkdlr"]
+
+[node name="SectorContent" type="Node3D" unique_id=930724763]
+metadata/content_version = 1
+metadata/sector_x = 30
+metadata/sector_y = 30
+metadata/_edit_lock_ = true
+
+[node name="Rocks" type="Node3D" parent="." unique_id=1387344042]
+metadata/_edit_lock_ = true
+
+[node name="Vegetation" type="Node3D" parent="." unique_id=396007667]
+metadata/_edit_lock_ = true
+
+[node name="Buildings" type="Node3D" parent="." unique_id=849352885]
+metadata/_edit_lock_ = true
+
+[node name="NPCs" type="Node3D" parent="." unique_id=587327801]
+metadata/_edit_lock_ = true
+
+[node name="Props" type="Node3D" parent="." unique_id=1104949045]
+metadata/_edit_lock_ = true

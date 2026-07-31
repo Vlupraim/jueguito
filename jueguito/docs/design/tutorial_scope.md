@@ -4,14 +4,40 @@ El tutorial ocurre sobre el sector canonico `(27, 30)`. El terreno pertenece al
 mundo real y sigue siendo alcanzable por otros jugadores; solamente la guia, los
 marcadores y el progreso son individuales para cada personaje.
 
+El personaje aparece sobre arena seca cerca de `(273, 7, 218)`, mirando hacia el
+drakkar encallado de la costa central. El barco usa la colocacion elegida en el
+workspace Terrain3D, con centro aproximado en `(273.06, 3.24, 188.78)`.
+
+El naufragio tiene casco y bordes con hitbox, una cubierta caminable y un acceso
+inclinado desde la arena. El personaje solo puede entrar o salir de la plataforma
+por ese acceso; mientras esta sobre la cubierta, los bordes no permiten caer por
+error. La escena tambien expone anclas para abordar y recuperar una posicion
+segura sobre el barco.
+
+## Orientacion y mapa local
+
+La camara tactica sigue al personaje. El boton central permite orbitarla;
+`Shift` + boton central desplaza temporalmente la vista dentro de un radio
+limitado. Al caminar vuelve suavemente al personaje, y `F` o doble clic central
+la recentran manualmente. `C` conserva el acceso rapido a cuatro orientaciones
+fijas. El HUD no muestra el texto tecnico de depuracion durante el juego normal.
+
+Cada chunk tiene dos representaciones locales. El minimapa pequeno es una carta
+medieval generada desde `surface_reference.png` y `height_preview.png`, con costa
+suavizada, relieve y marcadores dinamicos. Al entrar al chunk se realiza ademas
+un unico escaneo 3D con una camara cartografica; `Tab` reutiliza esa captura y
+permite zoom, desplazamiento, salidas y leyenda. Al cruzar a otro chunk cambian
+ambas representaciones. El mapa general queda reservado para una futura pantalla
+de atlas o viaje y no forma parte de la vista de `Tab`.
+
 ## Objetivo de la primera version
 
 Ensenar el bucle minimo sin introducir sistemas que aun no estan terminados.
 
 1. **Orientacion inicial**
    - Presentar el lugar y un objetivo visible cercano.
-   - Explicar movimiento con clic derecho.
-   - Explicar zoom con la rueda, manteniendo fija la orientacion tactica.
+   - Explicar movimiento con clic derecho y carrera manteniendo `Shift`.
+   - Explicar zoom con la rueda, orbita con boton central y recentrado con `F`.
 2. **Primera interaccion**
    - Acercarse a un objeto sencillo del mundo.
    - Interactuar con clic izquierdo.

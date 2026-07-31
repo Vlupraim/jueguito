@@ -6,6 +6,8 @@ El proyecto usa `Boceto.png` como silueta continental base y lo convierte en dat
 Documentacion tecnica principal:
 
 - Estructura futura: `res://docs/technical/project_structure.md`.
+- Red autoritativa, carga de sectores, acciones y persistencia:
+  `res://docs/technical/authoritative_networking_and_persistence.md`.
 - Pipeline de personajes GLB con animaciones propias:
   `res://docs/technical/character_glb_animation_pipeline.md`.
 - Flujo de roster y creacion de personajes:
@@ -70,9 +72,12 @@ Este no es el generador final: es el puente entre el mapa macro pintado y los fu
 - `1` a `7`: saltar al siguiente sector del bioma elegido.
 - `0`: saltar al siguiente sector sin bioma.
 - `T` / `C` / `O` / `F`: saltar al siguiente sector con tierra, costa, agua o agua profunda.
-- `WASD` o flechas: mover personaje en modo jugador.
-- `Shift`: correr.
+- Clic derecho: mover el personaje hacia el punto indicado.
+- `Shift`: correr mientras el personaje avanza hacia su destino.
 - Rueda del mouse: acercar/alejar camara del personaje.
+- Boton central + arrastrar: orbitar la camara alrededor del personaje.
+- `Shift` + boton central + arrastrar: desplazar temporalmente la camara.
+- `F` o doble clic central: recentrar la camara en el personaje.
 - `V`: alternar entre camara de jugador y camara libre debug.
 - En camara libre: `WASD` o flechas recorren, `Q` / `E` bajan o suben, `Shift` / `Ctrl` cambian velocidad.
 - En camara libre: boton derecho + mover mouse mira alrededor, rueda del mouse cambia altura.
@@ -160,7 +165,9 @@ El agua no se resuelve como textura Terrain3D principal. `OceanWater` genera una
 malla separada desde `surface_reference.png`, aplica ondulación y espuma mediante
 shader, crea un `Area3D` detectable y reproduce ambiente costero. El personaje
 distingue tierra, vadeo, natación y mar abierto; este último bloquea el avance
-sin embarcación. Terrain3D continúa representando el fondo marino.
+sin embarcación. Al nadar, el personaje queda fijado a una lámina de flotación:
+no hay buceo ni hace falta representar un océano físicamente profundo. La misma
+altura lógica queda disponible para futuros barcos y objetos flotantes.
 
 Automatizacion actual:
 
@@ -187,7 +194,7 @@ Orden fijo de texturas Terrain3D:
 
 Este orden debe mantenerse porque los `control.exr` guardan indices, no nombres. Si falta una textura en ese indice, Terrain3D puede mostrar negro aunque el terreno o la pintura sigan guardados.
 
-El recurso compartido que fija esta lista vive en `res://assets/environment/terrain/jueguito_terrain_assets.tres`. Si agregas, cambias o reordenas texturas desde Terrain3D, `Guardar sector` y `Ctrl+S` persisten tanto el sector activo como la libreria/material compartidos.
+El recurso compartido que fija esta lista vive en `res://assets/environment/terrain/jueguito_terrain_assets.tres`. Godot gestiona ese `.tres` como recurso externo cuando realmente se edita; `Guardar sector` y el hook de `Ctrl+S` del dock persisten solamente los datos regionales activos para no forzar una recarga de la biblioteca mientras Terrain3D la usa.
 
 El dock `Mapa Sectores MMO` carga `control.exr` automaticamente si existe. Si un sector fue exportado antes de esta automatizacion y no tiene `control.exr`, usa `Generar + cargar` para un sector puntual o `Regenerar seleccion` para rehacer varios sectores.
 
@@ -232,10 +239,10 @@ Funciones actuales del dock:
 - `Generar + cargar`: exporta el sector seleccionado y lo carga al centro de Terrain3D.
 - `Generar faltantes`: exporta solo los sectores seleccionados que aun no estan verdes/exportados; si detecta sectores ya generados, pregunta antes y los omite.
 - `Regenerar seleccion`: reexporta todos los sectores seleccionados, incluso si ya estaban verdes/exportados; siempre pide confirmacion.
-- `Guardar sector`: guarda el sector cargado en `res://data/terrain3d_edits/sector_X_Y/` y tambien persiste la libreria/material compartido de Terrain3D.
+- `Guardar sector`: guarda el sector cargado en `res://data/terrain3d_edits/sector_X_Y/`.
 - `Abrir pintor`: vuelve al editor de capas para corregir superficie/bioma antes de exportar.
 
-Nota de guardado: con el plugin activo, `Ctrl+S` guarda la escena abierta, la escultura/pintura del sector Terrain3D activo y su libreria/material compartidos. `Guardar sector` sigue disponible como accion explicita y el dock tambien intenta guardar el sector al cerrarse.
+Nota de guardado: con el plugin activo, `Ctrl+S` guarda la escena abierta y la escultura/pintura del sector Terrain3D activo. La libreria y el material son recursos externos que Godot guarda cuando se editan; el dock evita reescribirlos en cada sector porque Terrain3D puede tenerlos en uso. `Guardar sector` sigue disponible como accion explicita y el dock tambien intenta guardar el sector al cerrarse.
 
 Flujo recomendado:
 
@@ -261,6 +268,22 @@ Sector inicial de personajes:
 
 - `[27, 30]`: spawn oficial actual. Los personajes nuevos cargan este sector en
   `res://scenes/terrain3d_walk_preview.tscn`.
+
+Controles de la vista jugable Terrain3D:
+
+- `C`: rota la camara tactica entre cuatro orientaciones fijas.
+- Boton central + arrastrar: orbita libre alrededor del personaje.
+- `Shift` + boton central + arrastrar: desplaza la vista hasta 30 metros.
+- `F` o doble clic central: recentra la vista; al caminar tambien vuelve suavemente.
+- Clic derecho: mover; mantener `Shift` permite correr hacia el destino.
+- `Tab`: abre o cierra el mapa local ampliado del chunk actual.
+- El minimapa genera una carta medieval suavizada desde `surface_reference.png`
+  y `height_preview.png`: redondea la costa, agrega relieve y dibuja encima al
+  jugador, su orientacion y los hitos locales.
+- Al entrar a un chunk, una camara cartografica captura una vista 3D real una sola
+  vez y la conserva en memoria para el panel de `Tab`. Ese panel permite zoom,
+  desplazamiento, muestra salidas vecinas y reserva una barra para herramientas
+  futuras; no abre el atlas mundial.
 
 Otros sectores históricos de prueba:
 

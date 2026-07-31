@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://ci15n4ltogl5o"]
+
+[ext_resource type="PackedScene" uid="uid://b0kcj5e5lue4" path="res://assets/environment/rocks/rock_1.glb" id="1_feuyp"]
+[ext_resource type="PackedScene" uid="uid://qijtuf6g6lsx" path="res://assets/environment/rocks/rock_2.glb" id="2_1utf8"]
+[ext_resource type="PackedScene" uid="uid://gp6apv78uwua" path="res://assets/vehicles/boats/tutorial_ship/models/destroyed_ship.glb" id="3_mdeh3"]
+
+[node name="SectorContent" type="Node3D" unique_id=639310997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15013885, -0.19626617, 0.008041382)
+metadata/content_version = 1
+metadata/sector_x = 27
+metadata/sector_y = 30
+metadata/_edit_lock_ = true
+
+[node name="Rocks" type="Node3D" parent="." unique_id=1554852972]
+metadata/_edit_lock_ = true
+
+[node name="rock_3" parent="Rocks" unique_id=1012346342 instance=ExtResource("1_feuyp")]
+transform = Transform3D(1.1358814, 0, 1.4619533, 0, 2.3876934, 0, -2.7436943, 0, 0.60524446, 3.6255999, 3.8926587, 224.56602)
+
+[node name="rock_4" parent="Rocks" unique_id=1391182969 instance=ExtResource("2_1utf8")]
+transform = Transform3D(2.3785543, 0, 0, 0, 2.3876934, 0, 0, 0, 2.0352166, 4.7040515, 4.591673, 227.91925)
+
+[node name="rock_5" parent="Rocks" unique_id=188163899 instance=ExtResource("2_1utf8")]
+transform = Transform3D(1.169616, 0, 1.4388089, 0, 2.3876934, 0, -2.7483816, 0, 0.6123073, 1.7525849, 4.0615597, 226.27306)
+
+[node name="rock_1" parent="Rocks" unique_id=1562559295 instance=ExtResource("1_feuyp")]
+transform = Transform3D(1.4720334, 0, 0.59004545, 0, 1.6054089, 0, -0.6242554, 0, 1.3913641, 176.3288, 3.5682993, 217.9283)
+
+[node name="rock_2" parent="Rocks" unique_id=1609909858 instance=ExtResource("2_1utf8")]
+transform = Transform3D(1.370209, 0, 0.8088327, 0, 1.349352, 0, -0.76600367, 0, 1.4468207, 183.63815, 3.0033894, 216.92908)
+
+[node name="Vegetation" type="Node3D" parent="." unique_id=356686219]
+metadata/_edit_lock_ = true
+
+[node name="Buildings" type="Node3D" parent="." unique_id=871814195]
+metadata/_edit_lock_ = true
+
+[node name="NPCs" type="Node3D" parent="." unique_id=627406434]
+metadata/_edit_lock_ = true
+
+[node name="Props" type="Node3D" parent="." unique_id=886929279]
+metadata/_edit_lock_ = true
+
+[node name="ShipHullHitbox" type="StaticBody3D" parent="Props" unique_id=775449043]
+transform = Transform3D(4.458144, 0, -7.717271, 1.5265609, 24.585148, 0.37871996, 11.676883, -3.214104, 2.8968837, 273.0609, 3.2427492, 188.88696)
+
+[node name="ShipDeckSurface" type="StaticBody3D" parent="Props" unique_id=1315694725 groups=["walkable_ship_surface"]]
+transform = Transform3D(3.5404959, 0, -9.352265, 1.2123389, 9.915624, 0.45895624, 9.273355, -1.2963047, 3.5106225, 273.0609, 3.2427492, 188.77995)
+collision_layer = 8
+collision_mask = 0
+metadata/platform_id = "tutorial_ship"
+metadata/surface_role = "deck"
+
+[node name="BoardingRampHitbox" type="StaticBody3D" parent="Props" unique_id=1911743607]
+transform = Transform3D(-0.411, 0.265, -0.872, 0, 0.956, 0.291, 0.912, 0.12, -0.393, 279, 5.2, 188.65)
+
+[node name="BoardingRampSurface" type="StaticBody3D" parent="Props" unique_id=1702585868 groups=["walkable_ship_surface"]]
+transform = Transform3D(-0.411, 0.265, -0.872, 0, 0.956, 0.291, 0.912, 0.12, -0.393, 279, 5.2, 188.65)
+collision_layer = 8
+collision_mask = 0
+metadata/platform_id = "tutorial_ship"
+metadata/surface_role = "ramp"
+
+[node name="BoardingAnchor" type="Marker3D" parent="Props" unique_id=699620289]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 282, 5.05, 190)
+
+[node name="DeckSafeAnchor" type="Marker3D" parent="Props" unique_id=1292256940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 273.0609, 7, 188.4)
+
+[node name="DestroyedShip" type="Node3D" parent="Props" unique_id=1650141469 instance=ExtResource("3_mdeh3")]
+transform = Transform3D(3.5404959, 0, -9.352265, 1.2123389, 9.915624, 0.45895624, 9.273355, -1.2963047, 3.5106225, 273.0609, 3.2427492, 188.77995)

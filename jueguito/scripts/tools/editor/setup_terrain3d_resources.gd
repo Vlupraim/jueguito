@@ -2,7 +2,9 @@
 extends SceneTree
 
 const ASSETS_PATH := "res://assets/environment/terrain/jueguito_terrain_assets.tres"
+const ASSETS_UID := "uid://culjong3w41jq"
 const MATERIAL_PATH := "res://assets/environment/terrain/jueguito_terrain_material.tres"
+const FLAT_NORMAL_PATH := "res://assets/environment/terrain/textures/stylized/terrain_slots/flat_normal_roughness.svg"
 const QUATERNIUS_PATH := "res://assets/environment/vegetation/quaternius_stylized_nature/"
 
 const TEXTURES := [
@@ -101,11 +103,19 @@ const MESH_ASSETS := [
 
 
 func _init() -> void:
-	var assets := Terrain3DAssets.new()
+	# Reutilizar la biblioteca existente conserva ajustes hechos desde el asset dock
+	# (UV, detiling, roughness, etc.) mientras normalizamos sus referencias de archivo.
+	var assets := load(ASSETS_PATH) as Terrain3DAssets
+	if assets == null:
+		assets = Terrain3DAssets.new()
 	var had_load_error := false
 	for index in range(TEXTURES.size()):
 		var texture_data: Dictionary = TEXTURES[index]
-		var texture := Terrain3DTextureAsset.new()
+		var texture: Terrain3DTextureAsset = null
+		if index < assets.get_texture_count():
+			texture = assets.get_texture(index)
+		if texture == null:
+			texture = Terrain3DTextureAsset.new()
 		texture.id = index
 		texture.name = str(texture_data["name"])
 		var albedo := load(str(texture_data["albedo"])) as Texture2D
@@ -114,15 +124,21 @@ func _init() -> void:
 		else:
 			had_load_error = true
 			push_error("No pude cargar la textura albedo: " + str(texture_data["albedo"]))
-		if texture_data.has("normal") and not str(texture_data["normal"]).is_empty():
-			var normal := load(str(texture_data["normal"])) as Texture2D
-			if normal != null and texture.has_method("set_normal_texture"):
-				texture.call("set_normal_texture", normal)
+		var normal := load(FLAT_NORMAL_PATH) as Texture2D
+		if normal != null and texture.has_method("set_normal_texture"):
+			texture.call("set_normal_texture", normal)
+		else:
+			had_load_error = true
+			push_error("No pude cargar la textura normal compartida: " + FLAT_NORMAL_PATH)
 		assets.set_texture(index, texture)
 
 	for index in range(MESH_ASSETS.size()):
 		var mesh_data: Dictionary = MESH_ASSETS[index]
-		var mesh_asset := Terrain3DMeshAsset.new()
+		var mesh_asset: Terrain3DMeshAsset = null
+		if index < assets.get_mesh_count():
+			mesh_asset = assets.get_mesh_asset(index)
+		if mesh_asset == null:
+			mesh_asset = Terrain3DMeshAsset.new()
 		mesh_asset.id = index
 		mesh_asset.name = str(mesh_data["name"])
 		var scene := load(str(mesh_data["scene"])) as PackedScene
@@ -144,13 +160,18 @@ func _init() -> void:
 	material.set("show_checkered", false)
 
 	var assets_error := ResourceSaver.save(assets, ASSETS_PATH)
+	var assets_uid_error := OK
+	if assets_error == OK:
+		assets_uid_error = ResourceSaver.set_uid(ASSETS_PATH, ResourceUID.text_to_id(ASSETS_UID))
 	var material_error := OK
 	if material_was_created:
 		material_error = ResourceSaver.save(material, MATERIAL_PATH)
 	if assets_error != OK:
 		push_error("No pude guardar " + ASSETS_PATH + ": " + error_string(assets_error))
+	if assets_uid_error != OK:
+		push_error("No pude conservar el UID de " + ASSETS_PATH + ": " + error_string(assets_uid_error))
 	if material_error != OK:
 		push_error("No pude guardar " + MATERIAL_PATH + ": " + error_string(material_error))
-	if assets_error == OK and material_error == OK and not had_load_error:
+	if assets_error == OK and assets_uid_error == OK and material_error == OK and not had_load_error:
 		print("Terrain3D resources listos: ", ASSETS_PATH, " | ", MATERIAL_PATH)
-	quit(0 if assets_error == OK and material_error == OK and not had_load_error else 1)
+	quit(0 if assets_error == OK and assets_uid_error == OK and material_error == OK and not had_load_error else 1)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/harvestable_tree.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_02.glb" id="2_model"]
+
+[node name="PalmCurved01" instance=ExtResource("1_base")]
+display_name = "Palmera"
+model_scene = ExtResource("2_model")
+visual_height = 7.5
+trunk_radius = 0.34
+trunk_height = 5.5

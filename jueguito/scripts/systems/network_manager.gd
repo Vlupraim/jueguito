@@ -24,9 +24,16 @@ class ServerMock:
 					"name": "Vlupraim",
 					"body_id": "strongman",
 					"level": 1,
-					"inventory": {"Hierro": 5, "Madera": 10},
+					"inventory": {
+						"Hierro": 5,
+						"Madera": 10,
+						"Hacha de leñador": 1,
+						"Espada vikinga": 2,
+						"Escudo vikingo": 1,
+						"Arco vikingo": 1,
+					},
 					"current_sector": Vector2i(27, 30),
-					"position": Vector3(0.0, 1.45, 0.0),
+					"position": Vector3(273.0, 7.0, 218.0),
 					"model_path": "res://assets/characters/player/models/char_6_c583a7dd/strong_man.glb",
 					"animation_source_path": "res://assets/characters/player/models/char_6_c583a7dd/strong_man.glb",
 					"visual_scale": 1.0,
@@ -38,6 +45,9 @@ class ServerMock:
 	}
 	
 	var active_sessions: Dictionary = {} # token -> username
+	# Estado autoritativo provisional de recursos del mundo. En produccion esta
+	# tabla vivira en el servidor persistente, no en el cliente.
+	var resource_respawn_at: Dictionary = {} # resource_id -> Unix timestamp
 	
 	func login(username: String, _password: String = "") -> Dictionary:
 		# Registro automático si la cuenta no existe
@@ -76,10 +86,17 @@ class ServerMock:
 			"name": clean_name,
 			"body_id": appearance.get("body_id", "strongman"),
 			"level": 1,
-			"inventory": {},
+			# Herramienta inicial provisional para probar el flujo del tutorial.
+			"inventory": {
+				"Hacha de leñador": 1,
+				"Espada vikinga": 2,
+				"Escudo vikingo": 1,
+				"Arco vikingo": 1,
+			},
 			# Sector inicial oficial dentro del mundo Terrain3D.
 			"current_sector": Vector2i(27, 30),
-			"position": Vector3(0.0, 1.45, 0.0),
+			# Playa del tutorial, frente al drakkar encallado.
+			"position": Vector3(273.0, 7.0, 218.0),
 			"model_path": appearance.get("model_path", ""),
 			"animation_source_path": appearance.get(
 				"animation_source_path",
@@ -92,7 +109,7 @@ class ServerMock:
 		accounts[username]["characters"].append(new_char)
 		return {"success": true, "character": new_char}
 
-	func validate_movement(char_name: String, target_position: Vector3) -> Vector3:
+	func validate_movement(_char_name: String, target_position: Vector3) -> Vector3:
 		# En un servidor real aquí se validaría la colisión física contra un mapa de colisiones (NavMesh/Grid)
 		# y la velocidad del personaje para evitar hacks de teleport.
 		# Por ahora, aprobamos la posición solicitada tal cual (mock).
@@ -119,6 +136,36 @@ class ServerMock:
 		target_char["inventory"][item_name] += amount
 		
 		return {"success": true, "inventory": target_char["inventory"]}
+
+	func validate_resource_harvest(
+			char_name: String,
+			resource_id: String,
+			item_name: String,
+			amount: int,
+			respawn_seconds: float
+		) -> Dictionary:
+		var now := Time.get_unix_time_from_system()
+		var blocked_until := float(resource_respawn_at.get(resource_id, 0.0))
+		if blocked_until > now:
+			return {
+				"success": false,
+				"error": "El recurso todavia no ha reaparecido",
+				"respawn_at": blocked_until,
+			}
+		var reward := validate_interaction(char_name, item_name, amount)
+		if not bool(reward.get("success", false)):
+			return reward
+		var next_respawn := now + maxf(respawn_seconds, 0.0)
+		resource_respawn_at[resource_id] = next_respawn
+		reward["respawn_at"] = next_respawn
+		return reward
+
+	func get_resource_respawn_at(resource_id: String) -> float:
+		var respawn_at := float(resource_respawn_at.get(resource_id, 0.0))
+		if respawn_at <= Time.get_unix_time_from_system():
+			resource_respawn_at.erase(resource_id)
+			return 0.0
+		return respawn_at
 
 # Instanciamos el servidor dentro del NetworkManager
 var server := ServerMock.new()
@@ -196,3 +243,25 @@ func request_interaction(item_name: String, amount: int) -> void:
 	var res = server.validate_interaction(current_character_name, item_name, amount)
 	if res["success"]:
 		inventory_updated.emit(res["inventory"])
+
+
+func request_resource_harvest(
+		resource_id: String,
+		item_name: String,
+		amount: int,
+		respawn_seconds: float
+	) -> Dictionary:
+	var result := server.validate_resource_harvest(
+		current_character_name,
+		resource_id,
+		item_name,
+		amount,
+		respawn_seconds
+	)
+	if bool(result.get("success", false)):
+		inventory_updated.emit(result["inventory"])
+	return result
+
+
+func get_resource_respawn_at(resource_id: String) -> float:
+	return server.get_resource_respawn_at(resource_id)

@@ -1,14 +1,15 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/options_menu.gd" id="1_options"]
+[ext_resource type="Theme" path="res://assets/ui/medieval_ui_theme.tres" id="2_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
-bg_color = Color(0.055, 0.07, 0.105, 0.98)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.23, 0.35, 0.55, 0.8)
+bg_color = Color(0.065, 0.052, 0.036, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.36, 0.19, 0.92)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -25,6 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 script = ExtResource("1_options")
+theme = ExtResource("2_theme")
 
 [node name="Backdrop" type="ColorRect" parent="."]
 layout_mode = 1
@@ -33,7 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.01, 0.015, 0.025, 0.82)
+color = Color(0.018, 0.014, 0.01, 0.84)
 
 [node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -325,6 +327,19 @@ min_value = 0.1
 max_value = 3.0
 step = 0.05
 value = 1.0
+
+[node name="CameraPitchLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+layout_mode = 2
+text = "Inclinación de cámara (Visión al horizonte)"
+
+[node name="CameraPitchSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 30)
+layout_mode = 2
+min_value = -60.0
+max_value = -30.0
+step = 1.0
+value = -45.0
 
 [node name="Accessibility" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
 layout_mode = 2

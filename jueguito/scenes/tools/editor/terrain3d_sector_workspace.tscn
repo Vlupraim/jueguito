@@ -5,8 +5,13 @@
 [ext_resource type="Terrain3DMaterial" uid="uid://bawc1rfkg2itm" path="res://assets/environment/terrain/jueguito_terrain_material.tres" id="3_material"]
 [ext_resource type="Terrain3DAssets" uid="uid://culjong3w41jq" path="res://assets/environment/terrain/jueguito_terrain_assets.tres" id="4_assets"]
 [ext_resource type="Script" uid="uid://cc5bn5p1qrb78" path="res://scripts/tools/editor/terrain3d_ocean_preview.gd" id="5_ocean_preview"]
+[ext_resource type="PackedScene" uid="uid://b0kcj5e5lue4" path="res://assets/environment/rocks/rock_1.glb" id="6_8ncfo"]
+[ext_resource type="PackedScene" uid="uid://gp6apv78uwua" path="res://assets/vehicles/boats/tutorial_ship/models/destroyed_ship.glb" id="7_6wqa4"]
+[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/pine_tall_01.tscn" id="7_q44vg"]
 
 [node name="Terrain3DSectorWorkspace" type="Node3D" unique_id=1772857410]
+metadata/loaded_sector_x = 27
+metadata/loaded_sector_y = 30
 
 [node name="WorkspaceCamera" type="Camera3D" parent="." unique_id=855196988]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 8200, 9200)
@@ -15,10 +20,10 @@ far = 42000.0
 
 [node name="WorkspaceLight" type="DirectionalLight3D" parent="." unique_id=937034337]
 transform = Transform3D(0.819152, -0.40558, 0.40558, 0, 0.707107, 0.707107, -0.573576, -0.579228, 0.579228, 0, 0, 0)
-light_energy = 1.2
+light_energy = 1.05
 
 [node name="Importer" parent="." unique_id=1935549813 instance=ExtResource("1_importer")]
-data_directory = "res://data/terrain3d_edits/sector_15_7"
+data_directory = "res://data/terrain3d_edits/sector_27_30"
 material = ExtResource("3_material")
 assets = ExtResource("4_assets")
 height_file_name = "C:/Users/dzzav/OneDrive/Documentos/repo/jueguito/jueguito/data/terrain3d_exports/sector_27_30/height.exr"
@@ -26,8 +31,59 @@ control_file_name = "C:/Users/dzzav/OneDrive/Documentos/repo/jueguito/jueguito/d
 
 [node name="SectorGuide" type="Node3D" parent="." unique_id=726682606]
 script = ExtResource("2_guide")
-origin_sector = Vector2i(15, 7)
+origin_sector = Vector2i(27, 30)
 
 [node name="OceanPreview" type="Node3D" parent="." unique_id=982218495]
 script = ExtResource("5_ocean_preview")
-sector = Vector2i(15, 7)
+
+[node name="SectorContent" type="Node3D" parent="." unique_id=639310997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15013885, -0.19626617, 0.008041382)
+metadata/content_version = 1
+metadata/sector_x = 27
+metadata/sector_y = 30
+metadata/_edit_lock_ = true
+
+[node name="Rocks" type="Node3D" parent="SectorContent" unique_id=1554852972]
+metadata/_edit_lock_ = true
+
+[node name="rock_2" parent="SectorContent/Rocks" unique_id=2032881430 instance=ExtResource("6_8ncfo")]
+transform = Transform3D(1, 0, 0, 0, 0.9933046, 0.11552479, 0, -0.11552479, 0.9933046, 282.25974, 4.2218566, 188.18723)
+
+[node name="Vegetation" type="Node3D" parent="SectorContent" unique_id=356686219]
+metadata/_edit_lock_ = true
+
+[node name="PineTall02" parent="SectorContent/Vegetation" unique_id=1909626864 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 347.36676, 7.014783, 306.47675)
+
+[node name="PineTall03" parent="SectorContent/Vegetation" unique_id=915288904 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.6201, 7.014783, 295.4411)
+
+[node name="PineTall04" parent="SectorContent/Vegetation" unique_id=23968472 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 347.36676, 7.014783, 299.1341)
+
+[node name="PineTall05" parent="SectorContent/Vegetation" unique_id=1780384698 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340.33, 7.014783, 302.78375)
+
+[node name="PineTall06" parent="SectorContent/Vegetation" unique_id=575930003 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 336.0357, 7.014783, 310.4201)
+
+[node name="PineTall07" parent="SectorContent/Vegetation" unique_id=1565857523 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340.33, 7.014783, 295.4411)
+
+[node name="PineTall08" parent="SectorContent/Vegetation" unique_id=447171556 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 333.07666, 7.014783, 299.1341)
+
+[node name="PineTall01" parent="SectorContent/Vegetation" unique_id=1015208729 instance=ExtResource("7_q44vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.6201, 7.014783, 302.78375)
+
+[node name="Buildings" type="Node3D" parent="SectorContent" unique_id=871814195]
+metadata/_edit_lock_ = true
+
+[node name="NPCs" type="Node3D" parent="SectorContent" unique_id=627406434]
+metadata/_edit_lock_ = true
+
+[node name="Props" type="Node3D" parent="SectorContent" unique_id=886929279]
+metadata/_edit_lock_ = true
+
+[node name="destroyed_ship" parent="SectorContent/Props" unique_id=1556019215 instance=ExtResource("7_6wqa4")]
+transform = Transform3D(2.6609085, -0.75314635, -12.702455, 2.536996, 12.748073, -0.22440135, 12.469292, -2.4329975, 2.756322, 283.47443, 2.5446196, 181.37114)

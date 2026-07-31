@@ -27,7 +27,7 @@ animation_source_path: res://assets/characters/player/models/char_6_c583a7dd/str
 visual_scale: 1.0
 ```
 
-El Strongman contiene 25 clips y actua como personaje del mundo jugable provisional
+El Strongman contiene 20 clips y actua como personaje del mundo jugable provisional
 mientras se preparan los demas cuerpos.
 
 ## Preparacion de un personaje en Blender
@@ -104,6 +104,16 @@ Cuando a un personaje le falte una animacion:
 5. Guardarla como Action o pista NLA.
 6. Volver a exportar el GLB completo de ese personaje.
 7. Sustituir su GLB en el proyecto y revalidar sus clips.
+
+Las descargas multianimacion de Meshy llegan como un ZIP con un GLB completo por
+clip. `scripts/tools/combine_meshy_animation_glbs.py` valida que todos compartan
+el mismo rig y consolida sus animaciones en el unico `strong_man.glb` consumido
+por Godot, sin duplicar veinte veces la malla y la textura.
+
+La antigua animacion externa de tala se elimino. Mientras no exista un nuevo
+hachazo dedicado, el alias `shared/chop` utiliza `attack`, incluido en el propio
+GLB del personaje. `heavy_hammer_swing` se conserva como una accion independiente
+para futuros ataques de martillo.
 
 Este trabajo se repite por personaje cuando sus rigs sean diferentes. Si en el
 futuro todos los cuerpos se vinculan al mismo armature maestro, se podra volver a

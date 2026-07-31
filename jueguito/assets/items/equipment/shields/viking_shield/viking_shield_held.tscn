@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b2puuguxk0ply"]
+
+[ext_resource type="PackedScene" uid="uid://byetlag4tfwy8" path="res://assets/items/equipment/shields/viking_shield/viking_shield.glb" id="1_model"]
+
+[node name="HeldItem" type="Node3D" unique_id=29931391]
+
+[node name="Visual" type="Node3D" parent="." unique_id=905980747 instance=ExtResource("1_model")]
+transform = Transform3D(0.047400482, 0.04396673, 0.30603912, 0.36373243, -0.023660375, -0.03371311, 0.01863071, 0.36774176, -0.041065313, 0.028781636, -0.052778088, 0.009778809)

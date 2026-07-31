@@ -65,7 +65,7 @@ func _validate_player_model(model_path: String) -> String:
 	elif failure.is_empty() and animation_player == null:
 		failure = "El cuerpo no expuso AnimationPlayer: " + model_path
 	elif failure.is_empty():
-		for alias in [&"idle", &"walk", &"run"]:
+		for alias in [&"idle", &"walk", &"run", &"swim_idle", &"swim_forward", &"chop"]:
 			var animation_name := AnimationRetargeter.shared_animation_name(alias)
 			if not animation_player.has_animation(animation_name):
 				failure = "Falta %s en Player: %s" % [animation_name, model_path]

@@ -1,0 +1,7 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+GameManager: Inventario actualizado autoritativamente -> { "Hierro": 5, "Madera": 14, "Hacha de leñador": 1, "Espada vikinga": 2, "Escudo vikingo": 1, "Arco vikingo": 1 }
+HARVESTABLE_TREE_FLOW_SMOKE_OK variants=6

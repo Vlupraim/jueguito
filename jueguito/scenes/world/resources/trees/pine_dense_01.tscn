@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/harvestable_tree.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_05.glb" id="2_model"]
+
+[node name="PineDense01" instance=ExtResource("1_base")]
+display_name = "Pino denso"
+amount = 4
+model_scene = ExtResource("2_model")
+visual_height = 8.2
+trunk_radius = 0.4
+trunk_height = 4.6

@@ -8,6 +8,25 @@ const SECTOR_OVERRIDES_PATH := "res://data/terrain3d_sector_overrides.json"
 const TERRAIN3D_EXPORT_DIR := "res://data/terrain3d_exports"
 const TERRAIN3D_EDIT_DIR := "res://data/terrain3d_edits"
 const TERRAIN3D_EDIT_BACKUP_DIR := "res://data/terrain3d_edit_backups"
+const SECTOR_CONTENT_DIR := "res://scenes/world/sectors/handmade"
+const SECTOR_CONTENT_BACKUP_DIR := "res://data/sector_content_backups"
+const SECTOR_CONTENT_ROOT_NAME := &"SectorContent"
+const SECTOR_CONTENT_VERSION := 1
+const SECTOR_CONTENT_CATEGORIES: Array[StringName] = [
+	&"Rocks",
+	&"Vegetation",
+	&"Buildings",
+	&"NPCs",
+	&"Props",
+]
+const WORKSPACE_INFRASTRUCTURE_NODES: Array[StringName] = [
+	&"WorkspaceCamera",
+	&"WorkspaceLight",
+	&"Importer",
+	&"SectorGuide",
+	&"OceanPreview",
+	SECTOR_CONTENT_ROOT_NAME,
+]
 const TERRAIN3D_ASSETS_PATH := "res://assets/environment/terrain/jueguito_terrain_assets.tres"
 const TERRAIN3D_MATERIAL_PATH := "res://assets/environment/terrain/jueguito_terrain_material.tres"
 const TERRAIN3D_SECTOR_RESOLUTION := 512
@@ -73,6 +92,7 @@ var exported_sectors: Dictionary = {}
 var multi_selected_sectors: Dictionary = {}
 var selected_sector := Vector2i(33, 19)
 var loaded_sector := NO_SECTOR
+var loaded_content_sector := NO_SECTOR
 var hovered_sector := Vector2i(-1, -1)
 var map_zoom := 1.0
 var map_pan := Vector2.ZERO
@@ -85,6 +105,7 @@ var selection_drag_start := Vector2.ZERO
 var selection_drag_current := Vector2.ZERO
 var selection_drag_base: Dictionary = {}
 var generation_in_progress := false
+var sector_transition_in_progress := false
 var dock_collapsed := false
 var dock_pinned := false
 var batch_current_index := 0
@@ -107,23 +128,25 @@ func _ready() -> void:
 	_load_sector_overrides()
 	_build_ui()
 	_refresh_exports()
+	call_deferred("_initialize_workspace_state")
 
 
 func _exit_tree() -> void:
-	if loaded_sector != NO_SECTOR and not generation_in_progress:
-		_save_loaded_sector()
+	if loaded_sector != NO_SECTOR and not generation_in_progress and not sector_transition_in_progress:
+		_save_loaded_sector_bundle()
 
 
 # Lo invoca EditorPlugin._save_external_data() cuando el usuario pulsa Ctrl+S.
 # No intenta guardar durante una generacion ni cuando el dock no tiene un sector
 # activo, para evitar persistir datos parciales o una escena que no corresponde.
 func save_external_data() -> void:
-	if loaded_sector == NO_SECTOR or generation_in_progress:
+	if loaded_sector == NO_SECTOR or generation_in_progress or sector_transition_in_progress:
 		return
-	if _save_loaded_sector():
-		_set_status("Guardado con Ctrl+S: " + _sector_label(loaded_sector) + " y recursos Terrain3D.")
+	ensure_workspace_content_editable()
+	if _save_loaded_sector_bundle():
+		_set_status("Guardado con Ctrl+S: terreno y contenido de " + _sector_label(loaded_sector) + ".")
 	else:
-		_set_status("Ctrl+S guardo la escena, pero no pude guardar el sector Terrain3D activo.")
+		_set_status("Ctrl+S guardo la escena, pero fallo el guardado seguro del sector activo.")
 
 
 func _build_ui() -> void:
@@ -280,7 +303,7 @@ func _build_ui() -> void:
 	var save_sector_button := Button.new()
 	save_sector_button.text = "Guardar"
 	save_sector_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	save_sector_button.tooltip_text = "Guarda tus ediciones manuales del sector y la libreria compartida de texturas Terrain3D."
+	save_sector_button.tooltip_text = "Guarda y valida el Terrain3D y todos los objetos de SectorContent del sector activo."
 	save_sector_button.pressed.connect(_save_current_sector_pressed)
 	terrain_button_grid.add_child(save_sector_button)
 
@@ -639,6 +662,8 @@ func _draw_map() -> void:
 	_draw_exported_sectors(map_rect)
 	_draw_multi_selected_sectors(map_rect)
 	_draw_sector_grid(map_rect)
+	if loaded_sector != NO_SECTOR:
+		_draw_sector_marker(map_rect, loaded_sector, Color(0.20, 0.86, 1.0, 0.98), 3.5, false)
 	_draw_sector_marker(map_rect, selected_sector, Color(1.0, 0.78, 0.16, 0.92), 2.5, true)
 	if _is_sector_inside(hovered_sector):
 		_draw_sector_marker(map_rect, hovered_sector, Color(1.0, 1.0, 1.0, 0.90), 2.0, false)
@@ -787,7 +812,7 @@ func _handle_map_input(event: InputEvent) -> void:
 							if not multi_selected_sectors.is_empty():
 								multi_selected_sectors.clear()
 							if auto_import_check == null or auto_import_check.button_pressed:
-								_import_selected_sector_centered()
+								await _import_selected_sector_centered()
 						_update_labels()
 						_update_sector_guide()
 						_queue_map_redraw()
@@ -880,9 +905,439 @@ func _clear_hover() -> void:
 	_queue_map_redraw()
 
 
+func _initialize_workspace_state() -> void:
+	var workspace := _find_workspace_root()
+	if workspace == null:
+		return
+	var content := _find_sector_content_node()
+	_repair_misplaced_workspace_infrastructure(content, workspace)
+	var inferred_sector := _infer_workspace_sector()
+	if inferred_sector == NO_SECTOR:
+		_set_status("Workspace listo, pero no pude determinar el sector activo. Carga uno antes de agregar contenido.")
+		return
+
+	selected_sector = inferred_sector
+	loaded_sector = inferred_sector
+	var declared_sector := _declared_content_sector(content)
+	var recovered_unassigned := false
+	var recovered_backup := false
+	if content != null and declared_sector == inferred_sector:
+		loaded_content_sector = inferred_sector
+		_normalize_sector_content(content, inferred_sector)
+		recovered_backup = _recover_richer_content_backup(content, inferred_sector)
+		_make_sector_content_editable(content, workspace)
+	else:
+		if content != null and declared_sector != NO_SECTOR and declared_sector != inferred_sector:
+			loaded_sector = NO_SECTOR
+			_set_status("SectorContent declara " + _sector_label(declared_sector) + ", pero Terrain3D apunta a " + _sector_label(inferred_sector) + ". Carga el sector correcto antes de editar.")
+			_update_sector_guide()
+			_update_labels()
+			return
+		var prepared := _prepare_sector_content(inferred_sector)
+		if not bool(prepared.get("ok", false)):
+			loaded_sector = NO_SECTOR
+			_set_status(str(prepared.get("message", "No pude preparar el contenido del sector.")))
+			_update_sector_guide()
+			_update_labels()
+			return
+		var prepared_content := prepared.get("node") as Node3D
+		recovered_backup = bool(prepared.get("recovered_backup", false))
+		recovered_unassigned = content != null and _sector_content_has_objects(content)
+		if recovered_unassigned:
+			_merge_sector_content_nodes(content, prepared_content, inferred_sector)
+		recovered_backup = _recover_richer_content_backup(prepared_content, inferred_sector) or recovered_backup
+		if not _activate_sector_content(prepared_content, inferred_sector):
+			loaded_sector = NO_SECTOR
+			_set_status("No pude activar el contenido artesanal del sector inferido.")
+			_update_sector_guide()
+			_update_labels()
+			return
+
+	_update_ocean_preview(inferred_sector)
+	_set_workspace_loaded_sector_metadata(inferred_sector)
+	_update_sector_guide()
+	_update_labels()
+	var loose_nodes := _workspace_loose_content_names()
+	if loose_nodes.is_empty():
+		if recovered_backup:
+			_set_status("Recupere el contenido completo de respaldo para " + _sector_label(inferred_sector) + " sin reemplazar tus objetos actuales. Pulsa Guardar para confirmarlo.")
+		elif recovered_unassigned:
+			_set_status("Contenido sin coordenadas recuperado y combinado de forma segura con " + _sector_label(inferred_sector) + ". Pulsa Guardar para confirmarlo.")
+		else:
+			_set_status("Sector " + _sector_label(inferred_sector) + " restaurado con terreno y contenido aislado.")
+	else:
+		_set_status(_loose_content_error(loose_nodes))
+
+
+func _infer_workspace_sector() -> Vector2i:
+	var workspace := _find_workspace_root()
+	if workspace != null and workspace.has_meta("loaded_sector_x") and workspace.has_meta("loaded_sector_y"):
+		return Vector2i(int(workspace.get_meta("loaded_sector_x")), int(workspace.get_meta("loaded_sector_y")))
+	var importer := _find_importer_node()
+	if importer == null:
+		return NO_SECTOR
+	var from_edits := _sector_from_storage_path(str(importer.get("data_directory")))
+	if from_edits != NO_SECTOR:
+		return from_edits
+	return _sector_from_storage_path(str(importer.get("height_file_name")))
+
+
+func _set_workspace_loaded_sector_metadata(sector: Vector2i) -> void:
+	var workspace := _find_workspace_root()
+	if workspace == null:
+		return
+	workspace.set_meta("loaded_sector_x", sector.x)
+	workspace.set_meta("loaded_sector_y", sector.y)
+	if editor_interface != null:
+		editor_interface.mark_scene_as_unsaved()
+
+
+func _sector_from_storage_path(path: String) -> Vector2i:
+	if path.is_empty():
+		return NO_SECTOR
+	var normalized := path.replace("\\", "/")
+	var marker_index := normalized.rfind("sector_")
+	if marker_index < 0:
+		return NO_SECTOR
+	var suffix := normalized.substr(marker_index + 7)
+	var end_index := suffix.find("/")
+	if end_index >= 0:
+		suffix = suffix.left(end_index)
+	suffix = suffix.trim_suffix(".tscn")
+	var parts := suffix.split("_")
+	if parts.size() != 2 or not parts[0].is_valid_int() or not parts[1].is_valid_int():
+		return NO_SECTOR
+	return Vector2i(int(parts[0]), int(parts[1]))
+
+
+func _find_workspace_root() -> Node:
+	if editor_interface == null:
+		return null
+	var root: Node = editor_interface.get_edited_scene_root()
+	if root == null or root.name != &"Terrain3DSectorWorkspace":
+		return null
+	return root
+
+
+func _find_sector_content_node() -> Node3D:
+	var root := _find_workspace_root()
+	if root == null:
+		return null
+	return root.get_node_or_null(NodePath(String(SECTOR_CONTENT_ROOT_NAME))) as Node3D
+
+
+func _create_empty_sector_content(sector: Vector2i) -> Node3D:
+	var content := Node3D.new()
+	content.name = SECTOR_CONTENT_ROOT_NAME
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		var category := Node3D.new()
+		category.name = category_name
+		content.add_child(category)
+		category.owner = content
+	_set_content_sector_metadata(content, sector)
+	return content
+
+
+func _prepare_sector_content(sector: Vector2i) -> Dictionary:
+	var content_path := _sector_content_path(sector)
+	if not ResourceLoader.exists(content_path):
+		return {"ok": true, "node": _create_empty_sector_content(sector), "created": true}
+
+	var packed := ResourceLoader.load(content_path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
+	if packed == null:
+		return {"ok": false, "message": "La escena de contenido " + content_path + " no se puede abrir; cambio cancelado."}
+	var content := packed.instantiate() as Node3D
+	if content == null:
+		return {"ok": false, "message": "La raiz de " + content_path + " no es Node3D; cambio cancelado."}
+	var declared_sector := _declared_content_sector(content)
+	if declared_sector != NO_SECTOR and declared_sector != sector:
+		content.free()
+		return {"ok": false, "message": "La escena " + content_path + " declara otro sector; cambio cancelado para evitar mezcla."}
+	content.scene_file_path = ""
+	_normalize_sector_content(content, sector)
+	var validation_error := _validate_sector_content(content, sector, true)
+	if not validation_error.is_empty():
+		content.free()
+		return {"ok": false, "message": validation_error + " Cambio cancelado."}
+	var recovered_backup := _recover_richer_content_backup(content, sector)
+	return {"ok": true, "node": content, "created": false, "recovered_backup": recovered_backup}
+
+
+func _activate_sector_content(content: Node3D, sector: Vector2i) -> bool:
+	var workspace := _find_workspace_root()
+	if workspace == null or content == null:
+		return false
+	var old_content := _find_sector_content_node()
+	if old_content != null:
+		var selection = editor_interface.get_selection()
+		for selected_node in selection.get_selected_nodes():
+			if selected_node == old_content or old_content.is_ancestor_of(selected_node):
+				selection.clear()
+				break
+		workspace.remove_child(old_content)
+		old_content.free()
+	content.name = SECTOR_CONTENT_ROOT_NAME
+	workspace.add_child(content)
+	content.owner = workspace
+	_make_sector_content_editable(content, workspace)
+	_set_content_sector_metadata(content, sector)
+	loaded_content_sector = sector
+	editor_interface.mark_scene_as_unsaved()
+	return true
+
+
+func ensure_workspace_content_editable() -> void:
+	var workspace := _find_workspace_root()
+	var content := _find_sector_content_node()
+	if workspace == null or content == null:
+		return
+	_repair_misplaced_workspace_infrastructure(content, workspace)
+	if loaded_content_sector != NO_SECTOR:
+		_recover_richer_content_backup(content, loaded_content_sector)
+	_make_sector_content_editable(content, workspace)
+
+
+# Las escenas de sector se empaquetan con SectorContent como owner, pero al
+# insertarlas en el workspace Godot ocultaria esos nodos como internos de un
+# bloque unico. Promover solo los nodos pertenecientes a esa escena permite
+# editarlos desde el arbol sin expandir los hijos internos de GLB u otras escenas.
+func _make_sector_content_editable(content: Node3D, workspace: Node) -> void:
+	if content == null or workspace == null:
+		return
+	content.owner = workspace
+	content.set_meta("_edit_lock_", true)
+	_promote_sector_content_owners(content, content, workspace)
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		var category := content.get_node_or_null(NodePath(String(category_name)))
+		if category != null:
+			category.set_meta("_edit_lock_", true)
+
+
+func _promote_sector_content_owners(node: Node, content_owner: Node, workspace: Node) -> void:
+	for child in node.get_children():
+		if child.owner == content_owner:
+			child.owner = workspace
+		_promote_sector_content_owners(child, content_owner, workspace)
+
+
+func _repair_misplaced_workspace_infrastructure(content: Node3D, workspace: Node) -> Array[String]:
+	var repaired: Array[String] = []
+	if content == null or workspace == null:
+		return repaired
+	for infrastructure_name in WORKSPACE_INFRASTRUCTURE_NODES:
+		if infrastructure_name == SECTOR_CONTENT_ROOT_NAME:
+			continue
+		var misplaced := content.find_child(String(infrastructure_name), true, false)
+		if misplaced == null:
+			continue
+		var existing := workspace.get_node_or_null(NodePath(String(infrastructure_name)))
+		if existing != null and existing != misplaced:
+			continue
+		var preserve_global_transform := misplaced.is_inside_tree() and workspace.is_inside_tree()
+		misplaced.owner = null
+		misplaced.reparent(workspace, preserve_global_transform)
+		misplaced.owner = workspace
+		repaired.append(String(infrastructure_name))
+	if not repaired.is_empty() and editor_interface != null:
+		editor_interface.mark_scene_as_unsaved()
+	return repaired
+
+
+func _recover_richer_content_backup(content: Node3D, sector: Vector2i) -> bool:
+	if content == null:
+		return false
+	var canonical_path := _sector_content_path(sector)
+	var backup_path := _sector_content_backup_path(sector)
+	if not ResourceLoader.exists(canonical_path) and ResourceLoader.exists(backup_path):
+		var backup_result := _load_content_scene_for_recovery(backup_path, sector)
+		if bool(backup_result.get("ok", false)):
+			var backup := backup_result.get("node") as Node3D
+			_merge_sector_content_nodes(backup, content, sector, true)
+			backup.free()
+			if editor_interface != null:
+				editor_interface.mark_scene_as_unsaved()
+			return true
+	return false
+
+
+func _load_content_scene_for_recovery(path: String, sector: Vector2i) -> Dictionary:
+	var packed := ResourceLoader.load(path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
+	if packed == null:
+		return {"ok": false}
+	var content := packed.instantiate() as Node3D
+	if content == null:
+		return {"ok": false}
+	content.scene_file_path = ""
+	var declared_sector := _declared_content_sector(content)
+	if declared_sector != NO_SECTOR and declared_sector != sector:
+		content.free()
+		return {"ok": false}
+	_normalize_sector_content(content, sector)
+	var validation_error := _validate_sector_content(content, sector, true)
+	if not validation_error.is_empty():
+		content.free()
+		return {"ok": false}
+	return {"ok": true, "node": content}
+
+
+func _free_recovery_result(result: Dictionary) -> void:
+	var node := result.get("node") as Node
+	if node != null:
+		node.free()
+
+
+func _sector_content_object_count(content: Node3D) -> int:
+	if content == null:
+		return 0
+	var count := 0
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		var category := content.get_node_or_null(NodePath(String(category_name)))
+		if category != null:
+			count += category.get_child_count()
+	return count
+
+
+func _normalize_sector_content(content: Node3D, sector: Vector2i) -> void:
+	content.name = SECTOR_CONTENT_ROOT_NAME
+	var categories: Dictionary = {}
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		var category := content.get_node_or_null(NodePath(String(category_name))) as Node3D
+		if category == null:
+			category = Node3D.new()
+			category.name = category_name
+			content.add_child(category)
+			category.owner = content
+		categories[category_name] = category
+
+	for child in content.get_children().duplicate():
+		if child.name in SECTOR_CONTENT_CATEGORIES:
+			continue
+		var destination := categories.get(_category_for_content_node(child)) as Node3D
+		if destination == null:
+			destination = categories.get(&"Props") as Node3D
+		child.owner = null
+		content.remove_child(child)
+		destination.add_child(child)
+		child.owner = content
+	_set_content_sector_metadata(content, sector)
+
+
+func _merge_sector_content_nodes(source: Node3D, destination: Node3D, sector: Vector2i, prefer_destination_on_name_conflict: bool = false) -> void:
+	if source == null or destination == null or source == destination:
+		return
+	_normalize_sector_content(source, sector)
+	_normalize_sector_content(destination, sector)
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		var source_category := source.get_node_or_null(NodePath(String(category_name))) as Node3D
+		var destination_category := destination.get_node_or_null(NodePath(String(category_name))) as Node3D
+		if source_category == null or destination_category == null:
+			continue
+		for child in source_category.get_children().duplicate():
+			if prefer_destination_on_name_conflict and destination_category.get_node_or_null(NodePath(String(child.name))) != null:
+				child.free()
+				continue
+			child.owner = null
+			source_category.remove_child(child)
+			destination_category.add_child(child, true)
+			child.owner = destination
+	_set_content_sector_metadata(destination, sector)
+
+
+func _category_for_content_node(node: Node) -> StringName:
+	var lower_name := String(node.name).to_lower()
+	if lower_name.contains("rock") or lower_name.contains("stone") or lower_name.contains("piedra"):
+		return &"Rocks"
+	if lower_name.contains("tree") or lower_name.contains("bush") or lower_name.contains("grass") or lower_name.contains("plant") or lower_name.contains("veget"):
+		return &"Vegetation"
+	if lower_name.contains("house") or lower_name.contains("building") or lower_name.contains("wall") or lower_name.contains("bridge") or lower_name.contains("casa"):
+		return &"Buildings"
+	if lower_name.contains("npc") or lower_name.contains("enemy") or lower_name.contains("character") or lower_name.contains("villager"):
+		return &"NPCs"
+	return &"Props"
+
+
+func _set_content_sector_metadata(content: Node, sector: Vector2i) -> void:
+	content.set_meta("content_version", SECTOR_CONTENT_VERSION)
+	content.set_meta("sector_x", sector.x)
+	content.set_meta("sector_y", sector.y)
+
+
+func _declared_content_sector(content: Node) -> Vector2i:
+	if content == null or not content.has_meta("sector_x") or not content.has_meta("sector_y"):
+		return NO_SECTOR
+	return Vector2i(int(content.get_meta("sector_x")), int(content.get_meta("sector_y")))
+
+
+func _validate_sector_content(content: Node3D, sector: Vector2i, require_metadata: bool) -> String:
+	if content == null or content.name != SECTOR_CONTENT_ROOT_NAME:
+		return "Contenido invalido: la raiz debe llamarse SectorContent."
+	var declared_sector := _declared_content_sector(content)
+	if require_metadata and declared_sector == NO_SECTOR:
+		return "Contenido invalido: faltan las coordenadas del sector."
+	if declared_sector != NO_SECTOR and declared_sector != sector:
+		return "Contenido invalido: pertenece a " + _sector_label(declared_sector) + " y no a " + _sector_label(sector) + "."
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		if not (content.get_node_or_null(NodePath(String(category_name))) is Node3D):
+			return "Contenido invalido: falta SectorContent/" + String(category_name) + "."
+	for forbidden_name in WORKSPACE_INFRASTRUCTURE_NODES:
+		if forbidden_name == SECTOR_CONTENT_ROOT_NAME:
+			continue
+		if content.find_child(String(forbidden_name), true, false) != null:
+			return "Contenido invalido: " + String(forbidden_name) + " es infraestructura del workspace y no puede guardarse dentro del sector."
+	return ""
+
+
+func _sector_content_has_objects(content: Node3D) -> bool:
+	if content == null:
+		return false
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		var category := content.get_node_or_null(NodePath(String(category_name)))
+		if category != null and category.get_child_count() > 0:
+			return true
+	for child in content.get_children():
+		if not (child.name in SECTOR_CONTENT_CATEGORIES):
+			return true
+	return false
+
+
+func _workspace_loose_content_names() -> Array[String]:
+	var names: Array[String] = []
+	var workspace := _find_workspace_root()
+	if workspace == null:
+		return names
+	for child in workspace.get_children():
+		if child.name in WORKSPACE_INFRASTRUCTURE_NODES:
+			continue
+		if child is Node3D:
+			names.append(String(child.name))
+	return names
+
+
+func _loose_content_error(names: Array[String]) -> String:
+	var preview := names.slice(0, mini(names.size(), 5))
+	var suffix := "..." if names.size() > preview.size() else ""
+	return "Cambio bloqueado: hay objetos fuera de SectorContent (" + ", ".join(preview) + suffix + "). Muevelos a Rocks, Vegetation, Buildings, NPCs o Props para que no se mezclen entre sectores."
+
+
 func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
-	var export_dir := str(exported_sectors.get(_sector_key(selected_sector), ""))
-	var edit_dir := _sector_edit_dir(selected_sector)
+	if sector_transition_in_progress:
+		_set_status("Ya hay un cambio de sector Terrain3D en curso.")
+		return false
+	sector_transition_in_progress = true
+	var target_sector := selected_sector
+	_set_generation_buttons_enabled(false)
+	_set_ocean_preview_transition(true)
+	var imported := await _import_selected_sector_centered_staged(target_sector, force_fresh)
+	_set_ocean_preview_transition(false)
+	sector_transition_in_progress = false
+	if not generation_in_progress:
+		_set_generation_buttons_enabled(true)
+	return imported
+
+
+func _import_selected_sector_centered_staged(target_sector: Vector2i, force_fresh: bool = false) -> bool:
+	var export_dir := str(exported_sectors.get(_sector_key(target_sector), ""))
+	var edit_dir := _sector_edit_dir(target_sector)
 	var has_saved_edits := _edit_dir_has_data(edit_dir)
 	if export_dir.is_empty() and (force_fresh or not has_saved_edits):
 		_set_status("Ese sector no tiene export Terrain3D. Usa Generar + cargar.")
@@ -894,32 +1349,98 @@ func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
 		return false
 	_ensure_importer_shared_resources(importer)
 
-	# Guardar las ediciones del sector que estabamos editando antes de cambiar.
-	if loaded_sector != NO_SECTOR and loaded_sector != selected_sector:
-		_save_loaded_sector()
+	# Los scripts @tool pueden recargarse mientras el dock ya esta abierto; en ese
+	# caso _ready() no vuelve a ejecutarse y el workspace puede mostrar terreno
+	# aunque loaded_sector siga en NO_SECTOR. Recuperar el estado aqui vuelve el
+	# primer clic autocorrectivo, sin exigir reiniciar Godot.
+	if loaded_sector == NO_SECTOR or loaded_content_sector == NO_SECTOR:
+		var requested_sector := target_sector
+		_initialize_workspace_state()
+		selected_sector = requested_sector
+		_update_labels()
+		if loaded_sector == NO_SECTOR or loaded_content_sector == NO_SECTOR:
+			return false
+
+	var loose_nodes := _workspace_loose_content_names()
+	if not loose_nodes.is_empty():
+		_set_status(_loose_content_error(loose_nodes))
+		return false
+	var current_content := _find_sector_content_node()
+	if loaded_content_sector == NO_SECTOR and _sector_content_has_objects(current_content):
+		_set_status("Cambio bloqueado: SectorContent tiene objetos, pero no esta asignado a ningun sector. Guarda o recupera su sector antes de continuar.")
+		return false
+
+	var needs_content_switch := loaded_content_sector != target_sector
+	var prepared_content: Node3D = null
+	var created_content := false
+	if needs_content_switch:
+		var prepared := _prepare_sector_content(target_sector)
+		if not bool(prepared.get("ok", false)):
+			_set_status(str(prepared.get("message", "No pude validar el contenido del sector destino.")))
+			return false
+		prepared_content = prepared.get("node") as Node3D
+		created_content = bool(prepared.get("created", false))
+
+	# Guardar y validar terreno + objetos antes de modificar el workspace.
+	if loaded_sector != NO_SECTOR and loaded_sector != target_sector:
+		_set_status("Guardando y validando " + _sector_label(loaded_sector) + " antes de cambiar...")
+		if not _save_loaded_sector_bundle():
+			if prepared_content != null:
+				prepared_content.free()
+			_set_status("No pude guardar terreno y contenido de " + _sector_label(loaded_sector) + "; cambio cancelado sin limpiar la escena.")
+			return false
+		await get_tree().process_frame
 
 	# Si el sector ya tiene ediciones guardadas y no estamos regenerando, cargarlas.
 	if not force_fresh and has_saved_edits:
 		if importer.has_method("reset_terrain"):
 			importer.call("reset_terrain", true)
+		await get_tree().process_frame
+		if not export_dir.is_empty():
+			var saved_height_path := ProjectSettings.globalize_path(export_dir + "/height.exr")
+			var saved_control_path := ProjectSettings.globalize_path(export_dir + "/control.exr")
+			importer.set("height_file_name", saved_height_path if FileAccess.file_exists(saved_height_path) else "")
+			importer.set("control_file_name", saved_control_path if FileAccess.file_exists(saved_control_path) else "")
 		importer.set("data_directory", edit_dir)
-		loaded_sector = selected_sector
+		await get_tree().process_frame
+		await get_tree().process_frame
+		if not _terrain_data_matches_directory(importer, edit_dir):
+			if prepared_content != null:
+				prepared_content.free()
+			loaded_sector = NO_SECTOR
+			_update_sector_guide()
+			_set_status("Terrain3D no confirmo la carga de " + _sector_label(target_sector) + "; cambio cancelado para evitar mostrar el sector anterior.")
+			_update_labels()
+			return false
+		if needs_content_switch and not _activate_sector_content(prepared_content, target_sector):
+			prepared_content.free()
+			loaded_sector = NO_SECTOR
+			_set_status("El terreno cargo, pero no pude activar su contenido. No continues editando hasta recargar el sector.")
+			return false
+		loaded_sector = target_sector
+		_set_workspace_loaded_sector_metadata(target_sector)
+		_update_sector_guide()
 		_update_ocean_preview(loaded_sector)
 		var saved_extra_count := _refresh_cleanup_regions_button(importer)
-		_set_status("Cargado " + _sector_label(selected_sector) + " con tus ediciones guardadas." + _outside_regions_warning(saved_extra_count))
+		var content_note := " Contenido nuevo y limpio." if created_content else " Contenido artesanal cargado."
+		_set_status("Cargado " + _sector_label(target_sector) + " con tus ediciones guardadas." + content_note + _outside_regions_warning(saved_extra_count))
 		call_deferred("_refresh_loaded_region_limit_state", importer)
+		_update_labels()
 		return true
 
 	# Importacion fresca desde el height.exr generado por los scripts.
 	var height_path := ProjectSettings.globalize_path(export_dir + "/height.exr")
 	if not FileAccess.file_exists(height_path):
-		_set_status("Falta height.exr para " + _sector_label(selected_sector) + ".")
+		if prepared_content != null:
+			prepared_content.free()
+		_set_status("Falta height.exr para " + _sector_label(target_sector) + ".")
 		return false
 	var control_path := ProjectSettings.globalize_path(export_dir + "/control.exr")
 	var has_control := FileAccess.file_exists(control_path)
 
 	if importer.has_method("reset_terrain"):
 		importer.call("reset_terrain", true)
+		await get_tree().process_frame
 	importer.set("height_file_name", height_path)
 	importer.set("control_file_name", control_path if has_control else "")
 	importer.set("color_file_name", "")
@@ -932,24 +1453,41 @@ func _import_selected_sector_centered(force_fresh: bool = false) -> bool:
 		importer.set("run_import", true)
 	if importer.has_method("update_heights"):
 		importer.call("update_heights", true)
+	await get_tree().process_frame
 
 	# Al regenerar descartamos ediciones viejas: la base cambio.
 	if force_fresh:
 		_clear_edit_dir(edit_dir)
 
-	# Persistir la carga y enlazar data_directory para que Ctrl+S tambien guarde.
-	var saved_dir := _save_loaded_sector_to(importer, edit_dir)
-	if saved_dir:
-		importer.set("data_directory", edit_dir)
+	# Persistir la carga sin volver a asignar data_directory. reset_terrain() lo deja
+	# vacio y los datos importados ya estan activos en memoria. Reasignar aqui el
+	# directorio recien escrito fuerza una segunda carga nativa mientras el editor
+	# detecta los .res nuevos, una carrera que puede terminar en un access violation.
+	if not _save_loaded_sector_to(importer, edit_dir):
+		if prepared_content != null:
+			prepared_content.free()
+		loaded_sector = NO_SECTOR
+		_set_status("Terrain3D importo " + _sector_label(target_sector) + ", pero no pude guardar sus regiones.")
+		return false
+	await get_tree().process_frame
 
-	loaded_sector = selected_sector
+	if needs_content_switch and not _activate_sector_content(prepared_content, target_sector):
+		prepared_content.free()
+		loaded_sector = NO_SECTOR
+		_set_status("El terreno cargo, pero no pude activar su contenido. No continues editando hasta recargar el sector.")
+		return false
+	loaded_sector = target_sector
+	_set_workspace_loaded_sector_metadata(target_sector)
+	_update_sector_guide()
 	_update_ocean_preview(loaded_sector)
 	var imported_extra_count := _refresh_cleanup_regions_button(importer)
+	var fresh_content_note := " Contenido nuevo y limpio." if created_content else " Contenido artesanal cargado."
 	if force_fresh:
-		_set_status("Base fresca importada " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base.") + " Ediciones anteriores respaldadas." + _outside_regions_warning(imported_extra_count))
+		_set_status("Base fresca importada " + _sector_label(target_sector) + (" con materiales base." if has_control else " sin materiales base.") + " Ediciones anteriores respaldadas." + fresh_content_note + _outside_regions_warning(imported_extra_count))
 	else:
-		_set_status("Cargado " + _sector_label(selected_sector) + (" con materiales base." if has_control else " sin materiales base. Regeneralo para crear control.exr.") + _outside_regions_warning(imported_extra_count))
+		_set_status("Cargado " + _sector_label(target_sector) + (" con materiales base." if has_control else " sin materiales base. Regeneralo para crear control.exr.") + fresh_content_note + _outside_regions_warning(imported_extra_count))
 	call_deferred("_refresh_loaded_region_limit_state", importer)
+	_update_labels()
 	return true
 
 
@@ -957,10 +1495,11 @@ func _save_current_sector_pressed() -> void:
 	if loaded_sector == NO_SECTOR:
 		_set_status("No hay sector cargado para guardar.")
 		return
-	if _save_loaded_sector():
-		_set_status("Guardado " + _sector_label(loaded_sector) + " y libreria de texturas Terrain3D.")
+	ensure_workspace_content_editable()
+	if _save_loaded_sector_bundle():
+		_set_status("Guardado y validado terreno + contenido de " + _sector_label(loaded_sector) + ".")
 	else:
-		_set_status("No pude guardar el sector. Revisa que el nodo Importer este en la escena.")
+		_set_status("No pude completar el guardado seguro. El cambio de sector quedara bloqueado.")
 
 
 func _request_cleanup_outside_regions() -> void:
@@ -1098,6 +1637,194 @@ func _save_loaded_sector() -> bool:
 	return _save_loaded_sector_to(importer, _sector_edit_dir(loaded_sector))
 
 
+func _terrain_data_matches_directory(importer: Node, expected_directory: String) -> bool:
+	if importer == null:
+		return false
+	var current_dir := str(importer.get("data_directory")).replace("\\", "/").trim_suffix("/")
+	var normalized_expected := expected_directory.replace("\\", "/").trim_suffix("/")
+	if current_dir != normalized_expected and ProjectSettings.globalize_path(current_dir).replace("\\", "/").trim_suffix("/") != ProjectSettings.globalize_path(normalized_expected).replace("\\", "/").trim_suffix("/"):
+		return false
+	var terrain_data = importer.get("data")
+	if terrain_data == null:
+		return false
+	var regions: Array = terrain_data.call("get_regions_active")
+	if regions.is_empty():
+		return true
+	var expected_prefix := normalized_expected + "/"
+	for region in regions:
+		if not (region is Resource):
+			continue
+		var resource_path := (region as Resource).resource_path.replace("\\", "/")
+		if not resource_path.is_empty() and not resource_path.begins_with(expected_prefix):
+			return false
+	return true
+
+
+func _save_loaded_sector_bundle() -> bool:
+	if loaded_sector == NO_SECTOR:
+		return false
+	# El terreno se persiste aunque luego la validacion de objetos detecte un
+	# problema. Asi una piedra mal ubicada nunca impide salvar una pincelada.
+	if not _save_loaded_sector():
+		return false
+	if loaded_content_sector != loaded_sector:
+		return false
+	return _save_loaded_sector_content()
+
+
+func _save_loaded_sector_content() -> bool:
+	var content := _find_sector_content_node()
+	var workspace := _find_workspace_root()
+	if content == null or workspace == null or loaded_content_sector == NO_SECTOR:
+		return false
+	_repair_misplaced_workspace_infrastructure(content, workspace)
+	var loose_nodes := _workspace_loose_content_names()
+	if not loose_nodes.is_empty():
+		_set_status(_loose_content_error(loose_nodes))
+		return false
+
+	_normalize_sector_content(content, loaded_content_sector)
+	var validation_error := _validate_sector_content(content, loaded_content_sector, true)
+	if not validation_error.is_empty():
+		_set_status(validation_error)
+		return false
+
+	# Los nodos agregados desde el editor suelen tener como owner la raiz del
+	# workspace. Para empaquetar solo SectorContent se los reasigna de forma
+	# temporal y se restaura inmediatamente despues, incluso si pack() falla.
+	var reassigned_nodes: Array[Node] = []
+	_collect_workspace_owned_content_nodes(content, workspace, reassigned_nodes)
+	for node in reassigned_nodes:
+		node.owner = content
+	var packed := PackedScene.new()
+	var pack_error := packed.pack(content)
+	for node in reassigned_nodes:
+		if is_instance_valid(node):
+			node.owner = workspace
+	if pack_error != OK:
+		_set_status("No pude empaquetar SectorContent: error " + str(pack_error) + ".")
+		return false
+
+	var expected_manifest := _content_manifest(content)
+	var content_path := _sector_content_path(loaded_content_sector)
+	var pending_path := _sector_content_pending_path(loaded_content_sector)
+	var backup_path := _sector_content_backup_path(loaded_content_sector)
+	for directory_path in [SECTOR_CONTENT_DIR, SECTOR_CONTENT_BACKUP_DIR]:
+		var make_error := DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(directory_path))
+		if make_error != OK:
+			_set_status("No pude crear la carpeta de contenido seguro: error " + str(make_error) + ".")
+			return false
+
+	var pending_absolute := ProjectSettings.globalize_path(pending_path)
+	if FileAccess.file_exists(pending_absolute):
+		DirAccess.remove_absolute(pending_absolute)
+	var save_error := ResourceSaver.save(packed, pending_path)
+	if save_error != OK:
+		_set_status("No pude escribir el archivo temporal de SectorContent: error " + str(save_error) + ".")
+		return false
+	var pending_validation := _validate_saved_content_scene(pending_path, loaded_content_sector, expected_manifest)
+	if not bool(pending_validation.get("ok", false)):
+		_set_status(str(pending_validation.get("message", "Fallo la validacion del contenido temporal.")))
+		return false
+
+	var content_absolute := ProjectSettings.globalize_path(content_path)
+	var backup_absolute := ProjectSettings.globalize_path(backup_path)
+	var had_previous := FileAccess.file_exists(content_absolute)
+	if had_previous:
+		var preserve_richer_backup := FileAccess.file_exists(backup_absolute) and _saved_content_object_count(backup_path, loaded_content_sector) > _saved_content_object_count(content_path, loaded_content_sector)
+		if not preserve_richer_backup:
+			if FileAccess.file_exists(backup_absolute):
+				DirAccess.remove_absolute(backup_absolute)
+			var backup_error := DirAccess.copy_absolute(content_absolute, backup_absolute)
+			if backup_error != OK:
+				_set_status("No pude crear el respaldo previo de SectorContent: error " + str(backup_error) + ".")
+				return false
+		var remove_error := DirAccess.remove_absolute(content_absolute)
+		if remove_error != OK:
+			_set_status("No pude preparar el reemplazo seguro de SectorContent: error " + str(remove_error) + ".")
+			return false
+
+	var replace_error := DirAccess.rename_absolute(pending_absolute, content_absolute)
+	if replace_error != OK:
+		if had_previous and FileAccess.file_exists(backup_absolute):
+			DirAccess.copy_absolute(backup_absolute, content_absolute)
+		_set_status("No pude activar el nuevo SectorContent: error " + str(replace_error) + ". El respaldo anterior se conservo.")
+		return false
+
+	var final_validation := _validate_saved_content_scene(content_path, loaded_content_sector, expected_manifest)
+	if not bool(final_validation.get("ok", false)):
+		DirAccess.remove_absolute(content_absolute)
+		if had_previous and FileAccess.file_exists(backup_absolute):
+			DirAccess.copy_absolute(backup_absolute, content_absolute)
+		_set_status(str(final_validation.get("message", "Fallo la validacion final.")) + " Se restauro el respaldo anterior.")
+		return false
+
+	if editor_interface != null:
+		var filesystem = editor_interface.get_resource_filesystem()
+		if filesystem != null:
+			filesystem.update_file(content_path)
+	return true
+
+
+func _collect_workspace_owned_content_nodes(node: Node, workspace: Node, output: Array[Node]) -> void:
+	for child in node.get_children():
+		if child.owner == workspace:
+			output.append(child)
+		_collect_workspace_owned_content_nodes(child, workspace, output)
+
+
+func _validate_saved_content_scene(path: String, sector: Vector2i, expected_manifest: Array[String]) -> Dictionary:
+	var packed := ResourceLoader.load(path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
+	if packed == null:
+		return {"ok": false, "message": "Validacion fallida: no pude volver a abrir " + path + "."}
+	var loaded := packed.instantiate() as Node3D
+	if loaded == null:
+		return {"ok": false, "message": "Validacion fallida: " + path + " no contiene una raiz Node3D."}
+	var validation_error := _validate_sector_content(loaded, sector, true)
+	var actual_manifest := _content_manifest(loaded)
+	loaded.free()
+	if not validation_error.is_empty():
+		return {"ok": false, "message": "Validacion fallida en " + path + ": " + validation_error}
+	if actual_manifest != expected_manifest:
+		return {"ok": false, "message": "Validacion fallida: el archivo guardado no contiene exactamente los mismos nodos que SectorContent."}
+	return {"ok": true}
+
+
+func _saved_content_object_count(path: String, sector: Vector2i) -> int:
+	var result := _load_content_scene_for_recovery(path, sector)
+	if not bool(result.get("ok", false)):
+		return -1
+	var content := result.get("node") as Node3D
+	var count := _sector_content_object_count(content)
+	content.free()
+	return count
+
+
+func _content_manifest(root: Node) -> Array[String]:
+	var manifest: Array[String] = []
+	_append_content_manifest(root, root, manifest)
+	manifest.sort()
+	return manifest
+
+
+func _append_content_manifest(root: Node, node: Node, manifest: Array[String]) -> void:
+	for child in node.get_children():
+		manifest.append(str(root.get_path_to(child)) + "|" + child.get_class())
+		_append_content_manifest(root, child, manifest)
+
+
+func _sector_content_path(sector: Vector2i) -> String:
+	return SECTOR_CONTENT_DIR + "/sector_%d_%d.tscn" % [sector.x, sector.y]
+
+
+func _sector_content_pending_path(sector: Vector2i) -> String:
+	return SECTOR_CONTENT_DIR + "/sector_%d_%d.pending.tscn" % [sector.x, sector.y]
+
+
+func _sector_content_backup_path(sector: Vector2i) -> String:
+	return SECTOR_CONTENT_BACKUP_DIR + "/sector_%d_%d.previous.tscn" % [sector.x, sector.y]
+
+
 func _save_loaded_sector_to(importer: Node, edit_dir: String) -> bool:
 	_ensure_importer_shared_resources(importer)
 	var terrain_data = importer.get("data")
@@ -1105,7 +1832,11 @@ func _save_loaded_sector_to(importer: Node, edit_dir: String) -> bool:
 		return false
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(edit_dir))
 	terrain_data.call("save_directory", edit_dir)
-	return _save_importer_shared_resources(importer)
+	# Los assets y el material son recursos externos compartidos. Reescribirlos en
+	# cada guardado de sector (la biblioteca puede pesar varios MB) hace que el
+	# EditorFileSystem intente recargarlos mientras Terrain3D aun los usa. Godot ya
+	# guarda esos .tres cuando realmente se editan; aqui solo persisten las regiones.
+	return _edit_dir_has_data(edit_dir)
 
 
 func _ensure_importer_shared_resources(importer: Node) -> void:
@@ -1117,27 +1848,6 @@ func _ensure_importer_shared_resources(importer: Node) -> void:
 		var current_material: Variant = importer.get("material")
 		if not (current_material is Resource) or (current_material as Resource).resource_path != TERRAIN3D_MATERIAL_PATH:
 			importer.set("material", load(TERRAIN3D_MATERIAL_PATH))
-
-
-func _save_importer_shared_resources(importer: Node) -> bool:
-	var ok := true
-	var assets: Variant = importer.get("assets")
-	if assets is Resource:
-		var assets_resource := assets as Resource
-		var assets_path := assets_resource.resource_path
-		if assets_path.is_empty():
-			assets_path = TERRAIN3D_ASSETS_PATH
-		var assets_error := ResourceSaver.save(assets_resource, assets_path)
-		ok = ok and assets_error == OK
-	var material: Variant = importer.get("material")
-	if material is Resource:
-		var material_resource := material as Resource
-		var material_path := material_resource.resource_path
-		if material_path.is_empty():
-			material_path = TERRAIN3D_MATERIAL_PATH
-		var material_error := ResourceSaver.save(material_resource, material_path)
-		ok = ok and material_error == OK
-	return ok
 
 
 func _sector_edit_dir(sector: Vector2i) -> String:
@@ -1223,7 +1933,7 @@ func _smooth_loaded_sector_pressed() -> void:
 	if generation_in_progress:
 		return
 	if loaded_sector == NO_SECTOR:
-		if not _import_selected_sector_centered(false):
+		if not await _import_selected_sector_centered(false):
 			_set_status("Carga un sector Terrain3D antes de suavizar.")
 			return
 	var importer := _find_importer_node()
@@ -1253,7 +1963,7 @@ func _repair_loaded_sector_pressed() -> void:
 	if generation_in_progress:
 		return
 	if loaded_sector == NO_SECTOR:
-		if not _import_selected_sector_centered(false):
+		if not await _import_selected_sector_centered(false):
 			_set_status("Carga un sector Terrain3D antes de reparar cortes.")
 			return
 	var importer := _find_importer_node()
@@ -1305,7 +2015,7 @@ func _smooth_multi_selection_pressed() -> void:
 		_queue_map_redraw()
 		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Cargando " + _sector_label(sector) + "...")
 		await get_tree().process_frame
-		if not _import_selected_sector_centered(false):
+		if not await _import_selected_sector_centered(false):
 			skipped_count += 1
 			continue
 		var importer := _find_importer_node()
@@ -1358,7 +2068,7 @@ func _repair_multi_selection_pressed() -> void:
 		_queue_map_redraw()
 		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Cargando " + _sector_label(sector) + "...")
 		await get_tree().process_frame
-		if not _import_selected_sector_centered(false):
+		if not await _import_selected_sector_centered(false):
 			skipped_count += 1
 			continue
 		var importer := _find_importer_node()
@@ -1577,7 +2287,7 @@ func _generate_and_import_selected_sector() -> void:
 	_show_generation_progress(92.0, "Cargando en Terrain3D...")
 	_refresh_exports()
 	var max_height := float(result.get("height_max", 0.0))
-	if _import_selected_sector_centered(true):
+	if await _import_selected_sector_centered(true):
 		_set_status("Generado e importado " + _sector_label(selected_sector) + _generation_mode_suffix() + " | altura max " + str(snappedf(max_height, 0.01)) + " m.")
 	else:
 		_set_status("Generado " + _sector_label(selected_sector) + ", pero no pude importarlo automaticamente. Abre terrain3d_sector_workspace.tscn y carga el sector.")
@@ -1878,7 +2588,9 @@ func _update_sector_guide() -> void:
 		return
 	var guide := root.find_child("SectorGuide", true, false)
 	if guide != null:
-		guide.set("origin_sector", selected_sector)
+		guide.visible = loaded_sector != NO_SECTOR
+		if loaded_sector != NO_SECTOR:
+			guide.set("origin_sector", loaded_sector)
 
 
 func _update_ocean_preview(next_sector: Vector2i) -> void:
@@ -1890,6 +2602,17 @@ func _update_ocean_preview(next_sector: Vector2i) -> void:
 	var preview := root.find_child("OceanPreview", true, false)
 	if preview != null and preview.has_method("refresh_for_sector"):
 		preview.call("refresh_for_sector", next_sector)
+
+
+func _set_ocean_preview_transition(active: bool) -> void:
+	if editor_interface == null:
+		return
+	var root: Node = editor_interface.get_edited_scene_root()
+	if root == null:
+		return
+	var preview := root.find_child("OceanPreview", true, false)
+	if preview != null and preview.has_method("set_terrain_transition_active"):
+		preview.call("set_terrain_transition_active", active)
 
 
 func _update_labels() -> void:
@@ -1904,6 +2627,13 @@ func _update_labels() -> void:
 		hover_label.text = "Hover: " + hover_text + "\nZoom: x" + str(snappedf(map_zoom, 0.01))
 	if selected_label != null:
 		var selected_text := "Seleccionado: " + _sector_label(selected_sector) + (" exportado" if _has_export(selected_sector) else " sin export")
+		if loaded_sector == NO_SECTOR:
+			selected_text += "\nATENCION: la vista 3D no tiene un sector cargado."
+		elif loaded_sector != selected_sector:
+			selected_text += "\nATENCION: la vista 3D sigue en " + _sector_label(loaded_sector) + "."
+		else:
+			selected_text += "\nVista 3D cargada: " + _sector_label(loaded_sector)
+		selected_text += " | contenido: " + (_sector_label(loaded_content_sector) if loaded_content_sector != NO_SECTOR else "ninguno")
 		if not multi_selected_sectors.is_empty():
 			selected_text += "\nSeleccion multiple: " + str(multi_selected_sectors.size()) + " sectores"
 		selected_label.text = selected_text
@@ -1979,6 +2709,8 @@ func _sector_details_text(sector: Vector2i) -> String:
 	lines.append("Generacion: " + ("superficies + biomas" if _generation_uses_biomes() else "solo superficies"))
 	var has_edits := _edit_dir_has_data(_sector_edit_dir(sector))
 	lines.append("Edicion guardada: " + ("si (se carga antes que el export)" if has_edits else "no"))
+	var content_path := _sector_content_path(sector)
+	lines.append("Contenido artesanal: " + ("guardado" if ResourceLoader.exists(content_path) else "nuevo / vacio"))
 	if _has_export(sector):
 		var metadata := _export_metadata_for_sector(sector)
 		if metadata.is_empty():

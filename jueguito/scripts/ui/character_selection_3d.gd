@@ -298,9 +298,10 @@ func _update_3d_character(appearance: Dictionary) -> void:
 		return
 	instance.name = "PedestalCharacter"
 	instance.scale = Vector3.ONE * float(appearance.get("visual_scale", 1.0))
-	instance.rotation_degrees.y = 180.0
+	instance.rotation_degrees.y = 0.0
 	spawn_point.add_child(instance)
 	current_spawned_character = instance
+	_tune_preview_materials(instance)
 
 	current_animation_player = _find_animation_player(instance)
 	if current_animation_player != null:
@@ -331,6 +332,26 @@ func _update_3d_character(appearance: Dictionary) -> void:
 	var attachment := instance.find_child("HairAttachment", true, false)
 	if attachment != null:
 		_apply_hair_color(attachment, hair_color)
+
+
+func _tune_preview_materials(root: Node3D) -> void:
+	# El selector tiene un fondo 2D iluminado. Atenuamos solo las copias de los
+	# materiales del preview para que el personaje no parezca emitir luz.
+	for mesh_node in root.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := mesh_node as MeshInstance3D
+		if mesh_instance.mesh == null:
+			continue
+		for surface_index in range(mesh_instance.mesh.get_surface_count()):
+			var material := mesh_instance.get_active_material(surface_index)
+			if material is BaseMaterial3D:
+				var preview_material := material.duplicate() as BaseMaterial3D
+				preview_material.albedo_color *= Color(0.62, 0.58, 0.54, 1.0)
+				preview_material.roughness = maxf(preview_material.roughness, 0.72)
+				preview_material.metallic_specular = minf(
+					preview_material.metallic_specular,
+					0.28
+				)
+				mesh_instance.set_surface_override_material(surface_index, preview_material)
 
 
 func _clear_3d_character() -> void:

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dd3sa032ujlyt"]
+
+[node name="SectorContent" type="Node3D" unique_id=1668981292]
+metadata/content_version = 1
+metadata/sector_x = 27
+metadata/sector_y = 31
+
+[node name="Rocks" type="Node3D" parent="." unique_id=169122970]
+
+[node name="Vegetation" type="Node3D" parent="." unique_id=880419224]
+
+[node name="Buildings" type="Node3D" parent="." unique_id=1052068331]
+
+[node name="NPCs" type="Node3D" parent="." unique_id=1000975054]
+
+[node name="Props" type="Node3D" parent="." unique_id=694664610]

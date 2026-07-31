@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bu1n3is2qnvio"]
+
+[ext_resource type="PackedScene" uid="uid://bjyuf2f3l6gr1" path="res://assets/items/equipment/tools/axes/lumberjack_axe/lumberjack_axe.glb" id="1_de1rg"]
+
+[node name="HeldItem" type="Node3D" unique_id=1261687201]
+
+[node name="Visual" type="Node3D" parent="." unique_id=1219878234 instance=ExtResource("1_de1rg")]
+transform = Transform3D(-0.019068323, -0.0047407756, 0.22078273, -0.24954751, -0.18164244, 0.004663795, 0.2498358, -0.18300728, -0.020022541, 0.03649644, 0.20746757, -0.25715145)

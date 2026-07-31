@@ -1,0 +1,167 @@
+[gd_resource type="Theme" format=3 uid="uid://cb3ph34s48yo7"]
+
+[ext_resource type="Texture2D" uid="uid://cglcr4pw5155f" path="res://assets/ui/hud/runtime/menu_button.png" id="1_button"]
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonDisabled"]
+texture = ExtResource("1_button")
+texture_margin_left = 18.0
+texture_margin_top = 10.0
+texture_margin_right = 18.0
+texture_margin_bottom = 10.0
+modulate_color = Color(0.42, 0.4, 0.36, 0.76)
+
+[sub_resource type="StyleBoxFlat" id="StyleFocus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.57, 0.3, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonHover"]
+texture = ExtResource("1_button")
+texture_margin_left = 18.0
+texture_margin_top = 10.0
+texture_margin_right = 18.0
+texture_margin_bottom = 10.0
+modulate_color = Color(1.18, 1.1, 0.78, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonNormal"]
+texture = ExtResource("1_button")
+texture_margin_left = 18.0
+texture_margin_top = 10.0
+texture_margin_right = 18.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleButtonPressed"]
+texture = ExtResource("1_button")
+texture_margin_left = 18.0
+texture_margin_top = 10.0
+texture_margin_right = 18.0
+texture_margin_bottom = 10.0
+modulate_color = Color(0.72, 0.68, 0.58, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleSeparator"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0.52, 0.4, 0.21, 0.7)
+
+[sub_resource type="StyleBoxFlat" id="StyleInputFocus"]
+content_margin_left = 11.0
+content_margin_top = 7.0
+content_margin_right = 11.0
+content_margin_bottom = 7.0
+bg_color = Color(0.045, 0.037, 0.027, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.69, 0.53, 0.27, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleInput"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.035, 0.03, 0.024, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.42, 0.34, 0.22, 0.95)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StylePanel"]
+bg_color = Color(0.075, 0.061, 0.043, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.43, 0.335, 0.19, 0.92)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.62)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleTabPanel"]
+bg_color = Color(0.035, 0.03, 0.024, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.28, 0.18, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleTabSelected"]
+content_margin_left = 14.0
+content_margin_right = 14.0
+bg_color = Color(0.19, 0.145, 0.075, 0.98)
+border_width_bottom = 2
+border_color = Color(0.78, 0.61, 0.3, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleTabUnselected"]
+content_margin_left = 14.0
+content_margin_right = 14.0
+bg_color = Color(0.065, 0.052, 0.037, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[resource]
+default_font_size = 15
+Button/colors/font_color = Color(0.91, 0.84, 0.69, 1)
+Button/colors/font_disabled_color = Color(0.5, 0.47, 0.41, 1)
+Button/colors/font_focus_color = Color(1, 0.94, 0.78, 1)
+Button/colors/font_hover_color = Color(1, 0.96, 0.84, 1)
+Button/colors/font_pressed_color = Color(0.79, 0.72, 0.59, 1)
+Button/styles/disabled = SubResource("StyleButtonDisabled")
+Button/styles/focus = SubResource("StyleFocus")
+Button/styles/hover = SubResource("StyleButtonHover")
+Button/styles/normal = SubResource("StyleButtonNormal")
+Button/styles/pressed = SubResource("StyleButtonPressed")
+CheckButton/colors/font_color = Color(0.85, 0.8, 0.68, 1)
+CheckButton/colors/font_hover_color = Color(1, 0.94, 0.79, 1)
+ColorPickerButton/styles/hover = SubResource("StyleButtonHover")
+ColorPickerButton/styles/normal = SubResource("StyleButtonNormal")
+ColorPickerButton/styles/pressed = SubResource("StyleButtonPressed")
+HSeparator/styles/separator = SubResource("StyleSeparator")
+Label/colors/font_color = Color(0.85, 0.81, 0.72, 1)
+LineEdit/colors/caret_color = Color(0.85, 0.67, 0.34, 1)
+LineEdit/colors/font_color = Color(0.93, 0.88, 0.77, 1)
+LineEdit/colors/font_placeholder_color = Color(0.55, 0.51, 0.43, 1)
+LineEdit/styles/focus = SubResource("StyleInputFocus")
+LineEdit/styles/normal = SubResource("StyleInput")
+OptionButton/colors/font_color = Color(0.91, 0.84, 0.69, 1)
+OptionButton/styles/focus = SubResource("StyleFocus")
+OptionButton/styles/hover = SubResource("StyleButtonHover")
+OptionButton/styles/normal = SubResource("StyleButtonNormal")
+OptionButton/styles/pressed = SubResource("StyleButtonPressed")
+PanelContainer/styles/panel = SubResource("StylePanel")
+PopupMenu/colors/font_color = Color(0.87, 0.82, 0.71, 1)
+PopupMenu/styles/panel = SubResource("StylePanel")
+TabContainer/colors/font_selected_color = Color(1, 0.91, 0.7, 1)
+TabContainer/colors/font_unselected_color = Color(0.66, 0.62, 0.54, 1)
+TabContainer/styles/panel = SubResource("StyleTabPanel")
+TabContainer/styles/tab_selected = SubResource("StyleTabSelected")
+TabContainer/styles/tab_unselected = SubResource("StyleTabUnselected")

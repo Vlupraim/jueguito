@@ -1,0 +1,7 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+CHARACTER_RETARGET_MODEL_OK path=res://assets/characters/player/models/char_6_c583a7dd/strong_man.glb clips=9
+CHARACTER_RETARGET_SMOKE_OK models=1
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.

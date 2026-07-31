@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EquipmentItemDefinition" format=3 uid="uid://dqpq027sjlwks"]
+
+[ext_resource type="Script" uid="uid://ec1wccmqrovr" path="res://scripts/systems/items/equipment_item_definition.gd" id="1_definition"]
+
+[resource]
+script = ExtResource("1_definition")
+item_name = "Arco vikingo"
+display_name = "Arco vikingo"
+category = "weapon"
+weapon_type = "bow"
+hand_usage = "two_hand"
+default_action = &"archery_shot"
+icon_path = "res://assets/items/icons/viking_bow.png"
+source_model_path = "res://assets/items/weapons/ranged/viking_bow/viking_bow.glb"
+held_scene_path = "res://assets/items/weapons/ranged/viking_bow/viking_bow_held.tscn"

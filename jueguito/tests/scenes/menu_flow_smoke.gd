@@ -23,6 +23,11 @@ func _run() -> void:
 	if not landing.visible or login.visible or credits.visible:
 		_fail("La portada no inicia en la vista principal")
 		return
+	var text_cursor := CursorManager.get_cursor_texture(CursorManager.TEXT)
+	if password.mouse_default_cursor_shape != Control.CURSOR_IBEAM \
+	or text_cursor == null or text_cursor.get_size() != Vector2(40.0, 40.0):
+		_fail("Los campos de texto no usan el I-beam medieval reducido")
+		return
 
 	menu.call("_show_login")
 	if landing.visible or not login.visible or not password.secret:

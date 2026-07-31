@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/resources/nodes/harvestable_tree.gd" id="1_tree"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_trunk"]
+radius = 0.42
+height = 4.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_interaction"]
+size = Vector3(4, 8, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stump"]
+albedo_color = Color(0.27, 0.14, 0.055, 1)
+roughness = 0.92
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_stump"]
+material = SubResource("StandardMaterial3D_stump")
+top_radius = 0.34
+bottom_radius = 0.42
+height = 0.5
+radial_segments = 12
+
+[node name="HarvestableTree" type="Node3D"]
+script = ExtResource("1_tree")
+
+[node name="VisualPivot" type="Node3D" parent="."]
+
+[node name="TrunkBody" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrunkBody"]
+position = Vector3(0, 2.25, 0)
+shape = SubResource("CapsuleShape3D_trunk")
+
+[node name="InteractionArea" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+position = Vector3(0, 4, 0)
+shape = SubResource("BoxShape3D_interaction")
+
+[node name="StumpVisual" type="MeshInstance3D" parent="."]
+visible = false
+position = Vector3(0, 0.25, 0)
+mesh = SubResource("CylinderMesh_stump")

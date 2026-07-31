@@ -12,6 +12,11 @@ const TERRAIN_RESOLUTION := 80
 const GRID_STEP_METERS := 5000.0
 const WATER_COLLISION_GRID := 40
 const WATER_LEVEL := 2.0
+const DEEP_SEABED_HEIGHT := -4.5
+const OPEN_WATER_SEABED_HEIGHT := -3.0
+const SHALLOW_SEABED_HEIGHT := WATER_LEVEL - 0.45
+const COAST_BASE_HEIGHT := WATER_LEVEL + 0.9
+const BEACH_BASE_HEIGHT := WATER_LEVEL + 1.5
 const WATER_AREA_HEIGHT := 260.0
 const MAX_WADE_DISTANCE_METERS := 15.0
 const AUTO_BEACH_RADIUS_PIXELS := 4
@@ -1198,10 +1203,10 @@ func _water_colors_for_sector(sector: Vector2i) -> Dictionary:
 	var sectors_y := float(MAP_IMAGE_SIZE.y) * METERS_PER_PIXEL / SECTOR_SIDE_METERS
 	var latitude_ratio := clampf(float(sector.y) / maxf(sectors_y, 1.0), 0.0, 1.0)
 	var pole_factor := absf(latitude_ratio - 0.5) * 2.0
-	var shallow_center := Color(0.10, 0.45, 0.66, 0.60)
-	var deep_center := Color(0.03, 0.20, 0.42, 0.78)
-	var shallow_pole := Color(0.09, 0.19, 0.46, 0.64)
-	var deep_pole := Color(0.02, 0.06, 0.22, 0.82)
+	var shallow_center := Color(0.14, 0.58, 0.82, 0.55)
+	var deep_center := Color(0.03, 0.22, 0.54, 0.82)
+	var shallow_pole := Color(0.10, 0.32, 0.62, 0.60)
+	var deep_pole := Color(0.03, 0.12, 0.36, 0.84)
 	return {
 		"shallow": shallow_center.lerp(shallow_pole, pole_factor),
 		"deep": deep_center.lerp(deep_pole, pole_factor),
@@ -1312,15 +1317,15 @@ func _height_for(
 			detail_height = 2.0
 
 	if surface_id == SURFACE_DEEP_WATER:
-		var deep_floor := -10.0 + detail * 1.0
-		var shallow_floor := 0.8 + broad * 1.2 + detail * 0.6
+		var deep_floor := DEEP_SEABED_HEIGHT + detail * 0.45
+		var shallow_floor := minf(WATER_LEVEL - 0.1, SHALLOW_SEABED_HEIGHT + broad * 0.25 + detail * 0.18)
 		return lerpf(deep_floor, shallow_floor, shore_influence)
 	if surface_id == SURFACE_WATER:
-		var open_water_floor := -4.0 + detail * 0.7
-		var near_shore_floor := 1.4 + broad * 1.0 + detail * 0.5
+		var open_water_floor := OPEN_WATER_SEABED_HEIGHT + detail * 0.35
+		var near_shore_floor := minf(WATER_LEVEL - 0.1, SHALLOW_SEABED_HEIGHT + broad * 0.25 + detail * 0.18)
 		return lerpf(open_water_floor, near_shore_floor, shore_influence)
 	if surface_id == SURFACE_COAST:
-		return 5.0 + broad * 3.5 + detail * 1.1
+		return maxf(WATER_LEVEL + 0.25, COAST_BASE_HEIGHT + broad * 0.8 + detail * 0.35)
 	if surface_id == SURFACE_LAND:
 		var broad_lift := maxf(0.0, broad + 0.12)
 		if biome_id == 5:
@@ -1328,7 +1333,7 @@ func _height_for(
 		var land_height := base_height + broad_lift * biome_height + detail * detail_height
 		var beach_strength := _beach_strength(surface_id, shore_influence)
 		if beach_strength > 0.0:
-			var beach_height := 6.0 + broad * 3.0 + detail * 1.0
+			var beach_height := BEACH_BASE_HEIGHT + maxf(0.0, broad) * 1.2 + detail * 0.35
 			land_height = lerpf(land_height, beach_height, beach_strength)
 
 		if edge_falloff < 1.0:

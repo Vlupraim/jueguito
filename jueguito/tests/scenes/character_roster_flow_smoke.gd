@@ -21,6 +21,10 @@ func _run() -> void:
 	add_child(selector)
 	await get_tree().process_frame
 	await get_tree().process_frame
+	var first_slot := selector.find_child("CharacterSlot1", true, false) as Button
+	if first_slot == null or first_slot.mouse_default_cursor_shape != Control.CURSOR_ARROW:
+		_fail("El selector de personaje no conserva el puntero normal")
+		return
 
 	if not _validate_empty_roster():
 		return

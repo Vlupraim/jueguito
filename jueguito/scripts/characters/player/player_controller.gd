@@ -1,11 +1,18 @@
 extends CharacterBody3D
 
 signal water_state_changed(previous_state: String, next_state: String)
+signal timed_action_started(label: String, duration: float)
+signal timed_action_progress(elapsed: float, duration: float)
+signal timed_action_finished(completed: bool)
 
 enum CameraMode { PERSPECTIVE_TACTICAL, PERSPECTIVE_CLOSE, ORTHOGRAPHIC }
 
 const CAMERA_MODE_COUNT := 3
 const AnimationRetargeter = preload("res://scripts/characters/player/character_animation_retargeter.gd")
+const ItemCatalog = preload("res://scripts/systems/items/item_catalog.gd")
+const CHOP_ACTION := &"chop"
+const CHOP_PLAYBACK_SPEED := 1.30
+const CHOP_LOOP_CAPTURE_DURATION := 0.28
 
 @export var walk_speed := 3.85
 @export var sprint_speed := 9.1
@@ -16,7 +23,6 @@ const AnimationRetargeter = preload("res://scripts/characters/player/character_a
 ## Distancia entre el origen del personaje y la superficie al nadar. Con el
 ## modelo actual deja la linea del agua cerca de los hombros.
 @export var swimming_body_offset := 0.68
-@export var swim_vertical_speed := 1.4
 @export_enum("Perspectiva tactica", "Perspectiva cercana", "Ortografica") var camera_mode: int = CameraMode.PERSPECTIVE_TACTICAL
 @export var perspective_fov := 42.0
 @export var close_perspective_fov := 58.0
@@ -47,9 +53,16 @@ var camera: Camera3D
 var visual: Node3D
 var character_instance: Node3D
 var character_animation_player: AnimationPlayer
+var character_action_animation := &""
+var character_action_speed := 1.0
 var last_safe_position := Vector3.ZERO
 var locomotion_state := ""
 var water_state := "dry"
+var pending_interactable: Node3D
+var active_interactable: Node3D
+var timed_action_elapsed := 0.0
+var timed_action_duration := 0.0
+var timed_action_animation := &""
 
 # Variables para movimiento tipo LoL (click-to-move)
 var target_pos := Vector3.ZERO
@@ -64,6 +77,9 @@ func _ready() -> void:
 	camera = $CameraPivot/SpringArm3D/Camera3D
 	visual = $Visual
 	_setup_character_visual()
+	if not GameManager.equipment_changed.is_connected(_on_equipment_changed):
+		GameManager.equipment_changed.connect(_on_equipment_changed)
+	_refresh_equipped_items()
 	camera_pivot.rotation_degrees = Vector3(0.0, 45.0, 0.0)
 	spring_arm.spring_length = initial_camera_distance
 	_apply_camera_mode()
@@ -81,20 +97,22 @@ func _on_movement_approved(approved_position: Vector3) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Si mantiene presionado el Clic Derecho, actualizamos el destino continuamente (estilo LoL)
-	if gameplay_input_enabled and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		_set_movement_target_from_mouse()
-
 	var move_direction := Vector3.ZERO
 	var target_speed := walk_speed
 	if Input.is_key_pressed(KEY_SHIFT):
 		target_speed = sprint_speed
 
+	if gameplay_input_enabled and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		_set_movement_target_from_mouse()
+	if _update_timed_interaction(delta):
+		return
+	_update_pending_interaction()
+	if active_interactable != null:
+		return
+
 	if has_target:
 		var to_target = target_pos - global_position
 		var to_target_2d = Vector2(to_target.x, to_target.z)
-		
-		# Si estamos a más de 20cm del destino, seguimos moviéndonos
 		if to_target_2d.length() > 0.2:
 			move_direction = to_target.normalized()
 			move_direction.y = 0.0
@@ -142,11 +160,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func set_gameplay_input_enabled(enabled: bool) -> void:
 	gameplay_input_enabled = enabled
+	if not enabled:
+		_cancel_timed_interaction()
 
 
 func _set_movement_target_from_mouse() -> void:
 	if camera == null:
 		return
+	_cancel_timed_interaction()
 	var mouse_pos := get_viewport().get_mouse_position()
 	var ray_origin := camera.project_ray_origin(mouse_pos)
 	var ray_normal := camera.project_ray_normal(mouse_pos)
@@ -184,17 +205,145 @@ func _try_interact_from_mouse() -> void:
 		while interactable != null and not interactable.has_method("interact"):
 			interactable = interactable.get_parent()
 			
-		if interactable != null:
-			var dist = global_position.distance_to(interactable.global_position)
-			if dist <= 3.5:
-				# Si estamos en rango (3.5m), recolectamos autoritativamente
-				var item_name: String = interactable.get("item_name") if "item_name" in interactable else interactable.name
-				var amount: int = interactable.get("amount") if "amount" in interactable else 1
-				NetworkManager.request_interaction(item_name, amount)
-				interactable.call("interact", self)
-			else:
-				# Si estamos lejos, caminamos hacia el interactuable
-				NetworkManager.request_move(interactable.global_position)
+		if interactable is Node3D:
+			request_interaction_with(interactable as Node3D)
+
+
+func request_interaction_with(interactable: Node3D) -> bool:
+	if not is_instance_valid(interactable):
+		return false
+	if interactable.has_method("can_interact") and not bool(
+		interactable.call("can_interact", self)
+	):
+		return false
+	_cancel_timed_interaction()
+	pending_interactable = interactable
+	if _interaction_distance(interactable) <= _interaction_range(interactable):
+		_begin_pending_interaction()
+	else:
+		var approach_position := interactable.global_position
+		if interactable.has_method("get_interaction_position"):
+			approach_position = interactable.call(
+				"get_interaction_position",
+				global_position
+			)
+		NetworkManager.request_move(approach_position)
+	return true
+
+
+func has_equipped_tool(tool_type: String) -> bool:
+	return GameManager.has_equipped_tool_type(tool_type)
+
+
+func play_primary_equipment_action() -> bool:
+	var action := ItemCatalog.get_default_action(GameManager.equipped_primary_item)
+	if action.is_empty():
+		return false
+	return play_character_action(action)
+
+
+func _update_pending_interaction() -> void:
+	if pending_interactable == null:
+		return
+	if not is_instance_valid(pending_interactable):
+		pending_interactable = null
+		return
+	if pending_interactable.has_method("can_interact") and not bool(
+		pending_interactable.call("can_interact", self)
+	):
+		pending_interactable = null
+		return
+	if _interaction_distance(pending_interactable) <= _interaction_range(pending_interactable):
+		_begin_pending_interaction()
+
+
+func _begin_pending_interaction() -> void:
+	var interactable := pending_interactable
+	pending_interactable = null
+	if not is_instance_valid(interactable):
+		return
+	if interactable.has_method("begin_interaction") and not bool(
+		interactable.call("begin_interaction", self)
+	):
+		return
+	active_interactable = interactable
+	has_target = false
+	velocity = Vector3.ZERO
+	timed_action_elapsed = 0.0
+	timed_action_duration = 1.0
+	if interactable.has_method("get_interaction_duration"):
+		timed_action_duration = maxf(
+			float(interactable.call("get_interaction_duration")),
+			0.05
+		)
+	var label := "Interactuando"
+	if interactable.has_method("get_interaction_label"):
+		label = String(interactable.call("get_interaction_label"))
+	timed_action_animation = &""
+	if interactable.has_method("get_interaction_animation"):
+		timed_action_animation = StringName(
+			interactable.call("get_interaction_animation")
+		)
+	face_world_position(interactable.global_position)
+	if not timed_action_animation.is_empty():
+		play_character_action(timed_action_animation)
+	timed_action_started.emit(label, timed_action_duration)
+	timed_action_progress.emit(0.0, timed_action_duration)
+
+
+func _update_timed_interaction(delta: float) -> bool:
+	if active_interactable == null:
+		return false
+	if not is_instance_valid(active_interactable):
+		_cancel_timed_interaction()
+		return false
+	if _interaction_distance(active_interactable) > _interaction_range(active_interactable) + 0.8:
+		_cancel_timed_interaction()
+		return false
+	velocity = Vector3.ZERO
+	face_world_position(active_interactable.global_position)
+	timed_action_elapsed = minf(timed_action_elapsed + delta, timed_action_duration)
+	timed_action_progress.emit(timed_action_elapsed, timed_action_duration)
+	if character_action_animation.is_empty() and not timed_action_animation.is_empty():
+		play_character_action(timed_action_animation)
+	if timed_action_elapsed < timed_action_duration:
+		return true
+
+	var interactable := active_interactable
+	active_interactable = null
+	var completed := true
+	if interactable.has_method("complete_interaction"):
+		completed = bool(interactable.call("complete_interaction", self))
+	stop_character_action()
+	timed_action_elapsed = 0.0
+	timed_action_duration = 0.0
+	timed_action_animation = &""
+	timed_action_finished.emit(completed)
+	return true
+
+
+func _cancel_timed_interaction() -> void:
+	pending_interactable = null
+	if active_interactable != null and is_instance_valid(active_interactable):
+		if active_interactable.has_method("cancel_interaction"):
+			active_interactable.call("cancel_interaction", self)
+		active_interactable = null
+		stop_character_action()
+		timed_action_finished.emit(false)
+	timed_action_elapsed = 0.0
+	timed_action_duration = 0.0
+	timed_action_animation = &""
+
+
+func _interaction_range(interactable: Node3D) -> float:
+	if interactable.has_method("get_interaction_range"):
+		return maxf(float(interactable.call("get_interaction_range")), 0.1)
+	return 3.5
+
+
+func _interaction_distance(interactable: Node3D) -> float:
+	var offset := interactable.global_position - global_position
+	return Vector2(offset.x, offset.z).length()
 
 
 
@@ -205,6 +354,22 @@ func make_camera_current() -> void:
 
 func mark_safe_position() -> void:
 	last_safe_position = global_position
+
+
+func face_world_position(world_target: Vector3) -> void:
+	if visual == null:
+		return
+	var direction := world_target - global_position
+	direction.y = 0.0
+	if direction.length_squared() < 0.001:
+		return
+	visual.rotation.y = atan2(-direction.x, -direction.z)
+
+
+func get_facing_direction_xz() -> Vector2:
+	if visual == null:
+		return Vector2(0.0, -1.0)
+	return Vector2(-sin(visual.rotation.y), -cos(visual.rotation.y)).normalized()
 
 
 func get_camera_distance() -> float:
@@ -371,6 +536,12 @@ func _setup_character_visual() -> void:
 	character_animation_player = _find_animation_player(character_instance)
 	if character_animation_player == null:
 		return
+	if not character_animation_player.animation_finished.is_connected(
+		_on_character_animation_finished
+	):
+		character_animation_player.animation_finished.connect(
+			_on_character_animation_finished
+		)
 	var report := AnimationRetargeter.install_shared_library(
 		character_instance,
 		character_animation_player,
@@ -379,6 +550,114 @@ func _setup_character_visual() -> void:
 	if not String(report.get("error", "")).is_empty():
 		push_warning("Player: " + String(report["error"]))
 	_play_locomotion("idle")
+
+
+func _on_equipment_changed(_primary_item: String, _secondary_item: String) -> void:
+	_refresh_equipped_items()
+
+
+func _refresh_equipped_items() -> void:
+	if character_instance == null:
+		return
+	var skeletons := character_instance.find_children("*", "Skeleton3D", true, false)
+	if skeletons.is_empty():
+		return
+	var skeleton := skeletons[0] as Skeleton3D
+	for attachment_name in ["PrimaryItemAttachment", "SecondaryItemAttachment"]:
+		var old_attachment := skeleton.get_node_or_null(attachment_name)
+		if old_attachment != null:
+			old_attachment.free()
+	var primary_visual_slot := ItemCatalog.get_visual_slot(
+		GameManager.equipped_primary_item
+	)
+	var primary_candidates: Array[String] = ["RightHand", "right_hand", "hand_r"]
+	if primary_visual_slot == "secondary":
+		primary_candidates = ["LeftHand", "left_hand", "hand_l"]
+	_attach_item_to_hand(
+		skeleton,
+		GameManager.equipped_primary_item,
+		primary_visual_slot,
+		primary_candidates
+	)
+	_attach_item_to_hand(
+		skeleton,
+		GameManager.equipped_secondary_item,
+		"secondary",
+		["LeftHand", "left_hand", "hand_l"]
+	)
+
+
+func _attach_item_to_hand(
+		skeleton: Skeleton3D,
+		item_name: String,
+		slot_name: String,
+		bone_candidates: Array[String]
+	) -> void:
+	if item_name.is_empty():
+		return
+	var definition := ItemCatalog.get_definition(item_name)
+	var item_scene := ItemCatalog.get_model_scene(item_name)
+	if definition.is_empty() or item_scene == null:
+		return
+	var configured_bone := String(definition.get(
+		"attachment_%s_bone" % slot_name,
+		definition.get("attachment_bone", "")
+	))
+	var resolved_candidates := bone_candidates.duplicate()
+	if not configured_bone.is_empty():
+		resolved_candidates.push_front(configured_bone)
+	var hand_bone := _find_bone_name(skeleton, resolved_candidates)
+	if hand_bone.is_empty():
+		push_warning("Player: no se encontro el hueso para " + slot_name)
+		return
+
+	var attachment := BoneAttachment3D.new()
+	attachment.name = "PrimaryItemAttachment" if slot_name == "primary" \
+		else "SecondaryItemAttachment"
+	attachment.bone_name = hand_bone
+	skeleton.add_child(attachment)
+
+	# El armature del personaje usa una escala de importacion 0.01. Este pivote
+	# la compensa para que los items puedan definirse normalmente en metros.
+	var scale_compensator := Node3D.new()
+	scale_compensator.name = "ScaleCompensator"
+	var armature := skeleton.get_parent() as Node3D
+	if armature != null:
+		scale_compensator.scale = Vector3(
+			1.0 / maxf(absf(armature.scale.x), 0.0001),
+			1.0 / maxf(absf(armature.scale.y), 0.0001),
+			1.0 / maxf(absf(armature.scale.z), 0.0001)
+		)
+	attachment.add_child(scale_compensator)
+
+	var item := item_scene.instantiate() as Node3D
+	item.name = "EquippedPrimaryItem" if slot_name == "primary" \
+		else "EquippedSecondaryItem"
+	item.position = definition.get(
+		"held_%s_position" % slot_name,
+		definition.get("held_position", Vector3.ZERO)
+	)
+	item.rotation_degrees = definition.get(
+		"held_%s_rotation_degrees" % slot_name,
+		definition.get("held_rotation_degrees", Vector3.ZERO)
+	)
+	item.scale = Vector3.ONE * float(definition.get(
+		"held_%s_scale" % slot_name,
+		definition.get("held_scale", 1.0)
+	))
+	scale_compensator.add_child(item)
+
+
+func _find_bone_name(skeleton: Skeleton3D, candidates: Array[String]) -> String:
+	for candidate in candidates:
+		if skeleton.find_bone(candidate) >= 0:
+			return candidate
+	var side := "right" if "right" in candidates[0].to_lower() else "left"
+	for bone_index in range(skeleton.get_bone_count()):
+		var normalized := skeleton.get_bone_name(bone_index).to_lower().replace("_", "")
+		if side in normalized and "hand" in normalized:
+			return skeleton.get_bone_name(bone_index)
+	return ""
 
 
 func _set_placeholder_visible(next_visible: bool) -> void:
@@ -402,8 +681,12 @@ func _find_animation_player(root: Node) -> AnimationPlayer:
 func _update_locomotion(move_direction: Vector3, target_speed: float) -> void:
 	if character_animation_player == null:
 		return
+	if not character_action_animation.is_empty():
+		return
 	if water_state == "swimming" or water_state == "open_water":
-		_play_locomotion("swim_idle")
+		_play_locomotion(
+			"swim_forward" if move_direction.length_squared() >= 0.001 else "swim_idle"
+		)
 		return
 	if water_state == "wading":
 		_play_locomotion("walk" if move_direction.length_squared() >= 0.001 else "idle")
@@ -426,6 +709,54 @@ func _play_locomotion(next_state: String) -> void:
 	character_animation_player.play(animation_name, 0.18)
 
 
+func play_character_action(
+		action: StringName,
+		blend_time: float = 0.12,
+		custom_speed: float = 0.0
+	) -> bool:
+	if character_animation_player == null:
+		return false
+	var animation_name := AnimationRetargeter.shared_animation_name(action)
+	if not character_animation_player.has_animation(animation_name):
+		return false
+	var resolved_speed := custom_speed
+	if is_zero_approx(resolved_speed):
+		resolved_speed = CHOP_PLAYBACK_SPEED if action == CHOP_ACTION else 1.0
+	character_action_animation = animation_name
+	character_action_speed = resolved_speed
+	character_animation_player.play(animation_name, blend_time, resolved_speed)
+	return true
+
+
+func stop_character_action() -> void:
+	if character_action_animation.is_empty():
+		return
+	character_action_animation = &""
+	character_action_speed = 1.0
+	locomotion_state = ""
+	if character_animation_player != null:
+		character_animation_player.stop()
+
+
+func _on_character_animation_finished(animation_name: StringName) -> void:
+	if animation_name != character_action_animation:
+		return
+	if (
+		timed_action_animation == CHOP_ACTION
+		and active_interactable != null
+		and is_instance_valid(active_interactable)
+		and character_animation_player != null
+	):
+		character_animation_player.play_with_capture(
+			animation_name,
+			CHOP_LOOP_CAPTURE_DURATION,
+			-1.0,
+			character_action_speed
+		)
+		return
+	stop_character_action()
+
+
 func _animation_name_for_state(state: String) -> StringName:
 	var shared_name := AnimationRetargeter.shared_animation_name(StringName(state))
 	if character_animation_player.has_animation(shared_name):
@@ -441,34 +772,6 @@ func _animation_name_for_state(state: String) -> StringName:
 	if animation_list.is_empty():
 		return &""
 	return animation_list[0]
-
-
-func _get_move_input() -> Vector2:
-	var input := Vector2.ZERO
-	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
-		input.x -= 1.0
-	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
-		input.x += 1.0
-	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):
-		input.y += 1.0
-	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
-		input.y -= 1.0
-	return input.normalized()
-
-
-func _get_camera_relative_direction(move_input: Vector2) -> Vector3:
-	if move_input == Vector2.ZERO or camera == null:
-		return Vector3.ZERO
-
-	var forward := -camera.global_transform.basis.z
-	forward.y = 0.0
-	forward = forward.normalized()
-
-	var right := camera.global_transform.basis.x
-	right.y = 0.0
-	right = right.normalized()
-
-	return (right * move_input.x + forward * move_input.y).normalized()
 
 
 func _face_move_direction(move_direction: Vector3, delta: float) -> void:
@@ -499,6 +802,9 @@ func _move_on_generator_ground(move_direction: Vector3, target_speed: float, del
 	var requested_position := global_position
 	if move_direction != Vector3.ZERO:
 		requested_position += move_direction * effective_speed * delta
+	var movement_blocked := _is_resource_collider_at(requested_position)
+	if movement_blocked:
+		requested_position = global_position
 
 	var ground_info: Variant = parent.call("get_player_ground_info", requested_position)
 	if not (ground_info is Dictionary):
@@ -507,6 +813,11 @@ func _move_on_generator_ground(move_direction: Vector3, target_speed: float, del
 	var info := ground_info as Dictionary
 	var water_info: Dictionary = info.get("water", {"in_water": false, "state": "dry"})
 	var next_water_state := String(water_info.get("state", "dry"))
+	var current_ground_info := current_info as Dictionary
+	if not _is_platform_transition_allowed(current_ground_info, info):
+		global_position = last_safe_position
+		velocity = Vector3.ZERO
+		return
 	_set_water_state(next_water_state)
 
 	if next_water_state == "open_water":
@@ -514,24 +825,68 @@ func _move_on_generator_ground(move_direction: Vector3, target_speed: float, del
 		velocity = Vector3.ZERO
 		return
 	if next_water_state == "swimming":
-		var target_swim_y := float(water_info.get("water_level", global_position.y)) - swimming_body_offset
+		# No existe buceo: al entrar a profundidad de nado, el personaje queda
+		# anclado a la lamina del oceano. La profundidad del terreno solo clasifica
+		# la zona y no se convierte en recorrido vertical.
+		var target_swim_y := float(water_info.get(
+			"float_height",
+			water_info.get("water_level", global_position.y)
+		)) - swimming_body_offset
 		global_position = Vector3(
 			requested_position.x,
-			move_toward(global_position.y, target_swim_y, swim_vertical_speed * delta),
+			target_swim_y,
 			requested_position.z
 		)
-		velocity = move_direction * effective_speed
+		velocity = Vector3.ZERO if movement_blocked else move_direction * effective_speed
 		last_safe_position = global_position
 		return
 
 	if bool(info.get("walkable", false)):
 		var ground_position: Vector3 = info.get("position", global_position)
 		global_position = ground_position + Vector3.UP * ground_clearance
-		velocity = move_direction * effective_speed
+		velocity = Vector3.ZERO if movement_blocked else move_direction * effective_speed
 		last_safe_position = global_position
 	else:
 		global_position = last_safe_position
 		velocity = Vector3.ZERO
+		if String(info.get("reason", "")) == "limite_sector":
+				has_target = false
+
+
+func _is_resource_collider_at(requested_position: Vector3) -> bool:
+	var player_collision := get_node_or_null("CollisionShape3D") as CollisionShape3D
+	if player_collision == null or player_collision.shape == null:
+		return false
+	var query := PhysicsShapeQueryParameters3D.new()
+	query.shape = player_collision.shape
+	var next_transform := player_collision.global_transform
+	next_transform.origin.x = requested_position.x
+	next_transform.origin.z = requested_position.z
+	query.transform = next_transform
+	# Capa 3 (valor 4): troncos y otros recursos solidos. El terreno se
+	# resuelve mediante get_player_ground_info y no participa en esta consulta.
+	query.collision_mask = 4
+	query.exclude = [get_rid()]
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	return not get_world_3d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+
+func _is_platform_transition_allowed(current_info: Dictionary, next_info: Dictionary) -> bool:
+	var current_platform := String(current_info.get("platform_id", ""))
+	var next_platform := String(next_info.get("platform_id", ""))
+	var current_role := String(current_info.get("surface_role", ""))
+	var next_role := String(next_info.get("surface_role", ""))
+
+	# Para subir por primera vez se debe pisar la rampa. Esto evita saltar desde
+	# cualquier costado directamente a una cubierta elevada.
+	if current_platform.is_empty() and not next_platform.is_empty():
+		return next_role == "ramp"
+	# Una vez a bordo solo se puede abandonar la plataforma desde la rampa. En
+	# navegacion, esta regla evita caidas accidentales por los bordes del barco.
+	if not current_platform.is_empty() and next_platform.is_empty():
+		return current_role == "ramp"
+	return current_platform == next_platform
 
 
 func _set_water_state(next_state: String) -> void:

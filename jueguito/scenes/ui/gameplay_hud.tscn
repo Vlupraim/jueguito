@@ -1,7 +1,14 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=22 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/gameplay_hud.gd" id="1_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/options_menu.tscn" id="2_options"]
+[ext_resource type="Script" path="res://scripts/ui/editable_hud_module.gd" id="3_editable"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/portrait_frame.png" id="4_portrait"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/action_slot_frame.png" id="5_slot"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/resource_bar_frame.png" id="6_bar"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/pause_panel.png" id="7_pause"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/menu_button.png" id="8_button"]
+[ext_resource type="Theme" path="res://assets/ui/medieval_ui_theme.tres" id="9_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
 bg_color = Color(0.0627451, 0.0823529, 0.12549, 0.94)
@@ -41,6 +48,108 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_frame"]
+bg_color = Color(0.055, 0.047, 0.034, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.43, 0.24, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_portrait"]
+bg_color = Color(0.15, 0.135, 0.105, 1)
+border_color = Color(0.72, 0.58, 0.31, 1)
+corner_radius_top_left = 44
+corner_radius_top_right = 44
+corner_radius_bottom_right = 44
+corner_radius_bottom_left = 44
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_background"]
+bg_color = Color(0.05, 0.045, 0.035, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.32, 0.27, 0.18, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.59, 0.12, 0.105, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_energy_fill"]
+bg_color = Color(0.12, 0.43, 0.48, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action_slot"]
+bg_color = Color(0.055, 0.049, 0.038, 0.96)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_coin_gold"]
+bg_color = Color(0.55, 0.36, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.91, 0.73, 0.27, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_coin_silver"]
+bg_color = Color(0.28, 0.3, 0.31, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.76, 0.77, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_menu_normal"]
+texture = ExtResource("8_button")
+texture_margin_left = 18.0
+texture_margin_top = 10.0
+texture_margin_right = 18.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_menu_hover"]
+texture = ExtResource("8_button")
+texture_margin_left = 18.0
+texture_margin_top = 10.0
+texture_margin_right = 18.0
+texture_margin_bottom = 10.0
+modulate_color = Color(1.18, 1.12, 0.84, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_menu_pressed"]
+texture = ExtResource("8_button")
+texture_margin_left = 18.0
+texture_margin_top = 10.0
+texture_margin_right = 18.0
+texture_margin_bottom = 10.0
+modulate_color = Color(0.72, 0.69, 0.62, 1)
+
 [node name="GameplayHUD" type="CanvasLayer"]
 layer = 20
 script = ExtResource("1_hud")
@@ -53,67 +162,788 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("9_theme")
+
+[node name="PersistentHUD" type="Control" parent="Screen"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CharacterStatus" type="PanelContainer" parent="Screen/PersistentHUD"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(92, 92)
+offset_right = 92.0
+offset_bottom = 92.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
+script = ExtResource("3_editable")
+layout_key = "character_status"
+default_normalized_position = Vector2(0.5, 1)
+
+[node name="Margin" type="MarginContainer" parent="Screen/PersistentHUD/CharacterStatus"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 9
+theme_override_constants/margin_top = 9
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 9
+
+[node name="Content" type="HBoxContainer" parent="Screen/PersistentHUD/CharacterStatus/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Portrait" type="PanelContainer" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_portrait")
+
+[node name="Placeholder" type="Label" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Portrait"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.8, 0.72, 0.55, 1)
+theme_override_font_sizes/font_size = 30
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Portrait"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_portrait")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ToggleStats" type="Button" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Portrait"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+tooltip_text = "Mostrar estadisticas del personaje"
+flat = true
+
+[node name="Status" type="VBoxContainer" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="CharacterName" type="Label" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.93, 0.86, 0.69, 1)
+theme_override_font_sizes/font_size = 15
+text = "Aventurero"
+
+[node name="HealthBar" type="ProgressBar" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 17)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 10
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_bar")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Caption" type="Label" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.04, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 8
+text = "VIDA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnergyBar" type="ProgressBar" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_energy_fill")
+value = 72.0
+show_percentage = false
+
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status/EnergyBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_bar")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Caption" type="Label" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status/EnergyBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.08, 0.09, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 7
+text = "ENERGIA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Level" type="Label" parent="Screen/PersistentHUD/CharacterStatus/Margin/Content/Status"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.68, 0.62, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "Nivel —"
+
+[node name="ActionBar" type="PanelContainer" parent="Screen/PersistentHUD"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(650, 90)
+offset_right = 650.0
+offset_bottom = 90.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
+script = ExtResource("3_editable")
+layout_key = "action_bar"
+default_normalized_position = Vector2(0.5, 1)
+default_position_offset = Vector2(0, -99)
+
+[node name="Margin" type="MarginContainer" parent="Screen/PersistentHUD/ActionBar"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 32
+
+[node name="Slots" type="HBoxContainer" parent="Screen/PersistentHUD/ActionBar/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Slot1" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot1"]
+layout_mode = 2
+mouse_filter = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot1"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot2" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot2"]
+layout_mode = 2
+mouse_filter = 2
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot2"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot3" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot3"]
+layout_mode = 2
+mouse_filter = 2
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot3"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot4" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot4"]
+layout_mode = 2
+mouse_filter = 2
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot4"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LeftGroupGap" type="Control" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Signature1" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(50, 46)
+layout_mode = 2
+mouse_filter = 2
+tooltip_text = "Habilidad insignia I"
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Signature1"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.88, 0.7, 0.3, 1)
+text = "I"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Signature1"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Signature2" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(50, 46)
+layout_mode = 2
+mouse_filter = 2
+tooltip_text = "Habilidad insignia II"
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Signature2"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.88, 0.7, 0.3, 1)
+text = "II"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Signature2"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Signature3" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(50, 46)
+layout_mode = 2
+mouse_filter = 2
+tooltip_text = "Habilidad insignia III"
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Signature3"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.88, 0.7, 0.3, 1)
+text = "III"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Signature3"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RightGroupGap" type="Control" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Slot5" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot5"]
+layout_mode = 2
+mouse_filter = 2
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot5"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot6" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot6"]
+layout_mode = 2
+mouse_filter = 2
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot6"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot7" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot7"]
+layout_mode = 2
+mouse_filter = 2
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot7"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Slot8" type="PanelContainer" parent="Screen/PersistentHUD/ActionBar/Margin/Slots"]
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_action_slot")
+[node name="Key" type="Label" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot8"]
+layout_mode = 2
+mouse_filter = 2
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+[node name="Frame" type="TextureRect" parent="Screen/PersistentHUD/ActionBar/Margin/Slots/Slot8"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_slot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CombatResourceBars" type="Control" parent="Screen/PersistentHUD/ActionBar"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CombatHealthBar" type="ProgressBar" parent="Screen/PersistentHUD/ActionBar/CombatResourceBars"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.01
+anchor_top = 1.0
+anchor_right = 0.34
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -7.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Caption" type="Label" parent="Screen/PersistentHUD/ActionBar/CombatResourceBars/CombatHealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.8, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 9
+text = "VIDA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CombatManaBar" type="ProgressBar" parent="Screen/PersistentHUD/ActionBar/CombatResourceBars"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.66
+anchor_top = 1.0
+anchor_right = 0.99
+anchor_bottom = 1.0
+offset_top = -24.0
+offset_bottom = -7.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_energy_fill")
+value = 72.0
+show_percentage = false
+
+[node name="Caption" type="Label" parent="Screen/PersistentHUD/ActionBar/CombatResourceBars/CombatManaBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.84, 0.96, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 9
+text = "MANA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrencyDisplay" type="PanelContainer" parent="Screen/PersistentHUD"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(286, 40)
+offset_right = 286.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
+script = ExtResource("3_editable")
+layout_key = "currency"
+default_normalized_position = Vector2(0.5, 0)
+default_position_offset = Vector2(0, 12)
+
+[node name="Margin" type="MarginContainer" parent="Screen/PersistentHUD/CurrencyDisplay"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
+
+[node name="Currencies" type="HBoxContainer" parent="Screen/PersistentHUD/CurrencyDisplay/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="GoldCoin" type="PanelContainer" parent="Screen/PersistentHUD/CurrencyDisplay/Margin/Currencies"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_coin_gold")
+
+[node name="Mark" type="Label" parent="Screen/PersistentHUD/CurrencyDisplay/Margin/Currencies/GoldCoin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.49, 1)
+theme_override_font_sizes/font_size = 10
+text = "O"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoldAmount" type="Label" parent="Screen/PersistentHUD/CurrencyDisplay/Margin/Currencies"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.94, 0.76, 0.28, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.02, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 15
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CurrencyDivider" type="VSeparator" parent="Screen/PersistentHUD/CurrencyDisplay/Margin/Currencies"]
+layout_mode = 2
+
+[node name="SilverAmount" type="Label" parent="Screen/PersistentHUD/CurrencyDisplay/Margin/Currencies"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.78, 0.82, 0.84, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.05, 0.05, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 15
+text = "0"
+vertical_alignment = 1
+
+[node name="SilverCoin" type="PanelContainer" parent="Screen/PersistentHUD/CurrencyDisplay/Margin/Currencies"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_coin_silver")
+
+[node name="Mark" type="Label" parent="Screen/PersistentHUD/CurrencyDisplay/Margin/Currencies/SilverCoin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.92, 0.94, 0.94, 1)
+theme_override_font_sizes/font_size = 10
+text = "P"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUDEditToolbar" type="PanelContainer" parent="Screen"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 360.0
+offset_top = 14.0
+offset_right = -360.0
+offset_bottom = 62.0
+grow_horizontal = 2
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
+
+[node name="Row" type="HBoxContainer" parent="Screen/HUDEditToolbar"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Hint" type="Label" parent="Screen/HUDEditToolbar/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mover: arrastra · Escalar: tirador inferior derecho o rueda"
+horizontal_alignment = 1
+
+[node name="Reset" type="Button" parent="Screen/HUDEditToolbar/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Restaurar"
+
+[node name="Done" type="Button" parent="Screen/HUDEditToolbar/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Listo"
 
 [node name="InventoryPanel" type="PanelContainer" parent="Screen"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(360, 500)
+custom_minimum_size = Vector2(430, 660)
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -384.0
-offset_top = -270.0
+offset_left = -454.0
+offset_top = -340.0
 offset_right = -24.0
-offset_bottom = 270.0
+offset_bottom = 340.0
 grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
+
+[node name="Visual" type="TextureRect" parent="Screen/InventoryPanel"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_pause")
+expand_mode = 1
+stretch_mode = 0
 
 [node name="Margin" type="MarginContainer" parent="Screen/InventoryPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 22
 
 [node name="Content" type="VBoxContainer" parent="Screen/InventoryPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 8
 
 [node name="Header" type="HBoxContainer" parent="Screen/InventoryPanel/Margin/Content"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="Screen/InventoryPanel/Margin/Content/Header"]
+[node name="HeaderPortrait" type="PanelContainer" parent="Screen/InventoryPanel/Margin/Content/Header"]
+custom_minimum_size = Vector2(54, 54)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_portrait")
+
+[node name="Placeholder" type="Label" parent="Screen/InventoryPanel/Margin/Content/Header/HeaderPortrait"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.8, 0.72, 0.55, 1)
+theme_override_font_sizes/font_size = 22
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Frame" type="TextureRect" parent="Screen/InventoryPanel/Margin/Content/Header/HeaderPortrait"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_portrait")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HeaderText" type="VBoxContainer" parent="Screen/InventoryPanel/Margin/Content/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.392157, 0.662745, 1, 1)
-theme_override_font_sizes/font_size = 24
+alignment = 1
+
+[node name="InventoryOwnerName" type="Label" parent="Screen/InventoryPanel/Margin/Content/Header/HeaderText"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.66, 0.6, 0.49, 1)
+theme_override_font_sizes/font_size = 11
+text = "Aventurero"
+
+[node name="Title" type="Label" parent="Screen/InventoryPanel/Margin/Content/Header/HeaderText"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.86, 0.69, 1)
+theme_override_font_sizes/font_size = 23
 text = "Inventario"
 
 [node name="InventoryCloseButton" type="Button" parent="Screen/InventoryPanel/Margin/Content/Header"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 36)
+custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-text = "×"
+text = "X"
 tooltip_text = "Cerrar inventario (I o Esc)"
-
-[node name="Hint" type="Label" parent="Screen/InventoryPanel/Margin/Content"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.62, 0.68, 0.78, 1)
-theme_override_font_sizes/font_size = 13
-text = "Pulsa I para abrir o cerrar"
 
 [node name="HSeparator" type="HSeparator" parent="Screen/InventoryPanel/Margin/Content"]
 layout_mode = 2
 
+[node name="EquipmentHeader" type="HBoxContainer" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="EquipmentTitle" type="Label" parent="Screen/InventoryPanel/Margin/Content/EquipmentHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.83, 0.72, 0.49, 1)
+theme_override_font_sizes/font_size = 13
+text = "EQUIPAMIENTO"
+
+[node name="EquipmentHint" type="Label" parent="Screen/InventoryPanel/Margin/Content/EquipmentHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.46, 0.39, 1)
+theme_override_font_sizes/font_size = 10
+text = "Clic para guardar"
+
+[node name="EquipmentSlots" type="HBoxContainer" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PrimaryEquipmentSlot" type="Button" parent="Screen/InventoryPanel/Margin/Content/EquipmentSlots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mano principal\nVacía"
+expand_icon = true
+icon_max_width = 48
+tooltip_text = "Mano principal"
+
+[node name="SecondaryEquipmentSlot" type="Button" parent="Screen/InventoryPanel/Margin/Content/EquipmentSlots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mano secundaria\nVacía"
+expand_icon = true
+icon_max_width = 48
+tooltip_text = "Mano secundaria"
+
+[node name="InventoryResources" type="PanelContainer" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
+
+[node name="Margin" type="MarginContainer" parent="Screen/InventoryPanel/Margin/Content/InventoryResources"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
+
+[node name="Row" type="HBoxContainer" parent="Screen/InventoryPanel/Margin/Content/InventoryResources/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="InventoryGoldLabel" type="Label" parent="Screen/InventoryPanel/Margin/Content/InventoryResources/Margin/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.94, 0.76, 0.28, 1)
+theme_override_font_sizes/font_size = 12
+text = "ORO  0"
+
+[node name="InventoryItemCount" type="Label" parent="Screen/InventoryPanel/Margin/Content/InventoryResources/Margin/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.74, 0.69, 0.58, 1)
+theme_override_font_sizes/font_size = 12
+text = "OBJETOS  0"
+horizontal_alignment = 1
+
+[node name="InventoryCapacity" type="Label" parent="Screen/InventoryPanel/Margin/Content/InventoryResources/Margin/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.74, 0.69, 0.58, 1)
+theme_override_font_sizes/font_size = 12
+text = "0 / 24"
+horizontal_alignment = 2
+
+[node name="BagHeader" type="HBoxContainer" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="BagTitle" type="Label" parent="Screen/InventoryPanel/Margin/Content/BagHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.83, 0.72, 0.49, 1)
+theme_override_font_sizes/font_size = 13
+text = "MOCHILA"
+
+[node name="BagShortcut" type="Label" parent="Screen/InventoryPanel/Margin/Content/BagHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.46, 0.39, 1)
+theme_override_font_sizes/font_size = 10
+text = "I para cerrar"
+
 [node name="EmptyInventoryLabel" type="Label" parent="Screen/InventoryPanel/Margin/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.56, 0.62, 0.72, 1)
+theme_override_colors/font_color = Color(0.56, 0.52, 0.44, 1)
 text = "Tu inventario está vacío."
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -131,6 +961,25 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 4
 
+[node name="InventoryFooter" type="HBoxContainer" parent="Screen/InventoryPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="InventoryValueLabel" type="Label" parent="Screen/InventoryPanel/Margin/Content/InventoryFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.48, 0.44, 0.37, 1)
+theme_override_font_sizes/font_size = 10
+text = "Valor de mercado · sin tasación"
+
+[node name="InventoryFreeSlots" type="Label" parent="Screen/InventoryPanel/Margin/Content/InventoryFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.52, 0.42, 1)
+theme_override_font_sizes/font_size = 10
+text = "24 espacios libres"
+horizontal_alignment = 2
+
 [node name="PauseBackdrop" type="ColorRect" parent="Screen"]
 unique_name_in_owner = true
 layout_mode = 1
@@ -140,9 +989,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
-color = Color(0.015, 0.02, 0.035, 0.68)
+color = Color(0.012, 0.014, 0.013, 0.88)
 
-[node name="Center" type="CenterContainer" parent="Screen/PauseBackdrop"]
+[node name="Center" type="Control" parent="Screen/PauseBackdrop"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -152,31 +1001,45 @@ grow_vertical = 2
 
 [node name="MenuPanel" type="PanelContainer" parent="Screen/PauseBackdrop/Center"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(410, 400)
-layout_mode = 2
+custom_minimum_size = Vector2(382, 470)
+layout_mode = 1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = -518.0
+offset_right = 430.0
+offset_bottom = -48.0
+grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Visual" type="TextureRect" parent="Screen/PauseBackdrop/Center/MenuPanel"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_pause")
+expand_mode = 1
+stretch_mode = 0
 
 [node name="Margin" type="MarginContainer" parent="Screen/PauseBackdrop/Center/MenuPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 38
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 38
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 28
 
 [node name="Content" type="VBoxContainer" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 12
 
 [node name="Title" type="Label" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.9, 1, 1)
+theme_override_colors/font_color = Color(0.94, 0.86, 0.68, 1)
 theme_override_font_sizes/font_size = 28
 text = "Menú"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.58, 0.65, 0.76, 1)
+theme_override_colors/font_color = Color(0.62, 0.59, 0.51, 1)
 text = "La aventura está en pausa"
 horizontal_alignment = 1
 
@@ -189,7 +1052,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxFlat_action")
+theme_override_colors/font_color = Color(0.92, 0.86, 0.72, 1)
+theme_override_colors/font_hover_color = Color(1, 0.96, 0.84, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Continuar"
 
 [node name="PauseOptionsButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
@@ -197,15 +1064,29 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Opciones"
+
+[node name="EditHUDButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
+text = "Editar HUD"
 
 [node name="MainMenuButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Salir a selección de personaje"
 
 [node name="QuitGameButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
@@ -213,7 +1094,9 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxFlat_secondary")
+theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Salir del juego"
 
 [node name="OptionsMenu" parent="Screen" instance=ExtResource("2_options")]

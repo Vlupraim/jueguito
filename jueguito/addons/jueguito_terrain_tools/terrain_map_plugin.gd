@@ -2,6 +2,15 @@
 extends EditorPlugin
 
 const TERRAIN3D_AUTO_REGIONS_SETTING := "terrain3d/tool_settings/auto_regions"
+const WORKSPACE_ROOT_NAME := &"Terrain3DSectorWorkspace"
+const SECTOR_CONTENT_NAME := &"SectorContent"
+const SECTOR_CONTENT_CATEGORIES: Array[StringName] = [
+	&"Rocks",
+	&"Vegetation",
+	&"Buildings",
+	&"NPCs",
+	&"Props",
+]
 
 var dock: Control
 
@@ -18,18 +27,62 @@ func _enter_tree() -> void:
 	if dock.has_method("setup"):
 		dock.call("setup", get_editor_interface())
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, dock)
+	if not scene_changed.is_connected(_on_scene_changed):
+		scene_changed.connect(_on_scene_changed)
+	call_deferred("_ensure_current_workspace_structure")
 
 
 func _exit_tree() -> void:
+	if scene_changed.is_connected(_on_scene_changed):
+		scene_changed.disconnect(_on_scene_changed)
 	if dock != null:
 		remove_control_from_docks(dock)
 		dock.queue_free()
 		dock = null
 
 
+func _on_scene_changed(scene_root: Node) -> void:
+	_ensure_workspace_structure(scene_root)
+
+
+func _ensure_current_workspace_structure() -> void:
+	_ensure_workspace_structure(get_editor_interface().get_edited_scene_root())
+
+
+# El workspace es una escena reutilizable. Su contenido artesanal vive bajo un
+# unico nodo para que, en el siguiente paso, el plugin pueda guardarlo/cargarlo
+# como scenes/world/sectors/handmade/sector_X_Y.tscn sin incluir camara, luz ni
+# herramientas de Terrain3D.
+func _ensure_workspace_structure(scene_root: Node) -> void:
+	if scene_root == null or scene_root.name != WORKSPACE_ROOT_NAME:
+		return
+
+	var changed := false
+	var sector_content := scene_root.get_node_or_null(NodePath(String(SECTOR_CONTENT_NAME))) as Node3D
+	if sector_content == null:
+		sector_content = Node3D.new()
+		sector_content.name = SECTOR_CONTENT_NAME
+		scene_root.add_child(sector_content)
+		sector_content.owner = scene_root
+		changed = true
+
+	for category_name in SECTOR_CONTENT_CATEGORIES:
+		var category := sector_content.get_node_or_null(NodePath(String(category_name))) as Node3D
+		if category != null:
+			continue
+		category = Node3D.new()
+		category.name = category_name
+		sector_content.add_child(category)
+		category.owner = scene_root
+		changed = true
+
+	if changed:
+		get_editor_interface().mark_scene_as_unsaved()
+
+
 # Godot llama este hook al guardar la escena/proyecto desde el editor (Ctrl+S).
-# Terrain3D mantiene datos externos a la escena, por lo que se los delegamos al
-# dock para que el guardado normal incluya el sector activo y sus recursos.
+# Terrain3D y SectorContent mantienen datos por sector fuera del workspace, por
+# lo que el guardado normal persiste y valida ambos antes de continuar.
 func _save_external_data() -> void:
 	if dock != null and dock.has_method("save_external_data"):
 		dock.call("save_external_data")

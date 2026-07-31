@@ -464,6 +464,11 @@ tools/
 
 ## Servidor autoritativo futuro
 
+Las responsabilidades, el modelo de sectores y la estrategia de persistencia se
+definen en `res://docs/technical/authoritative_networking_and_persistence.md`.
+La primera implementación usa un solo servidor Godot para múltiples sectores;
+esta jerarquía reserva módulos y no implica un proceso dedicado por sector.
+
 ```text
 server/
   src/

@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://c6a8b79f0122e"]
+[gd_scene load_steps=11 format=3 uid="uid://c6a8b79f0122e"]
 
 [ext_resource type="Script" path="res://scripts/ui/character_selection_3d.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/ui/backgrounds/medieval_lowpoly_viking_camp_v2.png" id="2_background"]
+[ext_resource type="Theme" path="res://assets/ui/medieval_ui_theme.tres" id="3_theme"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -10,28 +12,38 @@ ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 sky_material = SubResource("ProceduralSkyMaterial_sky")
 
 [sub_resource type="Environment" id="Environment_env"]
-background_mode = 2
+background_mode = 3
 sky = SubResource("Sky_sky")
 tonemap_mode = 2
 glow_enabled = true
 glow_intensity = 0.5
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_pedestal"]
-top_radius = 1.2
-bottom_radius = 1.3
-height = 0.3
+[sub_resource type="PlaneMesh" id="CylinderMesh_pedestal"]
+size = Vector2(1.35, 0.72)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pedestal"]
-albedo_color = Color(0.180392, 0.2, 0.235294, 1)
-roughness = 0.8
+[sub_resource type="Shader" id="Shader_earth"]
+code = "shader_type spatial;
+render_mode unshaded, blend_mix, depth_draw_never, cull_disabled;
+
+void fragment() {
+	vec2 centered = (UV - vec2(0.5)) * vec2(1.0, 1.65);
+	float contact = 1.0 - smoothstep(0.08, 0.52, length(centered));
+	ALBEDO = vec3(0.018, 0.012, 0.008);
+	ALPHA = contact * 0.34;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="StandardMaterial3D_pedestal"]
+render_priority = 0
+shader = SubResource("Shader_earth")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
-bg_color = Color(0.0627451, 0.0823529, 0.12549, 0.82)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.231373, 0.352941, 0.54902, 0.55)
+bg_color = Color(0.065, 0.052, 0.036, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.36, 0.19, 0.88)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -40,12 +52,12 @@ shadow_color = Color(0, 0, 0, 0.3)
 shadow_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action"]
-bg_color = Color(0.105882, 0.321569, 0.65098, 0.95)
+bg_color = Color(0.34, 0.235, 0.09, 0.98)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.392157, 0.662745, 1, 0.9)
+border_color = Color(0.78, 0.61, 0.3, 0.95)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -60,32 +72,57 @@ environment = SubResource("Environment_env")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
+light_color = Color(1, 0.86, 0.66, 1)
+light_energy = 0.45
 sky_mode = 1
 
 [node name="SpotLight3D_Key" type="SpotLight3D" parent="."]
 transform = Transform3D(0.965926, 0.0669873, -0.25, 0, 0.965926, 0.258819, 0.258819, -0.25, 0.933013, -1.2, 2.3, 3.2)
 light_color = Color(1, 0.980392, 0.941176, 1)
-light_energy = 4.0
+light_energy = 0.55
 spot_range = 10.0
 spot_angle = 35.0
 
 [node name="SpotLight3D_Rim" type="SpotLight3D" parent="."]
 transform = Transform3D(-0.965926, -0.0669873, 0.25, 0, 0.965926, 0.258819, -0.258819, 0.25, -0.933013, 1.2, 2.2, -2.5)
-light_color = Color(0.705882, 0.823529, 1, 1)
-light_energy = 3.5
+light_color = Color(0.56, 0.67, 0.68, 1)
+light_energy = 0.4
 spot_range = 8.0
 spot_angle = 40.0
 
-[node name="Pedestal" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+[node name="GroundContactShadow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46, 0.004, 0.78)
 mesh = SubResource("CylinderMesh_pedestal")
 surface_material_override/0 = SubResource("StandardMaterial3D_pedestal")
 
 [node name="CharacterSpawn" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46, -0.08, 0.78)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 1.3, 2.8)
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Backdrop" type="TextureRect" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Atmosphere" type="ColorRect" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.024, 0.018, 0.18)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -96,6 +133,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_theme")
 
 [node name="RotateArea" type="Control" parent="CanvasLayer/UI"]
 unique_name_in_owner = true
@@ -114,7 +152,7 @@ anchor_right = 1.0
 offset_top = 26.0
 offset_bottom = 66.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.82, 0.9, 1, 1)
+theme_override_colors/font_color = Color(0.93, 0.8, 0.52, 1)
 theme_override_font_sizes/font_size = 26
 text = "Elige tu personaje"
 horizontal_alignment = 1
@@ -145,14 +183,14 @@ theme_override_constants/separation = 12
 
 [node name="Title" type="Label" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.392157, 0.662745, 1, 1)
+theme_override_colors/font_color = Color(0.88, 0.72, 0.42, 1)
 theme_override_font_sizes/font_size = 22
 text = "Tus personajes"
 
 [node name="SlotCounterLabel" type="Label" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.62, 0.68, 0.78, 1)
+theme_override_colors/font_color = Color(0.69, 0.64, 0.54, 1)
 theme_override_font_sizes/font_size = 13
 text = "0 de 4 espacios utilizados"
 
@@ -167,7 +205,7 @@ theme_override_constants/separation = 10
 
 [node name="ListHint" type="Label" parent="CanvasLayer/UI/ListPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.54, 0.6, 0.7, 1)
+theme_override_colors/font_color = Color(0.6, 0.56, 0.48, 1)
 theme_override_font_sizes/font_size = 12
 text = "Selecciona un espacio para continuar."
 autowrap_mode = 2
@@ -203,7 +241,7 @@ theme_override_constants/separation = 7
 [node name="SelectedNameLabel" type="Label" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.87, 0.92, 1, 1)
+theme_override_colors/font_color = Color(0.94, 0.86, 0.69, 1)
 theme_override_font_sizes/font_size = 20
 text = "Espacio vacío"
 horizontal_alignment = 1
@@ -211,7 +249,7 @@ horizontal_alignment = 1
 [node name="SelectedDetailsLabel" type="Label" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.61, 0.68, 0.78, 1)
+theme_override_colors/font_color = Color(0.68, 0.63, 0.54, 1)
 theme_override_font_sizes/font_size = 13
 text = "Crea un personaje para comenzar tu aventura."
 horizontal_alignment = 1
@@ -221,7 +259,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 17
-theme_override_styles/normal = SubResource("StyleBoxFlat_action")
 text = "Crear personaje"
 
 [node name="CreationPanel" type="PanelContainer" parent="CanvasLayer/UI"]
@@ -255,16 +292,16 @@ alignment = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.392157, 0.662745, 1, 1)
+theme_override_colors/font_color = Color(0.88, 0.72, 0.42, 1)
 theme_override_font_sizes/font_size = 22
 text = "Crear personaje"
 horizontal_alignment = 1
 
 [node name="CreationSubtitle" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.61, 0.68, 0.78, 1)
+theme_override_colors/font_color = Color(0.68, 0.63, 0.54, 1)
 theme_override_font_sizes/font_size = 12
-text = "Personaliza el cuerpo y revisa el resultado en la plataforma."
+text = "Personaliza el cuerpo y revisa el resultado en la escena."
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -340,7 +377,6 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 15
-theme_override_styles/normal = SubResource("StyleBoxFlat_action")
 text = "Crear"
 
 [node name="RotateHint" type="Label" parent="CanvasLayer/UI"]
@@ -352,7 +388,7 @@ offset_top = -34.0
 offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.56, 0.62, 0.72, 1)
+theme_override_colors/font_color = Color(0.68, 0.63, 0.54, 1)
 theme_override_font_sizes/font_size = 12
 text = "Arrastra sobre el personaje para rotarlo"
 horizontal_alignment = 1

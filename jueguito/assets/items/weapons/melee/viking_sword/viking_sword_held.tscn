@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c86wqph15pcbx"]
+
+[ext_resource type="PackedScene" uid="uid://beuojyxhk5bwu" path="res://assets/items/weapons/melee/viking_sword/viking_sword.glb" id="1_model"]
+
+[node name="HeldItem" type="Node3D" unique_id=915447653]
+
+[node name="Visual" type="Node3D" parent="." unique_id=1753785743 instance=ExtResource("1_model")]
+transform = Transform3D(0.08951278, 0.0006193295, 0.22865117, -0.29216415, 0.21840599, 0.05144248, -0.17456242, -0.36522698, 0.031150721, 0.05870074, 0.17148983, -0.33831322)

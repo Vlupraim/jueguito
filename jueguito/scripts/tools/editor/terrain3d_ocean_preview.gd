@@ -32,6 +32,7 @@ var _ocean: OceanWater
 var _connected_data: Object
 var _refresh_at_ms := -1
 var _observed_source_signature := ""
+var _terrain_transition_active := false
 
 
 func _ready() -> void:
@@ -47,6 +48,8 @@ func _exit_tree() -> void:
 
 func _process(_delta: float) -> void:
 	if not Engine.is_editor_hint():
+		return
+	if _terrain_transition_active:
 		return
 	if _terrain == null or not is_instance_valid(_terrain):
 		_ensure_preview()
@@ -104,8 +107,23 @@ func refresh_for_sector(next_sector: Vector2i) -> void:
 	_schedule_refresh(100)
 
 
+## El dock pausa el preview mientras Terrain3D guarda, libera y carga regiones.
+## Desconectar maps_edited evita reconstrucciones con datos a medio cambiar.
+func set_terrain_transition_active(active: bool) -> void:
+	_terrain_transition_active = active
+	_refresh_at_ms = -1
+	if active:
+		_disconnect_terrain_data()
+		if _ocean != null and is_instance_valid(_ocean):
+			_ocean.visible = false
+		return
+	_connect_terrain_data()
+	_observed_source_signature = _terrain_source_signature()
+	_schedule_refresh(100)
+
+
 func _schedule_refresh(delay_ms: int) -> void:
-	if not Engine.is_editor_hint() or not is_inside_tree():
+	if _terrain_transition_active or not Engine.is_editor_hint() or not is_inside_tree():
 		return
 	_refresh_at_ms = Time.get_ticks_msec() + maxi(delay_ms, 0)
 

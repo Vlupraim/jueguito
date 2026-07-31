@@ -1,0 +1,6 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+PLAYER_CHOP_LOOP_SMOKE_OK speed=1.3 capture=0.28

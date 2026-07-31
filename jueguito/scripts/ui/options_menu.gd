@@ -27,6 +27,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var voice_slider: HSlider = %VoiceSlider
 @onready var camera_sensitivity_slider: HSlider = %CameraSensitivitySlider
 @onready var zoom_speed_slider: HSlider = %ZoomSpeedSlider
+@onready var camera_pitch_slider: HSlider = %CameraPitchSlider
 @onready var colorblind_option: OptionButton = %ColorblindOption
 @onready var colorblind_intensity_slider: HSlider = %ColorblindIntensitySlider
 @onready var text_scale_slider: HSlider = %TextScaleSlider
@@ -44,6 +45,7 @@ func _ready() -> void:
 
 
 func open(initial_tab := 0) -> void:
+	_set_menu_translucent(false)
 	_refresh_controls()
 	tabs.current_tab = clampi(initial_tab, 0, tabs.get_tab_count() - 1)
 	show()
@@ -51,6 +53,7 @@ func open(initial_tab := 0) -> void:
 
 
 func close() -> void:
+	_set_menu_translucent(false)
 	hide()
 	closed.emit()
 
@@ -90,6 +93,7 @@ func _connect_controls() -> void:
 	_bind_slider(voice_slider, "audio", "voice")
 	_bind_slider(camera_sensitivity_slider, "controls", "camera_sensitivity")
 	_bind_slider(zoom_speed_slider, "controls", "zoom_speed")
+	_bind_slider(camera_pitch_slider, "controls", "camera_pitch", true)
 	colorblind_option.item_selected.connect(func(index): _write_setting("accessibility", "colorblind_mode", index))
 	_bind_slider(colorblind_intensity_slider, "accessibility", "colorblind_intensity")
 	_bind_slider(text_scale_slider, "accessibility", "text_scale")
@@ -97,8 +101,30 @@ func _connect_controls() -> void:
 	camera_shake_check.toggled.connect(func(value): _write_setting("accessibility", "camera_shake", value))
 
 
-func _bind_slider(control: HSlider, section: String, key: String) -> void:
+var _fade_tween: Tween
+
+
+func _bind_slider(control: HSlider, section: String, key: String, enable_translucency := false) -> void:
 	control.value_changed.connect(func(value): _write_setting(section, key, value))
+	if enable_translucency:
+		control.drag_started.connect(func(): _set_menu_translucent(true))
+		control.drag_ended.connect(func(_value_changed): _set_menu_translucent(false))
+
+
+func _set_menu_translucent(translucent: bool) -> void:
+	var backdrop := get_node_or_null("Backdrop") as Control
+	var center := get_node_or_null("Center") as Control
+	if _fade_tween != null and _fade_tween.is_valid():
+		_fade_tween.kill()
+	_fade_tween = create_tween().set_parallel(true)
+	_fade_tween.set_trans(Tween.TRANS_SINE)
+	_fade_tween.set_ease(Tween.EASE_IN_OUT)
+	var target_alpha := 0.20 if translucent else 1.0
+	var backdrop_target_alpha := 0.05 if translucent else 1.0
+	if center != null:
+		_fade_tween.tween_property(center, "modulate:a", target_alpha, 0.15)
+	if backdrop != null:
+		_fade_tween.tween_property(backdrop, "modulate:a", backdrop_target_alpha, 0.15)
 
 
 func _write_setting(section: String, key: String, value: Variant, apply_immediately := true) -> void:
@@ -126,6 +152,7 @@ func _refresh_controls() -> void:
 	voice_slider.value = float(SettingsManager.get_setting("audio", "voice", 1.0))
 	camera_sensitivity_slider.value = float(SettingsManager.get_setting("controls", "camera_sensitivity", 1.0))
 	zoom_speed_slider.value = float(SettingsManager.get_setting("controls", "zoom_speed", 1.0))
+	camera_pitch_slider.value = float(SettingsManager.get_setting("controls", "camera_pitch", -45.0))
 	colorblind_option.select(int(SettingsManager.get_setting("accessibility", "colorblind_mode", 0)))
 	colorblind_intensity_slider.value = float(SettingsManager.get_setting("accessibility", "colorblind_intensity", 1.0))
 	text_scale_slider.value = float(SettingsManager.get_setting("accessibility", "text_scale", 1.0))

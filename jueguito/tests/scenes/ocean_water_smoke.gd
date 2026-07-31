@@ -32,6 +32,15 @@ func _run() -> void:
 	if not bool(water_info.get("in_water", false)):
 		_fail("La zona azul del mapa no se reconoce como agua")
 		return
+	if not bool(water_info.get("surface_locked", false)):
+		_fail("El mar profundo no activo la capa de flotacion")
+		return
+	if not is_equal_approx(float(water_info.get("float_height", -INF)), ocean.water_level):
+		_fail("La altura de flotacion no coincide con la superficie visible")
+		return
+	if not is_equal_approx(ocean.get_float_height(0.68), ocean.water_level - 0.68):
+		_fail("El offset de flotacion no se aplico sobre la lamina")
+		return
 	if bool(land_info.get("in_water", false)):
 		_fail("La zona terrestre del mapa se clasifico como agua")
 		return
@@ -40,6 +49,9 @@ func _run() -> void:
 		return
 	if String(wading_limit.get("state", "")) != "wading":
 		_fail("Los primeros 1.20 metros no permanecen caminables")
+		return
+	if bool(wading_limit.get("surface_locked", false)):
+		_fail("El vadeo quedo fijado a la superficie antes de tiempo")
 		return
 
 	print(

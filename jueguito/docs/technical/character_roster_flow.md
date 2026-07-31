@@ -42,9 +42,14 @@ estaba seleccionado sin crear datos.
 ## Persistencia
 
 Las cuentas siguen viviendo en memoria dentro de `ServerMock`. Al cerrar el juego
-se pierden los personajes creados. El siguiente paso de infraestructura puede ser
-serializar las cuentas a JSON local; la interfaz no deberia necesitar cambios para
-incorporarlo.
+se pierden los personajes creados. El siguiente paso acordado es reemplazar el
+registro automatico por FastAPI y PostgreSQL, y hacer que el futuro servidor Godot
+autoritativo cargue y persista el roster. La interfaz no deberia necesitar una
+reescritura completa: `NetworkManager` seguira funcionando como fachada, pero
+dejara de ejecutar el mock dentro del cliente.
+
+La arquitectura completa se define en
+`res://docs/technical/authoritative_networking_and_persistence.md`.
 
 ## Prueba automatizada
 

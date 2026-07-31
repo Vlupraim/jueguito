@@ -52,6 +52,9 @@ func _validate_model(model_path: String) -> String:
 		AnimationRetargeter.shared_animation_name(&"idle"),
 		AnimationRetargeter.shared_animation_name(&"walk"),
 		AnimationRetargeter.shared_animation_name(&"run"),
+		AnimationRetargeter.shared_animation_name(&"swim_idle"),
+		AnimationRetargeter.shared_animation_name(&"swim_forward"),
+		AnimationRetargeter.shared_animation_name(&"chop"),
 	]
 	for animation_name in required:
 		if not player.has_animation(animation_name):

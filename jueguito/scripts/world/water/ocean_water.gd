@@ -7,15 +7,15 @@ const SURFACE_WATER := 2
 const SURFACE_DEEP_WATER := 4
 
 @export var water_level := 2.0
-@export_range(32, 192, 1) var mesh_resolution := 128
-@export_range(16, 96, 1) var collision_resolution := 48
+@export_range(32, 192, 1) var mesh_resolution := 64
+@export_range(16, 96, 1) var collision_resolution := 32
 @export_range(2, 24, 1) var foam_search_pixels := 12
-@export_range(4, 48, 1) var coast_overlap_pixels := 28
+@export_range(4, 48, 1) var coast_overlap_pixels := 16
 @export_range(0.25, 4.0, 0.05) var foam_depth_meters := 1.65
 @export_range(0.0, 0.5, 0.01) var water_entry_depth := 0.08
 @export_range(0.5, 3.0, 0.05) var swim_depth_threshold := 1.20
 @export var fallback_sector_size := 512.0
-@export var water_area_depth := 80.0
+@export var water_area_depth := 12.0
 
 @onready var water_surface: MeshInstance3D = %WaterSurface
 @onready var water_area: Area3D = %WaterArea
@@ -92,14 +92,23 @@ func get_water_info(world_position: Vector3, terrain_height := INF) -> Dictionar
 	var state := "wading"
 	if depth > swim_depth_threshold:
 		state = "swimming" if mask_shore_factor > 0.08 else "open_water"
+	var surface_locked := state == "swimming" or state == "open_water"
 	return {
 		"in_water": true,
 		"state": state,
 		"water_level": water_level,
+		# El oceano es una lamina navegable, no un volumen buceable. Cualquier
+		# controlador flotante puede fijar su eje Y a esta altura con su offset.
+		"surface_locked": surface_locked,
+		"float_height": water_level,
 		"depth": maxf(depth, 0.0),
 		"shore_factor": shore_factor,
 		"deep_water": surface_kind == SURFACE_DEEP_WATER,
 	}
+
+
+func get_float_height(body_offset := 0.0) -> float:
+	return water_level - maxf(body_offset, 0.0)
 
 
 func _fixed_sector_bounds(sector: Vector2i, terrain: Node) -> Rect2:

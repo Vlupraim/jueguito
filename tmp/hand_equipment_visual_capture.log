@@ -1,0 +1,11 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 3050 6GB Laptop GPU
+
+[MapDataManager] Cargados 2546 sectores desde JSON.
+CAPTURE dual_swords bounds=[P: (-0.0051, -0.78, -0.001664), S: (0.010201, 0.017, 0.003328)]
+CAPTURE sword_shield bounds=[P: (-0.640606, -0.78, -0.874427), S: (1.288709, 1.44942, 1.331001)]
+ITEM_MESH /root/HandEquipmentVisualCapture/Player/Visual/ImportedCharacter/Armature/Skeleton3D/PrimaryItemAttachment/ScaleCompensator/EquippedPrimaryItem/Visual/mesh_node global=[X: (-0.116664, 0.319143, -0.091551), Y: (0.084176, -0.086304, -0.408116), Z: (-0.2181, -0.087334, -0.026515), O: (0.459567, 0.114239, -0.397726)] aabb=[P: (-0.722497, -1.0, -0.092021), S: (1.444994, 2.0, 0.184042)]
+ITEM_MESH /root/HandEquipmentVisualCapture/Player/Visual/ImportedCharacter/Armature/Skeleton3D/SecondaryItemAttachment/ScaleCompensator/EquippedSecondaryItem/Visual/mesh_node global=[X: (-0.086055, -0.346074, -0.08788), Y: (-0.011132, -0.089591, 0.359967), Z: (-0.302675, 0.069568, 0.005598), O: (-0.472945, 0.218194, 0.007593)] aabb=[P: (-0.998047, -1.0, -0.233398), S: (1.996094, 2.0, 0.466796)]
+CAPTURE two_hand_bow bounds=[P: (-0.0051, -0.78, -0.622086), S: (0.588484, 1.161084, 1.177381)]
+ITEM_MESH /root/HandEquipmentVisualCapture/Player/Visual/ImportedCharacter/Armature/Skeleton3D/PrimaryItemAttachment/ScaleCompensator/EquippedPrimaryItem/Visual/mesh_node global=[X: (-0.123816, 0.55157, 0.129768), Y: (-0.092635, -0.150747, 0.552354), Z: (0.559007, 0.097188, 0.120274), O: (0.422934, 0.106782, -0.033396)] aabb=[P: (-0.210861, -1.0, -0.074609), S: (0.421722, 2.0, 0.149218)]
+HAND_EQUIPMENT_VISUAL_CAPTURE_OK

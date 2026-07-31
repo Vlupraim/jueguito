@@ -11,7 +11,9 @@ const ALIAS_TO_CANONICAL := {
 	&"jump": &"basic_jump",
 	&"gather": &"collect_object",
 	&"attack": &"attack",
+	&"chop": &"attack",
 	&"swim_idle": &"swim_idle",
+	&"swim_forward": &"swim_forward",
 }
 
 const LOOPING_CLIPS := {
@@ -19,6 +21,7 @@ const LOOPING_CLIPS := {
 	"walking_man": true,
 	"running": true,
 	"swim_idle": true,
+	"swim_forward": true,
 }
 
 
@@ -108,7 +111,6 @@ static func install_shared_library(
 	report["missing_bones"] = missing_list
 	source_root.free()
 	return report
-
 
 static func shared_animation_name(alias: StringName) -> StringName:
 	return StringName(String(LIBRARY_NAME) + "/" + String(alias))

@@ -20,6 +20,8 @@ func get_player_ground_info(requested_position: Vector3) -> Dictionary:
 			"in_water": water_mode != "dry",
 			"state": water_mode,
 			"water_level": 2.0,
+			"surface_locked": water_mode == "swimming" or water_mode == "open_water",
+			"float_height": 2.0,
 			"depth": maxf(2.0 - terrain_height, 0.0),
 		},
 	}
@@ -40,7 +42,8 @@ func _run() -> void:
 		return
 
 	water_mode = "swimming"
-	player.call("_move_on_generator_ground", Vector3.RIGHT, 9.0, 1.0)
+	player.global_position.y = -10.0
+	player.call("_move_on_generator_ground", Vector3.RIGHT, 9.0, 0.016)
 	if String(player.get("water_state")) != "swimming":
 		_fail("El jugador no entro al estado de natacion")
 		return
@@ -48,7 +51,15 @@ func _run() -> void:
 		_fail("La linea de flotacion deja demasiado torso fuera del agua")
 		return
 	if not is_equal_approx(player.global_position.y, 2.0 - float(player.get("swimming_body_offset"))):
-		_fail("El nadador no se mantuvo sobre el nivel del agua")
+		_fail("El nadador no quedo bloqueado inmediatamente en la superficie")
+		return
+	player.call("_update_locomotion", Vector3.RIGHT, 9.0)
+	if String(player.get("locomotion_state")) != "swim_forward":
+		_fail("El nadador en movimiento no uso swim_forward")
+		return
+	player.call("_update_locomotion", Vector3.ZERO, 0.0)
+	if String(player.get("locomotion_state")) != "swim_idle":
+		_fail("El nadador detenido no regreso a swim_idle")
 		return
 	var safe_swim_position := player.global_position
 
