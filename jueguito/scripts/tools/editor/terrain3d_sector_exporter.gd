@@ -33,7 +33,9 @@ const TEXTURE_GRASS := 2
 const TEXTURE_HUMID_EARTH := 3
 const TEXTURE_ROCK := 4
 const TEXTURE_ARCANE := 5
-const TEXTURE_SNOW := 6
+# La nieve anterior fue retirada. El bioma polar exporta tundra/ceniza fria hasta
+# que exista una textura de nieve aprobada dentro de los 24 slots.
+const TEXTURE_SNOW := 15
 const TEXTURE_SWAMP := 7
 
 const ROCK_SLOPE_START_DEGREES := 28.0

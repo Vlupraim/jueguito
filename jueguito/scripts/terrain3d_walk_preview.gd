@@ -14,14 +14,30 @@ const OCEAN_WATER_SCENE := preload("res://scenes/world/water/ocean_water.tscn")
 const TERRAIN_ASSETS := preload("res://assets/environment/terrain/jueguito_terrain_assets.tres")
 const TERRAIN_MATERIAL := preload("res://assets/environment/terrain/jueguito_terrain_material.tres")
 const LOCAL_MAP_TEXTURE_BUILDER := preload("res://scripts/ui/local_map_texture_builder.gd")
+const WORLD_ATLAS_SURFACE := preload("res://scripts/ui/world_atlas_surface.gd")
 const EDITABLE_HUD_MODULE_SCRIPT := preload("res://scripts/ui/editable_hud_module.gd")
 const MINIMAP_FRAME_TEXTURE := preload("res://assets/ui/hud/runtime/minimap_frame_parchment.png")
 const MAP_MENU_SHELL_TEXTURE := preload("res://assets/ui/hud/runtime/map_menu_shell.png")
 const WORLD_ATLAS_SHELL_TEXTURE := preload("res://assets/ui/hud/runtime/world_atlas_shell.png")
-const HUD_BUTTON_TEXTURE := preload("res://assets/ui/hud/runtime/menu_button.png")
+const HUD_CLOSE_ICON := preload("res://assets/ui/icons/close.svg")
+const HUD_ZOOM_IN_ICON := preload("res://assets/ui/icons/zoom_in.svg")
+const HUD_ZOOM_OUT_ICON := preload("res://assets/ui/icons/zoom_out.svg")
+const HUD_EXPAND_ICON := preload("res://assets/ui/icons/expand.svg")
+const HUD_CENTER_ICON := preload("res://assets/ui/icons/center.svg")
+const HUD_WORLD_ICON := preload("res://assets/ui/icons/world.svg")
 const TUTORIAL_SECTOR := Vector2i(27, 30)
-const TUTORIAL_SHIP_POSITION := Vector3(273.0609, 3.2427492, 188.77995)
-const TUTORIAL_SPAWN_XZ := Vector2(273.0, 218.0)
+# La ilustracion maestra del atlas ubica estas dos celdas costeras al reves
+# respecto de la grilla de datos. El intercambio conserva intactos tanto el
+# arte como las coordenadas logicas usadas por terreno, guardado y portales.
+const WORLD_MAP_ART_SECTOR_SWAPS := {
+	Vector2i(27, 30): Vector2i(26, 30),
+	Vector2i(26, 30): Vector2i(27, 30),
+}
+const TUTORIAL_SHIP_POSITION := Vector3(283.47443, 2.5446196, 181.37114)
+const TUTORIAL_SPAWN_XZ := Vector2(283.47443, 210.57114)
+const TUTORIAL_STAND_UP_ACTION := &"stand_up1"
+const TUTORIAL_BLACK_SCREEN_SECONDS := 1.5
+const TUTORIAL_FADE_IN_SECONDS := 4.0
 const SECTOR_CONTENT_DIR := "res://scenes/world/sectors/handmade"
 
 # Cada sector usa su propia referencia 2D. El atlas mundial queda reservado
@@ -36,7 +52,10 @@ const WORLD_MAP_VIEW_SIZE := Vector2(720.0, 390.0)
 const WORLD_MAP_REGION_VISIBLE_COLUMNS := 11.0
 const MINIMAP_MARGIN := 12.0
 const CAMERA_QUADRANT_YAWS := [45.0, 135.0, 225.0, 315.0]
-const SECTOR_BOUNDARY_MARGIN := 1.25
+## Franja de terreno que sigue renderizandose alrededor del area jugable para
+## que la camara nunca revele el final real del sector. No precarga vecinos.
+const SECTOR_VISUAL_BORDER := 48.0
+const PORTAL_ENTRY_OVERLAP := 1.25
 const PORTAL_BOUNDARY_DEPTH := 3.0
 const MINIMAP_ZOOM_MIN := 1.0
 const MINIMAP_ZOOM_MAX := 1.6
@@ -73,6 +92,7 @@ var current_sector := Vector2i(-1, -1)
 var available_sectors := {}  # "x,y" -> Vector2i
 var local_minimap: Control
 var expanded_local_minimap: Control
+var regional_map_surface: Control
 var expanded_map_backdrop: ColorRect
 var local_minimap_texture: Texture2D
 var expanded_map_texture: Texture2D
@@ -109,6 +129,7 @@ var sector_portal_openings: Array[Dictionary] = []
 # El mapa mundial es una vista separada del mapa local de Tab.
 var world_map_backdrop: ColorRect
 var world_map_canvas: Control
+var world_map_surface: Control
 var world_map_texture: Texture2D
 var world_map_zoom := 1.0
 var world_map_pan := Vector2.ZERO
@@ -125,6 +146,8 @@ var world_map_info_card: PanelContainer
 var world_map_drag_distance := 0.0
 var gameplay_hud: CanvasLayer
 var minimap_hud_module: Control
+var tutorial_intro_active := false
+var tutorial_intro_overlay: ColorRect
 
 
 func _ready() -> void:
@@ -133,6 +156,12 @@ func _ready() -> void:
 	if not SettingsManager.setting_changed.is_connected(_on_setting_changed):
 		SettingsManager.setting_changed.connect(_on_setting_changed)
 	_apply_character_sector()
+	tutorial_intro_active = (
+		current_sector == TUTORIAL_SECTOR
+		or sector == TUTORIAL_SECTOR
+	) and GameManager.should_play_tutorial_intro
+	if tutorial_intro_active:
+		_setup_tutorial_intro_overlay()
 	_setup_environment()
 	if show_debug_hud:
 		_setup_debug_hud()
@@ -147,6 +176,8 @@ func _ready() -> void:
 	_setup_minimap()
 	await get_tree().process_frame
 	_place_player_on_ground()
+	if tutorial_intro_active:
+		await _play_tutorial_intro()
 	# Reasignar la camara ya en su posicion final, por si el clipmap no la seguia.
 	var cam := _player_camera()
 	if cam != null and terrain != null and terrain.has_method("set_camera"):
@@ -182,6 +213,9 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if get_tree().paused:
+		return
+	if tutorial_intro_active:
+		get_viewport().set_input_as_handled()
 		return
 
 	if event is InputEventMouseButton:
@@ -402,6 +436,7 @@ func _setup_gameplay_hud() -> void:
 	gameplay_hud = GAMEPLAY_HUD_SCENE.instantiate()
 	gameplay_hud.name = "GameplayHUD"
 	add_child(gameplay_hud)
+	gameplay_hud.visible = not tutorial_intro_active
 	gameplay_hud.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
 	gameplay_hud.hud_edit_mode_changed.connect(_on_hud_edit_mode_changed)
 	var reset_button := gameplay_hud.find_child("Reset", true, false) as Button
@@ -428,7 +463,7 @@ func _refresh_player_input_enabled() -> void:
 	if player != null and player.has_method("set_gameplay_input_enabled"):
 		player.call(
 			"set_gameplay_input_enabled",
-			not inventory_is_visible and not local_map_expanded
+			not inventory_is_visible and not local_map_expanded and not tutorial_intro_active
 		)
 
 
@@ -558,6 +593,8 @@ func _dir_has_res(dir_path: String) -> bool:
 func _create_player() -> void:
 	player = PLAYER_SCENE.instantiate()
 	add_child(player)
+	if tutorial_intro_active and player.has_method("set_gameplay_input_enabled"):
+		player.call("set_gameplay_input_enabled", false)
 	if gameplay_hud != null and gameplay_hud.has_method("bind_player"):
 		gameplay_hud.call("bind_player", player)
 	if player.has_method("make_camera_current"):
@@ -690,6 +727,10 @@ func get_player_ground_info(requested_position: Vector3) -> Dictionary:
 
 
 func _sector_walkable_bounds() -> Rect2:
+	return _sector_visual_bounds().grow(-SECTOR_VISUAL_BORDER)
+
+
+func _sector_visual_bounds() -> Rect2:
 	if ocean_water != null:
 		return ocean_water.sector_bounds
 	return Rect2(Vector2.ZERO, Vector2(512.0, 512.0))
@@ -697,7 +738,7 @@ func _sector_walkable_bounds() -> Rect2:
 
 func _is_position_inside_sector_or_portal(world_xz: Vector2) -> bool:
 	var bounds := _sector_walkable_bounds()
-	if bounds.grow(-SECTOR_BOUNDARY_MARGIN).has_point(world_xz):
+	if bounds.has_point(world_xz):
 		return true
 	for opening in sector_portal_openings:
 		if _portal_opening_contains(opening, world_xz, bounds):
@@ -713,19 +754,19 @@ func _portal_opening_contains(opening: Dictionary, world_xz: Vector2, bounds: Re
 		"N":
 			return absf(world_xz.x - center) <= half_width \
 				and world_xz.y >= bounds.position.y - PORTAL_BOUNDARY_DEPTH \
-				and world_xz.y <= bounds.position.y + SECTOR_BOUNDARY_MARGIN
+				and world_xz.y <= bounds.position.y + PORTAL_ENTRY_OVERLAP
 		"E":
 			return absf(world_xz.y - center) <= half_width \
-				and world_xz.x >= bounds.end.x - SECTOR_BOUNDARY_MARGIN \
+				and world_xz.x >= bounds.end.x - PORTAL_ENTRY_OVERLAP \
 				and world_xz.x <= bounds.end.x + PORTAL_BOUNDARY_DEPTH
 		"S":
 			return absf(world_xz.x - center) <= half_width \
-				and world_xz.y >= bounds.end.y - SECTOR_BOUNDARY_MARGIN \
+				and world_xz.y >= bounds.end.y - PORTAL_ENTRY_OVERLAP \
 				and world_xz.y <= bounds.end.y + PORTAL_BOUNDARY_DEPTH
 		"O", "W":
 			return absf(world_xz.y - center) <= half_width \
 				and world_xz.x >= bounds.position.x - PORTAL_BOUNDARY_DEPTH \
-				and world_xz.x <= bounds.position.x + SECTOR_BOUNDARY_MARGIN
+				and world_xz.x <= bounds.position.x + PORTAL_ENTRY_OVERLAP
 	return false
 
 
@@ -800,7 +841,7 @@ func _place_player_on_ground() -> void:
 	if player.has_method("mark_safe_position"):
 		player.call("mark_safe_position")
 	if current_sector == TUTORIAL_SECTOR and player.has_method("face_world_position"):
-		player.call("face_world_position", TUTORIAL_SHIP_POSITION)
+		player.call("face_world_position", _tutorial_ship_world_position())
 	print("Terrain3DWalkPreview: jugador en ", spawn_position.round())
 
 
@@ -840,8 +881,9 @@ func _find_tutorial_spawn_xz() -> Vector2:
 		Vector2(8.0, 8.0),
 		Vector2(0.0, 14.0),
 	]
+	var authored_spawn := _tutorial_spawn_xz()
 	for offset: Vector2 in offsets:
-		var candidate := TUTORIAL_SPAWN_XZ + offset
+		var candidate := authored_spawn + offset
 		var height := terrain.data.get_height(Vector3(candidate.x, 0.0, candidate.y))
 		if is_nan(height):
 			continue
@@ -850,7 +892,71 @@ func _find_tutorial_spawn_xz() -> Vector2:
 		var water_info := ocean_water.get_water_info(Vector3(candidate.x, height, candidate.y), height)
 		if String(water_info.get("state", "dry")) == "dry":
 			return candidate
+	return authored_spawn
+
+
+func _tutorial_spawn_xz() -> Vector2:
+	if sector_content != null:
+		var marker := sector_content.find_child("TutorialSpawn", true, false) as Node3D
+		if marker != null:
+			return Vector2(marker.global_position.x, marker.global_position.z)
 	return TUTORIAL_SPAWN_XZ
+
+
+func _tutorial_ship_world_position() -> Vector3:
+	if sector_content != null:
+		var ship := sector_content.find_child("destroyed_ship", true, false) as Node3D
+		if ship != null:
+			return ship.global_position
+	return TUTORIAL_SHIP_POSITION
+
+
+func _setup_tutorial_intro_overlay() -> void:
+	var layer := CanvasLayer.new()
+	layer.name = "TutorialIntroLayer"
+	layer.layer = 100
+	add_child(layer)
+	tutorial_intro_overlay = ColorRect.new()
+	tutorial_intro_overlay.name = "BlackFade"
+	tutorial_intro_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	tutorial_intro_overlay.color = Color.BLACK
+	tutorial_intro_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	layer.add_child(tutorial_intro_overlay)
+
+
+func _play_tutorial_intro() -> void:
+	if player == null or tutorial_intro_overlay == null:
+		tutorial_intro_active = false
+		return
+	player.call("hold_character_action_pose", TUTORIAL_STAND_UP_ACTION, 0.0)
+	await get_tree().create_timer(TUTORIAL_BLACK_SCREEN_SECONDS).timeout
+	var fade := create_tween()
+	fade.set_trans(Tween.TRANS_SINE)
+	fade.set_ease(Tween.EASE_IN_OUT)
+	fade.tween_property(
+		tutorial_intro_overlay,
+		"color:a",
+		0.0,
+		TUTORIAL_FADE_IN_SECONDS
+	)
+	await fade.finished
+	tutorial_intro_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var stand_duration := float(player.call(
+		"get_character_action_duration",
+		TUTORIAL_STAND_UP_ACTION
+	))
+	if bool(player.call("play_character_action", TUTORIAL_STAND_UP_ACTION, 0.08)):
+		await get_tree().create_timer(maxf(stand_duration, 0.1)).timeout
+	tutorial_intro_active = false
+	if gameplay_hud != null:
+		gameplay_hud.visible = true
+	if minimap_hud_module != null:
+		minimap_hud_module.visible = true
+	_refresh_player_input_enabled()
+	GameManager.complete_tutorial_intro()
+	var intro_layer := tutorial_intro_overlay.get_parent()
+	intro_layer.queue_free()
+	tutorial_intro_overlay = null
 
 
 func _player_camera() -> Camera3D:
@@ -923,6 +1029,7 @@ func _setup_minimap() -> void:
 	minimap_hud_module.set("default_position_offset", Vector2(-12.0, 12.0))
 	minimap_hud_module.custom_minimum_size = Vector2(292.0, 224.0)
 	minimap_hud_module.add_theme_constant_override("separation", 6)
+	minimap_hud_module.visible = not tutorial_intro_active
 	layer.add_child(minimap_hud_module)
 
 	var box := VBoxContainer.new()
@@ -960,25 +1067,31 @@ func _setup_minimap() -> void:
 	minimap_hud_module.add_child(minimap_controls)
 	var minimap_zoom_in := Button.new()
 	minimap_zoom_in.name = "AcercarMapaLocal"
-	minimap_zoom_in.text = "+"
+	minimap_zoom_in.icon = HUD_ZOOM_IN_ICON
+	minimap_zoom_in.expand_icon = true
+	minimap_zoom_in.add_theme_constant_override("icon_max_width", 18)
 	minimap_zoom_in.tooltip_text = "Acercar el minimapa"
-	minimap_zoom_in.custom_minimum_size = Vector2(30.0, 28.0)
+	minimap_zoom_in.custom_minimum_size = Vector2(34.0, 32.0)
 	_style_minimap_edge_button(minimap_zoom_in)
 	minimap_zoom_in.pressed.connect(_change_local_minimap_zoom.bind(0.15))
 	minimap_controls.add_child(minimap_zoom_in)
 	var minimap_zoom_out := Button.new()
 	minimap_zoom_out.name = "AlejarMapaLocal"
-	minimap_zoom_out.text = "-"
+	minimap_zoom_out.icon = HUD_ZOOM_OUT_ICON
+	minimap_zoom_out.expand_icon = true
+	minimap_zoom_out.add_theme_constant_override("icon_max_width", 18)
 	minimap_zoom_out.tooltip_text = "Alejar hasta mostrar el chunk completo"
-	minimap_zoom_out.custom_minimum_size = Vector2(30.0, 28.0)
+	minimap_zoom_out.custom_minimum_size = Vector2(34.0, 32.0)
 	_style_minimap_edge_button(minimap_zoom_out)
 	minimap_zoom_out.pressed.connect(_change_local_minimap_zoom.bind(-0.15))
 	minimap_controls.add_child(minimap_zoom_out)
 	var minimap_expand := Button.new()
 	minimap_expand.name = "ExpandirMapaLocal"
-	minimap_expand.text = "↗"
+	minimap_expand.icon = HUD_EXPAND_ICON
+	minimap_expand.expand_icon = true
+	minimap_expand.add_theme_constant_override("icon_max_width", 18)
 	minimap_expand.tooltip_text = "Expandir el mapa"
-	minimap_expand.custom_minimum_size = Vector2(30.0, 28.0)
+	minimap_expand.custom_minimum_size = Vector2(34.0, 32.0)
 	_style_minimap_edge_button(minimap_expand)
 	minimap_expand.pressed.connect(_open_regional_map)
 	minimap_controls.add_child(minimap_expand)
@@ -1065,7 +1178,9 @@ func _setup_minimap() -> void:
 	title_box.add_child(expanded_sector_label)
 	_add_map_navigation_tabs(header, false)
 	var close_button := Button.new()
-	close_button.text = "ESC  X"
+	close_button.icon = HUD_CLOSE_ICON
+	close_button.expand_icon = true
+	close_button.add_theme_constant_override("icon_max_width", 27)
 	close_button.tooltip_text = "Cerrar mapa (Tab)"
 	close_button.custom_minimum_size = Vector2(40.0, 36.0)
 	_style_map_button(close_button)
@@ -1098,6 +1213,14 @@ func _setup_minimap() -> void:
 	expanded_local_minimap.draw.connect(_on_expanded_local_minimap_draw)
 	expanded_local_minimap.gui_input.connect(_on_expanded_map_gui_input)
 	regional_map_margin.add_child(expanded_local_minimap)
+	regional_map_surface = WORLD_ATLAS_SURFACE.new() as Control
+	regional_map_surface.name = "SuperficieCartaRegional"
+	regional_map_surface.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	regional_map_surface.show_behind_parent = true
+	regional_map_surface.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	expanded_local_minimap.add_child(regional_map_surface)
+	regional_map_surface.call("set_relief_strength", 3.25)
+	_configure_regional_map_surface()
 	var regional_info_panel := PanelContainer.new()
 	regional_info_panel.name = "InformacionMapaRegional"
 	regional_info_panel.custom_minimum_size = Vector2(240.0, 0.0)
@@ -1137,7 +1260,12 @@ func _setup_minimap() -> void:
 	tools_row.alignment = BoxContainer.ALIGNMENT_CENTER
 	tools_row.add_theme_constant_override("separation", 5)
 	expanded_box.add_child(tools_row)
-	_add_map_tool_button(tools_row, "Centrar", "Volver al encuadre inicial", _center_expanded_map)
+	var center_button := _add_map_tool_button(
+		tools_row, "Centrar", "Volver al encuadre inicial", _center_expanded_map
+	)
+	center_button.icon = HUD_CENTER_ICON
+	center_button.expand_icon = true
+	center_button.add_theme_constant_override("icon_max_width", 18)
 	_add_map_tool_button(tools_row, "Ping", "Marcar una posicion para el grupo", _set_map_ping_mode.bind(0))
 	_add_map_tool_button(tools_row, "Ataque", "Ping tactico de ataque", _set_map_ping_mode.bind(1))
 	_add_map_tool_button(tools_row, "Defensa", "Ping tactico de defensa", _set_map_ping_mode.bind(2))
@@ -1154,13 +1282,19 @@ func _setup_minimap() -> void:
 	expanded_map_status_label.add_theme_color_override("font_color", Color("c5b27e"))
 	tools_row.add_child(expanded_map_status_label)
 	var zoom_out := Button.new()
-	zoom_out.text = "−"
+	zoom_out.icon = HUD_ZOOM_OUT_ICON
+	zoom_out.expand_icon = true
+	zoom_out.add_theme_constant_override("icon_max_width", 19)
+	zoom_out.custom_minimum_size = Vector2(40.0, 38.0)
 	zoom_out.tooltip_text = "Alejar"
 	_style_map_button(zoom_out)
 	zoom_out.pressed.connect(_change_expanded_map_zoom.bind(-0.15))
 	tools_row.add_child(zoom_out)
 	var zoom_in := Button.new()
-	zoom_in.text = "+"
+	zoom_in.icon = HUD_ZOOM_IN_ICON
+	zoom_in.expand_icon = true
+	zoom_in.add_theme_constant_override("icon_max_width", 19)
+	zoom_in.custom_minimum_size = Vector2(40.0, 38.0)
 	zoom_in.tooltip_text = "Acercar"
 	_style_map_button(zoom_in)
 	zoom_in.pressed.connect(_change_expanded_map_zoom.bind(0.15))
@@ -1173,6 +1307,9 @@ func _setup_minimap() -> void:
 	tools_row.add_child(legend_button)
 	var world_button := Button.new()
 	world_button.text = "Mundo"
+	world_button.icon = HUD_WORLD_ICON
+	world_button.expand_icon = true
+	world_button.add_theme_constant_override("icon_max_width", 18)
 	world_button.tooltip_text = "Abrir el mapa general"
 	_style_map_button(world_button)
 	world_button.pressed.connect(_toggle_world_map)
@@ -1180,6 +1317,9 @@ func _setup_minimap() -> void:
 
 	_setup_map_customization(layer)
 	_setup_world_map_overlay(layer)
+	_update_regional_map_info(current_sector)
+	if _regional_map_surface_active():
+		_set_map_status("Carta regional ilustrada")
 
 	local_minimap.queue_redraw()
 	expanded_local_minimap.queue_redraw()
@@ -1193,22 +1333,6 @@ func _make_map_style(background: Color, border: Color, radius: int, shadow_size:
 	style.set_corner_radius_all(radius)
 	style.shadow_color = Color(0.0, 0.0, 0.0, 0.42)
 	style.shadow_size = shadow_size
-	return style
-
-
-func _make_hud_texture_style(
-	texture: Texture2D,
-	modulate_color: Color,
-	horizontal_margin: float,
-	vertical_margin: float
-) -> StyleBoxTexture:
-	var style := StyleBoxTexture.new()
-	style.texture = texture
-	style.texture_margin_left = horizontal_margin
-	style.texture_margin_right = horizontal_margin
-	style.texture_margin_top = vertical_margin
-	style.texture_margin_bottom = vertical_margin
-	style.modulate_color = modulate_color
 	return style
 
 
@@ -1228,15 +1352,17 @@ func _style_map_button(button: Button) -> void:
 	button.add_theme_font_size_override("font_size", 12)
 	button.add_theme_color_override("font_color", Color("ddd2b5"))
 	button.add_theme_color_override("font_hover_color", Color("fff1c9"))
-	button.add_theme_stylebox_override("normal", _make_hud_texture_style(
-		HUD_BUTTON_TEXTURE, Color("c8c2b8ff"), 16.0, 10.0
-	))
-	button.add_theme_stylebox_override("hover", _make_hud_texture_style(
-		HUD_BUTTON_TEXTURE, Color("fff0bdff"), 16.0, 10.0
-	))
-	button.add_theme_stylebox_override("pressed", _make_hud_texture_style(
-		HUD_BUTTON_TEXTURE, Color("8f897fff"), 16.0, 10.0
-	))
+	var normal := _make_map_style(Color("11130fe6"), Color("5f5035d9"), 5, 0)
+	var hover := _make_map_style(Color("29251bed"), Color("b99b59f2"), 5, 0)
+	var pressed := _make_map_style(Color("0c0e0ce8"), Color("d8bd72f2"), 5, 0)
+	for style in [normal, hover, pressed]:
+		style.content_margin_left = 12.0
+		style.content_margin_top = 7.0
+		style.content_margin_right = 12.0
+		style.content_margin_bottom = 7.0
+	button.add_theme_stylebox_override("normal", normal)
+	button.add_theme_stylebox_override("hover", hover)
+	button.add_theme_stylebox_override("pressed", pressed)
 
 
 func _style_minimap_edge_button(button: Button) -> void:
@@ -1443,7 +1569,9 @@ func _setup_world_map_overlay(layer: CanvasLayer) -> void:
 	title_box.add_child(subtitle)
 	_add_map_navigation_tabs(header, true)
 	var close_button := Button.new()
-	close_button.text = "ESC"
+	close_button.icon = HUD_CLOSE_ICON
+	close_button.expand_icon = true
+	close_button.add_theme_constant_override("icon_max_width", 27)
 	close_button.tooltip_text = "Volver al mapa local"
 	_style_map_button(close_button)
 	close_button.pressed.connect(_toggle_world_map)
@@ -1475,6 +1603,12 @@ func _setup_world_map_overlay(layer: CanvasLayer) -> void:
 	world_map_canvas.draw.connect(_on_world_map_draw)
 	world_map_canvas.gui_input.connect(_on_world_map_gui_input)
 	world_map_margin.add_child(world_map_canvas)
+	world_map_surface = WORLD_ATLAS_SURFACE.new() as Control
+	world_map_surface.name = "SuperficieAtlasIlustrado"
+	world_map_surface.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	world_map_surface.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	world_map_surface.show_behind_parent = true
+	world_map_canvas.add_child(world_map_surface)
 	world_map_info_card = PanelContainer.new()
 	world_map_info_card.name = "FichaTerritorioAtlas"
 	world_map_info_card.visible = false
@@ -1521,16 +1655,27 @@ func _setup_world_map_overlay(layer: CanvasLayer) -> void:
 	hint.add_theme_color_override("font_color", Color("918b7b"))
 	footer.add_child(hint)
 	world_map_hover_label = hint
-	_add_map_tool_button(footer, "Region actual", "Centrar el atlas en el jugador", _center_world_map_on_current_sector)
+	var current_region_button := _add_map_tool_button(
+		footer, "Region actual", "Centrar el atlas en el jugador", _center_world_map_on_current_sector
+	)
+	current_region_button.icon = HUD_CENTER_ICON
+	current_region_button.expand_icon = true
+	current_region_button.add_theme_constant_override("icon_max_width", 18)
 	_add_map_tool_button(footer, "Completo", "Mostrar el mundo entero", _reset_world_map_view)
 	var zoom_out := Button.new()
-	zoom_out.text = "-"
+	zoom_out.icon = HUD_ZOOM_OUT_ICON
+	zoom_out.expand_icon = true
+	zoom_out.add_theme_constant_override("icon_max_width", 19)
+	zoom_out.custom_minimum_size = Vector2(40.0, 38.0)
 	zoom_out.tooltip_text = "Alejar hasta ver el mundo completo"
 	_style_map_button(zoom_out)
 	zoom_out.pressed.connect(_change_world_map_zoom.bind(-0.2))
 	footer.add_child(zoom_out)
 	var zoom_in := Button.new()
-	zoom_in.text = "+"
+	zoom_in.icon = HUD_ZOOM_IN_ICON
+	zoom_in.expand_icon = true
+	zoom_in.add_theme_constant_override("icon_max_width", 19)
+	zoom_in.custom_minimum_size = Vector2(40.0, 38.0)
 	zoom_in.tooltip_text = "Acercar"
 	_style_map_button(zoom_in)
 	zoom_in.pressed.connect(_change_world_map_zoom.bind(0.2))
@@ -1562,6 +1707,7 @@ func _toggle_map_customization() -> void:
 func _center_expanded_map() -> void:
 	expanded_map_zoom = 1.0
 	expanded_map_pan = Vector2.ZERO
+	_sync_regional_map_view()
 	if expanded_local_minimap != null:
 		expanded_local_minimap.queue_redraw()
 
@@ -1659,6 +1805,72 @@ func _load_local_minimap_texture() -> void:
 	expanded_map_texture = local_minimap_texture
 
 
+func _configure_regional_map_surface() -> void:
+	if regional_map_surface == null:
+		return
+	var configured := expanded_map_texture != null
+	regional_map_surface.visible = configured
+	_sync_regional_map_view()
+	if configured:
+		_set_map_status("Carta regional ilustrada")
+
+
+func _regional_map_surface_active() -> bool:
+	return regional_map_surface != null \
+		and regional_map_surface.visible \
+		and expanded_map_texture != null
+
+
+func _sync_regional_map_view() -> void:
+	if regional_map_surface == null:
+		return
+	var map_size := _expanded_map_view_size()
+	var scaled_size := map_size * expanded_map_zoom
+	var rect := Rect2((map_size - scaled_size) * 0.5 + expanded_map_pan, scaled_size)
+	regional_map_surface.call("set_view", expanded_map_texture, rect)
+
+
+func _project_sector_map_uv(uv: Vector2, fallback_size: Vector2) -> Vector2:
+	if _regional_map_surface_active():
+		return regional_map_surface.call("project_uv", uv) as Vector2
+	return uv * fallback_size
+
+
+func _unproject_sector_map_position(position: Vector2, fallback_size: Vector2) -> Vector2:
+	if _regional_map_surface_active():
+		return regional_map_surface.call("unproject_point", position) as Vector2
+	var untransformed := (
+		(position - fallback_size * 0.5 - expanded_map_pan)
+		/ expanded_map_zoom
+		+ fallback_size * 0.5
+	)
+	return Vector2(
+		clampf(untransformed.x / maxf(fallback_size.x, 1.0), 0.0, 1.0),
+		clampf(untransformed.y / maxf(fallback_size.y, 1.0), 0.0, 1.0)
+	)
+
+
+func _update_regional_map_info(sec: Vector2i) -> void:
+	if expanded_region_info_label == null:
+		return
+	var info: Dictionary = MapDataManager.get_sector_info(sec)
+	var resources_text := PackedStringArray()
+	var resources: Array = info.get("resources", []) as Array
+	for index in range(mini(resources.size(), 3)):
+		var resource: Dictionary = resources[index] as Dictionary
+		resources_text.append(str(resource.get("name", "Recurso")))
+	var resource_summary := ", ".join(resources_text)
+	if resource_summary.is_empty():
+		resource_summary = "Sin datos registrados"
+	expanded_region_info_label.text = "%s\n%s · Grado %s\n%s\n\nRECURSOS\n%s\n\nCarta ilustrada a partir del terreno real." % [
+		_location_caption(sec),
+		str(info.get("biome_display", "Bioma sin registrar")),
+		str(info.get("grade_roman", "I")),
+		str(info.get("hazard_name", "Riesgo sin registrar")),
+		resource_summary,
+	]
+
+
 func _sector_caption(sec: Vector2i) -> String:
 	if sec.x < 0:
 		return "Sin sector cargado"
@@ -1706,9 +1918,12 @@ func _draw_local_map(target: Control, map_size: Vector2, texture: Texture2D, exp
 	var scaled_size := map_size * zoom
 	var rect := Rect2((map_size - scaled_size) * 0.5 + pan, scaled_size)
 	if expanded:
-		target.draw_rect(rect, Color(0.025, 0.04, 0.06, 0.96), true)
-		if texture != null:
-			target.draw_texture_rect(texture, rect, false)
+		if _regional_map_surface_active():
+			regional_map_surface.call("set_view", texture, rect)
+		else:
+			target.draw_rect(rect, Color(0.025, 0.04, 0.06, 0.96), true)
+			if texture != null:
+				target.draw_texture_rect(texture, rect, false)
 	else:
 		_draw_local_minimap_surface(target, map_size, texture)
 
@@ -1842,12 +2057,19 @@ func _draw_minimap_compass_indicators(target: Control, center: Vector2, half_siz
 func _world_position_to_local_map(world_position: Vector3, map_size: Vector2, expanded: bool) -> Vector2:
 	if not expanded:
 		return _world_xz_to_diamond_minimap(Vector2(world_position.x, world_position.z), map_size)
+	if _regional_map_surface_active():
+		return _project_sector_map_uv(
+			_world_xz_to_local_uv(Vector2(world_position.x, world_position.z)),
+			map_size
+		)
 	return _world_xz_to_local_minimap(Vector2(world_position.x, world_position.z), map_size)
 
 
 func _transform_expanded_map_point(point: Vector2, map_size: Vector2, expanded: bool) -> Vector2:
 	if not expanded:
 		return (point - map_size * 0.5) * local_minimap_zoom + map_size * 0.5
+	if _regional_map_surface_active():
+		return point
 	return (point - map_size * 0.5) * expanded_map_zoom + map_size * 0.5 + expanded_map_pan
 
 
@@ -1948,13 +2170,12 @@ func _world_marker_basis(
 		facing = Vector2(0.0, -1.0)
 	var side := Vector2(-facing.y, facing.x)
 	if expanded:
-		# La carta de Tab es plana. El puntero conserva su orientacion, pero no
-		# hereda la inclinacion ni la deformacion del minimapa del HUD.
-		var flat_forward := Vector2(facing.x, facing.y).normalized()
-		return {
-			"forward": flat_forward,
-			"side": Vector2(-flat_forward.y, flat_forward.x),
-		}
+		if not _regional_map_surface_active():
+			var flat_forward := Vector2(facing.x, facing.y).normalized()
+			return {
+				"forward": flat_forward,
+				"side": Vector2(-flat_forward.y, flat_forward.x),
+			}
 	var origin_point := _world_position_to_local_map(world_origin, map_size, expanded)
 	var forward_point := _world_position_to_local_map(
 		world_origin + Vector3(facing.x, 0.0, facing.y) * 18.0,
@@ -1971,10 +2192,17 @@ func _world_marker_basis(
 	side_point = _transform_expanded_map_point(side_point, map_size, expanded)
 	var forward_delta := forward_point - origin_point
 	var side_delta := side_point - origin_point
-	var normalizer := maxf(maxf(forward_delta.length(), side_delta.length()), 0.001)
+	# La camara inclinada comprime el eje de profundidad. La orientacion debe
+	# seguir esa proyeccion, pero el icono del jugador no debe quedar aplastado.
+	var flat_forward := forward_delta.normalized()
+	if flat_forward.length_squared() < 0.001:
+		flat_forward = Vector2(facing.x, facing.y).normalized()
+	var flat_side := Vector2(-flat_forward.y, flat_forward.x)
+	if flat_side.dot(side_delta) < 0.0:
+		flat_side = -flat_side
 	return {
-		"forward": forward_delta / normalizer,
-		"side": side_delta / normalizer,
+		"forward": flat_forward,
+		"side": flat_side,
 	}
 
 
@@ -2048,7 +2276,9 @@ func _draw_map_ping(target: Control, map_size: Vector2, expanded: bool) -> void:
 		return
 	var position := Vector2.ZERO
 	if expanded:
-		position = _transform_expanded_map_point(map_ping_uv * map_size, map_size, true)
+		position = _project_sector_map_uv(map_ping_uv, map_size)
+		if not _regional_map_surface_active():
+			position = _transform_expanded_map_point(position, map_size, true)
 	else:
 		var center := map_size * 0.5
 		position = center + Vector2(
@@ -2081,6 +2311,7 @@ func _open_regional_map() -> void:
 	local_map_expanded = true
 	if expanded_map_backdrop != null:
 		expanded_map_backdrop.visible = true
+	_sync_regional_map_view()
 	if expanded_local_minimap != null:
 		expanded_local_minimap.queue_redraw()
 	_sync_persistent_hud_visibility()
@@ -2102,15 +2333,7 @@ func _on_expanded_map_gui_input(event: InputEvent) -> void:
 			elif mouse_button.shift_pressed:
 				_set_map_ping_mode(2)
 			var view_size := _expanded_map_view_size()
-			var untransformed := (
-				(mouse_button.position - view_size * 0.5 - expanded_map_pan)
-				/ expanded_map_zoom
-				+ view_size * 0.5
-			)
-			map_ping_uv = Vector2(
-				clampf(untransformed.x / view_size.x, 0.0, 1.0),
-				clampf(untransformed.y / view_size.y, 0.0, 1.0)
-			)
+			map_ping_uv = _unproject_sector_map_position(mouse_button.position, view_size)
 			expanded_local_minimap.queue_redraw()
 			if local_minimap != null:
 				local_minimap.queue_redraw()
@@ -2129,6 +2352,7 @@ func _on_expanded_map_gui_input(event: InputEvent) -> void:
 		expanded_map_pan += mouse_motion.position - expanded_map_last_mouse
 		expanded_map_last_mouse = mouse_motion.position
 		_clamp_expanded_map_pan()
+		_sync_regional_map_view()
 		expanded_local_minimap.queue_redraw()
 		expanded_local_minimap.accept_event()
 	elif event is InputEventMagnifyGesture:
@@ -2139,6 +2363,7 @@ func _on_expanded_map_gui_input(event: InputEvent) -> void:
 		var pan_gesture := event as InputEventPanGesture
 		expanded_map_pan -= pan_gesture.delta * 18.0
 		_clamp_expanded_map_pan()
+		_sync_regional_map_view()
 		expanded_local_minimap.queue_redraw()
 		expanded_local_minimap.accept_event()
 
@@ -2146,6 +2371,7 @@ func _on_expanded_map_gui_input(event: InputEvent) -> void:
 func _change_expanded_map_zoom(delta: float) -> void:
 	expanded_map_zoom = clampf(expanded_map_zoom + delta, 1.0, 2.5)
 	_clamp_expanded_map_pan()
+	_sync_regional_map_view()
 	if expanded_local_minimap != null:
 		expanded_local_minimap.queue_redraw()
 
@@ -2192,66 +2418,142 @@ func _on_world_map_draw() -> void:
 	if world_map_canvas == null:
 		return
 	var map_size := _world_map_view_size()
-	world_map_canvas.draw_rect(Rect2(Vector2.ZERO, map_size), Color("0d1419"), true)
 	var texture_rect := _world_map_texture_rect(map_size)
-	if world_map_texture != null:
-		world_map_canvas.draw_texture_rect(world_map_texture, texture_rect, false)
+	if world_map_surface != null:
+		world_map_surface.call("set_view", world_map_texture, texture_rect)
 	else:
-		world_map_canvas.draw_rect(texture_rect, Color("5f7059"), true)
+		world_map_canvas.draw_rect(Rect2(Vector2.ZERO, map_size), Color("0d1419"), true)
+		if world_map_texture != null:
+			world_map_canvas.draw_texture_rect(world_map_texture, texture_rect, false)
 
-	var image_to_screen := texture_rect.size / WORLD_MAP_IMAGE_SIZE
-	# Misma cuadricula del dock MMO: una linea por sector de 5 km, sin una
-	# segunda division inventada para macroregiones.
-	for column in range(world_map_columns + 1):
-		var x := texture_rect.position.x + float(column) * world_map_sector_pixels * image_to_screen.x
-		world_map_canvas.draw_line(
-			Vector2(x, texture_rect.position.y),
-			Vector2(x, texture_rect.end.y),
-			Color(0.02, 0.03, 0.03, 0.32),
-			1.0
-		)
-	for row in range(world_map_rows + 1):
-		var y := texture_rect.position.y + float(row) * world_map_sector_pixels * image_to_screen.y
-		world_map_canvas.draw_line(
-			Vector2(texture_rect.position.x, y),
-			Vector2(texture_rect.end.x, y),
-			Color(0.02, 0.03, 0.03, 0.32),
-			1.0
-		)
-	# Los sectores disponibles son datos de navegacion, no una capa verde.
-	# Solo se insinuan al acercar mucho para no tapar la ilustracion del atlas.
+	# La grilla es una ayuda de inspeccion y solo aparece en zoom cercano. En la
+	# vista completa el jugador percibe regiones continuas, no celdas tecnicas.
+	if world_map_zoom >= 4.0:
+		for column in range(world_map_columns + 1):
+			var u := clampf(
+				float(column) * world_map_sector_pixels / WORLD_MAP_IMAGE_SIZE.x,
+				0.0,
+				1.0
+			)
+			world_map_canvas.draw_line(
+				_world_map_project_uv(Vector2(u, 0.0), texture_rect),
+				_world_map_project_uv(Vector2(u, 1.0), texture_rect),
+				Color(0.02, 0.03, 0.03, 0.26),
+				0.8
+			)
+		for row in range(world_map_rows + 1):
+			var v := clampf(
+				float(row) * world_map_sector_pixels / WORLD_MAP_IMAGE_SIZE.y,
+				0.0,
+				1.0
+			)
+			world_map_canvas.draw_line(
+				_world_map_project_uv(Vector2(0.0, v), texture_rect),
+				_world_map_project_uv(Vector2(1.0, v), texture_rect),
+				Color(0.02, 0.03, 0.03, 0.26),
+				0.8
+			)
 	if world_map_zoom >= 5.0:
 		for key in available_sectors:
 			var sec: Vector2i = available_sectors[key]
-			var sector_rect := _world_map_sector_rect(texture_rect, sec)
-			world_map_canvas.draw_rect(sector_rect, Color("c5b27e38"), false, 0.75)
+			_draw_world_map_sector_outline(texture_rect, sec, Color("c5b27e38"), 0.75)
 
 	if current_sector.x >= 0:
-		var current_rect := _world_map_sector_rect(texture_rect, current_sector)
-		world_map_canvas.draw_rect(current_rect, Color(1.0, 0.78, 0.16, 0.18), true)
-		world_map_canvas.draw_rect(current_rect, Color(1.0, 0.86, 0.30, 0.96), false, 2.5)
-		world_map_canvas.draw_circle(current_rect.get_center(), 3.5, map_marker_color)
+		_draw_world_map_sector_fill(texture_rect, current_sector, Color(1.0, 0.78, 0.16, 0.16))
+		_draw_world_map_sector_outline(texture_rect, current_sector, Color(1.0, 0.86, 0.30, 0.96), 2.5)
+		world_map_canvas.draw_circle(
+			_world_map_sector_center(texture_rect, current_sector),
+			3.5,
+			map_marker_color
+		)
 	if _is_world_map_sector_inside(world_map_hovered_sector):
-		var hover_rect := _world_map_sector_rect(texture_rect, world_map_hovered_sector)
-		world_map_canvas.draw_rect(hover_rect, Color(1.0, 1.0, 1.0, 0.92), false, 2.0)
+		_draw_world_map_sector_outline(texture_rect, world_map_hovered_sector, Color(1.0, 1.0, 1.0, 0.92), 2.0)
 	if _is_world_map_sector_inside(world_map_selected_sector):
-		var selected_rect := _world_map_sector_rect(texture_rect, world_map_selected_sector)
-		world_map_canvas.draw_rect(selected_rect, Color(0.96, 0.75, 0.25, 0.16), true)
-		world_map_canvas.draw_rect(selected_rect, Color(0.96, 0.78, 0.36, 1.0), false, 3.0)
-	world_map_canvas.draw_rect(Rect2(Vector2.ZERO, map_size), Color("9b8760"), false, 1.5)
+		_draw_world_map_sector_fill(texture_rect, world_map_selected_sector, Color(0.96, 0.75, 0.25, 0.16))
+		_draw_world_map_sector_outline(texture_rect, world_map_selected_sector, Color(0.96, 0.78, 0.36, 1.0), 3.0)
+	var atlas_border := PackedVector2Array([
+		_world_map_project_uv(Vector2.ZERO, texture_rect),
+		_world_map_project_uv(Vector2(1.0, 0.0), texture_rect),
+		_world_map_project_uv(Vector2.ONE, texture_rect),
+		_world_map_project_uv(Vector2(0.0, 1.0), texture_rect),
+		_world_map_project_uv(Vector2.ZERO, texture_rect),
+	])
+	world_map_canvas.draw_polyline(atlas_border, Color("9b8760"), 1.5, true)
 
 
 func _world_map_sector_rect(texture_rect: Rect2, sector_coord: Vector2i) -> Rect2:
-	var image_to_screen := texture_rect.size / WORLD_MAP_IMAGE_SIZE
-	var start_pixels := Vector2(sector_coord) * world_map_sector_pixels
+	var polygon := _world_map_sector_polygon(texture_rect, sector_coord)
+	if polygon.is_empty():
+		return Rect2()
+	var bounds := Rect2(polygon[0], Vector2.ZERO)
+	for point in polygon:
+		bounds = bounds.expand(point)
+	return bounds
+
+
+func _world_map_project_uv(uv: Vector2, texture_rect: Rect2) -> Vector2:
+	if world_map_surface != null:
+		world_map_surface.call("set_view", world_map_texture, texture_rect)
+		return world_map_surface.call("project_uv", uv) as Vector2
+	return texture_rect.position + uv * texture_rect.size
+
+
+func _world_map_unproject_point(point: Vector2, texture_rect: Rect2) -> Vector2:
+	if world_map_surface != null:
+		world_map_surface.call("set_view", world_map_texture, texture_rect)
+		return world_map_surface.call("unproject_point", point) as Vector2
+	return Vector2(
+		(point.x - texture_rect.position.x) / maxf(texture_rect.size.x, 0.001),
+		(point.y - texture_rect.position.y) / maxf(texture_rect.size.y, 0.001)
+	)
+
+
+func _world_map_sector_uv_bounds(sector_coord: Vector2i) -> Rect2:
+	var art_sector := _world_map_art_sector_coord(sector_coord)
+	var start_pixels := Vector2(art_sector) * world_map_sector_pixels
 	var end_pixels := Vector2(
 		minf(start_pixels.x + world_map_sector_pixels, WORLD_MAP_IMAGE_SIZE.x),
 		minf(start_pixels.y + world_map_sector_pixels, WORLD_MAP_IMAGE_SIZE.y)
 	)
-	return Rect2(
-		texture_rect.position + start_pixels * image_to_screen,
-		(end_pixels - start_pixels) * image_to_screen
-	)
+	return Rect2(start_pixels / WORLD_MAP_IMAGE_SIZE, (end_pixels - start_pixels) / WORLD_MAP_IMAGE_SIZE)
+
+
+func _world_map_art_sector_coord(logical_sector: Vector2i) -> Vector2i:
+	return WORLD_MAP_ART_SECTOR_SWAPS.get(logical_sector, logical_sector) as Vector2i
+
+
+func _world_map_logical_sector_coord(art_sector: Vector2i) -> Vector2i:
+	# El intercambio es simetrico, de modo que la misma tabla sirve como inversa.
+	return WORLD_MAP_ART_SECTOR_SWAPS.get(art_sector, art_sector) as Vector2i
+
+
+func _world_map_sector_polygon(texture_rect: Rect2, sector_coord: Vector2i) -> PackedVector2Array:
+	var uv_rect := _world_map_sector_uv_bounds(sector_coord)
+	return PackedVector2Array([
+		_world_map_project_uv(uv_rect.position, texture_rect),
+		_world_map_project_uv(Vector2(uv_rect.end.x, uv_rect.position.y), texture_rect),
+		_world_map_project_uv(uv_rect.end, texture_rect),
+		_world_map_project_uv(Vector2(uv_rect.position.x, uv_rect.end.y), texture_rect),
+	])
+
+
+func _world_map_sector_center(texture_rect: Rect2, sector_coord: Vector2i) -> Vector2:
+	return _world_map_project_uv(_world_map_sector_uv_bounds(sector_coord).get_center(), texture_rect)
+
+
+func _draw_world_map_sector_fill(texture_rect: Rect2, sector_coord: Vector2i, color: Color) -> void:
+	world_map_canvas.draw_colored_polygon(_world_map_sector_polygon(texture_rect, sector_coord), color)
+
+
+func _draw_world_map_sector_outline(
+	texture_rect: Rect2,
+	sector_coord: Vector2i,
+	color: Color,
+	width: float
+) -> void:
+	var polygon := _world_map_sector_polygon(texture_rect, sector_coord)
+	polygon.append(polygon[0])
+	world_map_canvas.draw_polyline(polygon, color, width, true)
 
 
 func _is_world_map_sector_inside(sector_coord: Vector2i) -> bool:
@@ -2334,7 +2636,8 @@ func _center_world_map_on_current_sector() -> void:
 		18.0
 	)
 	var draw_size := WORLD_MAP_IMAGE_SIZE * fit_scale * world_map_zoom
-	var sector_center_pixels := (Vector2(current_sector) + Vector2.ONE * 0.5) * world_map_sector_pixels
+	var art_sector := _world_map_art_sector_coord(current_sector)
+	var sector_center_pixels := (Vector2(art_sector) + Vector2.ONE * 0.5) * world_map_sector_pixels
 	var marker_without_pan := (view_size - draw_size) * 0.5
 	marker_without_pan += sector_center_pixels / WORLD_MAP_IMAGE_SIZE * draw_size
 	world_map_pan = view_size * 0.5 - marker_without_pan
@@ -2357,19 +2660,18 @@ func _reset_world_map_view() -> void:
 func _update_world_map_hover(local_position: Vector2) -> void:
 	var view_size := _world_map_view_size()
 	var texture_rect := _world_map_texture_rect(view_size)
+	var normalized := _world_map_unproject_point(local_position, texture_rect)
 	if not Rect2(Vector2.ZERO, view_size).has_point(local_position) \
-	or not texture_rect.has_point(local_position):
+	or normalized.x < 0.0 or normalized.x > 1.0 \
+	or normalized.y < 0.0 or normalized.y > 1.0:
 		world_map_hovered_sector = Vector2i(-1, -1)
 	else:
-		var normalized := Vector2(
-			(local_position.x - texture_rect.position.x) / texture_rect.size.x,
-			(local_position.y - texture_rect.position.y) / texture_rect.size.y
-		)
 		var image_pixel := normalized * WORLD_MAP_IMAGE_SIZE
-		world_map_hovered_sector = Vector2i(
+		var art_sector := Vector2i(
 			int(floor(image_pixel.x / world_map_sector_pixels)),
 			int(floor(image_pixel.y / world_map_sector_pixels))
 		)
+		world_map_hovered_sector = _world_map_logical_sector_coord(art_sector)
 		if not _is_world_map_sector_inside(world_map_hovered_sector):
 			world_map_hovered_sector = Vector2i(-1, -1)
 	if world_map_hover_label != null:
@@ -2476,7 +2778,7 @@ func _travel_to_sector(sec: Vector2i) -> void:
 	_setup_sector_content()
 	_load_local_minimap_texture()
 	expanded_map_texture = local_minimap_texture
-	_set_map_status("Carta ilustrada")
+	_configure_regional_map_surface()
 	_place_player_on_ground()
 	expanded_map_zoom = 1.0
 	expanded_map_pan = Vector2.ZERO
@@ -2497,9 +2799,7 @@ func _travel_to_sector(sec: Vector2i) -> void:
 	if expanded_sector_label != null:
 		expanded_sector_label.text = "%s - %s" % [_location_caption(sec), _sector_caption(sec)]
 	if expanded_region_info_label != null:
-		expanded_region_info_label.text = "%s\n%s\n\nCarta cargada desde el terreno real del sector." % [
-			_location_caption(sec), _sector_caption(sec)
-		]
+		_update_regional_map_info(sec)
 	traveling = false
 
 

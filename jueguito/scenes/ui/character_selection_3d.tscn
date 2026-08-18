@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6a8b79f0122e"]
+[gd_scene load_steps=13 format=3 uid="uid://c6a8b79f0122e"]
 
 [ext_resource type="Script" path="res://scripts/ui/character_selection_3d.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/ui/backgrounds/medieval_lowpoly_viking_camp_v2.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/backgrounds/character_selection_lakeside_ruins_v3.png" id="2_background"]
 [ext_resource type="Theme" path="res://assets/ui/medieval_ui_theme.tres" id="3_theme"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/play.svg" id="4_play"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/back.svg" id="5_back"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,6 +19,10 @@ sky = SubResource("Sky_sky")
 tonemap_mode = 2
 glow_enabled = true
 glow_intensity = 0.5
+adjustment_enabled = true
+adjustment_brightness = 0.78
+adjustment_contrast = 1.05
+adjustment_saturation = 0.92
 
 [sub_resource type="PlaneMesh" id="CylinderMesh_pedestal"]
 size = Vector2(1.35, 0.72)
@@ -73,20 +79,20 @@ environment = SubResource("Environment_env")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 light_color = Color(1, 0.86, 0.66, 1)
-light_energy = 0.45
+light_energy = 0.33
 sky_mode = 1
 
 [node name="SpotLight3D_Key" type="SpotLight3D" parent="."]
 transform = Transform3D(0.965926, 0.0669873, -0.25, 0, 0.965926, 0.258819, 0.258819, -0.25, 0.933013, -1.2, 2.3, 3.2)
 light_color = Color(1, 0.980392, 0.941176, 1)
-light_energy = 0.55
+light_energy = 0.32
 spot_range = 10.0
 spot_angle = 35.0
 
 [node name="SpotLight3D_Rim" type="SpotLight3D" parent="."]
 transform = Transform3D(-0.965926, -0.0669873, 0.25, 0, 0.965926, 0.258819, -0.258819, 0.25, -0.933013, 1.2, 2.2, -2.5)
 light_color = Color(0.56, 0.67, 0.68, 1)
-light_energy = 0.4
+light_energy = 0.25
 spot_range = 8.0
 spot_angle = 40.0
 
@@ -122,7 +128,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.03, 0.024, 0.018, 0.18)
+color = Color(0.03, 0.024, 0.018, 0.28)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -154,7 +160,7 @@ offset_bottom = 66.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.93, 0.8, 0.52, 1)
 theme_override_font_sizes/font_size = 26
-text = "Elige tu personaje"
+text = "ELIGE TU PERSONAJE"
 horizontal_alignment = 1
 
 [node name="ListPanel" type="PanelContainer" parent="CanvasLayer/UI"]
@@ -210,56 +216,27 @@ theme_override_font_sizes/font_size = 12
 text = "Selecciona un espacio para continuar."
 autowrap_mode = 2
 
-[node name="SelectionPanel" type="PanelContainer" parent="CanvasLayer/UI"]
+[node name="PrimaryActionButton" type="Button" parent="CanvasLayer/UI"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(470, 154)
+visible = false
+custom_minimum_size = Vector2(360, 52)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -235.0
-offset_top = -198.0
-offset_right = 235.0
+offset_left = -180.0
+offset_top = -96.0
+offset_right = 180.0
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/SelectionPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 14
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 16
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/SelectionPanel/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 7
-
-[node name="SelectedNameLabel" type="Label" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.94, 0.86, 0.69, 1)
-theme_override_font_sizes/font_size = 20
-text = "Espacio vacío"
-horizontal_alignment = 1
-
-[node name="SelectedDetailsLabel" type="Label" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.68, 0.63, 0.54, 1)
-theme_override_font_sizes/font_size = 13
-text = "Crea un personaje para comenzar tu aventura."
-horizontal_alignment = 1
-
-[node name="PrimaryActionButton" type="Button" parent="CanvasLayer/UI/SelectionPanel/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
 theme_override_font_sizes/font_size = 17
-text = "Crear personaje"
+text = "Iniciar aventura"
+icon = ExtResource("4_play")
+expand_icon = true
+icon_max_width = 20
 
 [node name="CreationPanel" type="PanelContainer" parent="CanvasLayer/UI"]
 unique_name_in_owner = true
@@ -294,14 +271,14 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.72, 0.42, 1)
 theme_override_font_sizes/font_size = 22
-text = "Crear personaje"
+text = "APARIENCIA"
 horizontal_alignment = 1
 
 [node name="CreationSubtitle" type="Label" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.68, 0.63, 0.54, 1)
 theme_override_font_sizes/font_size = 12
-text = "Personaliza el cuerpo y revisa el resultado en la escena."
+text = "Define una silueta clara; podrás ampliar la personalización más adelante."
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -370,6 +347,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 15
 text = "Volver"
+icon = ExtResource("5_back")
+expand_icon = true
+icon_max_width = 19
 
 [node name="CreateButton" type="Button" parent="CanvasLayer/UI/CreationPanel/MarginContainer/VBoxContainer/ActionButtons"]
 unique_name_in_owner = true

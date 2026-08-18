@@ -140,7 +140,7 @@ func _refresh_controls() -> void:
 	confirm_exit_check.button_pressed = bool(SettingsManager.get_setting("general", "confirm_exit", true))
 	ui_scale_slider.value = float(SettingsManager.get_setting("general", "ui_scale", 1.0))
 	window_mode_option.select(int(SettingsManager.get_setting("video", "window_mode", 0)))
-	_select_resolution(SettingsManager.get_setting("video", "resolution", Vector2i(1280, 720)))
+	_select_resolution(SettingsManager.get_setting("video", "resolution", Vector2i(1920, 1080)))
 	vsync_option.select(int(SettingsManager.get_setting("video", "vsync", 1)))
 	var fps_values := [30, 60, 120, 144, 0]
 	fps_option.select(maxi(0, fps_values.find(int(SettingsManager.get_setting("video", "max_fps", 60)))))

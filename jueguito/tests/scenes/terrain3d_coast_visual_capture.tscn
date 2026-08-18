@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tests/scenes/terrain3d_coast_visual_capture.gd" id="1_capture"]
+
+[node name="Terrain3DCoastVisualCapture" type="Node3D"]
+script = ExtResource("1_capture")

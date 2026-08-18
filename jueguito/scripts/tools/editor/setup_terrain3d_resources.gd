@@ -6,6 +6,12 @@ const ASSETS_UID := "uid://culjong3w41jq"
 const MATERIAL_PATH := "res://assets/environment/terrain/jueguito_terrain_material.tres"
 const FLAT_NORMAL_PATH := "res://assets/environment/terrain/textures/stylized/terrain_slots/flat_normal_roughness.svg"
 const QUATERNIUS_PATH := "res://assets/environment/vegetation/quaternius_stylized_nature/"
+const TEXTURE_NORMAL_DEPTH := 0.722
+const TEXTURE_AO_STRENGTH := 0.813
+const TEXTURE_ROUGHNESS := 0.0
+const TEXTURE_UV_SCALE := 0.684
+const TEXTURE_DETILING_ROTATION := 0.298
+const TEXTURE_DETILING_SHIFT := 0.255
 
 const TEXTURES := [
 	{
@@ -33,12 +39,78 @@ const TEXTURES := [
 		"albedo": "res://assets/environment/terrain/textures/stylized/terrain_slots/05_arcano.png",
 	},
 	{
-		"name": "06_Nieve",
-		"albedo": "res://assets/environment/terrain/textures/stylized/terrain_slots/06_nieve.png",
+		"name": "06_PastoSombrio",
+		"albedo": "res://assets/environment/terrain/textures/stylized/terrain_slots/02_pasto.png",
+		"albedo_color": Color("77856f"),
 	},
 	{
 		"name": "07_Pantano",
 		"albedo": "res://assets/environment/terrain/textures/stylized/terrain_slots/07_pantano.png",
+	},
+	{
+		"name": "08_TierraGrisGravilla",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_gris_con_gravilla_001.png",
+	},
+	{
+		"name": "09_ArenaRosaGravilla",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_rosa_con_gravilla_fina_015.png",
+	},
+	{
+		"name": "10_ArenaClaraPiedras",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_clara_con_piedras_024.png",
+	},
+	{
+		"name": "11_TierraOcrePiedras",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_ocre_con_piedras_031.png",
+	},
+	{
+		"name": "12_TierraRojaFina",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_gravilla_fina_033.png",
+	},
+	{
+		"name": "13_TierraRojaGrava",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_grava_036.png",
+	},
+	{
+		"name": "14_RocaGrisLajas",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_de_lajas_grandes_040.png",
+	},
+	{
+		"name": "15_CenizaGrisGravilla",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/tierra/ceniza_gris_con_gravilla_048.png",
+	},
+	{
+		"name": "16_RocaMarronMusgo",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/roca_marron_con_musgo_064.png",
+	},
+	{
+		"name": "17_PastoRocasDispersas",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png",
+	},
+	{
+		"name": "18_MusgoRocasGrandes",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/musgo_con_rocas_grandes_071.png",
+	},
+	{
+		"name": "19_RocaCalizaClara",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_caliza_clara_077.png",
+	},
+	{
+		"name": "20_RocaMarronLajas",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_marron_en_lajas_079.png",
+	},
+	{
+		"name": "21_CantosMarronesHumedos",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_marrones_humedos_087.png",
+	},
+	{
+		"name": "22_EmpedradoRojo",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_rojo_091.png",
+	},
+	{
+		"name": "23_PastoRocasSombrio",
+		"albedo": "res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png",
+		"albedo_color": Color("7f8878"),
 	},
 ]
 
@@ -130,7 +202,16 @@ func _init() -> void:
 		else:
 			had_load_error = true
 			push_error("No pude cargar la textura normal compartida: " + FLAT_NORMAL_PATH)
+		if texture_data.has("albedo_color"):
+			texture.albedo_color = texture_data["albedo_color"]
+		texture.normal_depth = TEXTURE_NORMAL_DEPTH
+		texture.ao_strength = TEXTURE_AO_STRENGTH
+		texture.roughness = TEXTURE_ROUGHNESS
+		texture.uv_scale = TEXTURE_UV_SCALE
+		texture.detiling_rotation = TEXTURE_DETILING_ROTATION
+		texture.detiling_shift = TEXTURE_DETILING_SHIFT
 		assets.set_texture(index, texture)
+	assets.texture_list.resize(TEXTURES.size())
 
 	for index in range(MESH_ASSETS.size()):
 		var mesh_data: Dictionary = MESH_ASSETS[index]

@@ -4,6 +4,7 @@ signal setting_changed(section: String, key: String, value: Variant)
 signal settings_reset
 
 const CONFIG_PATH := "user://settings.cfg"
+const SETTINGS_VERSION := 2
 const LEGACY_HUD_POSITIONS := {
 	"character_status_position": Vector2(0.018, 0.94),
 	"action_bar_position": Vector2(0.5, 0.98),
@@ -19,8 +20,8 @@ const DEFAULTS := {
 		"remembered_email": ""
 	},
 	"video": {
-		"window_mode": 0,
-		"resolution": Vector2i(1280, 720),
+		"window_mode": 1,
+		"resolution": Vector2i(1920, 1080),
 		"vsync": 1,
 		"max_fps": 60
 	},
@@ -90,6 +91,7 @@ func load_settings() -> void:
 	var config := ConfigFile.new()
 	if config.load(CONFIG_PATH) != OK:
 		return
+	var loaded_version := int(config.get_value("meta", "version", 0))
 	for section in DEFAULTS:
 		for key in DEFAULTS[section]:
 			(_settings[section] as Dictionary)[key] = config.get_value(
@@ -98,6 +100,19 @@ func load_settings() -> void:
 				DEFAULTS[section][key]
 			)
 	_migrate_legacy_hud_positions()
+	_migrate_video_defaults(loaded_version)
+	if loaded_version < SETTINGS_VERSION:
+		save_settings()
+
+
+func _migrate_video_defaults(loaded_version: int) -> void:
+	if loaded_version >= 2:
+		return
+	var video := _settings["video"] as Dictionary
+	# La version anterior no tenia una resolucion interna de referencia coherente.
+	# Esta migracion ocurre una sola vez; elecciones posteriores se conservan.
+	video["window_mode"] = 1
+	video["resolution"] = Vector2i(1920, 1080)
 
 
 func _migrate_legacy_hud_positions() -> void:
@@ -110,6 +125,7 @@ func _migrate_legacy_hud_positions() -> void:
 
 func save_settings() -> void:
 	var config := ConfigFile.new()
+	config.set_value("meta", "version", SETTINGS_VERSION)
 	for section in _settings:
 		for key in _settings[section]:
 			config.set_value(section, key, _settings[section][key])
@@ -148,7 +164,8 @@ func _apply_video() -> void:
 	if DisplayServer.get_name().to_lower() == "headless":
 		return
 
-	var window_mode := int(get_setting("video", "window_mode", 0))
+	var window_mode := int(get_setting("video", "window_mode", 1))
+	var resolution: Vector2i = get_setting("video", "resolution", Vector2i(1920, 1080))
 	match window_mode:
 		1:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -156,8 +173,11 @@ func _apply_video() -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 		_:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			var resolution: Vector2i = get_setting("video", "resolution", Vector2i(1280, 720))
 			DisplayServer.window_set_size(resolution)
+			var screen := DisplayServer.window_get_current_screen()
+			var usable_rect := DisplayServer.screen_get_usable_rect(screen)
+			var centered := usable_rect.position + (usable_rect.size - resolution) / 2
+			DisplayServer.window_set_position(centered)
 
 
 func _apply_audio() -> void:

@@ -1,0 +1,131 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[   0% ] first_scan_filesystem | Started Inicialización del proyecto (5 steps)
+[   0% ] first_scan_filesystem | Escaneando la estructura del archivo...
+[  16% ] first_scan_filesystem | Cargando nombres de clases globales...
+[  33% ] first_scan_filesystem | Verificando GDExtensions...
+[  50% ] first_scan_filesystem | Creando scripts de carga automática...
+[  66% ] first_scan_filesystem | Inicializando plugins...
+[  83% ] first_scan_filesystem | Iniciando escaneo de archivos...
+[ DONE ] first_scan_filesystem
+
+WARNING: Canceling suspended execution of "_notification" due to a script reload.
+   at: cancel_pending_functions (modules/gdscript/gdscript.cpp:1497)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d-01-01.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d-01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d-01_00.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d-01_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d-01_01.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d-01_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d-01_02.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d-01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_00-01.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_00-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_00_02.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_00_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_01-01.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_01_02.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_02-01.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_02-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_02_00.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_02_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_02_01.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_02_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edits/sector_27_30/terrain3d_02_02.res and res://data/terrain3d_asset_backups/20260802_135955_before_dark_grass_variants/sector_27_30/terrain3d_02_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01-01.res and res://data/terrain3d_edits/sector_27_30/terrain3d-01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01_00.res and res://data/terrain3d_edits/sector_27_30/terrain3d-01_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01_01.res and res://data/terrain3d_edits/sector_27_30/terrain3d-01_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01_02.res and res://data/terrain3d_edits/sector_27_30/terrain3d-01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_00-01.res and res://data/terrain3d_edits/sector_27_30/terrain3d_00-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_00_02.res and res://data/terrain3d_edits/sector_27_30/terrain3d_00_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_01-01.res and res://data/terrain3d_edits/sector_27_30/terrain3d_01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_01_02.res and res://data/terrain3d_edits/sector_27_30/terrain3d_01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02-01.res and res://data/terrain3d_edits/sector_27_30/terrain3d_02-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02_00.res and res://data/terrain3d_edits/sector_27_30/terrain3d_02_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02_01.res and res://data/terrain3d_edits/sector_27_30/terrain3d_02_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02_02.res and res://data/terrain3d_edits/sector_27_30/terrain3d_02_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01-01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01_00.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01_01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01_02.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d-01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_00-01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_00-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_00_00.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_00_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_00_01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_00_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_00_02.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_00_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_01-01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_01_00.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_01_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_01_01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_01_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_01_02.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02-01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02_00.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02_01.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02_02.res and res://data/terrain3d_edit_backups/20260802_130756/sector_27_30/terrain3d_02_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/terrain3d_sector_workspace.tscn and res://data/terrain3d_edit_backups/20260802_130756/terrain3d_sector_workspace.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d-01-01.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d-01_00.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d-01_01.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d-01_02.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d-01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_00-01.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_00-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_00_02.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_00_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_01-01.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_01-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_01_02.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_01_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_02-01.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02-01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_02_00.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02_00.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_02_01.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02_01.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/sector_27_30/terrain3d_02_02.res and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/sector_27_30/terrain3d_02_02.res.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/terrain3d_sector_workspace.tscn and res://data/terrain3d_edit_backups/20260802_133038_before_coast_paint/terrain3d_sector_workspace.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://scenes/tools/editor/terrain3d_sector_workspace.tscn and res://data/terrain3d_edit_backups/20260802_133830_before_sandy_coast/terrain3d_sector_workspace.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: Scan thread aborted...
+   at: _notification (editor/file_system/editor_file_system.cpp:1757)
+ERROR: Cannot save file 'C:/Users/dzzav/AppData/Roaming/Godot/editor_settings-4.7.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1768)
+ERROR: Error saving editor settings to C:/Users/dzzav/AppData/Roaming/Godot/editor_settings-4.7.tres
+   at: save (editor/settings/editor_settings.cpp:1525)

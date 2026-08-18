@@ -5,6 +5,7 @@ class_name EquipmentItemDefinition
 @export var item_name := ""
 @export var display_name := ""
 @export var category := "tool"
+@export var stackable := false
 @export var tool_type := ""
 @export var weapon_type := ""
 @export_enum("one_hand", "two_hand") var hand_usage := "one_hand"
@@ -22,6 +23,7 @@ func to_dictionary() -> Dictionary:
 	return {
 		"display_name": display_name if not display_name.is_empty() else item_name,
 		"category": category,
+		"stackable": stackable,
 		"tool_type": tool_type,
 		"weapon_type": weapon_type,
 		"hand_usage": hand_usage,

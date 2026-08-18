@@ -18,6 +18,13 @@ func _run() -> void:
 	if regional == null or atlas == null:
 		_fail("No se crearon las dos vistas cartograficas")
 		return
+	var regional_surface := world.get("regional_map_surface") as Control
+	if regional_surface == null or not regional_surface.visible:
+		_fail("Tab no preparo la carta regional ilustrada del sector actual")
+		return
+	if world.get("world_map_surface") == null:
+		_fail("M no preparo la superficie ilustrada con falsa perspectiva")
+		return
 	if CursorManager.current_mode != CursorManager.POINTING_HAND:
 		_fail("El terreno no activo la mano como puntero de juego")
 		return

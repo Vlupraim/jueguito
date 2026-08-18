@@ -1,0 +1,2337 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 3050 6GB Laptop GPU
+
+[MapDataManager] Cargados 2546 sectores desde JSON.
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:33)
+WARNING: Terrain3DInstancer#8370:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8370:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8370:_update_mmis:58: MeshAsset 7 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8370:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8370:_update_mmis:58: MeshAsset 6 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8370:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_casts_shadows (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2610)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_is_animated (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2597)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2641)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "material" is null.
+   at: material_update_dependency (servers/rendering/renderer_rd/storage_rd/material_storage.cpp:2653)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+COAST_VISUAL_CAPTURE_OK res://docs/design/concepts/tutorial/coast_art_paint_actual_v1.png

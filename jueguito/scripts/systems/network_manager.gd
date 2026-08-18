@@ -38,7 +38,8 @@ class ServerMock:
 					"animation_source_path": "res://assets/characters/player/models/char_6_c583a7dd/strong_man.glb",
 					"visual_scale": 1.0,
 					"hair_path": "",
-					"hair_color": ""
+					"hair_color": "",
+					"tutorial_intro_completed": false,
 				}
 			]
 		}
@@ -104,7 +105,8 @@ class ServerMock:
 			),
 			"visual_scale": appearance.get("visual_scale", 1.0),
 			"hair_path": appearance.get("hair_path", ""),
-			"hair_color": appearance.get("hair_color", "")
+			"hair_color": appearance.get("hair_color", ""),
+			"tutorial_intro_completed": false,
 		}
 		accounts[username]["characters"].append(new_char)
 		return {"success": true, "character": new_char}
@@ -224,6 +226,16 @@ func request_despawn() -> void:
 	await get_tree().create_timer(0.1).timeout
 	current_character_name = ""
 	player_despawned.emit(true, "")
+
+
+func mark_tutorial_intro_completed() -> void:
+	if current_character_name.is_empty():
+		return
+	for account_data in server.accounts.values():
+		for character_data in account_data["characters"]:
+			if String(character_data.get("name", "")) == current_character_name:
+				character_data["tutorial_intro_completed"] = true
+				return
 
 
 func logout() -> void:

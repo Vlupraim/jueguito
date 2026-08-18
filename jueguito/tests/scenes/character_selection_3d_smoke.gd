@@ -17,6 +17,11 @@ func _run() -> void:
 	root.add_child(selector)
 	await process_frame
 	await process_frame
+	var backdrop := selector.find_child("Backdrop", true, false) as TextureRect
+	if backdrop == null or backdrop.texture == null \
+	or not backdrop.texture.resource_path.ends_with("character_selection_lakeside_ruins_v3.png"):
+		_fail("El selector no usa el nuevo paisaje limpio de ruinas y lago")
+		return
 
 	var option := selector.find_child("ModelOptionButton", true, false) as OptionButton
 	if option == null or option.item_count != EXPECTED_MODELS:

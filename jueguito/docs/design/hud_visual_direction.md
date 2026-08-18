@@ -8,9 +8,23 @@ El HUD debe sentirse como un conjunto de instrumentos fisicos del mundo: cartas 
 
 ## Vista de juego
 
-- Inferior centro: retrato circular como nucleo del personaje. Un clic despliega nombre, nivel, vida y energia hacia arriba; cerrado no ocupa espacio informativo adicional.
-- Centro inferior, sobre el retrato: cuatro habilidades a la izquierda, tres habilidades insignia al centro y cuatro accesos de objetos a la derecha. Vida y mana cierran la composicion debajo de los grupos laterales.
-- Superior centro: contador simetrico de oro y plata con identificadores de moneda. No se muestran estadisticas competitivas sin una mecanica que las justifique.
+- Centro inferior: cuatro habilidades y Vida forman un módulo a la izquierda;
+  cuatro accesos y Maná forman otro a la derecha. Entre ambos, un tercer módulo
+  usa un medallón circular grande como núcleo y monta `Q/E/R/F` sobre su borde,
+  en distribución cardinal y sin una estrella literal.
+- La composición recomendada usa `65%` de escala en los tres módulos, alineados
+  al borde inferior y agrupados alrededor del núcleo. `Restaurar` recupera
+  exactamente este tamaño y posición; el jugador puede ajustar cada módulo
+  entre `45%` y `160%`.
+- Las ranuras de habilidad usan una base compacta de 42 px antes del escalado.
+  La tecla es metadata visual pequeña en la esquina inferior derecha; el centro
+  queda reservado para el icono, cooldown y estados futuros. Nunca se presenta
+  la tecla grande como contenido principal de la habilidad.
+- Los marcos de ranura se construyen con `StyleBox` de un píxel y no reutilizan
+  la placa ilustrada gruesa del prototipo. Esto conserva proporción y legibilidad
+  al reducir el módulo.
+- El centro del núcleo abre el Árbol de Maestrías. Las ranuras insignia quedan preparadas, pero no simulan habilidades que todavía no existen.
+- El oro y la plata no aparecen en el HUD persistente. La economia se presentara dentro de interfaces contextuales cuando tenga una funcion jugable clara.
 - Superior derecha: unico minimapa local inclinado, con borde de pergamino desgastado, nombre de zona y tres controles de borde: acercar, alejar y expandir.
 - Centro de la pantalla: libre salvo informacion contextual temporal.
 - El minimapa usa la textura y posicion reales del sector; no replica datos ni crea una segunda fuente cartografica.
@@ -19,6 +33,9 @@ El HUD debe sentirse como un conjunto de instrumentos fisicos del mundo: cartas 
 ### Edicion del HUD
 
 - Cada modulo persistente se puede mover dentro de una zona segura: personaje, acciones, oro y minimapa.
+- Las alas Vida/Habilidades, Núcleo insignia y Maná/Accesos son tres módulos
+  independientes: el jugador decide su posición y escala. `Restaurar` recupera
+  la composición simétrica recomendada al `65%`.
 - La escala se configura por modulo, ademas de una escala global de interfaz.
 - Las posiciones se guardan como ancla normalizada mas offset, no como pixeles absolutos, para sobrevivir a cambios de resolucion.
 - El modo de edicion muestra limites, alineacion y boton de restaurar valores recomendados.
@@ -26,13 +43,46 @@ El HUD debe sentirse como un conjunto de instrumentos fisicos del mundo: cartas 
 
 ## Inventario
 
-- Ventana vertical anclada al costado derecho, inspirada en inventarios compactos de MMO sin copiar su decoracion literal.
-- Cabecera con retrato, nombre del personaje, titulo y cierre; debajo aparecen solamente las ranuras de equipo que ya tienen logica real: mano principal y secundaria.
-- Franja de recursos con oro, cantidad total de objetos y ocupacion de mochila.
-- Mochila fija de 24 espacios en cuatro columnas. Las pilas existentes muestran icono, nombre abreviado y cantidad; los espacios libres conservan la cuadricula visible.
+- Panel lateral anclado a la derecha, de aproximadamente un tercio del viewport.
+  No bloquea el centro ni oculta innecesariamente el personaje que ya existe en
+  el mundo.
+- El inventario no crea un segundo viewport 3D. La lectura del equipo se resuelve
+  con iconos 2D; esto reduce coste de render, complejidad y duplicación visual.
+- Los iconos de objetos usan recursos PNG independientes del modelo jugable,
+  normalizados a un lienzo transparente de 256 px, centrados por peso visual y
+  con margen uniforme. Los modelos GLB quedan reservados exclusivamente para el
+  mundo 3D.
+- Cabecera con nombre del personaje, acceso a Maestrías, título y cierre.
+- El equipamiento usa una matriz estable de tres por tres inspirada en la
+  claridad estructural de Albion, no en su tratamiento gráfico:
+
+  ```text
+  Mochila equipada | Cabeza | Capa
+  Mano principal   | Torso  | Mano secundaria
+  Consumible       | Pies   | Alimento
+  ```
+
+- Mano principal y secundaria son funcionales hoy. Las otras siete ranuras
+  permanecen desactivadas, con icono y tooltip de sistema futuro; no simulan
+  mecánicas inexistentes. Guantes, joyería u otra categoría futura pueden
+  agregarse como una fila adicional sin ensanchar el panel.
+- Estadísticas es un acordeón cerrado por defecto. Al abrirlo, conserva el
+  tamaño exterior del panel y reduce temporalmente el área visible de la
+  mochila.
+- La franja de resumen muestra dano, defensa y ocupacion. Dano y defensa permanecen explicitamente como placeholders hasta conectar el sistema de atributos.
+- Mochila fija de 24 espacios en cinco columnas compactas. El viewport muestra
+  unas tres filas y permite desplazamiento vertical; una fracción de la fila
+  siguiente comunica que existe más contenido sin convertir la mochila en la
+  superficie dominante de la ventana.
+- Armas, herramientas, escudos y armaduras no son apilables: cada unidad ocupa
+  una ranura. Los recursos homogéneos, como madera e hierro, sí comparten ranura
+  y muestran su cantidad. La futura durabilidad y calidad requerirán un ID de
+  instancia por pieza, pero la presentación ya respeta esa ocupación.
 - La paleta usa cuero carbon, pergamino oscuro y laton envejecido, junto con la tipografia configurada en el tema medieval del proyecto.
-- No se muestran estadisticas, categorias o ranuras ficticias hasta que existan sistemas que las respalden.
+- Los placeholders visuales siempre se muestran con guion y texto de sistema pendiente; nunca inventan cifras de gameplay.
 - Los objetos equipables conservan interaccion directa; las ranuras superiores permiten desequipar y la cuadricula permite equipar o guardar.
+- El inventario se dibuja por encima del HUD persistente para que el núcleo de
+  habilidades nunca invada sus controles.
 
 ## Vista Sector (`Tab`)
 
@@ -132,10 +182,15 @@ El HUD debe sentirse como un conjunto de instrumentos fisicos del mundo: cartas 
 
 ## Estado implementado
 
-- HUD persistente centrado: retrato colapsado que despliega datos hacia arriba; cuatro habilidades, tres insignias y cuatro objetos sobre el nucleo, con vida y mana laterales.
-- Contadores de oro y plata centrados arriba, preparados para leer moneda autoritativa del personaje.
+- HUD persistente centrado: cuatro habilidades a cada lado del núcleo, cuatro ranuras insignia cardinales, acceso a Maestrías y barras laterales de vida y maná.
+- Oro y plata no aparecen en el HUD persistente; se reservan para interfaces económicas contextuales.
 - Minimapa real en la esquina superior derecha, derivado del sector cargado, con marcador orientado, controles minimalistas de zoom/expansion y borde de pergamino desgastado.
 - El minimapa compacto no muestra pestanas ni recordatorios `Tab`/`M`; esos accesos siguen funcionando por teclado y en tutorial.
 - Edicion de HUD con `F10` o desde pausa: arrastre, escala con rueda, persistencia por modulo y restauracion.
-- `Tab` abre el mapa regional como menu de pantalla completa; `M` abre el atlas mundial con zoom, paneo, hover territorial y centrar en region actual.
+- `Tab` abre el mapa regional como menú de pantalla completa y usa un proxy 3D
+  reducido del sector cuando existen altura y superficie exportadas; conserva
+  la carta 2D como fallback.
+- `M` abre el atlas mundial con falsa perspectiva, relieve horneado, zoom,
+  paneo, hover territorial y centrado en la región actual. La grilla de sectores
+  solo se revela en zoom cercano.
 - Sector y Mundo son estados exclusivos: cambiar de pestaña oculta la anterior y cerrar Mundo devuelve directamente al juego.

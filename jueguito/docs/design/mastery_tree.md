@@ -291,6 +291,18 @@ pedir una elección permanente. La pantalla de cierre del naufragio resume las
 maestrías iniciadas y explica que las decisiones culminantes llegarán mucho más
 adelante.
 
+## Presentación en interfaz
+
+- El acceso principal nace de la estrella central de cuatro puntas del HUD y se
+  repite en la cabecera del inventario.
+- La vista usa cuatro troncos: Marciales, Mundo, Oficio e Influencia. Los nodos
+  organizadores conectan con las maestrías terminales definidas en este documento.
+- Los nodos incluidos en el tutorial se destacan; los demás permanecen visibles
+  como planificación futura, sin inventar progreso ni efectos.
+- La columna de detalle muestra rango, progreso, tres enfoques y la explicación de
+  Legados. Mientras no exista persistencia real, sus valores son placeholders
+  explícitos y no interactivos.
+
 ## Datos persistentes mínimos
 
 Cada maestría de personaje debe guardar al menos:

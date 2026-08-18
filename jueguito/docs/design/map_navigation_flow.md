@@ -2,6 +2,9 @@
 
 El juego utiliza una estructura de navegación y visualización espacial de tres escalas coordinadas mediante `MapDataManager`.
 
+Las decisiones de topología, persistencia y escalado se desarrollan en
+[`albion_world_architecture_lessons.md`](albion_world_architecture_lessons.md).
+
 ## 1. Minimapa del HUD (`minimap.tscn` / `minimap.gd`)
 
 - **Persistencia**: Visible continuamente en la esquina del HUD de juego.
@@ -21,7 +24,16 @@ El juego utiliza una estructura de navegación y visualización espacial de tres
 ## 2. Mapa de Sector / Cluster (`sector_map.tscn` / `sector_map.gd`)
 
 - **Activación**: Se abre con `N`, `Tab` o haciendo clic en el Minimapa.
-- **Visualización**: Renderizado en mapa de acuarela 2D generado por `local_map_texture_builder.gd`.
+- **Visualización actual**: proxy 3D cartográfico para Costa del Naufragio,
+  generado desde `height_preview.png` y `surface_reference.png`. Si un sector no
+  tiene esas fuentes, conserva como fallback la carta 2D de
+  `local_map_texture_builder.gd`.
+- **Implementación del piloto**: `sector_map_3d_renderer.gd` construye una malla
+  reducida de 96 × 96, suaviza costa y altura solo para presentación, extiende
+  el mar fuera de la baldosa y añade vegetación cartográfica de bajo coste. No
+  instancia Terrain3D ni la vegetación jugable.
+- **Coherencia espacial**: jugador, naufragio, orientación, zoom, paneo y pings
+  utilizan la misma proyección de la cámara 3D.
 - **Cabecera**:
   - Nombre del Sector (ej. *"Estepa - Sector [33, 19]"*).
   - Placa de Tier (`TIER 4`), insignia de peligro y contador de hostiles.
@@ -37,6 +49,9 @@ El juego utiliza una estructura de navegación y visualización espacial de tres
 
 - **Activación**: Se abre con `M` o desde el mapa de sector.
 - **Matriz Macro**: Lee la cuadrícula de 67 x 38 sectores de 5 km (`map_design_sectors_5km.json`).
+- **Superficie actual**: `world_atlas_surface.gd` presenta la ilustración como
+  una carta trapezoidal con falsa perspectiva, relieve horneado direccional y
+  viñeta contenida. La cuadrícula técnica aparece solo al acercarse.
 - **Modos de Vista**:
   - *Vista por Riesgo (PvP)*: Colorea cada celda según su nivel de peligro (Azul, Amarillo, Rojo, Negro).
   - *Vista por Bioma*: Colorea las celdas según el tipo de bioma (Bosque, Estepa, Pantano, Montaña, etc.).
@@ -56,3 +71,21 @@ HUD -------------------------[M]------------------------------------> Mapa Mundi
 Mapa Mundial --[Clic "Inspeccionar Sector"]--------------------------> Mapa de Sector
 Mapa de Sector / Mapa Mundial --[Esc / Clic ✕]-----------------------> HUD
 ```
+
+## Decisiones y deuda del piloto
+
+- Los sectores permanecen como unidades de carga, autoridad, persistencia y
+  depuración. La representación puede verse continua sin fusionar el mundo
+  jugable en una sola escena.
+- `MapDataManager` es la fuente de nombre, bioma, grado, peligro y recursos. El
+  sector tutorial `[27, 30]` queda identificado como `Costa del Naufragio`, de
+  bioma templado, para coincidir con el terreno artesanal existente.
+- Durante el piloto `[27, 30]` sigue visible en el atlas para probar la
+  integración. Antes de cerrar la topología debe excluirse del atlas público o
+  reemplazarse por la coordenada del primer territorio persistente; el prólogo
+  privado no debe consolidarse accidentalmente como una región ordinaria.
+- Siguiente prioridad regional: rutas, salidas, naufragio y puntos de interés
+  autorales; después, disolver visualmente los bordes terrestres cuando existan
+  datos de sectores vecinos.
+- Siguiente prioridad mundial: etiquetas por nivel de zoom, rutas principales
+  y LOD cartográfico. No añadir filtros hasta que sus datos sean deterministas.

@@ -1,0 +1,6 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+COAST_PAINT_SMOKE_OK height_delta=0.0000000 changed_controls=262144 max_texture_id=23 regions=4
+[MapDataManager] Cargados 2546 sectores desde JSON.

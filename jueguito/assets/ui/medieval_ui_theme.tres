@@ -1,14 +1,20 @@
 [gd_resource type="Theme" format=3 uid="uid://cb3ph34s48yo7"]
 
-[ext_resource type="Texture2D" uid="uid://cglcr4pw5155f" path="res://assets/ui/hud/runtime/menu_button.png" id="1_button"]
-
-[sub_resource type="StyleBoxTexture" id="StyleButtonDisabled"]
-texture = ExtResource("1_button")
-texture_margin_left = 18.0
-texture_margin_top = 10.0
-texture_margin_right = 18.0
-texture_margin_bottom = 10.0
-modulate_color = Color(0.42, 0.4, 0.36, 0.76)
+[sub_resource type="StyleBoxFlat" id="StyleQuietDisabled"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.035, 0.032, 0.028, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.19, 0.17, 0.7)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleFocus"]
 bg_color = Color(0, 0, 0, 0)
@@ -26,28 +32,71 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxTexture" id="StyleButtonHover"]
-texture = ExtResource("1_button")
-texture_margin_left = 18.0
-texture_margin_top = 10.0
-texture_margin_right = 18.0
-texture_margin_bottom = 10.0
-modulate_color = Color(1.18, 1.1, 0.78, 1)
+[sub_resource type="StyleBoxFlat" id="StyleQuietHover"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.115, 0.086, 0.048, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.68, 0.52, 0.27, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxTexture" id="StyleButtonNormal"]
-texture = ExtResource("1_button")
-texture_margin_left = 18.0
-texture_margin_top = 10.0
-texture_margin_right = 18.0
-texture_margin_bottom = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleQuietNormal"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.052, 0.044, 0.034, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.31, 0.255, 0.17, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxTexture" id="StyleButtonPressed"]
-texture = ExtResource("1_button")
-texture_margin_left = 18.0
-texture_margin_top = 10.0
-texture_margin_right = 18.0
-texture_margin_bottom = 10.0
-modulate_color = Color(0.72, 0.68, 0.58, 1)
+[sub_resource type="StyleBoxFlat" id="StyleQuietPressed"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 14.0
+content_margin_bottom = 7.0
+bg_color = Color(0.032, 0.028, 0.023, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.39, 0.22, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleCheckHover"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+bg_color = Color(0.15, 0.115, 0.064, 0.48)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleCheckNormal"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleSeparator"]
 content_margin_top = 1.0
@@ -135,17 +184,26 @@ Button/colors/font_disabled_color = Color(0.5, 0.47, 0.41, 1)
 Button/colors/font_focus_color = Color(1, 0.94, 0.78, 1)
 Button/colors/font_hover_color = Color(1, 0.96, 0.84, 1)
 Button/colors/font_pressed_color = Color(0.79, 0.72, 0.59, 1)
-Button/styles/disabled = SubResource("StyleButtonDisabled")
+Button/styles/disabled = SubResource("StyleQuietDisabled")
 Button/styles/focus = SubResource("StyleFocus")
-Button/styles/hover = SubResource("StyleButtonHover")
-Button/styles/normal = SubResource("StyleButtonNormal")
-Button/styles/pressed = SubResource("StyleButtonPressed")
+Button/styles/hover = SubResource("StyleQuietHover")
+Button/styles/normal = SubResource("StyleQuietNormal")
+Button/styles/pressed = SubResource("StyleQuietPressed")
 CheckButton/colors/font_color = Color(0.85, 0.8, 0.68, 1)
 CheckButton/colors/font_hover_color = Color(1, 0.94, 0.79, 1)
-ColorPickerButton/styles/hover = SubResource("StyleButtonHover")
-ColorPickerButton/styles/normal = SubResource("StyleButtonNormal")
-ColorPickerButton/styles/pressed = SubResource("StyleButtonPressed")
+CheckButton/styles/hover = SubResource("StyleCheckHover")
+CheckButton/styles/normal = SubResource("StyleCheckNormal")
+CheckButton/styles/pressed = SubResource("StyleCheckHover")
+ColorPickerButton/styles/hover = SubResource("StyleQuietHover")
+ColorPickerButton/styles/normal = SubResource("StyleQuietNormal")
+ColorPickerButton/styles/pressed = SubResource("StyleQuietPressed")
 HSeparator/styles/separator = SubResource("StyleSeparator")
+IconButton/base_type = &"Button"
+IconButton/styles/disabled = SubResource("StyleQuietDisabled")
+IconButton/styles/focus = SubResource("StyleFocus")
+IconButton/styles/hover = SubResource("StyleQuietHover")
+IconButton/styles/normal = SubResource("StyleQuietNormal")
+IconButton/styles/pressed = SubResource("StyleQuietPressed")
 Label/colors/font_color = Color(0.85, 0.81, 0.72, 1)
 LineEdit/colors/caret_color = Color(0.85, 0.67, 0.34, 1)
 LineEdit/colors/font_color = Color(0.93, 0.88, 0.77, 1)
@@ -154,9 +212,9 @@ LineEdit/styles/focus = SubResource("StyleInputFocus")
 LineEdit/styles/normal = SubResource("StyleInput")
 OptionButton/colors/font_color = Color(0.91, 0.84, 0.69, 1)
 OptionButton/styles/focus = SubResource("StyleFocus")
-OptionButton/styles/hover = SubResource("StyleButtonHover")
-OptionButton/styles/normal = SubResource("StyleButtonNormal")
-OptionButton/styles/pressed = SubResource("StyleButtonPressed")
+OptionButton/styles/hover = SubResource("StyleQuietHover")
+OptionButton/styles/normal = SubResource("StyleQuietNormal")
+OptionButton/styles/pressed = SubResource("StyleQuietPressed")
 PanelContainer/styles/panel = SubResource("StylePanel")
 PopupMenu/colors/font_color = Color(0.87, 0.82, 0.71, 1)
 PopupMenu/styles/panel = SubResource("StylePanel")

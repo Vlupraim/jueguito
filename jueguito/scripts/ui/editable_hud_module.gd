@@ -4,7 +4,7 @@ class_name EditableHUDModule
 @export var layout_key := "module"
 @export var default_normalized_position := Vector2.ZERO
 @export var default_position_offset := Vector2.ZERO
-@export_range(0.65, 1.6, 0.05) var default_module_scale := 1.0
+@export_range(0.45, 1.6, 0.05) var default_module_scale := 1.0
 
 var edit_mode := false
 var _dragging := false
@@ -15,7 +15,7 @@ var _resize_start_scale := 1.0
 var _edit_overlay: Node2D
 
 const RESIZE_HANDLE_SIZE := 22.0
-const MIN_MODULE_SCALE := 0.65
+const MIN_MODULE_SCALE := 0.45
 const MAX_MODULE_SCALE := 1.6
 
 

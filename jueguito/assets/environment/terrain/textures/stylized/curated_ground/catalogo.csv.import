@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://doog3488noy0y"
+
+[deps]
+
+source_file="res://assets/environment/terrain/textures/stylized/curated_ground/catalogo.csv"
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

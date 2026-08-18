@@ -42,6 +42,9 @@ son capas separadas.
 
 ### Personaje
 
+El contrato general de locomocion y salto se define en
+`res://docs/design/player_movement_camera_interaction.md`.
+
 | Estado | Regla inicial |
 | --- | --- |
 | `dry` | Movimiento terrestre normal. |
@@ -55,6 +58,11 @@ ni buceo: el relieve submarino clasifica costa y mar abierto, pero no constituye
 un recorrido vertical. La natación utiliza `swim_idle` al detenerse y
 `swim_forward` al desplazarse. Faltan resistencia, corriente de retorno,
 salpicaduras y respuesta de cámara.
+
+No se inicia un salto desde `swimming` ni `open_water`. Si una trayectoria aerea
+entra al volumen logico del oceano, se resuelve el estado de agua al contacto;
+el salto no permite atravesar el bloqueo de mar abierto ni salir de los limites
+autoritativos del sector.
 
 ### Audio
 
@@ -105,6 +113,19 @@ alcanza el exterior.
 - Shader: `res://shaders/ocean_surface.gdshader`.
 - Recursos: `res://assets/environment/water/`.
 - Audio: `res://assets/audio/sfx/environment/ocean/`.
+
+## Cinta visual del sector
+
+- El footprint completo de `512 x 512` permanece renderizado.
+- Los 48 metros exteriores de cada lado forman una cinta exclusivamente visual.
+- El area jugable termina en el borde interior de esa cinta, por lo que la
+  camara sigue viendo terreno aunque el personaje alcance el limite fisico.
+- La cinta no precarga sectores vecinos y no debe contener NPC, recursos ni
+  logica persistente.
+- Solo una salida autoral registrada puede extender temporalmente el movimiento
+  tres metros dentro de la cinta para activar una futura transicion de sector.
+- El cambio de sector seguira descargando el terreno actual antes de presentar
+  el siguiente; la cinta resuelve presentacion, no streaming.
 
 ## Siguientes iteraciones
 

@@ -161,7 +161,27 @@ func _unhandled_input(event: InputEvent) -> void:
 func set_gameplay_input_enabled(enabled: bool) -> void:
 	gameplay_input_enabled = enabled
 	if not enabled:
+		has_target = false
+		velocity.x = 0.0
+		velocity.z = 0.0
 		_cancel_timed_interaction()
+
+
+func hold_character_action_pose(action: StringName, pose_time := 0.0) -> bool:
+	if not play_character_action(action, 0.0):
+		return false
+	character_animation_player.seek(maxf(pose_time, 0.0), true)
+	character_animation_player.pause()
+	return true
+
+
+func get_character_action_duration(action: StringName) -> float:
+	if character_animation_player == null:
+		return 0.0
+	var animation_name := AnimationRetargeter.shared_animation_name(action)
+	if not character_animation_player.has_animation(animation_name):
+		return 0.0
+	return character_animation_player.get_animation(animation_name).length
 
 
 func _set_movement_target_from_mouse() -> void:

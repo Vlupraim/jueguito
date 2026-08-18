@@ -1,6 +1,22 @@
 extends CanvasLayer
 
 const ItemCatalog = preload("res://scripts/systems/items/item_catalog.gd")
+const SignatureSkillHubScene = preload("res://scripts/ui/signature_skill_hub.gd")
+const MasteryTreeViewScene = preload("res://scripts/ui/mastery_tree_view.gd")
+const EditableHUDModuleScene = preload("res://scripts/ui/editable_hud_module.gd")
+const MASTERY_ICON := preload("res://assets/ui/hud/generated/mastery_emblem.png")
+const CLOSE_ICON := preload("res://assets/ui/icons/close.svg")
+const CHEVRON_RIGHT_ICON := preload("res://assets/ui/icons/chevron_right.svg")
+const CHEVRON_DOWN_ICON := preload("res://assets/ui/icons/chevron_down.svg")
+const EQUIPMENT_BAG_ICON := preload("res://assets/ui/icons/equipment_bag.svg")
+const EQUIPMENT_HEAD_ICON := preload("res://assets/ui/icons/equipment_head.svg")
+const EQUIPMENT_CAPE_ICON := preload("res://assets/ui/icons/equipment_cape.svg")
+const EQUIPMENT_MAIN_HAND_ICON := preload("res://assets/ui/icons/equipment_main_hand.svg")
+const EQUIPMENT_CHEST_ICON := preload("res://assets/ui/icons/equipment_chest.svg")
+const EQUIPMENT_OFFHAND_ICON := preload("res://assets/ui/icons/equipment_offhand.svg")
+const EQUIPMENT_CONSUMABLE_ICON := preload("res://assets/ui/icons/equipment_consumable.svg")
+const EQUIPMENT_FEET_ICON := preload("res://assets/ui/icons/equipment_feet.svg")
+const EQUIPMENT_FOOD_ICON := preload("res://assets/ui/icons/equipment_food.svg")
 const INVENTORY_CAPACITY := 24
 
 signal inventory_visibility_changed(is_visible: bool)
@@ -48,11 +64,32 @@ var timed_action_label: Label
 var timed_action_bar: ProgressBar
 var timed_action_player: Node
 var character_stats_popup: PanelContainer
+var signature_skill_hub: SignatureSkillHub
+var action_left_module: EditableHUDModule
+var action_center_module: EditableHUDModule
+var action_right_module: EditableHUDModule
+var action_hud_modules: Array[EditableHUDModule] = []
+var mastery_backdrop: ColorRect
+var mastery_close_button: Button
+var mastery_detail_title: Label
+var mastery_detail_family: Label
+var mastery_detail_description: Label
+var inventory_mastery_button: Button
+var inventory_stats_toggle: Button
+var inventory_stats_panel: PanelContainer
+var inventory_stats_expanded := false
+var mastery_scroll: ScrollContainer
+var mastery_tree_view: MasteryTreeView
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_setup_action_hud_modules()
 	_setup_character_hub()
+	_setup_inventory_layout()
+	_setup_mastery_tree()
+	_apply_generated_button_icons()
+	currency_display.hide()
 	inventory_panel.hide()
 	pause_backdrop.hide()
 	inventory_close_button.pressed.connect(close_inventory)
@@ -110,7 +147,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			toggle_inventory()
 		get_viewport().set_input_as_handled()
 	elif _is_key(key_event, KEY_ESCAPE):
-		if options_menu.visible:
+		if mastery_backdrop != null and mastery_backdrop.visible:
+			close_mastery_tree()
+		elif options_menu.visible:
 			options_menu.call("close")
 		elif inventory_panel.visible:
 			close_inventory()
@@ -180,15 +219,571 @@ func set_hud_edit_mode(enabled: bool) -> void:
 	portrait_button.disabled = enabled
 	portrait_button.mouse_filter = Control.MOUSE_FILTER_IGNORE if enabled else Control.MOUSE_FILTER_STOP
 	character_status.call("set_edit_mode", enabled)
-	action_bar.call("set_edit_mode", enabled)
-	currency_display.call("set_edit_mode", enabled)
+	for module in action_hud_modules:
+		module.set_edit_mode(enabled)
+	if signature_skill_hub != null:
+		signature_skill_hub.set_interaction_enabled(not enabled)
 	hud_edit_mode_changed.emit(enabled)
 
 
 func reset_hud_layout() -> void:
 	character_status.call("reset_layout")
-	action_bar.call("reset_layout")
-	currency_display.call("reset_layout")
+	for module in action_hud_modules:
+		module.reset_layout()
+
+
+func _setup_action_hud_modules() -> void:
+	var legacy_action_bar := action_bar
+	var legacy_slots := legacy_action_bar.find_child("Slots", true, false) as HBoxContainer
+	var health_bar := legacy_action_bar.find_child("CombatHealthBar", true, false) as ProgressBar
+	var mana_bar := legacy_action_bar.find_child("CombatManaBar", true, false) as ProgressBar
+	if legacy_slots == null or health_bar == null or mana_bar == null:
+		return
+
+	var left_slots: Array[Control] = []
+	var right_slots: Array[Control] = []
+	for index in range(1, 5):
+		left_slots.append(legacy_slots.get_node("Slot%d" % index) as Control)
+	for index in range(5, 9):
+		right_slots.append(legacy_slots.get_node("Slot%d" % index) as Control)
+
+	legacy_action_bar.name = "LegacyActionBar"
+	action_left_module = _create_editable_action_module(
+		"ActionBar", "action_left", Vector2(-145.0, 0.0), Vector2(216.0, 84.0)
+	)
+	action_center_module = _create_editable_action_module(
+		"SignatureHubModule", "action_center", Vector2.ZERO, Vector2(180.0, 180.0), false
+	)
+	action_right_module = _create_editable_action_module(
+		"RightActionModule", "action_right", Vector2(145.0, 0.0), Vector2(216.0, 84.0)
+	)
+	action_hud_modules.assign([
+		action_left_module,
+		action_center_module,
+		action_right_module,
+	])
+	_build_action_wing(action_left_module, left_slots, health_bar, "VIDA")
+	_setup_signature_skill_hub(action_center_module)
+	_build_action_wing(action_right_module, right_slots, mana_bar, "MANA")
+	action_bar = action_left_module
+	legacy_action_bar.queue_free()
+
+
+func _create_editable_action_module(
+	module_name: String,
+	layout_key: String,
+	default_offset: Vector2,
+	module_size: Vector2,
+	with_frame := true
+) -> EditableHUDModule:
+	var module := EditableHUDModuleScene.new() as EditableHUDModule
+	module.name = module_name
+	module.layout_key = layout_key
+	module.default_normalized_position = Vector2(0.5, 1.0)
+	module.default_position_offset = default_offset
+	module.default_module_scale = 0.65
+	module.custom_minimum_size = module_size
+	module.size = module_size
+	persistent_hud.add_child(module)
+	if with_frame:
+		var frame := PanelContainer.new()
+		frame.name = "ModuleFrame"
+		frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		frame.add_theme_stylebox_override("panel", _action_module_frame_style())
+		module.add_child(frame)
+	return module
+
+
+func _build_action_wing(
+	module: EditableHUDModule,
+	slot_controls: Array[Control],
+	resource_bar: ProgressBar,
+	caption: String
+) -> void:
+	var frame := module.get_node("ModuleFrame") as PanelContainer
+	var margin := MarginContainer.new()
+	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	margin.add_theme_constant_override("margin_left", 8)
+	margin.add_theme_constant_override("margin_top", 7)
+	margin.add_theme_constant_override("margin_right", 8)
+	margin.add_theme_constant_override("margin_bottom", 7)
+	frame.add_child(margin)
+	var content := VBoxContainer.new()
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_theme_constant_override("separation", 6)
+	margin.add_child(content)
+	var slots := HBoxContainer.new()
+	slots.name = "Slots"
+	slots.alignment = BoxContainer.ALIGNMENT_CENTER
+	slots.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	slots.add_theme_constant_override("separation", 4)
+	content.add_child(slots)
+	for slot in slot_controls:
+		slot.reparent(slots)
+		_configure_compact_action_slot(slot)
+
+	var bar_plate := PanelContainer.new()
+	bar_plate.name = "%sPlate" % caption.to_pascal_case()
+	bar_plate.custom_minimum_size = Vector2(0.0, 22.0)
+	bar_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bar_plate.add_theme_stylebox_override("panel", _resource_bar_plate_style())
+	content.add_child(bar_plate)
+	var bar_margin := MarginContainer.new()
+	bar_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bar_margin.add_theme_constant_override("margin_left", 6)
+	bar_margin.add_theme_constant_override("margin_top", 4)
+	bar_margin.add_theme_constant_override("margin_right", 6)
+	bar_margin.add_theme_constant_override("margin_bottom", 4)
+	bar_plate.add_child(bar_margin)
+	resource_bar.reparent(bar_margin)
+	resource_bar.custom_minimum_size = Vector2(0.0, 13.0)
+	resource_bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	resource_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var label := resource_bar.get_node_or_null("Caption") as Label
+	if label != null:
+		label.text = caption
+		label.add_theme_font_size_override("font_size", 9)
+
+
+func _configure_compact_action_slot(slot: Control) -> void:
+	slot.custom_minimum_size = Vector2(42.0, 42.0)
+	slot.clip_contents = true
+	if slot is PanelContainer:
+		(slot as PanelContainer).add_theme_stylebox_override(
+			"panel", _compact_action_slot_style()
+		)
+	var old_frame := slot.get_node_or_null("Frame") as TextureRect
+	if old_frame != null:
+		old_frame.hide()
+	var key := slot.get_node_or_null("Key") as Label
+	if key == null:
+		return
+	var placeholder := Label.new()
+	placeholder.name = "AbilityPlaceholder"
+	placeholder.text = "◇"
+	placeholder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	placeholder.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	placeholder.add_theme_font_size_override("font_size", 14)
+	placeholder.add_theme_color_override("font_color", Color("5f4b2d99"))
+	slot.add_child(placeholder)
+	var key_margin := MarginContainer.new()
+	key_margin.name = "HotkeyBadge"
+	key_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	key_margin.add_theme_constant_override("margin_left", 2)
+	key_margin.add_theme_constant_override("margin_top", 2)
+	key_margin.add_theme_constant_override("margin_right", 3)
+	key_margin.add_theme_constant_override("margin_bottom", 2)
+	slot.add_child(key_margin)
+	key.reparent(key_margin)
+	key.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	key.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	key.add_theme_font_size_override("font_size", 10)
+	key.add_theme_color_override("font_color", Color("e8d7ac"))
+	key.add_theme_color_override("font_outline_color", Color("080705"))
+	key.add_theme_constant_override("outline_size", 2)
+
+
+func _compact_action_slot_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("0b0a08f2")
+	style.border_color = Color("6e5833dc")
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(4)
+	style.shadow_color = Color(0.0, 0.0, 0.0, 0.46)
+	style.shadow_size = 3
+	return style
+
+
+func _setup_signature_skill_hub(module: EditableHUDModule) -> void:
+	signature_skill_hub = SignatureSkillHubScene.new() as SignatureSkillHub
+	signature_skill_hub.name = "SignatureSkillHub"
+	signature_skill_hub.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	signature_skill_hub.mastery_requested.connect(open_mastery_tree)
+	module.add_child(signature_skill_hub)
+
+
+func _action_module_frame_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("0c0a07e8")
+	style.border_color = Color("796039e8")
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(6)
+	style.shadow_color = Color(0.0, 0.0, 0.0, 0.5)
+	style.shadow_size = 4
+	return style
+
+
+func _resource_bar_plate_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("090805fa")
+	style.border_color = Color("71582fff")
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(5)
+	return style
+
+
+func _setup_inventory_layout() -> void:
+	var content := inventory_panel.get_node("Margin/Content") as VBoxContainer
+	var header := content.get_node("Header") as HBoxContainer
+	var header_portrait := header.get_node("HeaderPortrait") as Control
+	header_portrait.hide()
+	inventory_mastery_button = Button.new()
+	inventory_mastery_button.name = "InventoryMasteryButton"
+	inventory_mastery_button.text = "Maestrías"
+	inventory_mastery_button.icon = MASTERY_ICON
+	inventory_mastery_button.expand_icon = true
+	inventory_mastery_button.add_theme_constant_override("icon_max_width", 22)
+	inventory_mastery_button.tooltip_text = "Abrir Árbol de Maestrías"
+	inventory_mastery_button.custom_minimum_size = Vector2(108.0, 34.0)
+	inventory_mastery_button.pressed.connect(open_mastery_tree)
+	header.add_child(inventory_mastery_button)
+	header.move_child(inventory_mastery_button, header.get_child_count() - 2)
+
+	var body := VBoxContainer.new()
+	body.name = "InventoryBody"
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 6)
+	content.add_child(body)
+	content.move_child(body, 2)
+
+	var equipment_header := content.get_node("EquipmentHeader") as HBoxContainer
+	var equipment_title := equipment_header.get_node("EquipmentTitle") as Label
+	var equipment_hint := equipment_header.get_node("EquipmentHint") as Label
+	equipment_hint.hide()
+	equipment_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	equipment_header.reparent(body)
+
+	var equipment_slots := content.get_node("EquipmentSlots") as HBoxContainer
+	var equipment_grid := GridContainer.new()
+	equipment_grid.name = "EquipmentGrid"
+	equipment_grid.columns = 3
+	equipment_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	equipment_grid.add_theme_constant_override("h_separation", 6)
+	equipment_grid.add_theme_constant_override("v_separation", 6)
+	body.add_child(equipment_grid)
+	var primary_slot := equipment_slots.get_node("PrimaryEquipmentSlot") as Button
+	var secondary_slot := equipment_slots.get_node("SecondaryEquipmentSlot") as Button
+	equipment_grid.add_child(_create_future_equipment_slot(
+		"bag", "Mochila equipada · sistema futuro", EQUIPMENT_BAG_ICON
+	))
+	equipment_grid.add_child(_create_future_equipment_slot(
+		"head", "Cabeza · casco o capucha · sistema futuro", EQUIPMENT_HEAD_ICON
+	))
+	equipment_grid.add_child(_create_future_equipment_slot(
+		"cape", "Espalda · capa o accesorio · sistema futuro", EQUIPMENT_CAPE_ICON
+	))
+	primary_slot.reparent(equipment_grid)
+	_configure_hand_equipment_slot(primary_slot, "primary")
+	equipment_grid.add_child(_create_future_equipment_slot(
+		"chest", "Torso · armadura · sistema futuro", EQUIPMENT_CHEST_ICON
+	))
+	secondary_slot.reparent(equipment_grid)
+	_configure_hand_equipment_slot(secondary_slot, "secondary")
+	equipment_grid.add_child(_create_future_equipment_slot(
+		"consumable", "Consumible rápido · sistema futuro", EQUIPMENT_CONSUMABLE_ICON
+	))
+	equipment_grid.add_child(_create_future_equipment_slot(
+		"feet", "Pies · botas · sistema futuro", EQUIPMENT_FEET_ICON
+	))
+	equipment_grid.add_child(_create_future_equipment_slot(
+		"food", "Alimento · sistema futuro", EQUIPMENT_FOOD_ICON
+	))
+	equipment_slots.queue_free()
+
+	_setup_inventory_stats(body)
+
+	var bag_header := content.get_node("BagHeader") as HBoxContainer
+	var bag_title := bag_header.get_node("BagTitle") as Label
+	var bag_shortcut := bag_header.get_node("BagShortcut") as Label
+	bag_shortcut.hide()
+	bag_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	inventory_capacity.reparent(bag_header)
+	inventory_capacity.size_flags_horizontal = Control.SIZE_SHRINK_END
+	inventory_capacity.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	var inventory_resources := content.get_node("InventoryResources") as PanelContainer
+	var empty_label := content.get_node("EmptyInventoryLabel") as Label
+	var scroll := content.get_node("InventoryScroll") as ScrollContainer
+	var footer := content.get_node("InventoryFooter") as HBoxContainer
+	inventory_resources.reparent(body)
+	bag_header.reparent(body)
+	empty_label.reparent(body)
+	scroll.reparent(body)
+	footer.reparent(body)
+	scroll.custom_minimum_size = Vector2(0.0, 92.0)
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	inventory_grid.columns = 5
+	inventory_grid.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	inventory_grid.add_theme_constant_override("h_separation", 6)
+	inventory_grid.add_theme_constant_override("v_separation", 6)
+	var value_label := footer.get_node("InventoryValueLabel") as Label
+	value_label.hide()
+	inventory_free_slots.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	inventory_free_slots.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	inventory_gold_label.text = "DAÑO  —"
+	inventory_gold_label.tooltip_text = "Daño total · sistema pendiente"
+	inventory_item_count.text = "DEFENSA  —"
+	inventory_item_count.tooltip_text = "Defensa total · sistema pendiente"
+	inventory_capacity.text = "0 / %d" % INVENTORY_CAPACITY
+
+
+func _setup_inventory_stats(parent: Control) -> void:
+	inventory_stats_toggle = Button.new()
+	inventory_stats_toggle.name = "InventoryStatsToggle"
+	inventory_stats_toggle.text = "ESTADÍSTICAS"
+	inventory_stats_toggle.icon = CHEVRON_RIGHT_ICON
+	inventory_stats_toggle.icon_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	inventory_stats_toggle.expand_icon = true
+	inventory_stats_toggle.add_theme_constant_override("icon_max_width", 18)
+	inventory_stats_toggle.custom_minimum_size.y = 32.0
+	inventory_stats_toggle.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	inventory_stats_toggle.tooltip_text = "Mostrar estadísticas"
+	inventory_stats_toggle.pressed.connect(_toggle_inventory_stats)
+	parent.add_child(inventory_stats_toggle)
+
+	inventory_stats_panel = PanelContainer.new()
+	inventory_stats_panel.name = "PlaceholderStats"
+	inventory_stats_panel.add_theme_stylebox_override(
+		"panel", _inventory_slot_style(Color("65543c"), Color("111516e8"))
+	)
+	parent.add_child(inventory_stats_panel)
+	var margin := MarginContainer.new()
+	for side in ["margin_left", "margin_top", "margin_right", "margin_bottom"]:
+		margin.add_theme_constant_override(side, 7)
+	inventory_stats_panel.add_child(margin)
+	var stats := GridContainer.new()
+	stats.columns = 4
+	stats.add_theme_constant_override("h_separation", 8)
+	stats.add_theme_constant_override("v_separation", 3)
+	margin.add_child(stats)
+	for stat_name in [
+		"Daño", "Defensa", "Poder de objeto", "Precisión", "Resistencia", "Velocidad",
+	]:
+		var name_label := Label.new()
+		name_label.text = stat_name
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		name_label.add_theme_color_override("font_color", Color("aaa397"))
+		name_label.add_theme_font_size_override("font_size", 9)
+		stats.add_child(name_label)
+		var value_label := Label.new()
+		value_label.text = "—"
+		value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		value_label.add_theme_color_override("font_color", Color("c5b58e"))
+		value_label.add_theme_font_size_override("font_size", 9)
+		stats.add_child(value_label)
+	_set_inventory_stats_expanded(false)
+
+
+func _toggle_inventory_stats() -> void:
+	_set_inventory_stats_expanded(not inventory_stats_expanded)
+
+
+func _set_inventory_stats_expanded(expanded: bool) -> void:
+	inventory_stats_expanded = expanded
+	inventory_stats_panel.visible = expanded
+	inventory_stats_toggle.icon = CHEVRON_DOWN_ICON if expanded else CHEVRON_RIGHT_ICON
+	inventory_stats_toggle.tooltip_text = (
+		"Ocultar estadísticas" if expanded else "Mostrar estadísticas"
+	)
+
+
+func _configure_hand_equipment_slot(button: Button, slot_name: String) -> void:
+	button.set_meta("equipment_slot", slot_name)
+	button.custom_minimum_size = Vector2(64.0, 58.0)
+	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	button.expand_icon = true
+	button.add_theme_constant_override("icon_max_width", 32)
+	button.add_theme_font_size_override("font_size", 9)
+
+
+func _create_future_equipment_slot(
+		slot_name: String, description: String, icon: Texture2D
+) -> Button:
+	var button := Button.new()
+	button.name = "EquipmentSlot_%s" % slot_name
+	button.set_meta("equipment_slot", slot_name)
+	button.custom_minimum_size = Vector2(64.0, 58.0)
+	button.disabled = true
+	button.focus_mode = Control.FOCUS_NONE
+	button.icon = icon
+	button.expand_icon = true
+	button.add_theme_constant_override("icon_max_width", 28)
+	button.add_theme_color_override("icon_disabled_color", Color("8c8066"))
+	button.tooltip_text = description
+	return button
+
+
+func _setup_mastery_tree() -> void:
+	mastery_backdrop = ColorRect.new()
+	mastery_backdrop.name = "MasteryTreeBackdrop"
+	mastery_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	mastery_backdrop.color = Color("080c11ff")
+	mastery_backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	mastery_backdrop.z_index = 60
+	get_node("Screen").add_child(mastery_backdrop)
+
+	var shell := VBoxContainer.new()
+	shell.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shell.offset_left = 28.0
+	shell.offset_top = 22.0
+	shell.offset_right = -28.0
+	shell.offset_bottom = -22.0
+	shell.add_theme_constant_override("separation", 12)
+	mastery_backdrop.add_child(shell)
+
+	var header := HBoxContainer.new()
+	header.custom_minimum_size.y = 54.0
+	shell.add_child(header)
+	var titles := VBoxContainer.new()
+	titles.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(titles)
+	var title := Label.new()
+	title.text = "ÁRBOL DE MAESTRÍAS"
+	title.add_theme_color_override("font_color", Color("e6d3a5"))
+	title.add_theme_font_size_override("font_size", 24)
+	titles.add_child(title)
+	var subtitle := Label.new()
+	subtitle.text = "Practica para progresar · hasta tres maestrías enfocadas"
+	subtitle.add_theme_color_override("font_color", Color("777f82"))
+	subtitle.add_theme_font_size_override("font_size", 11)
+	titles.add_child(subtitle)
+	var points := Label.new()
+	points.text = "PUNTOS DISPONIBLES  0"
+	points.add_theme_color_override("font_color", Color("c6a45c"))
+	points.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	header.add_child(points)
+	mastery_close_button = Button.new()
+	mastery_close_button.text = "Cerrar  ×"
+	mastery_close_button.custom_minimum_size = Vector2(48.0, 42.0)
+	mastery_close_button.pressed.connect(close_mastery_tree)
+	header.add_child(mastery_close_button)
+
+	var body := HBoxContainer.new()
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 14)
+	shell.add_child(body)
+	mastery_scroll = ScrollContainer.new()
+	mastery_scroll.name = "MasteryTreeScroll"
+	mastery_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mastery_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_child(mastery_scroll)
+	mastery_tree_view = MasteryTreeViewScene.new() as MasteryTreeView
+	mastery_tree_view.name = "MasteryTreeView"
+	mastery_tree_view.mastery_selected.connect(_on_mastery_selected)
+	mastery_scroll.add_child(mastery_tree_view)
+	call_deferred("_center_mastery_tree")
+
+	var detail := PanelContainer.new()
+	detail.custom_minimum_size.x = 280.0
+	detail.add_theme_stylebox_override(
+		"panel", _inventory_slot_style(Color("80643d"), Color("10151aee"))
+	)
+	body.add_child(detail)
+	var detail_margin := MarginContainer.new()
+	for side in ["margin_left", "margin_top", "margin_right", "margin_bottom"]:
+		detail_margin.add_theme_constant_override(side, 18)
+	detail.add_child(detail_margin)
+	var detail_content := VBoxContainer.new()
+	detail_content.add_theme_constant_override("separation", 10)
+	detail_margin.add_child(detail_content)
+	mastery_detail_family = Label.new()
+	mastery_detail_family.text = "MUNDO · AVENTURA"
+	mastery_detail_family.add_theme_color_override("font_color", Color("70c7a2"))
+	mastery_detail_family.add_theme_font_size_override("font_size", 11)
+	detail_content.add_child(mastery_detail_family)
+	mastery_detail_title = Label.new()
+	mastery_detail_title.text = "Exploración"
+	mastery_detail_title.add_theme_color_override("font_color", Color("eee4cf"))
+	mastery_detail_title.add_theme_font_size_override("font_size", 22)
+	detail_content.add_child(mastery_detail_title)
+	var rank := Label.new()
+	rank.text = "INICIADO · NIVEL 1"
+	rank.add_theme_color_override("font_color", Color("b69755"))
+	detail_content.add_child(rank)
+	var progress := ProgressBar.new()
+	progress.max_value = 100.0
+	progress.value = 8.0
+	progress.show_percentage = false
+	progress.custom_minimum_size.y = 12.0
+	detail_content.add_child(progress)
+	mastery_detail_description = Label.new()
+	mastery_detail_description.text = (
+		"Maestría visible durante el tutorial. Sus rangos y Legados se desbloquearán con práctica significativa."
+	)
+	mastery_detail_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	mastery_detail_description.add_theme_color_override("font_color", Color("a49f95"))
+	detail_content.add_child(mastery_detail_description)
+	var focus_title := Label.new()
+	focus_title.text = "ENFOQUES ACTIVOS"
+	focus_title.add_theme_color_override("font_color", Color("c9ad70"))
+	focus_title.add_theme_font_size_override("font_size", 12)
+	detail_content.add_child(focus_title)
+	for focus_text in ["◇ Sin enfoque", "◇ Sin enfoque", "◇ Sin enfoque"]:
+		var focus := Label.new()
+		focus.text = focus_text
+		focus.add_theme_color_override("font_color", Color("777d80"))
+		detail_content.add_child(focus)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	detail_content.add_child(spacer)
+	var legacy := Label.new()
+	legacy.text = "LEGADOS DE GRAN MAESTRO\nVista previa disponible al alcanzar los rangos superiores. La elección final será permanente."
+	legacy.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	legacy.add_theme_color_override("font_color", Color("787167"))
+	legacy.add_theme_font_size_override("font_size", 10)
+	detail_content.add_child(legacy)
+	mastery_backdrop.hide()
+
+
+func open_mastery_tree() -> void:
+	if pause_backdrop.visible:
+		return
+	mastery_backdrop.show()
+	mastery_close_button.grab_focus()
+	inventory_visibility_changed.emit(true)
+	call_deferred("_center_mastery_tree")
+
+
+func close_mastery_tree() -> void:
+	if mastery_backdrop == null or not mastery_backdrop.visible:
+		return
+	mastery_backdrop.hide()
+	inventory_visibility_changed.emit(inventory_panel.visible)
+	if inventory_panel.visible and inventory_close_button != null:
+		inventory_close_button.grab_focus()
+
+
+func _on_mastery_selected(title: String, family: String, description: String) -> void:
+	mastery_detail_title.text = title
+	mastery_detail_family.text = family
+	mastery_detail_description.text = description
+
+
+func _center_mastery_tree() -> void:
+	if mastery_scroll == null or mastery_tree_view == null:
+		return
+	mastery_scroll.scroll_horizontal = maxi(
+		int((mastery_tree_view.size.x - mastery_scroll.size.x) * 0.5), 0
+	)
+	mastery_scroll.scroll_vertical = maxi(
+		int(mastery_tree_view.size.y - mastery_scroll.size.y), 0
+	)
+
+
+func _apply_generated_button_icons() -> void:
+	inventory_close_button.text = ""
+	inventory_close_button.icon = CLOSE_ICON
+	inventory_close_button.expand_icon = true
+	inventory_close_button.add_theme_constant_override("icon_max_width", 27)
+	inventory_close_button.tooltip_text = "Cerrar inventario (I o Esc)"
+	mastery_close_button.text = ""
+	mastery_close_button.icon = CLOSE_ICON
+	mastery_close_button.expand_icon = true
+	mastery_close_button.add_theme_constant_override("icon_max_width", 28)
+	mastery_close_button.tooltip_text = "Cerrar Árbol de Maestrías (Esc)"
 
 
 func toggle_character_stats() -> void:
@@ -271,9 +866,9 @@ func _setup_timed_action_progress() -> void:
 	timed_action_panel.name = "TimedActionProgress"
 	timed_action_panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	timed_action_panel.offset_left = -190.0
-	timed_action_panel.offset_top = -138.0
+	timed_action_panel.offset_top = -300.0
 	timed_action_panel.offset_right = 190.0
-	timed_action_panel.offset_bottom = -78.0
+	timed_action_panel.offset_bottom = -240.0
 	timed_action_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var panel_style := StyleBoxFlat.new()
@@ -395,38 +990,47 @@ func _render_inventory(inventory: Dictionary) -> void:
 			continue
 		item_names.append(display_name)
 	item_names.sort()
-	empty_inventory_label.visible = item_names.is_empty()
-	var total_items := 0
+	var item_entries: Array[Dictionary] = []
 	for item_name in item_names:
-		total_items += maxi(int(inventory.get(item_name, 0)), 0)
-	inventory_item_count.text = "OBJETOS  %d" % total_items
-	inventory_capacity.text = "%d / %d" % [item_names.size(), INVENTORY_CAPACITY]
-	var free_slots := maxi(INVENTORY_CAPACITY - item_names.size(), 0)
+		var quantity := maxi(int(inventory.get(item_name, 0)), 0)
+		if quantity <= 0:
+			continue
+		if ItemCatalog.is_stackable(item_name):
+			item_entries.append({
+				"item_name": item_name,
+				"quantity": quantity,
+				"instance_index": 0,
+			})
+		else:
+			for instance_index in range(quantity):
+				item_entries.append({
+					"item_name": item_name,
+					"quantity": 1,
+					"instance_index": instance_index,
+				})
+	empty_inventory_label.visible = item_entries.is_empty()
+	inventory_item_count.text = "DEFENSA  —"
+	inventory_capacity.text = "%d / %d" % [item_entries.size(), INVENTORY_CAPACITY]
+	var free_slots := maxi(INVENTORY_CAPACITY - item_entries.size(), 0)
 	inventory_free_slots.text = "%d espacios libres" % free_slots
 
-	for item_name in item_names:
-		inventory_grid.add_child(_create_item_slot(item_name, int(inventory.get(item_name, 0))))
+	for entry in item_entries:
+		inventory_grid.add_child(_create_item_slot(
+			String(entry.get("item_name", "")),
+			int(entry.get("quantity", 1)),
+			int(entry.get("instance_index", 0))
+		))
 	for index in range(free_slots):
 		inventory_grid.add_child(_create_empty_inventory_slot(index))
 
 
 func _update_currency_display(inventory: Dictionary) -> void:
-	var gold := int(GameManager.current_character.get("gold", 0))
-	for key in ["Oro", "Monedas de oro", "Gold"]:
-		if inventory.has(key):
-			gold = int(inventory[key])
-			break
-	var silver := int(GameManager.current_character.get("silver", 0))
-	for key in ["Plata", "Monedas de plata", "Silver"]:
-		if inventory.has(key):
-			silver = int(inventory[key])
-			break
-	gold_amount_label.text = _format_compact_number(gold)
-	gold_amount_label.tooltip_text = "%d monedas de oro" % gold
-	silver_amount_label.text = _format_compact_number(silver)
-	silver_amount_label.tooltip_text = "%d monedas de plata" % silver
-	inventory_gold_label.text = "ORO  %s" % _format_compact_number(gold)
-	inventory_gold_label.tooltip_text = "%d monedas de oro" % gold
+	# La economia se retiró del HUD hasta que tenga una función jugable clara.
+	# Este resumen queda reservado para atributos reales cuando existan.
+	gold_amount_label.text = ""
+	silver_amount_label.text = ""
+	inventory_gold_label.text = "DAÑO  —"
+	inventory_gold_label.tooltip_text = "Daño total · sistema pendiente"
 
 
 func _format_compact_number(value: int) -> String:
@@ -460,22 +1064,27 @@ func _render_equipment_slots() -> void:
 
 func _set_equipment_button(button: Button, label: String, item_name: String) -> void:
 	if item_name.is_empty():
-		button.text = label + "\nVacía"
-		button.icon = null
-		button.tooltip_text = label
+		button.text = ""
+		button.icon = (
+			EQUIPMENT_MAIN_HAND_ICON if label == "Mano principal" else EQUIPMENT_OFFHAND_ICON
+		)
+		button.tooltip_text = label + " · vacía"
+		button.set_meta("equipment_item", "")
 		button.disabled = true
 		return
 	var suffix := ""
 	if ItemCatalog.get_hand_usage(item_name) == "two_hand":
 		suffix = " (Dos manos)"
-	button.text = label + "\n" + item_name + suffix
+	button.text = ""
 	button.icon = ItemCatalog.get_icon(item_name)
-	button.tooltip_text = "Clic para desequipar " + item_name
+	button.tooltip_text = label + " · " + item_name + suffix + "\nClic para desequipar"
+	button.set_meta("equipment_item", item_name)
 	button.disabled = false
 
 
-func _create_item_slot(item_name: String, quantity: int) -> Control:
+func _create_item_slot(item_name: String, quantity: int, instance_index := 0) -> Control:
 	var slot: Control
+	var stackable := ItemCatalog.is_stackable(item_name)
 	if ItemCatalog.is_equippable(item_name):
 		var button := Button.new()
 		button.pressed.connect(GameManager.toggle_item_equipped.bind(item_name))
@@ -484,7 +1093,9 @@ func _create_item_slot(item_name: String, quantity: int) -> Control:
 	else:
 		slot = PanelContainer.new()
 	slot.set_meta("inventory_item", item_name)
-	slot.custom_minimum_size = Vector2(76.0, 82.0)
+	slot.set_meta("inventory_instance_index", instance_index)
+	slot.set_meta("inventory_stackable", stackable)
+	slot.custom_minimum_size = Vector2(60.0, 66.0)
 	slot.tooltip_text = item_name
 	if slot is Button:
 		var slot_button := slot as Button
@@ -506,10 +1117,10 @@ func _create_item_slot(item_name: String, quantity: int) -> Control:
 		slot.tooltip_text += "\nClic para equipar o guardar"
 
 	var margin := MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 6)
-	margin.add_theme_constant_override("margin_top", 8)
-	margin.add_theme_constant_override("margin_right", 6)
-	margin.add_theme_constant_override("margin_bottom", 8)
+	margin.add_theme_constant_override("margin_left", 3)
+	margin.add_theme_constant_override("margin_top", 4)
+	margin.add_theme_constant_override("margin_right", 3)
+	margin.add_theme_constant_override("margin_bottom", 4)
 	slot.add_child(margin)
 
 	var content := VBoxContainer.new()
@@ -520,6 +1131,7 @@ func _create_item_slot(item_name: String, quantity: int) -> Control:
 	var icon := ItemCatalog.get_icon(item_name)
 	if icon != null:
 		var icon_rect := TextureRect.new()
+		icon_rect.name = "ItemIcon"
 		icon_rect.custom_minimum_size = Vector2(44.0, 44.0)
 		icon_rect.texture = icon
 		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -530,37 +1142,32 @@ func _create_item_slot(item_name: String, quantity: int) -> Control:
 		var icon_placeholder := Label.new()
 		icon_placeholder.text = item_name.left(1).to_upper()
 		icon_placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		icon_placeholder.add_theme_font_size_override("font_size", 22)
+		icon_placeholder.add_theme_font_size_override("font_size", 16)
 		icon_placeholder.add_theme_color_override("font_color", Color("c7a85c"))
 		content.add_child(icon_placeholder)
 
-	var name_label := Label.new()
-	name_label.text = item_name
-	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	name_label.add_theme_font_size_override("font_size", 11)
-	name_label.add_theme_color_override("font_color", Color("d8cfb9"))
-	content.add_child(name_label)
-
-	var quantity_label := Label.new()
-	quantity_label.text = "x%d" % quantity
-	quantity_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	quantity_label.add_theme_font_size_override("font_size", 11)
-	quantity_label.add_theme_color_override("font_color", Color("d5c59d"))
-	content.add_child(quantity_label)
+	if stackable and quantity > 1:
+		var quantity_label := Label.new()
+		quantity_label.name = "StackQuantity"
+		quantity_label.text = "x%d" % quantity
+		quantity_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		quantity_label.add_theme_font_size_override("font_size", 9)
+		quantity_label.add_theme_color_override("font_color", Color("d5c59d"))
+		content.add_child(quantity_label)
 	var equipped_count := 0
 	if GameManager.equipped_primary_item == item_name:
 		equipped_count += 1
 	if GameManager.equipped_secondary_item == item_name:
 		equipped_count += 1
-	if equipped_count > 0:
+	if not stackable and instance_index < equipped_count:
 		var equipped_label := Label.new()
+		equipped_label.name = "EquippedState"
 		if ItemCatalog.get_hand_usage(item_name) == "two_hand":
 			equipped_label.text = "Dos manos"
 		else:
-			equipped_label.text = "Equipado" + (" x2" if equipped_count == 2 else "")
+			equipped_label.text = "Equipado"
 		equipped_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		equipped_label.add_theme_font_size_override("font_size", 10)
+		equipped_label.add_theme_font_size_override("font_size", 8)
 		equipped_label.add_theme_color_override("font_color", Color(0.42, 0.95, 0.55))
 		content.add_child(equipped_label)
 	return slot
@@ -569,7 +1176,7 @@ func _create_item_slot(item_name: String, quantity: int) -> Control:
 func _create_empty_inventory_slot(index: int) -> PanelContainer:
 	var slot := PanelContainer.new()
 	slot.name = "EmptySlot%02d" % (index + 1)
-	slot.custom_minimum_size = Vector2(76.0, 82.0)
+	slot.custom_minimum_size = Vector2(60.0, 66.0)
 	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	slot.add_theme_stylebox_override(
 		"panel", _inventory_slot_style(Color("443a29a3"), Color("100e0ab8"))

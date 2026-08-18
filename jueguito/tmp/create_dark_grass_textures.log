@@ -1,0 +1,8 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+DARK_GRASS_TEXTURE_WRITTEN source=res://assets/environment/terrain/textures/stylized/terrain_slots/02_pasto.png output=res://assets/environment/terrain/textures/stylized/terrain_slots/06_pasto_sombrio.png size=(512, 512)
+DARK_GRASS_TEXTURE_WRITTEN source=res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png output=res://assets/environment/terrain/textures/stylized/terrain_slots/23_pasto_rocas_sombrio.png size=(512, 512)
+DARK_GRASS_TEXTURES_OK count=2
+[MapDataManager] Cargados 2546 sectores desde JSON.

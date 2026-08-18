@@ -7,17 +7,20 @@ const LUMBERJACK_AXE := "Hacha de leñador"
 const VIKING_SWORD := "Espada vikinga"
 const VIKING_SHIELD := "Escudo vikingo"
 const VIKING_BOW := "Arco vikingo"
+const WOOD := "Madera"
+const IRON := "Hierro"
 
 const DEFINITIONS := {
 	LUMBERJACK_AXE: {
 		"display_name": LUMBERJACK_AXE,
 		"category": "tool",
+		"stackable": false,
 		"tool_type": "axe",
 		"hand_usage": "two_hand",
 		"allowed_slots": ["primary"],
 		"visual_slot": "primary",
 		"default_action": "chop",
-		"icon_path": "res://assets/items/icons/lumberjack_axe.png",
+		"icon_path": "res://assets/items/icons/lumberjack_axe_inventory.png",
 		"model_path": "res://assets/items/equipment/tools/axes/lumberjack_axe/lumberjack_axe_held.tscn",
 		"source_model_path": "res://assets/items/equipment/tools/axes/lumberjack_axe/lumberjack_axe.glb",
 		"attachment_bone": "RightHand",
@@ -28,12 +31,13 @@ const DEFINITIONS := {
 	VIKING_SWORD: {
 		"display_name": VIKING_SWORD,
 		"category": "weapon",
+		"stackable": false,
 		"weapon_type": "sword",
 		"hand_usage": "one_hand",
 		"allowed_slots": ["primary"],
 		"visual_slot": "primary",
 		"default_action": "attack",
-		"icon_path": "res://assets/items/icons/viking_sword.png",
+		"icon_path": "res://assets/items/icons/viking_sword_inventory.png",
 		"model_path": "res://assets/items/weapons/melee/viking_sword/viking_sword.glb",
 		"held_scale": 0.5,
 		"held_position": Vector3(0.0, 0.72, 0.0),
@@ -42,10 +46,11 @@ const DEFINITIONS := {
 	VIKING_SHIELD: {
 		"display_name": VIKING_SHIELD,
 		"category": "offhand",
+		"stackable": false,
 		"hand_usage": "one_hand",
 		"allowed_slots": ["secondary"],
 		"visual_slot": "secondary",
-		"icon_path": "res://assets/items/icons/viking_shield.png",
+		"icon_path": "res://assets/items/icons/viking_shield_inventory.png",
 		"model_path": "res://assets/items/equipment/shields/viking_shield/viking_shield.glb",
 		"held_scale": 0.46,
 		"held_position": Vector3.ZERO,
@@ -54,16 +59,31 @@ const DEFINITIONS := {
 	VIKING_BOW: {
 		"display_name": VIKING_BOW,
 		"category": "weapon",
+		"stackable": false,
 		"weapon_type": "bow",
 		"hand_usage": "two_hand",
 		"allowed_slots": ["primary"],
 		"visual_slot": "primary",
 		"default_action": "archery_shot",
-		"icon_path": "res://assets/items/icons/viking_bow.png",
+		"icon_path": "res://assets/items/icons/viking_bow_inventory.png",
 		"model_path": "res://assets/items/weapons/ranged/viking_bow/viking_bow.glb",
 		"held_scale": 0.58,
 		"held_position": Vector3.ZERO,
 		"held_rotation_degrees": Vector3.ZERO,
+	},
+	WOOD: {
+		"display_name": WOOD,
+		"category": "resource",
+		"stackable": true,
+		"hand_usage": "",
+		"icon_path": "res://assets/items/icons/wood_resource.png",
+	},
+	IRON: {
+		"display_name": IRON,
+		"category": "resource",
+		"stackable": true,
+		"hand_usage": "",
+		"icon_path": "res://assets/items/icons/iron_resource.png",
 	},
 }
 
@@ -104,6 +124,13 @@ static func _ensure_resource_definitions_loaded() -> void:
 
 static func is_equippable(item_name: String) -> bool:
 	return not String(get_definition(item_name).get("hand_usage", "")).is_empty()
+
+
+static func is_stackable(item_name: String) -> bool:
+	var definition := get_definition(item_name)
+	if definition.has("stackable"):
+		return bool(definition.get("stackable", false))
+	return String(definition.get("hand_usage", "")).is_empty()
 
 
 static func is_equippable_tool(item_name: String) -> bool:

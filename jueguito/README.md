@@ -66,6 +66,14 @@ Tambien genera colliders iniciales: tierra/costa como `StaticBody3D`, agua como 
 La escena instancia `res://scenes/characters/player/player.tscn` como personaje placeholder para probar caminata y colisiones.
 Mientras el terreno sea procedural de prototipo, el jugador usa movimiento guiado por el generador: toma X/Z del input y el generador devuelve la altura caminable. Los colliders fisicos quedan como infraestructura futura, pero no sostienen solos esta prueba.
 
+> **Migracion de controles:** la direccion aprobada adopta movimiento relativo a
+> camara con `WASD`, carrera con `Shift`, salto con `Espacio`, orbita con boton
+> derecho e interaccion en rango con `E` o clic izquierdo. El contrato completo
+> y sus criterios de aceptacion estan en
+> `res://docs/design/player_movement_camera_interaction.md`. Los controles que
+> siguen en esta seccion describen el prototipo actual hasta implementar la
+> migracion.
+
 Este no es el generador final: es el puente entre el mapa macro pintado y los futuros mapas locales recorribles.
 
 - `N` / `P`: cambiar entre sectores jugables.
@@ -270,6 +278,10 @@ Sector inicial de personajes:
   `res://scenes/terrain3d_walk_preview.tscn`.
 
 Controles de la vista jugable Terrain3D:
+
+> **Estado actual:** esta lista sigue siendo operativa para el prototipo. No
+> representa el contrato final de gameplay; consultar
+> `res://docs/design/player_movement_camera_interaction.md`.
 
 - `C`: rota la camara tactica entre cuatro orientaciones fijas.
 - Boton central + arrastrar: orbita libre alrededor del personaje.
