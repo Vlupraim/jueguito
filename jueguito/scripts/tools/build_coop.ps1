@@ -46,22 +46,19 @@ state_file="server_data/state.json"
 @echo off
 cd /d "%~dp0"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0IniciarServidor.ps1"
+set "server_result=%errorlevel%"
+if "%server_result%"=="10" goto already_running
 echo.
-echo Servidor cerrado. El estado esta en server_data/state.json.
+if "%server_result%"=="0" (echo Servidor cerrado. El estado esta en server_data/state.json.) else (echo El servidor no se inicio. Revisa el mensaje anterior.)
 pause
+exit /b %server_result%
+:already_running
+echo.
+echo No se abrio una segunda instancia. El servidor existente sigue activo.
+pause
+exit /b 0
 '@ | Set-Content -LiteralPath (Join-Path $serverFolder 'IniciarServidor.bat') -Encoding ascii
-@'
-param([int]$QuitAfter = 0)
-$ErrorActionPreference = 'Continue'
-[Console]::OutputEncoding = [Text.UTF8Encoding]::new()
-Set-Location -LiteralPath $PSScriptRoot
-# The main export binary works without the optional console-wrapper executable.
-$arguments = @('--headless')
-if ($QuitAfter -gt 0) { $arguments += @('--quit-after',"$QuitAfter") }
-$arguments += @('--','--server','--config=server.cfg') + $args
-& (Join-Path $PSScriptRoot 'JueguitoServidor.exe') @arguments 2>&1 | Out-Host
-exit $LASTEXITCODE
-'@ | Set-Content -LiteralPath (Join-Path $serverFolder 'IniciarServidor.ps1') -Encoding utf8
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'launch_coop_server.ps1') -Destination (Join-Path $serverFolder 'IniciarServidor.ps1')
 @'
 #Requires -RunAsAdministrator
 param([int]$Port = 0)

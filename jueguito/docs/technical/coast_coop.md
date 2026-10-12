@@ -31,6 +31,15 @@ la exportación dedicada de Godot, sin ventana de juego ni renderizado.
    clic derecho arrastrado orbita y la rueda acerca/aleja. Abre el inventario
    con I, equipa el hacha y pulsa un pino para acercarte y talarlo.
 
+Usa el BAT para arrancar con logs. Abrir `JueguitoServidor.exe` directamente
+puede dejar el servidor funcionando en segundo plano sin una consola visible.
+Si UDP 7777 ya está ocupado por esa misma instancia, el lanzador muestra su PID
+y confirma que sigue activa. Puedes entrar al cliente sin iniciar otra.
+Para volver a arrancar con consola, cierra esa instancia en el Administrador de
+tareas y abre el BAT. El lanzador no cierra automáticamente servidores ni otros
+programas que estén usando el puerto. Si otra aplicación lo ocupa, indica su
+nombre y PID; cambiar el puerto requiere usar el mismo valor en cliente y router.
+
 Con la cámara vinculada, el personaje gira hacia el movimiento y la cámara lo
 sigue con un pequeño retraso y giro limitado. Mantener A, S o D conserva ese
 rumbo; cambiar la dirección toma como referencia lo que ves en ese momento.
