@@ -31,6 +31,7 @@ var busy := false
 var reserved_player_id := 0
 var respawn_at := 0.0
 var model_bounds := AABB()
+var fall_tween: Tween
 
 
 func _ready() -> void:
@@ -42,6 +43,11 @@ func _ready() -> void:
 		set_process(false)
 		return
 	add_to_group("harvestable_trees")
+	var coop := get_node_or_null("/root/CoopSession")
+	if coop != null:
+		coop.resource_changed.connect(func(id: String, deadline: float):
+			if id == _resolved_resource_id(): apply_shared_resource_state(deadline)
+		)
 	var network_manager := get_node_or_null("/root/NetworkManager")
 	if network_manager != null and network_manager.has_method("get_resource_respawn_at"):
 		respawn_at = float(network_manager.call(
@@ -108,11 +114,15 @@ func begin_interaction(player: Node) -> bool:
 	if not can_interact(player):
 		return false
 	busy = true
+	var coop := get_node_or_null("/root/CoopSession")
+	if coop != null: coop.call("begin_harvest",_resolved_resource_id())
 	reserved_player_id = player.get_instance_id() if player != null else 0
 	return true
 
 
 func cancel_interaction(player: Node) -> void:
+	var coop := get_node_or_null("/root/CoopSession")
+	if coop != null: coop.call("cancel_harvest",_resolved_resource_id())
 	if reserved_player_id != 0 and player != null:
 		if reserved_player_id != player.get_instance_id():
 			return
@@ -239,15 +249,18 @@ func _apply_depleted_visual(animate_fall: bool) -> void:
 		visual_pivot.hide()
 		stump_visual.show()
 		return
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_QUAD)
-	tween.set_ease(Tween.EASE_IN)
-	tween.tween_property(visual_pivot, "rotation_degrees:z", 78.0, 0.7)
-	tween.tween_callback(visual_pivot.hide)
-	tween.tween_callback(stump_visual.show)
+	if fall_tween != null and fall_tween.is_valid(): fall_tween.kill()
+	fall_tween = create_tween()
+	fall_tween.set_trans(Tween.TRANS_QUAD)
+	fall_tween.set_ease(Tween.EASE_IN)
+	fall_tween.tween_property(visual_pivot, "rotation_degrees:z", 78.0, 0.7)
+	fall_tween.tween_callback(visual_pivot.hide)
+	fall_tween.tween_callback(stump_visual.show)
 
 
 func _apply_available_visual() -> void:
+	if fall_tween != null and fall_tween.is_valid(): fall_tween.kill()
+	fall_tween = null
 	available = true
 	busy = false
 	reserved_player_id = 0
@@ -268,3 +281,11 @@ func _has_nearby_player() -> bool:
 			if global_position.distance_to((node as Node3D).global_position) <= respawn_player_radius:
 				return true
 	return false
+
+
+func apply_shared_resource_state(deadline: float) -> void:
+	respawn_at = deadline
+	if deadline > Time.get_unix_time_from_system():
+		if available: _apply_depleted_visual(true)
+	elif not available:
+		_apply_available_visual()

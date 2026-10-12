@@ -80,6 +80,7 @@ var _cursor_textures: Dictionary = {}
 
 
 func _ready() -> void:
+	if DisplayServer.get_name() == "headless": return
 	_load_cursor_textures()
 	_register_standard_shapes()
 	set_cursor_mode(DEFAULT)
@@ -122,7 +123,7 @@ func get_cursor_texture(mode: StringName) -> Texture2D:
 
 func _load_cursor_textures() -> void:
 	for mode: StringName in CURSOR_PATHS:
-		var image := Image.load_from_file(ProjectSettings.globalize_path(CURSOR_PATHS[mode]))
+		var image := preload("res://scripts/systems/imported_image.gd").read(CURSOR_PATHS[mode])
 		if image == null or image.is_empty():
 			push_warning("No se pudo cargar el cursor: %s" % CURSOR_PATHS[mode])
 			continue

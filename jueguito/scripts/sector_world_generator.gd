@@ -211,9 +211,8 @@ func _load_sector_data() -> void:
 
 
 func _load_surface_mask() -> void:
-	surface_image = Image.new()
-	var error := surface_image.load(ProjectSettings.globalize_path(SURFACE_MASK_PATH))
-	if error != OK:
+	surface_image = preload("res://scripts/systems/imported_image.gd").read(SURFACE_MASK_PATH)
+	if surface_image == null or surface_image.is_empty():
 		surface_image = Image.create(MAP_IMAGE_SIZE.x, MAP_IMAGE_SIZE.y, false, Image.FORMAT_RGBA8)
 		surface_image.fill(Color.TRANSPARENT)
 		return

@@ -12,6 +12,7 @@ config_version=5
 
 config/name="jueguito"
 run/main_scene="res://scenes/ui/main_menu.tscn"
+run/main_scene.dedicated_server="res://scenes/server/coast_server.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +23,7 @@ SettingsManager="*res://scripts/systems/settings_manager.gd"
 GameManager="*res://scripts/systems/game_manager.gd"
 MapDataManager="*res://scripts/systems/map_data_manager.gd"
 CursorManager="*res://scripts/systems/cursor_manager.gd"
+CoopSession="*res://scripts/network/coop_session.gd"
 
 [display]
 

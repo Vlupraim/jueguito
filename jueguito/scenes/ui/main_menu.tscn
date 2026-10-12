@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/exit.svg" id="9_exit"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/back.svg" id="10_back"]
 
+[ext_resource type="Script" path="res://scripts/ui/coop_connection.gd" id="11_coop"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBox_main"]
 bg_color = Color(0.062, 0.048, 0.032, 0.94)
 border_width_left = 2
@@ -105,6 +107,12 @@ size_flags_vertical = 3
 theme_override_constants/separation = 10
 alignment = 1
 
+[node name="OnlineButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "Jugar en línea"
+
 [node name="EnterButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 52)
@@ -141,6 +149,67 @@ text = "Salir"
 icon = ExtResource("9_exit")
 expand_icon = true
 icon_max_width = 20
+
+[node name="ConnectionView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 6
+script = ExtResource("11_coop")
+
+[node name="AddressLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Dirección del servidor"
+
+[node name="Address" type="LineEdit" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+placeholder_text = "127.0.0.1 / IP pública / dominio"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="PortLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Puerto UDP"
+
+[node name="Port" type="SpinBox" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+min_value = 1.0
+max_value = 65535.0
+value = 7777.0
+custom_minimum_size = Vector2(0, 40)
+
+[node name="NicknameLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Tu nombre (distinto del de tu amigo)"
+
+[node name="Nickname" type="LineEdit" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+max_length = 24
+custom_minimum_size = Vector2(0, 40)
+
+[node name="KeyLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Clave de partida"
+
+[node name="Key" type="LineEdit" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+secret = true
+placeholder_text = "La clave de server.cfg"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Status" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+autowrap_mode = 2
+text = ""
+custom_minimum_size = Vector2(0, 45)
+
+[node name="Connect" type="Button" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Entrar a la costa"
+custom_minimum_size = Vector2(0, 46)
+
+[node name="Back" type="Button" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Volver"
 
 [node name="LoginView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
 unique_name_in_owner = true

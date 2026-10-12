@@ -184,6 +184,9 @@ func _ready() -> void:
 	_setup_minimap()
 	await get_tree().process_frame
 	_place_player_on_ground()
+	if CoopSession.active:
+		CoopSession.bind_world(self,player)
+		_setup_coop_status()
 	if tutorial_intro_active:
 		await _play_tutorial_intro()
 	# Reasignar la camara ya en su posicion final, por si el clipmap no la seguia.
@@ -549,7 +552,7 @@ func _resolve_initial_sector() -> Vector2i:
 
 
 func _dir_has_res(dir_path: String) -> bool:
-	var dir := DirAccess.open(ProjectSettings.globalize_path(dir_path))
+	var dir := DirAccess.open(dir_path)
 	if dir == null:
 		return false
 	dir.list_dir_begin()
@@ -817,6 +820,7 @@ func _place_player_on_ground() -> void:
 # Busca el centro de la region activa con la tierra mas alta, para aparecer sobre
 # terreno solido (no en el agua) y dentro del area cargada del sector.
 func _find_ground_xz() -> Vector2:
+	if CoopSession.active: return Vector2(CoopSession.assigned_spawn.x,CoopSession.assigned_spawn.z)
 	if terrain == null or terrain.data == null:
 		return spawn_xz
 	if current_sector == TUTORIAL_SECTOR:
@@ -963,7 +967,7 @@ func _scan_available_sectors() -> void:
 
 
 func _scan_sector_dir(root_dir: String, require_res: bool) -> void:
-	var root := DirAccess.open(ProjectSettings.globalize_path(root_dir))
+	var root := DirAccess.open(root_dir)
 	if root == null:
 		return
 	root.list_dir_begin()
@@ -2749,6 +2753,9 @@ func _queue_local_minimap_redraw_if_needed() -> void:
 
 
 func _travel_to_sector(sec: Vector2i) -> void:
+	if CoopSession.active and sec != TUTORIAL_SECTOR:
+		CoopSession._set_status("Esta partida comparte la Costa del Naufragio. El viaje entre sectores llegará después.")
+		return
 	if traveling or terrain == null:
 		return
 	traveling = true
@@ -2807,3 +2814,20 @@ func _set_progress(value: float, caption := "") -> void:
 		progress_bar.value = value
 	if not caption.is_empty() and sector_label != null:
 		sector_label.text = caption
+
+
+func _setup_coop_status() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 30
+	add_child(layer)
+	var label := Label.new()
+	label.position = Vector2(24,18)
+	label.add_theme_color_override("font_color",Color("f4e7bf"))
+	label.add_theme_color_override("font_shadow_color",Color.BLACK)
+	label.add_theme_constant_override("shadow_offset_x",2)
+	label.add_theme_constant_override("shadow_offset_y",2)
+	layer.add_child(label)
+	var refresh := func(): label.text = "En línea · %d jugadores · %s" % [CoopSession.players.size(),CoopSession.nickname]
+	CoopSession.players_changed.connect(refresh)
+	CoopSession.status_changed.connect(func(message: String): label.text = message)
+	refresh.call()

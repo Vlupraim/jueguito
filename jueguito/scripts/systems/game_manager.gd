@@ -40,6 +40,7 @@ func change_scene(scene_path: String) -> void:
 	get_tree().change_scene_to_file(scene_path)
 
 func return_to_main_menu() -> void:
+	CoopSession.leave()
 	current_character = {}
 	should_play_tutorial_intro = false
 	player_inventory = {}
@@ -53,6 +54,10 @@ func request_login(username: String, password: String = "") -> void:
 	NetworkManager.request_login(username, password)
 
 func request_leave_world_to_roster() -> void:
+	if CoopSession.active:
+		get_tree().paused = false
+		return_to_main_menu()
+		return
 	if _quit_requested:
 		return
 	NetworkManager.request_despawn()
@@ -61,6 +66,10 @@ func request_quit_game() -> void:
 	if _quit_requested:
 		return
 	_quit_requested = true
+	if CoopSession.active:
+		CoopSession.leave()
+		get_tree().quit()
+		return
 	get_tree().paused = false
 	if NetworkManager.current_character_name.is_empty():
 		get_tree().quit()

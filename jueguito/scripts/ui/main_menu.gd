@@ -1,5 +1,6 @@
 extends Control
 
+@onready var connection_view: VBoxContainer = %ConnectionView
 @onready var landing_view: VBoxContainer = %LandingView
 @onready var login_view: VBoxContainer = %LoginView
 @onready var credits_view: VBoxContainer = %CreditsView
@@ -14,6 +15,8 @@ extends Control
 
 
 func _ready() -> void:
+	%OnlineButton.pressed.connect(func(): _show_view(connection_view); connection_view.get_node("Address").grab_focus())
+	connection_view.get_node("Back").pressed.connect(_show_landing)
 	%EnterButton.pressed.connect(_show_login)
 	%OptionsButton.pressed.connect(func(): options_menu.call("open"))
 	%CreditsButton.pressed.connect(func(): _show_view(credits_view))
@@ -41,7 +44,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if options_menu.visible:
 		options_menu.call("close")
-	elif login_view.visible or credits_view.visible:
+	elif login_view.visible or credits_view.visible or connection_view.visible:
+		CoopSession.leave()
 		_show_landing()
 	else:
 		_request_exit()
@@ -49,6 +53,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _show_view(view: Control) -> void:
+	connection_view.visible = view == connection_view
 	landing_view.visible = view == landing_view
 	login_view.visible = view == login_view
 	credits_view.visible = view == credits_view

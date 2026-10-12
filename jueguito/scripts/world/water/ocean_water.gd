@@ -57,11 +57,11 @@ func configure_for_sector(next_sector: Vector2i, terrain: Node = null) -> bool:
 		next_sector.x,
 		next_sector.y,
 	]
-	if not FileAccess.file_exists(reference_path):
+	if not ResourceLoader.exists(reference_path) and not FileAccess.file_exists(reference_path):
 		_clear_water()
 		return false
 
-	surface_image = Image.load_from_file(ProjectSettings.globalize_path(reference_path))
+	surface_image = preload("res://scripts/systems/imported_image.gd").read(reference_path)
 	if surface_image == null or surface_image.is_empty():
 		_clear_water()
 		return false

@@ -263,6 +263,7 @@ func request_resource_harvest(
 		amount: int,
 		respawn_seconds: float
 	) -> Dictionary:
+	if CoopSession.active: return CoopSession.request_harvest(resource_id)
 	var result := server.validate_resource_harvest(
 		current_character_name,
 		resource_id,
@@ -276,4 +277,5 @@ func request_resource_harvest(
 
 
 func get_resource_respawn_at(resource_id: String) -> float:
+	if CoopSession.active: return CoopSession.get_respawn_at(resource_id)
 	return server.get_resource_respawn_at(resource_id)

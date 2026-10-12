@@ -108,9 +108,9 @@ static func _ensure_resource_definitions_loaded() -> void:
 	if _resource_definitions_loaded:
 		return
 	_resource_definitions_loaded = true
-	if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(DEFINITION_DIRECTORY)):
+	if not DirAccess.dir_exists_absolute(DEFINITION_DIRECTORY):
 		return
-	for file_name in DirAccess.get_files_at(DEFINITION_DIRECTORY):
+	for file_name in ResourceLoader.list_directory(DEFINITION_DIRECTORY):
 		if not file_name.ends_with(".tres") and not file_name.ends_with(".res"):
 			continue
 		var resource := load(DEFINITION_DIRECTORY.path_join(file_name))
