@@ -60,21 +60,24 @@ func _run() -> void:
 	player.position = Vector3(0, 0.78, 0)
 	player.get_node("CameraPivot").rotation = Vector3.ZERO
 	player.call("set_camera_locked", true)
-	var heading_before: float = player.get_node("Visual").rotation.y
+	player.get_node("Visual").rotation.y = 0.0
 	Input.action_press("player_right")
-	for _tick in range(10):
+	for _tick in range(120):
 		player.call("_physics_process", 1.0 / 60.0)
 		player.call("_process", 1.0 / 60.0)
 	Input.action_release("player_right")
-	if absf(angle_difference(heading_before, player.get_node("Visual").rotation.y)) > 0.01:
-		_fail("El desplazamiento lateral provoca un giro continuo en la cámara bloqueada")
+	if absf(angle_difference(-PI / 2.0, player.get_node("Visual").rotation.y)) > 0.01:
+		_fail("Mantener D no conserva el rumbo del giro inicial")
 		return
-	var expected_forward := Basis(Vector3.UP, heading_before) * Vector3.FORWARD
+	if absf(angle_difference(-PI / 2.0, player.get_node("CameraPivot").rotation.y)) > 0.02:
+		_fail("La cámara no alcanza suavemente al personaje")
+		return
+	var expected_forward: Vector3 = player.get_node("CameraPivot").global_basis * Vector3.FORWARD
 	Input.action_press("player_forward")
 	var locked_direction: Vector3 = player.call("_movement_input_direction")
 	Input.action_release("player_forward")
 	if locked_direction.distance_to(expected_forward) > 0.01:
-		_fail("W no sigue la orientación del personaje con la cámara bloqueada")
+		_fail("Una nueva dirección no usa el frente visible de la cámara")
 		return
 	player.call("set_camera_locked", false)
 	player.position = Vector3(0, 0.78, 0)

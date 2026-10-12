@@ -31,6 +31,13 @@ la exportación dedicada de Godot, sin ventana de juego ni renderizado.
    clic derecho arrastrado orbita y la rueda acerca/aleja. Abre el inventario
    con I, equipa el hacha y pulsa un pino para acercarte y talarlo.
 
+Con la cámara vinculada, el personaje gira hacia el movimiento y la cámara lo
+sigue con un pequeño retraso y giro limitado. Mantener A, S o D conserva ese
+rumbo; cambiar la dirección toma como referencia lo que ves en ese momento.
+Los giros grandes reducen brevemente el avance para evitar deslizamiento lateral.
+Mientras arrastras con clic derecho el giro de cámara es manual. La primera persona
+conserva el control directo de la mirada.
+
 Reutilizar el mismo nombre recupera su inventario guardado. La identificación
 por nombre y clave compartida es para esta prueba entre amigos: todavía no
 hay autenticación de cuentas de un servicio público. El viaje a otros sectores

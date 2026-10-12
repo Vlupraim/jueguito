@@ -1443,7 +1443,7 @@ func _sync_camera_lock_button(locked: bool) -> void:
 	camera_lock_button.set_pressed_no_signal(locked)
 	camera_lock_button.modulate = Color("efd697") if locked else Color("82969f")
 	camera_lock_button.tooltip_text = (
-		"Cámara vinculada al personaje · clic: liberar\nClic derecho y arrastrar: mirar temporalmente"
+		"Cámara con seguimiento suave · clic: liberar\nEl personaje gira hacia el movimiento. Clic derecho: mirar alrededor"
 		if locked else "Cámara libre · clic: vincular al personaje"
 	)
 

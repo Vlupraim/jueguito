@@ -20,6 +20,10 @@ const CHOP_LOOP_CAPTURE_DURATION := 0.28
 @export var walk_speed := 3.85
 @export var sprint_speed := 9.1
 @export var acceleration := 18.0
+@export var character_turn_response := 14.0
+@export var camera_follow_response := 4.5
+@export var camera_follow_speed_degrees := 135.0
+@export var camera_follow_delay := 0.12
 @export var gravity := 42.0
 @export var jump_speed := 10.5
 @export var max_stamina := 100.0
@@ -83,7 +87,9 @@ var _grounded := true
 var _orbiting := false
 var _first_person := false
 var camera_locked := true
-var _locked_heading := 0.0
+var _movement_reference_yaw := 0.0
+var _latched_move_input := Vector2.ZERO
+var _camera_follow_wait := 0.0
 
 
 func _ready() -> void:
@@ -112,7 +118,6 @@ func _ready() -> void:
 	SettingsManager.setting_changed.connect(_on_camera_setting_changed)
 	SettingsManager.settings_reset.connect(_on_camera_settings_reset)
 	camera_locked = bool(SettingsManager.get_setting("controls", "camera_locked", true))
-	_locked_heading = visual.rotation.y
 	
 	# Suscripción al movimiento aprobado por el servidor
 	NetworkManager.movement_approved.connect(_on_movement_approved)
@@ -127,8 +132,13 @@ func _on_movement_approved(approved_position: Vector3) -> void:
 func _process(_delta: float) -> void:
 	if spring_arm != null and visual != null:
 		visual.visible = spring_arm.spring_length > 0.25 and spring_arm.get_hit_length() > 0.35
-	if camera_locked and not _orbiting and gameplay_input_enabled:
-		camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, visual.rotation.y, 1.0 - exp(-12.0 * _delta))
+	if camera_locked and not _orbiting and not _first_person and gameplay_input_enabled:
+		_camera_follow_wait = maxf(_camera_follow_wait - _delta, 0.0)
+		if _camera_follow_wait <= 0.0:
+			var difference := wrapf(visual.rotation.y - camera_pivot.rotation.y, -PI, PI)
+			var step := difference * (1.0 - exp(-camera_follow_response * _delta))
+			var max_step := deg_to_rad(camera_follow_speed_degrees) * _delta
+			camera_pivot.rotation.y += clampf(step, -max_step, max_step)
 
 
 func _exit_tree() -> void:
@@ -165,10 +175,11 @@ func _physics_process(delta: float) -> void:
 		try_jump()
 	if _update_timed_interaction(delta):
 		return
+	_face_move_direction(move_direction, delta)
+	move_direction = _aligned_movement_direction(move_direction)
 
 	if use_generator_ground_snap and _has_generator_ground_provider():
 		_move_on_generator_ground(move_direction, target_speed, delta)
-		_face_move_direction(move_direction, delta)
 		_update_locomotion(move_direction, target_speed)
 		return
 
@@ -183,7 +194,6 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	_grounded = is_on_floor()
-	_face_move_direction(move_direction, delta)
 	_update_locomotion(move_direction, target_speed)
 
 
@@ -199,8 +209,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			adjust_camera_zoom(_zoom_step_for_input())
 		elif mouse_button.button_index == MOUSE_BUTTON_RIGHT:
 			_orbiting = mouse_button.pressed
-			if not _orbiting and camera_locked:
-				_locked_heading = visual.rotation.y
+			_latched_move_input = Vector2.ZERO
+			_camera_follow_wait = camera_follow_delay
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if _orbiting else Input.MOUSE_MODE_VISIBLE
 		elif mouse_button.pressed and mouse_button.button_index == MOUSE_BUTTON_LEFT:
 			_try_interact_from_mouse()
@@ -215,6 +225,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func set_gameplay_input_enabled(enabled: bool) -> void:
 	gameplay_input_enabled = enabled
 	if not enabled:
+		_latched_move_input = Vector2.ZERO
 		_orbiting = false
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		has_target = false
@@ -227,7 +238,21 @@ func _movement_input_direction() -> Vector3:
 	if not gameplay_input_enabled:
 		return Vector3.ZERO
 	var input := Input.get_vector("player_left", "player_right", "player_forward", "player_backward")
-	var reference := Basis(Vector3.UP, _locked_heading) if camera_locked and not _orbiting else camera_pivot.global_basis
+	if input.length_squared() < 0.001:
+		_latched_move_input = Vector2.ZERO
+		return Vector3.ZERO
+	var reference := camera_pivot.global_basis
+	if camera_locked and not _orbiting and not _first_person:
+		# Anchor a held direction once. Recomputing it from the following camera
+		# every frame would make A/D keep turning the character in a circle.
+		var intent := input.normalized()
+		if not intent.is_equal_approx(_latched_move_input):
+			_movement_reference_yaw = camera_pivot.global_rotation.y
+			_latched_move_input = intent
+			_camera_follow_wait = camera_follow_delay
+		reference = Basis(Vector3.UP, _movement_reference_yaw)
+	else:
+		_latched_move_input = Vector2.ZERO
 	var direction := reference * Vector3(input.x, 0.0, input.y)
 	direction.y = 0.0
 	return direction.limit_length(1.0)
@@ -285,7 +310,8 @@ func _on_camera_setting_changed(section: String, key: String, value: Variant) ->
 		_set_camera_pitch(float(value))
 	elif section == "controls" and key == "camera_locked":
 		camera_locked = bool(value)
-		_locked_heading = visual.rotation.y
+		_latched_move_input = Vector2.ZERO
+		_camera_follow_wait = camera_follow_delay
 		camera_lock_changed.emit(camera_locked)
 
 
@@ -493,8 +519,7 @@ func face_world_position(world_target: Vector3) -> void:
 	if direction.length_squared() < 0.001:
 		return
 	visual.rotation.y = atan2(-direction.x, -direction.z)
-	if camera_locked:
-		_locked_heading = visual.rotation.y
+	_latched_move_input = Vector2.ZERO
 
 
 func get_facing_direction_xz() -> Vector2:
@@ -914,9 +939,20 @@ func _face_move_direction(move_direction: Vector3, delta: float) -> void:
 	if move_direction.length_squared() < 0.001 or visual == null:
 		return
 	var target_yaw := atan2(-move_direction.x, -move_direction.z)
-	if camera_locked and not _orbiting:
-		target_yaw = _locked_heading
-	visual.rotation.y = lerp_angle(visual.rotation.y, target_yaw, minf(1.0, delta * 12.0))
+	if _first_person:
+		target_yaw = camera_pivot.global_rotation.y
+	visual.rotation.y = lerp_angle(visual.rotation.y, target_yaw, 1.0 - exp(-character_turn_response * delta))
+
+
+func _aligned_movement_direction(direction: Vector3) -> Vector3:
+	if not camera_locked or _orbiting or _first_person or direction.length_squared() < 0.001:
+		return direction
+	if not _grounded and water_state == "dry": return direction
+	# Walk along the body's heading while turning; a reversal briefly slows down
+	# instead of playing a forward walk while sliding sideways or backwards.
+	var forward := Vector3(-sin(visual.rotation.y), 0.0, -cos(visual.rotation.y))
+	var alignment := maxf(forward.dot(direction.normalized()), 0.0)
+	return forward * direction.length() * smoothstep(0.0, 0.8, alignment)
 
 
 func _has_generator_ground_provider() -> bool:
