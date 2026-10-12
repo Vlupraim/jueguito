@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+[ext_resource type="Shader" path="res://shaders/coastal_foliage.gdshader" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_03_base_color.jpg" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_03_normal.jpg" id="2"]
+[resource]
+resource_name = "CoastalAcacia_Matte"
+shader = ExtResource("3")
+shader_parameter/albedo_texture = ExtResource("1")
+shader_parameter/normal_texture = ExtResource("2")
+shader_parameter/palette = Vector3(0.96, 0.96, 0.88)

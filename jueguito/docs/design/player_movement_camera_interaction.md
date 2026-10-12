@@ -1,7 +1,40 @@
 # Movimiento, cámara e interacción del jugador
 
-Estado: dirección aprobada, pendiente de implementación completa
+Estado: control local implementado; autoridad de red y reasignación pendientes
 Fecha de decisión: 17 de agosto de 2026
+Actualización de implementación: 12 de octubre de 2026
+
+## Implementación local actual
+
+El mundo Terrain3D usa WASD relativo a cámara, carrera con Shift y salto con
+Espacio. El clic derecho mantenido captura el puntero y permite orbitar; al
+soltarlo vuelve el cursor. La rueda aproxima desde tercera persona hasta primera
+persona y F centra detrás del personaje. SpringArm3D respeta las capas físicas
+de terreno, recursos y plataformas, excluyendo al propio personaje. La geometría
+sin collider necesita autoría de colisión para bloquear cámara y movimiento.
+
+Opciones > Controles permite ajustar sensibilidad, velocidad de zoom,
+inclinación inicial e inversión vertical. Las preferencias se guardan; el formato
+3 migra la inclinación del encuadre táctico anterior a -15 grados.
+
+La estamina tiene 100 puntos: correr consume 28/s y recupera 22/s después de
+0,8 s sin correr. Al agotarse se camina hasta recuperar al menos el 25 %. La barra
+del HUD refleja el estado real. Los valores son provisionales y configurables en
+el controlador. El salto tiene gravedad, control aéreo limitado y usa la
+animación de salto disponible; no permite doble salto ni iniciar saltos nadando.
+
+Inventario, mapas, pausa y edición del HUD bloquean los controles. Moverse o
+saltar cancela canalizaciones. Clic izquierdo o E interactúan en rango, con un
+aviso cuando el objetivo está lejos. No generan aproximación automática.
+
+La integración de red sigue siendo el mock del prototipo: este cambio implementa
+el control local, no predicción ni reconciliación con un servidor persistente.
+Las reglas de rampa/cubierta dependen de superficies con metadatos; el GLB del
+naufragio que está colocado actualmente no incluye las superficies requeridas
+por la prueba histórica de abordaje.
+
+Pruebas: player_controls_smoke, player_controls_world_smoke,
+gameplay_hud_smoke, player_water_flow_smoke y sector_boundary_smoke.
 
 ## Decisión
 
@@ -60,7 +93,7 @@ físicas una vez terminada la migración.
 
 - Usa perspectiva en tercera persona, seguimiento del personaje y prevención de
   atravesar geometría mediante `SpringArm3D` o una solución equivalente.
-- Permite órbita continua, zoom limitado y recentrado suave.
+- Permite órbita continua, zoom hasta primera persona y recentrado detrás del personaje.
 - El encuadre debe conservar legibilidad del terreno próximo, objetivos e
   interacciones sin ofrecer información indebida a través de muros.
 - Abrir inventario, mapa, pausa u otra UI que capture el puntero bloquea
@@ -115,10 +148,11 @@ movimiento normal.
 
 ## Migración desde el prototipo
 
-El prototipo todavía contiene click-to-move, autoaproximación a interactuables y
-ajuste directo a la altura del generador. Hasta completar la migración, los
-documentos operativos pueden describir esos controles únicamente si los marcan
-como estado actual.
+El control local del mundo Terrain3D ya reemplaza click-to-move y
+autoaproximación. El proveedor de altura sigue ayudando al movimiento terrestre;
+el estado aéreo conserva velocidad vertical y gravedad hasta aterrizar. Las
+herramientas antiguas pueden conservar cámaras de depuración. La migración
+autoritaria de mensajes de red y la reasignación desde UI siguen pendientes.
 
 Orden recomendado:
 

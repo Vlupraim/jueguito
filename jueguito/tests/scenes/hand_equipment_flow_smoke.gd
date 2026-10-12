@@ -24,7 +24,8 @@ func _run() -> void:
 	await _frames(4)
 	if not _validate_attachment(player, "PrimaryItemAttachment", "RightHand", "viking_sword_held.tscn"):
 		return
-	if not _validate_attachment(player, "SecondaryItemAttachment", "LeftHand", "viking_shield_held.tscn"):
+	if player.find_child("SecondaryItemAttachment", true, false) != null:
+		_fail("La espada de dos manos dejó el escudo en la secundaria")
 		return
 	if not bool(player.call("play_primary_equipment_action")):
 		_fail("La espada no encontro su animacion attack")

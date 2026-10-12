@@ -1,0 +1,54 @@
+[gd_resource type="Environment" load_steps=6 format=3]
+
+[ext_resource type="Shader" path="res://shaders/coastal_sky.gdshader" id="1_sky"]
+
+[sub_resource type="FastNoiseLite" id="CloudNoise"]
+seed = 7342
+noise_type = 3
+frequency = 0.0035
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="CloudTexture"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("CloudNoise")
+
+[sub_resource type="ShaderMaterial" id="CoastalSkyMaterial"]
+shader = ExtResource("1_sky")
+shader_parameter/cloud_noise = SubResource("CloudTexture")
+shader_parameter/zenith_color = Color(0.22, 0.40, 0.63, 1)
+shader_parameter/horizon_color = Color(0.65, 0.73, 0.79, 1)
+shader_parameter/cloud_light = Color(0.95, 0.94, 0.88, 1)
+shader_parameter/cloud_shadow = Color(0.50, 0.59, 0.68, 1)
+shader_parameter/cloud_coverage = 0.50
+shader_parameter/cloud_scale = 0.65
+shader_parameter/cloud_offset = Vector2(0.19, 0.37)
+shader_parameter/cloud_layer_height = 900.0
+
+[sub_resource type="Sky" id="CoastalSky"]
+radiance_size = 3
+process_mode = 3
+sky_material = SubResource("CoastalSkyMaterial")
+
+[resource]
+background_mode = 2
+sky = SubResource("CoastalSky")
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.65
+ambient_light_energy = 0.78
+tonemap_mode = 3
+tonemap_exposure = 0.98
+adjustment_enabled = true
+adjustment_brightness = 0.96
+adjustment_contrast = 1.05
+adjustment_saturation = 0.90
+fog_enabled = true
+fog_mode = 1
+fog_density = 1.0
+fog_light_color = Color(0.65, 0.73, 0.79, 1)
+fog_sky_affect = 0.0
+fog_depth_begin = 160.0
+fog_depth_end = 2600.0
+fog_depth_curve = 0.65
+volumetric_fog_enabled = false

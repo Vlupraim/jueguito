@@ -1,0 +1,932 @@
+{
+  "glb_animations": [
+    "Armature|Archery_Shot_1|baselayer",
+    "Armature|Archery_Shot|baselayer",
+    "Armature|Attack|baselayer",
+    "Armature|Axe_Spin_Attack|baselayer",
+    "Armature|Basic_Jump|baselayer",
+    "Armature|Charged_Slash|baselayer",
+    "Armature|Collect_Object|baselayer",
+    "Armature|Double_Blade_Spin|baselayer",
+    "Armature|Double_Combo_Attack|baselayer",
+    "Armature|Heavy_Hammer_Swing|baselayer",
+    "Armature|Idle_11|baselayer",
+    "Armature|Left_Slash|baselayer",
+    "Armature|running|baselayer",
+    "Armature|Sit_and_Doze_Off|baselayer",
+    "Armature|Stand_Up1|baselayer",
+    "Armature|Swim_Forward|baselayer",
+    "Armature|Swim_Idle|baselayer",
+    "Armature|Sword_Judgment|baselayer",
+    "Armature|Triple_Combo_Attack|baselayer",
+    "Armature|walking_man|baselayer"
+  ],
+  "glb_joints": 24,
+  "vertex_colors": true,
+  "samples": [
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        1.13882714509964,
+        0.5832437574863434,
+        1.677394514088519
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 7,
+      "bounds_m": [
+        0.9694655239582062,
+        0.9768224954605103,
+        1.688315718434751
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 13,
+      "bounds_m": [
+        0.9977149963378906,
+        0.7699255049228668,
+        1.6844394863583148
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 19,
+      "bounds_m": [
+        1.175555944442749,
+        0.6031294614076614,
+        1.7121506119146943
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 26,
+      "bounds_m": [
+        1.2843792140483856,
+        0.49540673196315765,
+        1.738359664566815
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.7794473469257355,
+        0.3609784245491028,
+        1.7410281850025058
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 31,
+      "bounds_m": [
+        0.7102866470813751,
+        0.6101194620132446,
+        1.715505387634039
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 61,
+      "bounds_m": [
+        1.1450487077236176,
+        0.4798253923654556,
+        1.7371675204485655
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 91,
+      "bounds_m": [
+        1.290277361869812,
+        0.49022673070430756,
+        1.736430199816823
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 121,
+      "bounds_m": [
+        0.779861330986023,
+        0.3609873801469803,
+        1.7410277356393635
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.9081600606441498,
+        0.8319640755653381,
+        1.5552617833018303
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 18,
+      "bounds_m": [
+        0.669773057103157,
+        0.8405178189277649,
+        1.8525278680026531
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 34,
+      "bounds_m": [
+        0.6810884773731232,
+        1.3659696280956268,
+        1.3117555975914001
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 51,
+      "bounds_m": [
+        0.769556313753128,
+        1.1610592007637024,
+        1.47069026902318
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 68,
+      "bounds_m": [
+        0.9119793474674225,
+        0.8380643725395203,
+        1.5562424454838037
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.783789187669754,
+        0.7644533514976501,
+        1.6515847258269787
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 16,
+      "bounds_m": [
+        0.7169141173362732,
+        0.6764613650739193,
+        1.700931340456009
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 31,
+      "bounds_m": [
+        1.1286866962909698,
+        0.8029635231941938,
+        1.6326148249208927
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 46,
+      "bounds_m": [
+        0.9178401529788971,
+        0.8639049828052521,
+        1.7083275690674782
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 61,
+      "bounds_m": [
+        0.7742713689804077,
+        0.7750781178474426,
+        1.6524241641163826
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.7891310751438141,
+        1.1316034495830536,
+        1.6026146858930588
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 36,
+      "bounds_m": [
+        0.8267650604248047,
+        1.1778512597084045,
+        1.4773740693926811
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 72,
+      "bounds_m": [
+        0.8924427330493927,
+        1.4460795521736145,
+        0.9930555149912834
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 107,
+      "bounds_m": [
+        0.7913573682308197,
+        1.0105074644088745,
+        1.6315568089485168
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 142,
+      "bounds_m": [
+        0.7883040904998779,
+        1.1340218782424927,
+        1.615713357925415
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.5182196795940399,
+        1.270001620054245,
+        1.6039230711758137
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 14,
+      "bounds_m": [
+        0.729253888130188,
+        1.1654815971851349,
+        1.6794365867972374
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 28,
+      "bounds_m": [
+        0.6244088113307953,
+        1.0257813930511475,
+        1.6998822540044785
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 41,
+      "bounds_m": [
+        0.5673752576112747,
+        1.2125146389007568,
+        1.611457772552967
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 54,
+      "bounds_m": [
+        0.5192163586616516,
+        1.2659958899021149,
+        1.586087591946125
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.8182902336120605,
+        0.47251957654953003,
+        1.7646436304785311
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 37,
+      "bounds_m": [
+        0.7305439412593842,
+        0.8258923590183258,
+        0.9837787866708823
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 73,
+      "bounds_m": [
+        0.9142878949642181,
+        0.7329933196306229,
+        0.9760450457688421
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 109,
+      "bounds_m": [
+        0.7587486505508423,
+        0.5117271840572357,
+        1.7230011285282671
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 145,
+      "bounds_m": [
+        0.8184349238872528,
+        0.47256529331207275,
+        1.7646727613173425
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.6675239205360413,
+        0.7176472246646881,
+        1.7509901076555252
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 35,
+      "bounds_m": [
+        1.6113524585962296,
+        0.901057243347168,
+        1.5012945905327797
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 69,
+      "bounds_m": [
+        0.8152641355991364,
+        1.0965534448623657,
+        1.2900363765656948
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 103,
+      "bounds_m": [
+        0.9108408093452454,
+        1.1181275844573975,
+        1.327036563307047
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 137,
+      "bounds_m": [
+        0.9981608986854553,
+        0.9009853601455688,
+        1.2105939947068691
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.6485970616340637,
+        0.9744226336479187,
+        1.6333774998784065
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 18,
+      "bounds_m": [
+        0.9055606424808502,
+        0.8537593483924866,
+        1.4786101169884205
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 35,
+      "bounds_m": [
+        0.6984691321849823,
+        1.2661468088626862,
+        1.8106075897812843
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 52,
+      "bounds_m": [
+        0.5463792234659195,
+        1.302390694618225,
+        1.690289445221424
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 69,
+      "bounds_m": [
+        0.659517765045166,
+        0.9703151881694794,
+        1.6279681026935577
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.5457171723246574,
+        0.8680535405874252,
+        1.7431081533432007
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 12,
+      "bounds_m": [
+        0.5991729237139225,
+        0.9021185953170061,
+        1.5715892724692822
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 23,
+      "bounds_m": [
+        0.6246501971036196,
+        1.058225840330124,
+        2.025911830365658
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 34,
+      "bounds_m": [
+        0.7282640617340803,
+        1.2637900114059448,
+        1.6525297909975052
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 45,
+      "bounds_m": [
+        0.805434912443161,
+        0.9503889083862305,
+        1.1049130409955978
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.7609953880310059,
+        0.37643083930015564,
+        1.766099475324154
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 12,
+      "bounds_m": [
+        0.741415798664093,
+        0.3756398409605026,
+        1.7692841738462448
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 24,
+      "bounds_m": [
+        0.7696061134338379,
+        0.3751802295446396,
+        1.765364482998848
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 35,
+      "bounds_m": [
+        0.7786965668201447,
+        0.3763229101896286,
+        1.7660917788743973
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 46,
+      "bounds_m": [
+        0.7630221247673035,
+        0.376441091299057,
+        1.765849769115448
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.7875193059444427,
+        1.1350195705890656,
+        1.6035666316747665
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 20,
+      "bounds_m": [
+        0.9280154407024384,
+        1.1364696621894836,
+        1.6500944793224335
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 39,
+      "bounds_m": [
+        0.6689536869525909,
+        1.3150200843811035,
+        1.47371094673872
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 58,
+      "bounds_m": [
+        0.8132487237453461,
+        1.16709303855896,
+        1.6382258087396622
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 77,
+      "bounds_m": [
+        0.7887620329856873,
+        1.132151186466217,
+        1.5923012718558311
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.8216457664966583,
+        0.9528968632221222,
+        1.7345968279987574
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 5,
+      "bounds_m": [
+        0.7866650223731995,
+        1.0576869249343872,
+        1.7405650597065687
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 8,
+      "bounds_m": [
+        0.7979956269264221,
+        0.9565347135066986,
+        1.6849956989753991
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 12,
+      "bounds_m": [
+        0.765046089887619,
+        1.2940168380737305,
+        1.7227409221231937
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 16,
+      "bounds_m": [
+        0.8230235576629639,
+        0.9248613119125366,
+        1.728995867073536
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.7364872097969055,
+        0.6770461201667786,
+        1.353537805378437
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 105,
+      "bounds_m": [
+        0.7370893657207489,
+        0.6541597843170166,
+        1.3658791929483414
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 208,
+      "bounds_m": [
+        0.7418928146362305,
+        0.6496311575174332,
+        1.3401010818779469
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 312,
+      "bounds_m": [
+        0.7415975332260132,
+        0.6668621301651001,
+        1.342496670782566
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 416,
+      "bounds_m": [
+        0.736485481262207,
+        0.6769799441099167,
+        1.3535073176026344
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        1.6049333810806274,
+        1.7618800178170204,
+        0.3201049864292145
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 50,
+      "bounds_m": [
+        0.9029414057731628,
+        1.6270725578069687,
+        0.6652002334594727
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 100,
+      "bounds_m": [
+        0.8228959143161774,
+        1.0359503626823425,
+        0.9847709536552429
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 150,
+      "bounds_m": [
+        0.8259648382663727,
+        0.34922607243061066,
+        1.769486129283905
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 199,
+      "bounds_m": [
+        0.7330206334590912,
+        0.3191858381032944,
+        1.7692672722041607
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.9749524593353271,
+        1.5246223211288452,
+        0.7076732516288757
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 28,
+      "bounds_m": [
+        1.5138784646987915,
+        1.758288860321045,
+        0.5498512387275696
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 55,
+      "bounds_m": [
+        1.0018268525600433,
+        1.537586122751236,
+        0.7230236530303955
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 82,
+      "bounds_m": [
+        1.5347307324409485,
+        1.724091649055481,
+        0.5393227636814117
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 110,
+      "bounds_m": [
+        0.9733482301235199,
+        1.5100042819976807,
+        0.7021255195140839
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        1.0678529739379883,
+        1.1651890873908997,
+        1.5663996487855911
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 19,
+      "bounds_m": [
+        1.147143840789795,
+        0.9725120067596436,
+        1.577560767531395
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 37,
+      "bounds_m": [
+        1.010132372379303,
+        1.1434847712516785,
+        1.5164691358804703
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 55,
+      "bounds_m": [
+        0.989044725894928,
+        1.092253714799881,
+        1.5102339088916779
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 73,
+      "bounds_m": [
+        1.066600501537323,
+        1.166678786277771,
+        1.5650462359189987
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.9140413105487823,
+        0.9183200895786285,
+        1.715239480137825
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 27,
+      "bounds_m": [
+        1.4306890368461609,
+        0.9292190968990326,
+        1.5775846540927887
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 53,
+      "bounds_m": [
+        1.2256525233387947,
+        0.9924841402098536,
+        1.668323166668415
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 79,
+      "bounds_m": [
+        1.2554107308387756,
+        0.8924530744552612,
+        1.7307134792208672
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 106,
+      "bounds_m": [
+        0.5678988620638847,
+        1.102967619895935,
+        1.6952216029167175
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.8021326065063477,
+        1.0554083287715912,
+        1.5987408235669136
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 27,
+      "bounds_m": [
+        0.6367976069450378,
+        1.3936517834663391,
+        1.6099921315908432
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 53,
+      "bounds_m": [
+        0.789731815457344,
+        0.7138597965240479,
+        1.617932952940464
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 79,
+      "bounds_m": [
+        1.0428986549377441,
+        1.1108832359313965,
+        1.620410218834877
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 105,
+      "bounds_m": [
+        0.7903228402137756,
+        1.1082534790039062,
+        1.5964880138635635
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 1,
+      "bounds_m": [
+        0.8128079175949097,
+        0.37170374393463135,
+        1.7901936197304167
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 7,
+      "bounds_m": [
+        0.8079432547092438,
+        1.0238150358200073,
+        1.7208713734144112
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 13,
+      "bounds_m": [
+        0.8217886686325073,
+        0.45002759993076324,
+        1.7725793266436085
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 19,
+      "bounds_m": [
+        0.7531550824642181,
+        1.014731764793396,
+        1.734340569935739
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 26,
+      "bounds_m": [
+        0.8107680976390839,
+        0.39824460446834564,
+        1.7907539152074605
+      ]
+    }
+  ],
+  "roundtrip_blender": {
+    "bones": 24,
+    "actions": 20
+  }
+}

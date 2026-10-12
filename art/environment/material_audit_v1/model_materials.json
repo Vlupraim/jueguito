@@ -1,0 +1,262 @@
+[
+  {
+    "path": "jueguito/assets/environment/rocks/Meshy_AI__0727205131_texture.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/rocks/Meshy_AI__0727213612_texture.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/rocks/Meshy_AI__0727220746_texture.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/rocks/rock_1.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/rocks/rock_2.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/rocks/rock_3.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/buildings/castles/fortaleza1.glb",
+    "material": null,
+    "roughness": 1.0,
+    "metallic": 1.0,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/buildings/castles/fortaleza2.glb",
+    "material": null,
+    "roughness": 1.0,
+    "metallic": 1.0,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/buildings/huts/caba\u00f1aplaya1.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/foliage/trees/harvestable/harvestable_tree_01.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/foliage/trees/harvestable/harvestable_tree_02.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/foliage/trees/harvestable/harvestable_tree_03.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/foliage/trees/harvestable/harvestable_tree_04.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/foliage/trees/harvestable/harvestable_tree_05.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/foliage/trees/harvestable/harvestable_tree_06.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/props/barrels/barril1.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/props/boxes/caja1.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/props/boxes/caja2.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/props/boxes/caja3.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  },
+  {
+    "path": "jueguito/assets/environment/props/sacks/saco1.glb",
+    "material": "material",
+    "roughness": 1,
+    "metallic": 1,
+    "emissive": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "has_emissive_map": true,
+    "alpha_mode": "OPAQUE"
+  }
+]

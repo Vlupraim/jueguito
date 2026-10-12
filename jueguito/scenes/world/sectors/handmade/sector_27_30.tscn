@@ -1,7 +1,8 @@
-[gd_scene format=3 uid="uid://b7pxjs6c46l0b"]
+[gd_scene format=3 uid="uid://4n0s3jirabx7"]
 
 [ext_resource type="PackedScene" uid="uid://b0kcj5e5lue4" path="res://assets/environment/rocks/rock_1.glb" id="1_iibds"]
 [ext_resource type="PackedScene" uid="uid://gp6apv78uwua" path="res://assets/vehicles/boats/tutorial_ship/models/destroyed_ship.glb" id="2_feuyp"]
+[ext_resource type="PackedScene" path="res://scenes/world/sectors/handmade/tutorial_coast_dressing.tscn" id="3_coast"]
 
 [node name="SectorContent" type="Node3D" unique_id=639310997]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15013885, -0.19626617, 0.008041382)
@@ -18,6 +19,8 @@ transform = Transform3D(1, 0, 0, 0, 0.9933046, 0.11552479, 0, -0.11552479, 0.993
 
 [node name="Vegetation" type="Node3D" parent="." unique_id=356686219]
 metadata/_edit_lock_ = true
+
+[node name="CoastDressing" parent="Vegetation" instance=ExtResource("3_coast")]
 
 [node name="Buildings" type="Node3D" parent="." unique_id=871814195]
 metadata/_edit_lock_ = true

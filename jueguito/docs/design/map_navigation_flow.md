@@ -39,6 +39,10 @@ Las decisiones de topología, persistencia y escalado se desarrollan en
   - Placa de Tier (`TIER 4`), insignia de peligro y contador de hostiles.
 - **Navegación e Interacción**:
   - Arrastre con clic izquierdo y zoom suave con la rueda del ratón o slider.
+  - Control de opacidad del mapa: permite atenuar la superficie cartográfica y
+    consultar posición, rutas o marcadores conservando visible el mundo que
+    queda debajo. Debe recordar la preferencia del jugador y mantener textos,
+    iconos y controles con contraste legible.
   - Botón *"Centrar en Jugador"* (`Espacio`).
   - **Portales de Borde**: Botones interactivos en las salidas con tooltip del sector destino y su Tier. Al hacer clic, inspecciona dicho sector.
   - **Sistema de Pings**: Doble clic coloca un ping en el sector. `Ctrl + Doble Clic` = Clic de Ataque, `Shift + Doble Clic` = Clic de Defensa.
@@ -74,6 +78,8 @@ Mapa de Sector / Mapa Mundial --[Esc / Clic ✕]-----------------------> HUD
 
 ## Decisiones y deuda del piloto
 
+- Extender el control de opacidad al mapa mundial y definir si el minimapa
+  compacto utiliza el mismo ajuste o conserva una opacidad independiente.
 - Los sectores permanecen como unidades de carga, autoridad, persistencia y
   depuración. La representación puede verse continua sin fusionar el mundo
   jugable en una sola escena.

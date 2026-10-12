@@ -28,7 +28,7 @@ class ServerMock:
 						"Hierro": 5,
 						"Madera": 10,
 						"Hacha de leñador": 1,
-						"Espada vikinga": 2,
+						"Espada vikinga": 1,
 						"Escudo vikingo": 1,
 						"Arco vikingo": 1,
 					},
@@ -90,7 +90,7 @@ class ServerMock:
 			# Herramienta inicial provisional para probar el flujo del tutorial.
 			"inventory": {
 				"Hacha de leñador": 1,
-				"Espada vikinga": 2,
+				"Espada vikinga": 1,
 				"Escudo vikingo": 1,
 				"Arco vikingo": 1,
 			},

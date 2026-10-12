@@ -58,10 +58,10 @@ func process_terrain_data(terrain_data: Object, options: Dictionary = {}) -> Dic
 	var profile := _biome_profile(biome_id)
 	var used_texture_ids := _profile_texture_ids(profile)
 	for texture_id in used_texture_ids:
-		if texture_id < 0 or texture_id > 23:
+		if texture_id < 0 or texture_id > 24:
 			return {
 				"ok": false,
-				"message": "El perfil %s intenta usar el slot de textura %d; Terrain3D solo admite 0-23." % [_biome_name(biome_id), texture_id],
+				"message": "El perfil %s intenta usar el slot de textura %d; la biblioteca actual contiene 0-24." % [_biome_name(biome_id), texture_id],
 			}
 	var preview := Image.create(SECTOR_SIZE, SECTOR_SIZE, false, Image.FORMAT_RGBA8)
 	var painted_by_region: Dictionary = {}
@@ -265,11 +265,10 @@ func _biome_profile(biome_id: int) -> Dictionary:
 				"base": PackedInt32Array([21, 1, 16, 18, 6, 3]),
 				"detail": PackedInt32Array([3, 21, 20, 16, 18, 8]),
 			}
-		4: # Polar sin la antigua nieve: tundra fria y pedregosa.
+		4: # Nieve propia, con roca/grava en escarpes y senderos.
 			return {
-				"base": PackedInt32Array([1, 15, 14, 15, 8, 15]),
-				"detail": PackedInt32Array([21, 8, 19, 14, 19, 8]),
-				"fallback_note": "Polar usa tundra de grava/ceniza: no hay textura de nieve aprobada.",
+				"base": PackedInt32Array([21, 24, 14, 24, 24, 8]),
+				"detail": PackedInt32Array([8, 19, 19, 14, 8, 24]),
 			}
 		5: # Montana: lajas, roca con musgo y pasto oscuro escaso.
 			return {
@@ -298,7 +297,7 @@ func _biome_name(biome_id: int) -> String:
 		1: return "Templado"
 		2: return "Desierto"
 		3: return "Selva / humedo"
-		4: return "Polar / tundra"
+		4: return "Polar / nieve"
 		5: return "Montana"
 		6: return "Pantano"
 		7: return "Arcano / raro"

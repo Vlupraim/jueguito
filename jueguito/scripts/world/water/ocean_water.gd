@@ -16,8 +16,11 @@ const SURFACE_DEEP_WATER := 4
 @export_range(0.5, 3.0, 0.05) var swim_depth_threshold := 1.20
 @export var fallback_sector_size := 512.0
 @export var water_area_depth := 12.0
+## Decorado fuera del sector. Sin Area3D, audio ni superficie jugable adicional.
+@export var horizon_distance := 10000.0
 
 @onready var water_surface: MeshInstance3D = %WaterSurface
+@onready var horizon_surface: MeshInstance3D = %HorizonSurface
 @onready var water_area: Area3D = %WaterArea
 @onready var shore_loop: AudioStreamPlayer3D = %ShoreLoop
 @onready var shore_lapping: AudioStreamPlayer3D = %ShoreLapping
@@ -65,6 +68,7 @@ func configure_for_sector(next_sector: Vector2i, terrain: Node = null) -> bool:
 
 	_rebuild_spatial_masks()
 	_rebuild_surface()
+	_rebuild_horizon()
 	if Engine.is_editor_hint():
 		_clear_water_area()
 	else:
@@ -109,6 +113,12 @@ func get_water_info(world_position: Vector3, terrain_height := INF) -> Dictionar
 
 func get_float_height(body_offset := 0.0) -> float:
 	return water_level - maxf(body_offset, 0.0)
+
+
+func set_sea_haze_enabled(enabled: bool) -> void:
+	var material := water_surface.material_override as ShaderMaterial
+	if material != null:
+		material.set_shader_parameter("sea_haze_enabled", enabled)
 
 
 func _fixed_sector_bounds(sector: Vector2i, terrain: Node) -> Rect2:
@@ -219,6 +229,62 @@ func _rebuild_surface() -> void:
 	else:
 		var center := sector_bounds.get_center()
 		_set_audio_position(Vector3(center.x, water_level + 0.4, center.y))
+
+
+func _rebuild_horizon() -> void:
+	var vertices := PackedVector3Array()
+	var normals := PackedVector3Array()
+	var colors := PackedColorArray()
+	var uvs := PackedVector2Array()
+	var indices := PackedInt32Array()
+	var center := sector_bounds.get_center()
+	var factor := 1.0 + maxf(horizon_distance, 0.0) / maxf(sector_bounds.size.x * 0.5, 1.0)
+	var resolution := maxi(mesh_resolution, 1)
+	for edge in range(4):
+		for cell in range(resolution):
+			var start := float(cell) / resolution
+			var end := float(cell + 1) / resolution
+			var a: Vector2
+			var b: Vector2
+			match edge:
+				0:
+					a = Vector2(start, 0); b = Vector2(end, 0)
+				1:
+					a = Vector2(1, start); b = Vector2(1, end)
+				2:
+					a = Vector2(end, 1); b = Vector2(start, 1)
+				3:
+					a = Vector2(0, end); b = Vector2(0, start)
+			# Only extend actual water touching the boundary, never inland depressions.
+			if not _is_water(_surface_kind_at_uv((a + b) * 0.5)):
+				continue
+			var near_a := sector_bounds.position + a * sector_bounds.size
+			var near_b := sector_bounds.position + b * sector_bounds.size
+			var far_a := center + (near_a - center) * factor
+			var far_b := center + (near_b - center) * factor
+			var base := vertices.size()
+			for point in [near_a, near_b, far_a, far_b]:
+				vertices.append(Vector3(point.x, water_level, point.y))
+				normals.append(Vector3.UP)
+				uvs.append((point - sector_bounds.position) / sector_bounds.size)
+			colors.append(_vertex_color(a, near_a.x, near_a.y))
+			colors.append(_vertex_color(b, near_b.x, near_b.y))
+			colors.append(Color(1, 0, 0, 1))
+			colors.append(Color(1, 0, 0, 1))
+			indices.append_array(PackedInt32Array([base, base + 2, base + 1, base + 1, base + 2, base + 3]))
+	var mesh := ArrayMesh.new()
+	if not vertices.is_empty() and horizon_distance > 0.0:
+		var arrays := []
+		arrays.resize(Mesh.ARRAY_MAX)
+		arrays[Mesh.ARRAY_VERTEX] = vertices
+		arrays[Mesh.ARRAY_NORMAL] = normals
+		arrays[Mesh.ARRAY_COLOR] = colors
+		arrays[Mesh.ARRAY_TEX_UV] = uvs
+		arrays[Mesh.ARRAY_INDEX] = indices
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	horizon_surface.mesh = mesh
+	horizon_surface.material_override = water_surface.material_override
+	horizon_surface.visible = mesh.get_surface_count() > 0
 
 
 func _rebuild_water_area() -> void:
@@ -447,6 +513,8 @@ func _clear_water() -> void:
 	_shore_factor_mask.clear()
 	water_surface.mesh = null
 	water_surface.hide()
+	horizon_surface.mesh = null
+	horizon_surface.hide()
 	_clear_water_area()
 	_stop_audio()
 

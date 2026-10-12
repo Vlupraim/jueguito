@@ -16,10 +16,16 @@ Documentacion tecnica principal:
   `res://docs/design/tutorial_scope.md`.
 - Árbol de maestrías, enfoques y Legados de Gran Maestro:
   `res://docs/design/mastery_tree.md`.
+- Interfaz Yggdrasil, recursos editables, inventario y cámara bloqueada:
+  `res://docs/design/yggdrasil_ui_v1.md`.
+- Formas de vida, ocupaciones emergentes y poder fuera de la corona:
+  `res://docs/design/livelihoods_and_forms_of_power.md`.
 - Flujo de portada, login, pausa, opciones, personajes y regiones:
   `res://docs/design/menu_flow_and_settings.md`.
 - Agua, costa, natación limitada y navegación futura:
   `res://docs/design/water_and_navigation_flow.md`.
+- Cielo costero, nubes, bruma y recurso de viento:
+  `res://docs/design/coastal_atmosphere.md`.
 
 ## Contexto para colaboradores
 
@@ -52,6 +58,15 @@ Archivos clave:
 3. Presiona `F5` para abrir el login y el selector 3D de personajes.
 
 El editor de capas sigue disponible en `res://scenes/map_layer_painter.tscn`.
+
+En la partida Terrain3D: `WASD` mueve al personaje, `Shift` corre consumiendo
+estamina, `Espacio` salta, clic derecho + arrastrar orbita la cámara, la rueda
+controla el zoom hasta primera persona y `F` centra detrás del personaje.
+`E` o clic izquierdo interactúan en rango. La sensibilidad, el zoom y la
+inversión vertical se ajustan en `Opciones > Controles`.
+El botón de cámara junto al minimapa alterna seguimiento bloqueado y libre;
+clic derecho sobre el botón lo libera. Maestrías abre el Yggdrasil: rueda para
+zoom, arrastre izquierdo para explorar y accesos superiores para centrar ramas.
 La escena 3D plana sigue disponible en `res://scenes/map_flat_world_3d.tscn`.
 La escena de generacion local por sector sigue disponible en `res://scenes/sector_world_generator.tscn`.
 La escena 3D sigue disponible en `res://scenes/map_walk_3d.tscn`.
@@ -71,8 +86,8 @@ Mientras el terreno sea procedural de prototipo, el jugador usa movimiento guiad
 > derecho e interaccion en rango con `E` o clic izquierdo. El contrato completo
 > y sus criterios de aceptacion estan en
 > `res://docs/design/player_movement_camera_interaction.md`. Los controles que
-> siguen en esta seccion describen el prototipo actual hasta implementar la
-> migracion.
+> siguen en esta seccion corresponden a herramientas y prototipos anteriores;
+> la partida Terrain3D ya usa el nuevo control local.
 
 Este no es el generador final: es el puente entre el mapa macro pintado y los futuros mapas locales recorribles.
 
@@ -124,6 +139,8 @@ Terrain3D soporta pintura de texturas, colores, roughness/wetness, agujeros y fo
 
 ## Texturas de terreno
 
+La revisión actual usa diez bases naturales en **25 slots**, con nieve en `24`, ceniza en `15` y pasto sombrío en `6`/`23`. Los materiales anteriores siguen en el banco original. Detalles, crítica completa y límites: `docs/design/materiales_entorno_v1.md`. El sector del naufragio tiene una pasada de superficies más suave, vegetación baja y 14 árboles talables; ver `docs/design/tutorial_coast_v2.md`.
+
 La idea correcta no es que cada bioma sea una sola textura. Un sector puede ser templado, pero tener pasto en planicies, roca en laderas fuertes, arena en playas y nieve en cumbres. Por eso conviene separar:
 
 - Superficie macro: tierra, costa, agua, agua profunda.
@@ -138,8 +155,10 @@ Convencion inicial recomendada para slots Terrain3D:
 - `3`: tierra humeda / selva o pasto oscuro.
 - `4`: roca / acantilado.
 - `5`: roca secundaria / material raro provisional.
-- `6`: nieve.
+- `6`: pasto sombrío.
 - `7`: barro / pantano.
+- `15`: ceniza.
+- `24`: nieve.
 
 Esta convencion debe mantenerse estable porque Terrain3D guarda IDs de textura en sus mapas internos. Cambiar el orden despues puede hacer que un sector pintado como pasto aparezca como roca.
 

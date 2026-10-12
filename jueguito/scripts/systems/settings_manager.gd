@@ -4,7 +4,7 @@ signal setting_changed(section: String, key: String, value: Variant)
 signal settings_reset
 
 const CONFIG_PATH := "user://settings.cfg"
-const SETTINGS_VERSION := 2
+const SETTINGS_VERSION := 4
 const LEGACY_HUD_POSITIONS := {
 	"character_status_position": Vector2(0.018, 0.94),
 	"action_bar_position": Vector2(0.5, 0.98),
@@ -36,7 +36,9 @@ const DEFAULTS := {
 	"controls": {
 		"camera_sensitivity": 1.0,
 		"zoom_speed": 1.0,
-		"camera_pitch": -45.0
+		"camera_pitch": -15.0,
+		"invert_camera_y": false,
+		"camera_locked": true
 	},
 	"map": {
 		"marker_color": Color("f3cf55"),
@@ -51,7 +53,16 @@ const DEFAULTS := {
 		"minimap_position": Vector2(1.0, 0.0),
 		"minimap_scale": 1.0,
 		"currency_position": Vector2(0.5, 0.0),
-		"currency_scale": 1.0
+		"currency_scale": 1.0,
+		"action_left_position": Vector2(0.5, 1.0),
+		"action_left_scale": 1.0,
+		"action_center_position": Vector2(0.5, 1.0),
+		"action_center_scale": 1.0,
+		"action_right_position": Vector2(0.5, 1.0),
+		"action_right_scale": 1.0,
+		"stamina_position": Vector2(0.5, 1.0),
+		"stamina_scale": 1.0,
+		"module_order": ["character_status", "action_left", "action_center", "action_right", "stamina", "minimap", "currency"]
 	},
 	"accessibility": {
 		"colorblind_mode": 0,
@@ -101,8 +112,23 @@ func load_settings() -> void:
 			)
 	_migrate_legacy_hud_positions()
 	_migrate_video_defaults(loaded_version)
+	if loaded_version < 3:
+		_settings["controls"]["camera_pitch"] = -15.0
+	if loaded_version < 4:
+		_migrate_hud_scale(config)
 	if loaded_version < SETTINGS_VERSION:
 		save_settings()
+
+
+func _migrate_hud_scale(config: ConfigFile) -> void:
+	for key: String in DEFAULTS["hud"]:
+		if not key.ends_with("_scale") or not config.has_section_key("hud", key):
+			continue
+		var previous := float(config.get_value("hud", key))
+		var old_default := 0.65 if key in ["action_left_scale", "action_center_scale", "action_right_scale"] else 1.0
+		# El default anterior pasa al nuevo 100%; los tamanos personalizados
+		# conservan su dimension visual y solo cambian de porcentaje.
+		_settings["hud"][key] = 1.0 if is_equal_approx(previous, old_default) else previous / 1.2
 
 
 func _migrate_video_defaults(loaded_version: int) -> void:

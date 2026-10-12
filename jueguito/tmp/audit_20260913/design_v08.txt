@@ -1,0 +1,1275 @@
+
+MMO Territorial
+Documento base de diseño para un mundo de reinos, rutas, economía de riesgo, información y traición
+Versión 0.8 | 4 de agosto de 2026
+Campo
+Definición
+Estado
+Documento vivo para imaginación, discusión y prototipado.
+Género interno
+MMO de mundo vivo + estrategia territorial + economía de riesgo + política estacional.
+Foco actual
+Definir pilares, sistemas, tensiones y decisiones pendientes antes de diseñar mapa visual o arte.
+Advertencia sana
+Esto no es una biblia final. Es una base gruesa para ordenar ideas y descubrir preguntas difíciles.
+
+Idea central
+¿Cómo mantienes poder en un mundo donde otros pueden comerciar contigo, espiarte, traicionarte, bloquear tus rutas, robarte recursos o quitarte legitimidad?
+
+
+1. Resumen ejecutivo
+La propuesta base es un MMO tradicional en su lectura inicial: el jugador farmea, progresa, mejora su equipo, se agrupa, forma alianzas y busca volverse más fuerte. La diferencia central es que el poder no se define solo por nivel, daño o acumulación económica. El poder se mantiene mediante logística, información, legitimidad, confianza, rutas y capacidad de sostener territorio bajo presión.
+El juego debe permitir que una facción fuerte se sienta fuerte, pero no intocable. La ambición competitiva depende de que una facción dominante pueda caer si se sobreextiende, si descuida rutas, si pierde apoyo social, si infiltran su estructura, si falla su economía o si otros jugadores coordinan una sublevación inteligente.
+Lectura gruesa del proyecto
+Un MMO de mundo vivo donde el conflicto real no es solamente matar monstruos o acumular equipo, sino sostener poder en un ecosistema social que permite comercio, espionaje, traición, rutas vulnerables, temporadas políticas y rebeliones.
+
+1.1 Promesas de diseño
+El jugador nuevo siempre tiene un lugar donde empezar, producir y participar sin ser borrado del juego.
+El jugador competitivo encuentra un mundo donde la información puede valer tanto como el oro.
+Las facciones pueden crecer, gobernar y controlar rutas, pero deben pagar el costo de sostener ese poder.
+La traición y el espionaje existen dentro de sistemas del juego, con consecuencias sociales y mecánicas.
+El mapa crea historias: comercio, bloqueos, emboscadas, caravanas, rutas aéreas, viajes marítimos y guerras de temporada.
+La progresión es vertical, pero la ventaja no debe convertirse en invulnerabilidad.
+El trono central es deseable, visible y poderoso, pero temporal, vulnerable y dependiente de legitimidad.
+1.2 Lo que este documento no intenta cerrar
+No diseña todavía el mapa visual ni la forma exacta de las islas, medialunas o continentes.
+No fija números finales de daño, experiencia, loot, economía ni duración de combates.
+No define nombres definitivos de razas, reinos, ciudades, materiales o criaturas.
+No reemplaza un prototipo. Sirve para decidir qué prototipar primero y qué tensiones deben probarse.
+2. Pilares de diseño
+Los pilares son filtros. Si una futura idea no fortalece alguno de estos pilares, debería cuestionarse antes de entrar al diseño principal.
+Pilar
+Promesa
+Debe vigilarse
+Poder reversible
+Una facción fuerte puede caer por errores estratégicos, mala logística, desgaste político o pérdida de información.
+Evitar que el primer grupo dominante convierta el servidor en propiedad privada permanente.
+Información como recurso
+Horarios, rutas, almacenes, permisos, alianzas y debilidades son activos jugables.
+La información debe generarse dentro del juego, no depender de acoso externo o metajuego tóxico.
+Logística como conflicto
+Mover recursos por tierra, mar o aire importa tanto como conseguirlos.
+Si transportar es trivial, las rutas no tienen valor. Si es demasiado castigador, nadie comercia.
+Zonas seguras sagradas
+Las ciudades iniciales y áreas base permiten empezar, descansar, vender, craftear y reorganizarse.
+La seguridad no debe anular la economía de riesgo ni permitir abuso sin exposición.
+Política estacional
+El reinado central dura por temporadas, exige apoyo y puede terminar por rebelión o pérdida de legitimidad.
+El rey o reina debe sentirse importante sin tener herramientas arbitrarias para destruir la experiencia ajena.
+Roles fluidos
+No hay clases rígidas: set, maestrías, recursos y decisiones definen el estilo de juego.
+La libertad debe tener costos de oportunidad para que las decisiones importen.
+
+3. Experiencia objetivo del jugador
+El juego debería poder sostener muchos tipos de fantasía sin obligar a todos a ser el mismo héroe de combate. Un MMO de este tipo necesita combatientes, pero también necesita mercaderes, recolectores, domadores, espías, artesanos, líderes, guardaespaldas, exploradores y jugadores casuales que alimenten la economía.
+3.1 Historias que deberían poder pasar
+Un jugador nuevo farmea madera, cuero y minerales básicos en una zona segura, vende a un mercado estable y compra su primer set intermedio.
+Un grupo pequeño escolta una caravana marítima porque sabe que una ruta terrestre está vigilada por una facción rival.
+Un espía entra durante semanas a una facción, gana rango, descubre horarios de caravanas y filtra datos para un asalto.
+Un artesano se vuelve relevante porque su ciudad produce equipamiento confiable, barato de reparar y adaptado a la guerra local.
+Una facción toma un puerto por ser la primera en organizarse, pero lo pierde cuando no puede sostener suministros ni confianza interna.
+Un candidato al trono central gana apoyo no solo por fuerza militar, sino por bajar impuestos, abrir rutas y proteger comercio.
+Un rey poderoso cae antes de terminar la temporada porque sus aliados descubren corrupción, rutas bloqueadas y mala administración.
+3.2 Tono competitivo
+El juego puede ser cruel en zonas de riesgo, pero no debería ser gratuitamente injusto. La diferencia es importante: perder una carga valiosa por una mala decisión puede ser memorable; perder todo por una mecánica opaca o por abuso sin respuesta suele expulsar jugadores.
+Regla emocional
+La derrota debe sentirse como consecuencia de una apuesta, una mala lectura, un exceso de confianza o una traición jugable. No debe sentirse como castigo inevitable por simplemente existir en el servidor.
+
+4. Estructura macro del mundo
+El mapa nace desde una imagen conceptual: dos grandes regiones en forma de media luna ubicadas a cada lado de un planisferio, con una zona central más grande y más peligrosa entre ambas. Por ahora esto debe entenderse como arquitectura de juego, no como diseño visual definitivo.
+Región
+Rol jugable
+Nivel sugerido
+Riesgo
+Valor principal
+Medialuna Oeste
+Zona de origen, progreso inicial, rutas regionales y primeras disputas.
+1-9
+Seguro a intermedio
+Recursos base, cultura propia, puertos y territorios reclamables tempranos.
+Medialuna Este
+Contraparte regional con identidad económica y cultural distinta.
+1-9
+Seguro a intermedio
+Recursos complementarios, comercio cruzado, climas o biomas distintos.
+Continente Central
+Zona competitiva, capital del Reino, recursos únicos y política mayor.
+10-20
+Alto a extremo
+Recompensas superiores, trono, reliquias, asedios, rutas clave y reputación global.
+
+
+Figura 1. Boceto conceptual del mapa: medialunas laterales, continente central, archipiélagos y rutas marítimas/comerciales planificables.
+4.1 Medialunas laterales
+Cada medialuna debería tener tres nodos conceptuales principales: una zona segura central e inamovible, y dos extremos más peligrosos donde empiezan las disputas serias por recursos, rutas y puestos estratégicos. Dentro de esos grandes nodos pueden existir subregiones cargadas por mapa, con bandas de nivel del 1 al 9.
+Centro seguro de la medialuna: ciudad madre, banco, mercado, crafting, descanso, tutoriales, casas básicas, gremios iniciales y recursos de bajo nivel.
+Extremo norte o superior: zona intermedia con rutas, minas, bosques, pequeñas fortalezas, NPC hostiles y riesgo de saqueo.
+Extremo sur o inferior: otro polo intermedio con recursos distintos, puertos, caminos alternativos, eventos regionales y disputas de facción.
+Subregiones internas: cada zona puede dividirse en mapas cargables por nivel, bioma, tipo de recurso, grado de ley y presión PvP.
+4.2 Continente central
+La región central es la zona de muerte segura en términos de intención: no porque todo deba matar instantáneamente, sino porque entrar ahí significa aceptar exposición real. Es el lugar donde se encuentran mejores recompensas, mayor conflicto, rutas más valiosas, recursos únicos y el centro político del servidor.
+La capital del Reino funciona como foco político, económico y simbólico del servidor.
+Las subregiones centrales cubren niveles 10-20 y deberían requerir mejor equipo, coordinación, información o alianzas.
+El centro no debe ser solo una zona de farmeo más difícil; debe ser el escenario de la historia grande del servidor.
+Los mejores materiales, reliquias, jefes y eventos deberían vivir aquí, pero extraer valor debe exigir salir vivo o sostener una ruta.
+4.3 Cargas de mapa y subregiones
+Como la idea incluye regiones con niveles 1-9 y centro 10-20, conviene pensar el mundo como una red de subregiones. Cada carga de mapa no solo separa contenido técnico; también separa economía, riesgo, bioma, densidad de jugadores, rutas y control territorial.
+Las subregiones 1-3 enseñan recolección, combate básico, crafting y comercio sin castigos fuertes.
+Las subregiones 4-6 introducen riesgo parcial, recursos regionales, contratos, pequeñas rutas y primeras disputas.
+Las subregiones 7-9 permiten saqueo real, control de puestos, caravanas y recursos necesarios para acceder al centro.
+Las subregiones 10-15 del centro mezclan PvE peligroso, PvP abierto, rutas críticas y recompensas superiores.
+Las subregiones 16-20 deberían sentirse casi endgame: jefes, reliquias, política, asedios, dragones avanzados y pérdidas significativas.
+4.4 Accesibilidad al centro y lectura de riesgo (v0.4)
+El continente central no debe sentirse demasiado asequible desde todos lados. Aunque existan varias formas de entrar, el acceso práctico requiere preparación, requisitos y aceptación explícita de riesgo. La zona central concentra jugadores más competitivos, emboscadas, robo, conflicto territorial y recompensas superiores.
+Entrar por barco permite rutas comerciales, desembarcos, puertos y riesgo naval.
+Entrar por vías públicas da una ruta más legible, pero también más espiable, bloqueable y predecible.
+Entrar por cuenta propia o rutas alternativas reduce predictibilidad, pero aumenta exposición, costo y riesgo de pérdida.
+Los requisitos de acceso pueden incluir nivel, equipo, reputación, permisos, rutas habilitadas, dominio de transporte o preparación logística.
+La seguridad de zona azul no depende de la cercanía física al peligro: dentro de zona azul no hay PvP, aunque existan rutas rojas/negras cercanas.
+4.5 Biomas, latitud y economía asimétrica
+La economía de las medialunas no debe ser simétrica. El mapa puede usar una lógica climática simple: las puntas hacia los polos son más frías, la franja central funciona como ecuador más templado o tropical, el oeste tiende a lo desértico y el este a lo húmedo.
+Región o franja
+Lectura climática
+Implicancia económica/jugable
+Puntas de medialunas
+Frías, polares o subpolares.
+Biomas duros, recursos raros de frío, rutas difíciles, desgaste ambiental y asentamientos especializados.
+Medialuna oeste
+Más seca, árida o desértica.
+Metales, piedra, sal, rutas expuestas, oasis, escasez de alimento y economía de resistencia.
+Medialuna este
+Más húmeda, fértil o selvática.
+Madera, hierbas, cuero, fauna, pantanos, enfermedades, ríos y economía de abundancia biológica.
+Centro
+Más templado, tropical o de alta variedad.
+Recursos de máximo valor, biomas ricos, peligro alto, competencia fuerte y rutas políticas.
+Archipiélagos
+Costeros, marítimos y variables.
+Puertos, pesca, piratería, contrabando, rutas alternativas y casas menores con valor estratégico.
+4.6 Rutas punteadas, puertos y archipiélagos
+Las rutas punteadas del boceto no son decoración: representan corredores marítimos/comerciales planificables. Donde una ruta toca costa o archipiélago deberían existir puertos, nodos de acceso, mercados, permisos, manifiestos y oportunidades de espionaje.
+Los puertos funcionan como origen/destino natural de manifiestos, tributos, cargas de facción y contratos de escolta.
+Los archipiélagos deben ser importantes: no solo islas visuales, sino puntos de parada, disputa, contrabando, piratería, refugio y comercio.
+Las entradas exteriores alrededor de las medialunas permiten rutas largas o alternativas; la zona baja izquierda queda como excepción más cerrada.
+Las rutas públicas dan previsibilidad y comercio; las rutas propias dan libertad, pero aumentan costo, riesgo y valor de la información filtrada.
+Cada gran ruta debería tener razón económica, peligro asociado y posibilidad de ser espiada, bloqueada, desviada o defendida.
+5. Reglas de zona, muerte y saqueo
+El sistema de muerte es una de las decisiones más sensibles. Si el juego quiere saqueo, traición y riesgo real, debe proteger la base de jugadores nuevos y casuales sin quitarle filo a las zonas competitivas.
+5.1 Zonas seguras
+Si mueres, caes y te levantas sin pérdida relevante de objetos.
+No existe saqueo de jugadores ni destrucción de progreso básico.
+Se permite comercio, crafting, entrenamiento, socialización, descanso y gestión de facción.
+Los recursos de bajo nivel existen para que nuevos jugadores puedan escalar y alimentar la economía.
+El mercado central puede comprar recursos básicos a precios moderados para asegurar piso económico.
+Las ciudades seguras son inamovibles: ninguna facción puede conquistarlas, cerrarlas o convertirlas en prisión.
+5.2 Zonas intermedias
+Las zonas intermedias son el puente entre juego protegido y juego competitivo. Aquí el jugador debería aprender a viajar preparado, guardar ganancias, moverse con aliados y leer el territorio.
+Muerte con posibilidad de saqueo parcial o total según subregión, estado criminal y tipo de inventario.
+Recursos de valor medio, nodos regionales, campamentos, minas, puestos y rutas reclamables.
+PvP permitido con restricciones de reputación, testigos, bounties o respuesta de guardias según cercanía a asentamientos.
+Buen lugar para que facciones pequeñas aprendan guerra de rutas sin entrar aún al conflicto central.
+5.3 Zona central
+Riesgo alto explícito: entrar significa aceptar saqueo, emboscadas, guerra abierta y pérdida material.
+Recompensas superiores: recursos raros, jefes, reliquias, puntos de legitimidad, rutas reales y reputación global.
+Debería tener algunas áreas de respiro o ciudad neutral, pero no convertir el centro en una zona cómoda.
+El valor real no está solo en matar: está en extraer, transportar, defender, negociar y sobrevivir.
+5.4 Herramientas para que la pérdida no sea destructiva
+Seguro limitado para ciertos objetos o cargas declaradas antes del viaje.
+Ranuras protegidas de baja cantidad para impedir que una muerte borre completamente a un jugador.
+Durabilidad y reparación para que el equipo tenga costo sin depender siempre de pérdida total.
+Cadáver o paquete recuperable durante una ventana corta, generando rescates y conflictos.
+Contratos de escolta y recompensas por recuperar carga robada.
+Costos de criminalidad o reputación para evitar que el saqueo casual de nuevos jugadores sea la estrategia dominante.
+5.5 Modelo de riesgo por color (v0.3)
+Se adopta una lectura por colores para separar aprendizaje, riesgo progresivo y apuestas máximas. El objetivo es que el jugador entienda cuándo está protegido y cuándo acepta exposición real.
+Zona
+Regla de muerte/saqueo
+Intención de diseño
+Azul
+Segura. No hay saqueo ni pérdida relevante de ítems. La protección puede ser indefinida mientras el jugador permanezca en este tipo de zona.
+Inicio, mercado, crafting, descanso, socialización y recursos base.
+Amarilla
+Transición. Puede haber peligro, knockdown, daño de durabilidad o pérdida limitada de recursos recientes, pero no full loot.
+Enseñar riesgo sin castigar como zona central.
+Roja
+Peligrosa regional. Se pierde inventario/carga y parte de moneda cargada; el equipo equipado no cae, pero queda dañado de forma importante.
+Diferenciar riesgo serio de la zona negra sin convertir cada muerte en borrado total de expedición.
+Negra
+Zona central. Full loot total de lo que el personaje lleva encima, incluyendo inventario, moneda cargada y equipo equipado. Los objetos quedan en lápida/bolsa recuperable o saqueable.
+Apuesta máxima, conflicto territorial, recompensas altas y memoria de grandes pérdidas.
+5.6 Lápida, bolsa y sello de propiedad
+Al morir en zona negra, el personaje no pierde nivel, maestrías, recetas aprendidas ni progresión personal. La pérdida afecta la expedición: equipo, recursos, monedas cargadas e ítems transportados quedan en una lápida o bolsa del mundo.
+La lápida/bolsa puede ser recuperada por el jugador o saqueada por otros, según zona, tiempo y control territorial.
+Los bancos, casas, almacenes, propiedades y progresión permanente no se pierden por morir.
+Los ítems pueden conservar un sello histórico: quién los crafteó, quién los compró o quién los portó. Ese sello sirve para historia, reputación y comercio, no para impedir el saqueo.
+5.7 Estado del equipo y degradación sin destrucción
+El equipo no se destruye permanentemente por uso normal, porque la destrucción total se considera una mecánica poco atractiva para este proyecto. En su lugar, el equipo cambia de estado y ese estado modifica sus estadísticas.
+Estado
+Lectura mecánica
+Uso esperado
+Estropeado
+Penalización severa. El objeto funciona, pero pierde gran parte de su valor estadístico.
+Resultado de uso descuidado, derrota o falta de mantenimiento.
+Dañado
+Penalización clara, pero recuperable con reparación y materiales.
+Castigo común tras combate, muerte o exposición.
+Común
+Estado base sin bono ni penalización especial.
+Punto normal de uso.
+Fino
+Mejora moderada sobre el estado base.
+Equipo cuidado o trabajado por artesanos.
+Excelente
+Mejora importante, costosa de mantener.
+Equipo serio para guerra o expediciones valiosas.
+Radiante
+Estado máximo. Alto rendimiento, alto costo y alta dependencia de artesanos/materiales.
+Prestigio, preparación de alto nivel y economía viva.
+5.8 Objetos ligados al personaje
+La regla general queda definida: casi nada económico debería estar ligado al personaje. El mundo necesita que los objetos circulen, se pierdan, se vendan, se hereden, se roben o vuelvan al mercado.
+Pueden estar ligados: niveles, maestrías, recetas aprendidas, títulos históricos, cosméticos conmemorativos, documentos personales y objetos iniciales sin valor económico.
+No deberían estar ligados: armas, armaduras, recursos, moneda cargada, materiales raros, contratos valiosos ni equipo de guerra.
+Las excepciones deben justificarse por claridad de onboarding, memoria histórica o prevención de abuso, no por comodidad económica.
+6. Loop central de juego
+El loop central debe ser comprensible en una sesión corta, pero escalar hacia objetivos sociales de semanas y temporadas. El jugador siempre debería poder responder: qué preparo, dónde voy, qué arriesgo, qué espero traer de vuelta y con quién me conviene ir.
+Escala
+Acción típica
+Resultado esperado
+10 minutos
+Preparar equipo, comida, herramientas y ruta; salir a recolectar o cumplir un objetivo pequeño.
+Recurso, plata, experiencia de rama o información local.
+1 hora
+Expedición grupal, caravana, caza de jefe regional, exploración o defensa de puesto.
+Ganancia mayor, riesgo real, necesidad de coordinación.
+1 día
+Operación de facción: abastecer, comerciar, espiar, defender, negociar o atacar.
+Cambio visible en economía, rutas o reputación.
+1 semana
+Controlar un activo, sostener alianza, preparar asedio, posicionar espías o competir por rutas.
+Ventaja territorial o política acumulada.
+Temporada
+Construir legitimidad, competir por trono, defender reinado o provocar rebelión.
+Historia del servidor y recompensas estacionales.
+
+6.1 Loop individual
+Prepararse en zona segura: elegir set, herramientas, comida, montura, ruta y nivel de riesgo.
+Entrar a zona objetivo: recolectar, pelear, explorar, escoltar, cazar o espiar.
+Tomar decisiones de extracción: volver temprano con poco, arriesgarse por más o esperar apoyo.
+Regresar y convertir valor: vender, craftear, reparar, entregar contrato, guardar recursos o compartir con facción.
+Actualizar plan: subir maestría, mejorar equipo, cambiar ruta, negociar protección o buscar nueva alianza.
+6.2 Loop de facción
+Definir una necesidad: materiales, plata, territorio, información, reputación o apoyo político.
+Asignar roles: recolectores, escoltas, exploradores, artesanos, diplomáticos, espías y defensores.
+Mover recursos: por tierra, mar o aire, con rutas y horarios que pueden filtrarse.
+Convertir recursos en poder: infraestructura, defensas, equipo, dragones, contratos o influencia.
+Sostener poder: pagar mantenimiento, alimentar población, defender rutas y manejar confianza interna.
+7. Economía: oro, plata, recursos y mercados
+La economía debe alimentar el conflicto sin romperse por acumulación infinita. Oro y plata pueden coexistir si cada moneda tiene usos claros, fuentes distintas y sumideros constantes.
+7.1 Monedas
+Plata: Moneda cotidiana para consumibles, reparaciones menores, mercado básico, herramientas, comida, viajes comunes y compras de bajo a medio nivel.
+Oro: Moneda estratégica para territorios, impuestos grandes, contratos de facción, dragones, infraestructura, guerras, títulos, propiedades y comercio de alto valor.
+7.2 Fuentes y sumideros
+Sistema
+Fuentes de moneda
+Sumideros necesarios
+Jugador nuevo
+Venta de recursos básicos al mercado, misiones simples, encargos de otros jugadores.
+Herramientas, comida, reparación, viajes, entrenamiento inicial.
+Recolector
+Materiales regionales, contratos de facción, entregas y subastas.
+Herramientas mejores, seguros, monturas, permisos, escolta.
+Crafter
+Venta de equipo, consumibles, reparación, mejoras y pedidos personalizados.
+Recetas, estaciones, impuestos, fallos de producción, materiales raros.
+Facción
+Impuestos, comercio, rutas, control de recursos, contratos y botines de guerra.
+Mantenimiento, salarios NPC, defensas, logística, alimento, deuda y tributos.
+Reino
+Impuestos centrales, tasas de mercado, eventos, licencias y multas.
+Guardias, rutas públicas, recompensas, infraestructura, estabilización económica.
+
+7.3 Mercado central y libre comercio
+El mercado central puede funcionar como piso económico y herramienta de moderación sistémica. No debería reemplazar el libre comercio entre jugadores; debería impedir que el inicio del juego dependa por completo de monopolios o precios abusivos.
+El mercado central compra recursos básicos a precio bajo pero estable.
+Los jugadores pueden vender a mejores precios si encuentran demanda real.
+Los precios de mercado central deben evitar inflación y no competir con bienes avanzados.
+Las tasas de mercado, transporte y reparación sirven como sumideros permanentes.
+Las ciudades seguras pueden tener mercados locales; el centro puede tener el mercado más grande y peligroso de abastecer.
+7.4 Recursos regionales
+Metales: armas, armaduras, herramientas, defensas y construcción.
+Madera y fibra: barcos, arcos, viviendas, carros, empaques y estaciones.
+Hierbas y alimentos: buffs, curación, cocina, mantenimiento de población y rutas largas.
+Cristales o minerales mágicos: encantamientos, magia, reliquias, tecnología arcana y estaciones avanzadas.
+Componentes de criaturas: armaduras especiales, pociones, monturas, domadura y objetos raros.
+Materiales dracónicos: crianza, equipo de dragón, combustible arcano, sellos de vuelo y armas de asedio anti-aéreas.
+Reliquias centrales: progreso político, coronación, construcción mayor, eventos de temporada o fabricación de objetos únicos.
+7.5 Oro, plata y monedas regionales (v0.3)
+El oro se perfila como moneda central fuerte y la plata como moneda cotidiana. La conversión entre ambas puede existir, pero debe diseñarse con cuidado para no eliminar diferencias económicas regionales.
+Oro: tierra, tributos, guerra, dragones, infraestructura, grandes contratos, reservas y comercio político.
+Plata: reparación, comida, herramientas, mercado diario, transporte, sueldos menores y consumo común.
+El mercado central puede regular valor base y comprar materiales comunes, pero nunca debería comprar tierra.
+Las monedas regionales o de casa quedan como sistema futuro: podrían estar respaldadas por oro y variar según confianza, estabilidad y poder económico del territorio.
+Errores graves de administración, inflación extrema o monopolios abusivos deben poder transformarse en tensión política, rebelión o ataque legítimo contra quienes controlan ese mercado.
+8. Crafting, calidad y durabilidad
+El crafting debería permitir que un jugador dedicado a producción sea tan importante para la guerra como un combatiente. La economía gana profundidad cuando los mejores objetos no caen simplemente de monstruos, sino que requieren cadenas de suministro, recetas, calidad de material y artesanos confiables.
+8.1 Principios de crafting
+Los materiales tienen tier, calidad, origen y posibles propiedades regionales.
+Las recetas avanzadas requieren cooperación entre recolectores, crafters, domadores y combatientes.
+La calidad del producto puede depender de maestría, estación, herramientas, material y riesgo asumido.
+El equipo tiene durabilidad para que la economía respire y no se llene de objetos eternos.
+Reparar debería ser posible, pero no gratis ni infinito: la reparación puede reducir durabilidad máxima o requerir materiales.
+Los crafters pueden firmar objetos, creando reputación comercial y valor social.
+8.2 Tiendas, descanso y buffs
+La idea de tiendas, espacios de descanso y buffs encaja muy bien con un MMO de rutas. Descansar no debe ser solo decoración; puede ser una herramienta de preparación y logística.
+Una tienda de campaña puede dar recuperación, protección climática, cocina básica o bonus de descanso.
+Acampar fuera de zona segura debería tener riesgo: humo, rastros, ruido, visibilidad o vulnerabilidad a exploradores.
+Ciudades y posadas pueden dar buffs más seguros pero menos flexibles.
+Facciones podrían construir campamentos avanzados, vulnerables si no se defienden.
+La comida puede sostener viajes largos, dragones, trabajadores NPC y bonus temporales.
+9. Facciones, alianzas y territorio
+Las facciones son el motor social. Deben poder organizar comercio, guerra, defensa, permisos, espionaje, reputación y aspiraciones políticas. Pero el sistema debe evitar que crecer signifique volverse imposible de derribar.
+9.1 Escala social
+Grupo: unidad temporal para expediciones, farmeo, escolta y PvP pequeño.
+Clan o gremio menor: identidad persistente de pocos jugadores con banco y permisos simples.
+Guild o facción: organización con territorio, jerarquías, contratos, almacenes y diplomacia.
+Alianza: pacto entre facciones con objetivos comunes, comercio, guerra o apoyo político.
+Reino central: estructura estacional con gobernante, instituciones, impuestos y legitimidad global.
+9.2 Reclamar rutas y activos
+Conviene pensar el territorio menos como tierra plana y más como activos estratégicos: rutas, puertos, minas, torres, puentes, establos, aldeas productivas, fuertes, mercados y puntos de vigilancia.
+Activo reclamable
+Valor
+Mantenimiento
+Vulnerabilidad
+Ruta terrestre
+Permite mover carga y cobrar peajes.
+Patrullas, reparación, puestos, señales.
+Emboscadas, bloqueo, sabotaje de puentes.
+Puerto
+Comercio marítimo, pesca, barcos, entrada regional.
+Guardias, astillero, alimento, impuestos.
+Bloqueo naval, infiltración, incendio de almacenes.
+Mina o bosque
+Producción constante de materiales.
+Trabajadores, herramientas, caminos.
+Asaltos, agotamiento, huelga, monstruos.
+Torre de vigilancia
+Información, alerta temprana, control de visión.
+Guardias, combustible, mantenimiento.
+Sabotaje, captura rápida, reportes falsos.
+Establo o nido de dragones
+Movilidad aérea y prestigio estratégico.
+Alimento, domadores, protección, medicina.
+Robo de huevos, enfermedad, anti-aéreo.
+Fortaleza menor
+Defensa, depósito y presencia militar.
+Suministros, reparaciones, guarnición.
+Asedio, traición interna, corte de rutas.
+
+9.3 Ciclo de reclamo
+Explorar el activo y registrar interés mediante una avanzada, bandera, sello o contrato local.
+Entregar recursos iniciales para construir presencia: madera, piedra, herramientas, comida y plata.
+Mantener una ventana vulnerable mientras el reclamo se consolida y otros pueden disputar.
+Activar beneficios si el reclamo sobrevive: producción, impuestos, visión, almacenamiento o ruta segura parcial.
+Pagar mantenimiento recurrente y responder a eventos: ataques, desgaste, población descontenta o sabotaje.
+Principio anti-propiedad eterna
+Tomar un activo debería ser emocionante; mantenerlo debería ser un trabajo. Si una facción abandona presencia, logística o legitimidad, el territorio debe volverse frágil por diseño.
+
+9.4 Jerarquía feudal propuesta
+Se adopta una estructura feudal flexible para conectar territorio, casas, tributo y corona sin dar poderes absolutos a un solo jugador.
+Escala
+Descripción
+Función
+Casa
+Facción base o linaje político de jugadores.
+Organización social, identidad, banco, permisos y primeras tierras.
+Señorío
+Territorio local reclamable por una casa.
+Producción, tributo, defensa y presencia regional.
+Marca o condado
+Conjunto de señoríos dentro de una región.
+Primer escalón de poder territorial mayor.
+Ducado o gran casa
+Poder regional consolidado.
+Diplomacia, guerra, rutas importantes y candidatura política.
+Corona/Reino
+Autoridad central de temporada.
+Memoria histórica, coordinación simbólica, tributo y legitimidad.
+9.5 Asentamientos construibles y lógica de crecimiento
+El juego puede tomar una lógica inspirada en Age of Empires, pero reducida y vivible en tercera persona: las casas y jugadores construyen presencia, no una base RTS completa minuto a minuto.
+Asentamiento
+Rol
+Relación con dragones/territorio
+Campamento
+Temporal, barato y vulnerable.
+Descanso, ruta, exploración y apoyo menor.
+Aldea
+Producción básica, NPCs y recursos locales.
+Primer paso de economía persistente.
+Puesto fortificado
+Control de ruta, vigilancia y almacén.
+Defensa logística y punto de conflicto.
+Castillo menor
+Casa feudal regional, banco, talleres y guardias.
+Infraestructura mínima razonable para sostener dragones jóvenes/adultos.
+Fortaleza o capital de casa
+Centro político y militar avanzado.
+Establos dracónicos, tributo, gran defensa y prestigio.
+Dominio regional
+Red de asentamientos conectados por rutas.
+Poder territorial real y vulnerabilidad por sobreextensión.
+10. Logística: tierra, mar y aire
+La logística es el puente entre economía y guerra. Si todo entra en el inventario personal y se teletransporta, las rutas no importan. Si mover carga es una experiencia pesada, los jugadores no comerciarán. El diseño debe encontrar una zona de tensión jugable.
+10.1 Modos de transporte
+Tierra: carros, monturas, caravanas, caminos, puentes, peajes, emboscadas y puntos de control.
+Mar: barcos, puertos, rutas de comercio, tormentas, bloqueo naval, piratería y acceso entre medialunas.
+Aire: dragones y monturas raras, velocidad, exploración, transporte limitado y exposición a defensas anti-aéreas.
+10.2 Variables de carga
+Peso: afecta velocidad, estamina, consumo y capacidad de huida.
+Volumen: algunos objetos requieren carros, barcos o dragones de carga.
+Valor declarado: permite seguros, impuestos, inspecciones o contratos.
+Riesgo de ruta: zonas con mayor probabilidad de emboscada, clima, monstruos o bloqueo.
+Firma visible: una caravana grande debería ser detectada antes que un explorador solitario.
+10.3 Contratos
+Contrato de transporte: mover X recursos desde A hasta B por pago fijo o porcentaje.
+Contrato de escolta: proteger una carga durante una ruta y cobrar si llega.
+Contrato de recuperación: recuperar carga robada, cadáver o paquete perdido.
+Contrato de sabotaje: destruir, demorar o revelar una ruta enemiga, con límites para evitar abuso sistémico.
+Contrato de información: pagar por mapas, horarios, estado de defensas o avistamientos.
+10.4 Planificación de rutas materiales como regla base (v0.3)
+Para alimentar la dinámica de espionaje, todo movimiento relevante de materiales debe requerir una ruta planificada. La carga no se mueve solo por voluntad del jugador: debe existir un plan, manifiesto, permiso o contrato que convierta esa operación logística en información jugable.
+Las cargas pequeñas de inventario personal pueden moverse sin burocracia para no volver tedioso el juego cotidiano.
+El transporte de materiales en volumen, recursos de facción, tributos, cargas de alto valor o mercancía entre regiones debe generar un plan de ruta.
+El plan de ruta no debe encadenar al jugador a un camino exacto, pero sí declarar origen, destino, ventana de salida, tipo de carga, medio de transporte, responsables y ruta principal.
+Cambiar la ruta en medio del viaje debe ser posible, aunque con costo: demora, consumo extra, pérdida de eficiencia, permisos adicionales o exposición a zonas más peligrosas.
+Una ruta bien planificada puede incluir escolta, ruta alternativa, señuelos, horarios falsos o compartimentación de información.
+Tipo de movimiento
+Ruta requerida
+Información generada
+Inventario personal menor
+No obligatoria.
+Poca o nula información; sirve para juego cotidiano y farmeo simple.
+Carga comercial regional
+Sí, mediante manifiesto simple.
+Origen, destino, tipo de recurso, transportista y ventana aproximada.
+Recursos de facción/casa
+Sí, con permisos internos.
+Responsables, almacén de origen, ruta, escolta, prioridad y registro de autorización.
+Tributo, oro o materiales raros
+Sí, con manifiesto sellado.
+Información de alto valor: puede ser robada, filtrada, falsificada o usada para emboscada.
+Caravana, barco o dragón de carga
+Sí, con contrato logístico.
+Ruta visible por preparación física: carga, tripulación, establo/puerto, permisos y horarios.
+10.5 Manifiestos, permisos y rutas falsas
+La planificación obligatoria no busca frenar el comercio; busca producir tensión. Cada ruta importante crea una superficie de juego para espías, escoltas, líderes, mercaderes y saboteadores.
+El manifiesto es el documento o registro que declara carga, responsables y ruta prevista.
+Los permisos definen quién puede ver, aprobar, modificar o escoltar una ruta.
+Una casa puede crear rutas falsas o manifiestos señuelo para probar lealtades o distraer enemigos.
+Los manifiestos robados pueden estar incompletos, desactualizados o falsificados; la información debe ser poderosa, pero no siempre perfecta.
+La interfaz debería permitir planificar ruta, asignar escolta, declarar carga, sellar manifiesto y limitar visibilidad por rango.
+11. Reino central y política estacional
+La capital central del Reino es el corazón político del servidor. Puede existir como institución superior, administrada por sistemas del juego y por operadores de forma neutral, pero eventualmente gobernada por un jugador o grupo durante temporadas de tres meses.
+11.1 Llegar al trono
+Ser rey o reina no debería ser solo ganar una pelea. Tiene que ser una combinación de poder militar, apoyo social, economía, reputación, control territorial y legitimidad.
+Requisito territorial: controlar o influir en rutas/activos relevantes del centro.
+Requisito económico: entregar tributos, mantener rutas activas o financiar obras públicas.
+Requisito social: apoyo de facciones, votos ponderados, tratados o reputación positiva.
+Requisito militar: defender una coronación, ganar evento de asedio o superar pruebas de poder.
+Requisito de legitimidad: no estar marcado por corrupción extrema, deuda impaga o traición pública reciente.
+11.2 Poderes del reinado
+Definir impuestos centrales dentro de límites.
+Asignar contratos públicos, recompensas o prioridades de ruta.
+Declarar enemigos del Reino bajo condiciones verificables.
+Abrir eventos, campañas, obras o defensas especiales.
+Nombrar cargos limitados: tesorero, mariscal, ministro de rutas, juez o embajador.
+Influir en guardias, permisos y bonificaciones de capital sin poder cerrar zonas seguras iniciales.
+11.3 Caída del reinado
+Fin natural de temporada y pérdida de reelección.
+Rebelión por baja legitimidad, impuestos abusivos, hambre, deuda o rutas colapsadas.
+Pérdida de territorios o activos mínimos requeridos para sostener la corona.
+Asedio exitoso a un símbolo central durante ventana de conflicto.
+Traición de cargos internos que abre puertas, filtra información o bloquea suministros.
+Voto de desconfianza o mecanismo equivalente si suficientes facciones con peso se coordinan.
+Fase de temporada
+Duración sugerida
+Tensión principal
+Apertura
+Semanas 1-2
+Exploración, primeras rutas, alianzas iniciales, economía base.
+Expansión
+Semanas 3-5
+Reclamo de activos, comercio regional, infiltración temprana.
+Consolidación
+Semanas 6-8
+Grandes rutas, candidaturas, pactos, preparación de guerra.
+Crisis
+Semanas 9-11
+Asedios, rebeliones, coronación, sabotaje y alto PvP.
+Cierre
+Semana 12
+Evaluación de reinado, recompensas, memoria del servidor y transición.
+
+11.4 Temporadas, reinicio político y memoria histórica
+La temporada debe renovar el poder sin borrar la identidad del jugador. La duración queda abierta entre tres y seis meses, con una inclinación actual a probar ciclos más largos si la política necesita madurar.
+Se mantiene: nivel del personaje, maestrías, recetas aprendidas, memoria histórica y progresión personal.
+Se renueva: corona, cargos políticos, títulos de temporada, rankings y control territorial competitivo.
+La economía no debería reiniciarse por completo, pero sí puede recibir ajustes, sumideros, crisis o redistribución mediante eventos.
+La historia queda registrada en libros, monumentos, salones de corona o archivos del servidor: primer rey, casas dominantes, rebeliones, guerras, traiciones y eras.
+Una alternativa útil: temporada política de tres meses y era histórica de seis meses. Queda como opción para testear ritmo.
+11.5 Poderes prohibidos para la corona
+El título de rey o reina debe sentirse solemne y socialmente importante, pero no debe romper la igualdad básica del juego.
+La corona no puede confiscar bancos privados, borrar casas, cerrar zonas seguras, expulsar jugadores del servidor ni alterar reglas globales de loot.
+La corona no debería imprimir oro infinito, crear ítems arbitrarios ni recibir ventajas de combate injustas.
+Su poder debe ser simbólico, diplomático y administrativo: tributos, edictos limitados, contratos públicos, ceremonias, memoria histórica y coordinación de facciones.
+La elección del rey debe combinar requisitos, apoyo social, votación feudal, evento especial y posibilidad de conflicto/asedio.
+12. Espionaje, traición e información
+El espionaje debe ser una mecánica de primer orden, no solo algo que pasa en Discord. Para que funcione, el juego debe convertir información interna en objetos, permisos, reportes, mapas, logs, horarios y decisiones visibles dentro del mundo.
+12.1 Información valiosa
+Rutas de caravanas, horarios de salida, tipo de carga y escolta asignada.
+Ubicación y cantidad de recursos almacenados en bancos de facción.
+Estado de defensas, puertas, torres, munición, guardias NPC y puntos débiles.
+Tratados diplomáticos, deudas, promesas, pactos secretos y planes de asedio.
+Identidad de crafters clave, domadores importantes, dragones disponibles y líderes ausentes.
+Mapas explorados, recursos raros, spawn de jefes y ventanas de eventos.
+Moral, hambre, mantenimiento impago, corrupción y descontento de población NPC.
+12.2 Herramientas jugables de espionaje
+Rangos de facción con permisos granulares para banco, rutas, puertas, contratos, mapas y anuncios.
+Reportes de exploración que pueden compartirse, venderse, robarse o falsificarse.
+Libros de contabilidad, manifiestos de carga y documentos de ruta como objetos o registros consultables.
+Disfraces, identidades temporales o permisos de visita con límites claros.
+Sabotaje de estructuras: abrir puerta, atrasar reparación, apagar señal, contaminar suministro o alterar reporte.
+Mensajes sellados, interceptación de mensajeros, dead drops y contratos de información.
+12.3 Contrajuego
+Compartimentación: no todos los rangos ven todo.
+Logs con retraso: útiles para investigar sin impedir toda traición en tiempo real.
+Rutas señuelo y caravanas falsas.
+Auditoría interna: revisar quién retiró, abrió, firmó, movió o aprobó.
+Reputación histórica de jugadores: traicionar puede dar fama, pero también cerrar puertas.
+Objetos de seguridad: sellos, llaves temporales, mapas cifrados, permisos que expiran.
+Límite sano del espionaje
+La traición debe ser intensa dentro del juego, pero no debe incentivar acoso, doxxing, manipulación fuera del juego ni presión personal. El sistema tiene que hacer jugable la información sin empujar a conductas dañinas fuera del servidor.
+
+12.4 Rutas, manifiestos y guerra de información
+La información más valiosa se concentra en rutas de mercado, carga, barcos, caravanas y movimientos de recursos. Saber que una carga de oro, madera o materiales raros se mueve por una ruta específica puede cambiar una guerra.
+Información robable como objeto: manifiestos de carga, mapas privados, horarios de barcos, contratos de escolta, órdenes selladas, libros de almacén y planes de asedio.
+Información observable: tropas moviéndose, actividad de puerto, defensas visibles, caravanas grandes, presencia de dragones y precios locales.
+Una emboscada exitosa puede abrir una segunda capa de juego: investigar quién fue, atribuirse el golpe, ocultar marcas, dejar símbolos o provocar políticamente al reino afectado.
+El tono buscado es político y dramático, con sabor a casas rivales, reputación, traición y mensajes públicos.
+12.5 Logs internos, traición y reglas de casa
+Los logs no deberían ser perfectos ni inexistentes. Deben permitir investigación, pero no impedir toda traición en tiempo real.
+Logs básicos: entradas, salidas, cambios de rango y acciones públicas de facción.
+Logs de tesorería: depósitos, retiros, tributos, permisos y movimientos de almacén para oficiales autorizados.
+Logs de permisos: quién abrió puertas, aprobó rutas, cambió permisos o habilitó accesos importantes.
+Auditoría avanzada con retraso: útil para reconstruir sabotajes sin convertir cada traición en detección instantánea.
+Las consecuencias deben mezclar reglas automáticas y reputación social. Cada casa puede configurar parte de sus normas internas bajo un reglamento global de moderación.
+12.6 Ruta planificada como objeto de espionaje
+La ruta planificada es una de las unidades centrales del espionaje. Si una facción quiere mover madera, oro, carne, cuero, piedra, materiales arcanos o escamas de dragón en volumen, alguien debería poder intentar descubrir esa operación antes de que ocurra.
+Espiar una ruta puede significar robar el manifiesto, interceptar mensajeros, infiltrar permisos, observar preparación física o sobornar a trabajadores del puerto/almacén.
+El valor de la información depende de su precisión: ruta exacta, ventana aproximada, tipo de carga, escolta, transportista, ruta alternativa o simple rumor.
+El defensor puede responder con compartimentación, cambios de último minuto, señuelos, escoltas falsas, manifiestos incompletos o rutas simultáneas.
+El atacante puede usar la información para emboscar, incautar, retrasar, chantajear, atribuirse el golpe o provocar una crisis política.
+Esta regla convierte la logística en una fuente constante de historias: mover materiales es producir oportunidad para comercio, traición, guerra y reputación.
+13. Progresión y árbol de maestrías
+El jugador no queda encerrado en una clase. Su identidad nace del equipo actual, las maestrías aprendidas, los tres enfoques activos, sus decisiones permanentes y su reputación. El detalle operativo se mantiene en res://docs/design/mastery_tree.md.
+13.1 Arquitectura general
+El árbol se organiza en cuatro troncos. Los nodos intermedios ordenan el sistema; las maestrías terminales son las que progresan hasta nivel 100 y pueden culminar en un Legado.
+Tronco
+Ramas principales
+Intención
+Marciales
+Armas, protección y disciplinas arcanas futuras.
+Define combate, defensa y técnicas compatibles con el equipo.
+Mundo
+Recolección, aventura, navegación, rastreo y domadura.
+Define cómo el personaje comprende, explota y atraviesa el mundo.
+Oficio
+Refinado, fabricación, reparación, calidad y servicios.
+Convierte recursos y conocimiento en objetos, infraestructura y valor.
+Influencia
+Comercio, logística, espionaje y liderazgo.
+Convierte información, organización y rutas en poder social.
+Maestrías terminales previstas: Espadas, Arcos, Armas de asta, Contundentes y hachas, Dagas, Bastones y focos, Escudos, Tela, Cuero, Metal, Silvicultura, Minería, Botánica, Caza, Pesca, Exploración, Supervivencia, Navegación, Rastreo, Captura, Crianza, Entrenamiento, Carpintería, Metalurgia, Curtiduría, Textilería, Herrería, Arquería y flechería, Sastrería, Construcción naval, Alquimia y cocina, Reparación, Control de calidad, Comercio, Transporte, Contratos, Tasación, Observación, Infiltración, Falsificación, Sabotaje y Liderazgo.
+13.2 Rangos y progresión por uso
+Las maestrías suben mediante acciones significativas relacionadas con ellas. Golpear objetivos sin propósito, fabricar basura o repetir acciones sin riesgo no debe ser la ruta óptima de progreso.
+Rango
+Nivel de referencia
+Resultado principal
+Iniciado
+1
+Permite utilizar la familia y sus acciones básicas.
+Aprendiz
+10
+Primera técnica o ventaja de comodidad.
+Adepto
+25
+Abre estilos internos y decisiones de configuración.
+Experto
+50
+Técnicas avanzadas y equipo superior.
+Maestro
+75
+Ventaja distintiva y preparación de la culminación.
+Gran Maestro
+100
+Permite realizar el Juramento y elegir un Legado permanente.
+El equipo entrega las acciones activas básicas. La maestría desbloquea técnicas compatibles, eficiencia y alternativas. El personaje puede conocer más técnicas de las que puede llevar simultáneamente, de modo que el rol emerge de la configuración y no de una clase.
+13.3 Maestrías enfocadas y cambio de rol
+Un personaje puede aprender todas las maestrías, pero solo tres pueden estar enfocadas a la vez. El progreso nunca se pierde al retirar un enfoque. Las culminaciones solo se activan cuando la maestría correspondiente está enfocada y el equipo es compatible. Los enfoques se cambian en ciudades, bancos, entrenadores o lugares de descanso, nunca durante un conflicto.
+Cambiar de arma y set permite cambiar de función sin crear otro personaje.
+Las maestrías dan profundidad y eficiencia, pero no deben producir invulnerabilidad.
+Un híbrido conserva flexibilidad a cambio de tardar más en alcanzar especializaciones extremas.
+El equipo de alto nivel mantiene costes de materiales, reparación, peso y riesgo.
+13.4 Legado de Gran Maestro
+Al alcanzar nivel 100 en una maestría terminal, el personaje accede al Juramento de Gran Maestría. El Juramento presenta tres Legados y obliga a escoger exactamente uno. La elección representa la interpretación personal y definitiva de esa disciplina.
+La elección es permanente para ese personaje y no puede cambiarse mediante oro, moneda premium, consumibles, muerte, temporadas ni cambio de facción.
+El personaje puede obtener un Legado en cada maestría terminal llevada a 100, pero solo activa los correspondientes a sus tres enfoques.
+Las tres opciones se conocen desde niveles tempranos y pueden probarse en una instancia sin persistencia antes del Juramento.
+La confirmación final muestra requisitos, efectos, contraataques y una advertencia explícita de irreversibilidad.
+Solo una reconstrucción global de balance que elimine o vuelva incompatible un Legado puede conceder una reselección extraordinaria a todos los afectados.
+Familia
+Forma habitual del Legado
+Armas
+Habilidad activa culminante compatible con una configuración.
+Protección
+Postura, reacción defensiva o regla especial de mitigación.
+Recolección
+Método exclusivo de detección, extracción o aprovechamiento.
+Oficios
+Firma artesanal, técnica de calidad o capacidad de fabricación.
+Aventura y domadura
+Técnica de viaje, supervivencia, vínculo u orden.
+Logística y espionaje
+Contrato, maniobra, operación de información o escape.
+Liderazgo
+Orden, doctrina, estandarte o herramienta de organización.
+13.5 Tres Legados iniciales de Espadas
+Legado
+Configuración
+Identidad y contrajuego
+Último Acero
+Espada de una mano y mano libre.
+Guardia breve seguida de una respuesta precisa. Se contrarresta fingiendo, atacando a distancia, controlando o flanqueando.
+Juramento del Bastión
+Espada y escudo.
+Postura protectora con menor movilidad. Se contrarresta flanqueando, rompiendo guardia, obligando a moverse o esperando.
+Vendaval de Hierro
+Espada a dos manos.
+Secuencia visible de golpes amplios y control de espacio. Consume recursos y puede interrumpirse, esquivarse o evitarse con distancia.
+13.6 Tres Legados iniciales de Arcos
+Legado
+Configuración
+Identidad y contrajuego
+Ojo del Horizonte
+Arco largo.
+Disparo canalizado de alcance y penetración excepcionales. La preparación es visible y se rompe con cobertura, presión o interrupción.
+Lluvia de Plumas
+Arco compatible con descarga.
+Marca un área y castiga grupos o rutas estrechas. El área se anuncia y permite escapar.
+Paso del Cazador
+Arco corto.
+Desplazamiento evasivo combinado con disparo rápido o marca. Se responde con control de movimiento y cierre de rutas.
+13.7 Legados no combatientes y Liderazgo
+Todas las maestrías terminales pueden aspirar a tres Legados, pero no todos son ataques. En recolección pueden ser métodos de extracción; en crafting, firmas de calidad; en logística, maniobras y contratos; en Liderazgo, doctrinas y órdenes.
+Estandarte del Juramento: despliega un punto visible de reunión que los enemigos pueden destruir.
+Orden de Marcha: mejora temporalmente la coordinación logística de un grupo que conserva formación y ruta fuera de combate.
+Consejo de Hierro: habilita herramientas superiores de organización, permisos y respuesta ante crisis internas.
+Los efectos de liderazgo deben limitar su acumulación para impedir que varios líderes dupliquen indefinidamente el mismo beneficio. Cada Legado, sea combatiente o no, necesita requisitos, coste de oportunidad, señal reconocible y una respuesta razonable.
+13.8 Alcance inicial del tutorial
+El naufragio solo necesita iniciar Espadas, Arcos, Tela, Cuero, Recolección básica, Carpintería y reparación, Exploración y Navegación. Puede mostrar una vista previa del árbol y de los Legados, pero no debe pedir ninguna decisión permanente. Al reparar el barco, una pantalla resume las maestrías comenzadas y explica que las culminaciones llegarán mucho más adelante.
+14. Combate, PvP y balance competitivo
+El combate en tercera persona debe sostener tanto duelos como batallas pequeñas, escoltas, asedios y emboscadas. El equilibrio más importante no es que todo sea idéntico, sino que siempre exista alguna forma razonable de respuesta.
+14.1 Principios de combate
+El nivel alto da ventaja, pero mala posición, mal peso, mal cooldown o mala información pueden costar la vida.
+El equipo pesado protege, pero reduce movilidad, sigilo o capacidad de extracción.
+La magia ofrece control, daño o utilidad, pero exige recursos, canalización, preparación o vulnerabilidad.
+El melee debe sentirse fuerte en contacto, pero necesitar herramientas para cerrar distancia.
+El combate grupal debe valorar roles de soporte, control, scouting, protección y retirada.
+Las monturas y dragones deben ser estratégicos, no una forma automática de ganar todos los encuentros.
+14.2 Formas de derrotar a alguien más fuerte
+Emboscar con información previa y cortar retirada.
+Atacar cuando lleva carga pesada o equipo inadecuado.
+Usar terreno, trampas, clima, oscuridad o chokepoints.
+Forzar agotamiento de recursos, comida, munición, maná, montura o reparación.
+Coordinar varios jugadores de menor nivel con roles complementarios.
+Sabotear previamente defensas, consumibles, rutas o suministros.
+14.3 Peligros de balance
+Si el gear decide todo, la política y el espionaje pierden valor.
+Si el número de jugadores decide todo, las facciones grandes dominan sin inteligencia.
+Si la traición decide todo, nadie confía y las facciones se vuelven paranoicas e inmóviles.
+Si la muerte castiga demasiado, la mayoría no arriesga; si castiga muy poco, el mundo no importa.
+15. Razas, culturas y origen del jugador
+Las razas deben sumar identidad, fantasía, cultura y pequeñas ventajas, pero no deberían encerrar al jugador en una clase o destino. En un juego de política y comercio, la cultura puede importar tanto como el bonus numérico.
+15.1 Reglas para diseñar razas
+Cada raza debe tener una razón de existir en el mapa, la economía o la historia.
+Las ventajas deben ser suficientemente interesantes para sentirse, pero no obligatorias para un rol.
+La raza puede influir en reputación inicial, ciudades, estética, idiomas, recetas o relación con criaturas.
+Las facciones deberían poder mezclar razas si el jugador quiere política diversa.
+Evitar que una raza sea objetivamente la mejor para PvP, comercio o trono.
+15.2 Banco inicial de razas conceptuales
+Raza/cultura provisional
+Fantasía
+Posibles rasgos suaves
+Humanos de las Rutas
+Comerciantes, colonos, diplomáticos y constructores de alianzas.
+Bonos menores a contratos, reputación inicial o impuestos locales.
+Altarios
+Pueblos de altura vinculados a vientos, torres y navegación aérea.
+Mejor exploración vertical, resistencia al clima, afinidad con rutas aéreas.
+Ferrum
+Cultura minera y artesanal centrada en metal, forja y fortalezas.
+Crafteo metálico, reparación, resistencia a desgaste.
+Silvanos
+Comunidades de bosque, hierbas, rastreo y arquería.
+Recolección vegetal, sigilo natural, campamentos y comida.
+Umbríos
+Especialistas en información, secretos, pactos y rutas ocultas.
+Espionaje, lectura de rastros, falsificación limitada.
+Litorales
+Marineros, pescadores, cartógrafos y comerciantes de costa.
+Navegación, pesca, barcos, clima marítimo.
+Dracarios
+Linajes culturales ligados a dragones, crianza y pactos antiguos.
+Domadura, cuidado de monturas, vínculo dracónico inicial.
+Arcanos Errantes
+Magos nómadas, estudiosos de cristales y reliquias.
+Identificación de recursos mágicos, rituales, eficiencia arcana.
+
+16. Dragones, domadura y criaturas
+Los dragones son una promesa muy fuerte. Conviene tratarlos como sistemas estratégicos, no como monturas rápidas sin costo. Si son demasiado fáciles, rompen rutas terrestres y marítimas. Si son imposibles, se vuelven decoración.
+16.1 Ciclo de domadura
+Encontrar criatura, huevo, nido o rastro en una zona apropiada.
+Preparar comida, herramientas, conocimiento y espacio de cuidado.
+Completar proceso de captura, vínculo o crianza, con riesgo y tiempo.
+Entrenar órdenes, resistencia, carga, obediencia y tolerancia al combate.
+Mantener salud, alimentación, descanso, equipo y relación con el domador.
+16.2 Dragones como activos de facción
+Un dragón de carga puede mover recursos valiosos, pero debe ser visible, caro y vulnerable a sistemas anti-aéreos.
+Un dragón de combate puede alterar una batalla, pero no debería borrar la importancia de infantería, arqueros, magia y asedio.
+Los nidos, establos y huevos pueden ser objetivos de espionaje, robo, rescate o guerra.
+La crianza puede requerir recursos raros del centro, creando rutas peligrosas y comercio especializado.
+El clima, la altura, el cansancio y el peso deben importar para impedir vuelos infinitos y seguros.
+16.3 Dragones como criaturas vivas y activos raros
+Se define una regla de diseño fuerte: conseguir un dragón puede ser posible para cualquiera; mantenerlo no. El dragón es mítico en fantasía, pero sistémico en juego.
+Un jugador aleatorio puede encontrar un huevo, rescatar una cría, domar un ejemplar joven o ganar acceso por evento raro.
+La mayoría de jugadores sin infraestructura probablemente perderá el dragón por hambre, enfermedad, descuido, combate, robo o falta de espacio.
+Las casas, castillos y dominios poderosos tienen ventaja real porque pueden sostener nidos, alimento, domadores, guardias, curanderos y reservas.
+Un dragón no es un premio permanente ni una montura invulnerable: come, enferma, envejece, se cansa, puede morir y puede volverse demasiado caro de sostener.
+16.4 Ciclo de vida dracónico
+Los dragones crecen con el tiempo y su valor cambia por edad, linaje, entrenamiento, salud y vínculo.
+Etapa
+Uso principal
+Riesgo/costo
+Huevo
+Objeto vulnerable, altamente codiciado.
+Robo, incubación cara, transporte peligroso.
+Cría
+No montable; vínculo, cuidado y crianza.
+Muy frágil y dependiente.
+Joven
+Acompañamiento, entrenamiento básico y carga mínima.
+Puede morir fácil si se usa como arma temprana.
+Adolescente
+Primera etapa montable o funcional en tareas ligeras.
+Consume más y requiere espacio seguro.
+Adulto
+Guerra, transporte, exploración o defensa según linaje y entrenamiento.
+Activo caro, visible y políticamente relevante.
+Venerable
+Criatura enorme, rara y casi histórica.
+Costo altísimo, movilidad menos flexible y valor simbólico enorme.
+16.5 Linajes dracónicos y entrenamiento
+El linaje define tendencia natural; el entrenamiento define uso real. Ningún linaje bloquea completamente un rol, pero cada linaje cobra un precio distinto cuando se le fuerza fuera de su naturaleza.
+Linaje
+Tendencia natural
+Notas de balance
+Fuego
+Batalla, presión ofensiva y asedio ligero.
+Muy visible, alto consumo y difícil de ocultar.
+Tierra
+Defensa, aguante, carga y protección.
+Lento, pesado y menos flexible en vuelo.
+Marítimo
+Transporte costero, rutas de agua y resistencia naval.
+Peor desempeño en interior seco o montaña.
+Niebla
+Espionaje, evasión, exploración y rutas ocultas.
+Frágil, poca carga y menor presencia frontal.
+Tormenta
+Movilidad, altura, persecución y respuesta rápida.
+Difícil de controlar y sensible al cansancio.
+Arcano
+Rituales, recursos raros y habilidades especiales.
+Carísimo, delicado y políticamente codiciado.
+Hielo
+Control, defensa regional y clima hostil.
+Menos eficiente en zonas cálidas.
+Salvaje
+Rasgos raros, versatilidad e imprevisibilidad.
+Entrenamiento difícil y comportamiento menos estable.
+16.6 Infraestructura, mantenimiento y contrajuego
+Los dragones no deben romper el juego. Deben ser espectaculares, caros, rastreables y contrarrestables.
+Infraestructura necesaria: nido, establo dracónico, alimento, medicina, domadores, guardias, espacio, sombra/refugio y defensas anti-robo.
+Entrenamientos posibles: combate, transporte, exploración, defensa, asedio, espionaje, vínculo y supervivencia.
+Limitaciones: no vuelan infinitamente, no cargan todo sin penalización, necesitan aterrizar, se cansan, sufren clima y son visibles desde lejos.
+Contrajuego: torres, ballestas, magia anti-aérea, trampas, dragones rivales, infiltración de establos, robo de huevos, enfermedad y corte de suministros.
+Un dragón debería cambiar una historia, no decidir automáticamente una guerra.
+17. PvE, mundo vivo y amenazas
+El PvE no debería ser solo una máquina de loot. Debe alimentar economía, exploración, control territorial y política. Monstruos, jefes, eventos y amenazas regionales pueden alterar rutas y crear oportunidades de guerra o cooperación.
+17.1 Tipos de contenido PvE
+Fauna regional: recursos, pieles, comida, peligro ambiental y aprendizaje de combate.
+Bandidos o facciones NPC: controlan rutas, atacan caravanas y crean objetivos de limpieza.
+Ruinas y reliquias: exploración, puzzles ligeros, historia y materiales raros.
+Jefes regionales: requieren coordinación, generan señales públicas y atraen conflicto PvP.
+Eventos de mundo: tormentas, migraciones, plagas, invasiones, bloqueo de ruta o caída de mina.
+Amenazas centrales: contenido 10-20 con mejores recompensas y mayor exposición social.
+17.2 PvE como política indirecta
+Una facción puede limpiar una ruta para ganar reputación comercial.
+Un rey puede fallar si deja que eventos centrales destruyan comercio o seguridad.
+Los monstruos pueden debilitar territorios sobreextendidos al atacar suministros.
+Un jefe central puede iniciar una carrera por información, preparación y emboscadas.
+18. Reputación, ley y crimen
+La ley no debería eliminar la agresión, pero sí darle contexto. Matar, robar, traicionar o sabotear puede ser válido en zonas de riesgo, pero no siempre debería ser socialmente gratis.
+18.1 Capas de reputación
+Reputación personal: historial visible de comercio, traición, asesinatos, contratos cumplidos o deudas.
+Reputación de facción: confianza pública, acuerdos rotos, protección de rutas y comportamiento de miembros.
+Reputación local: relación con ciudades, aldeas, gremios NPC y regiones específicas.
+Reputación del Reino: legitimidad del gobernante y percepción general de estabilidad.
+18.2 Crimen y bounties
+El asesinato en zonas totalmente peligrosas puede ser esperado, pero el abuso cerca de zonas iniciales debe tener costos.
+Robos, sabotajes y traiciones pueden generar investigaciones, bounties, juicios de facción o exilio.
+Los testigos, logs y objetos marcados pueden convertir un crimen en información vendible.
+Un sistema de recompensa por captura o muerte puede crear carreras de cazarrecompensas.
+La ley debe ser legible: el jugador necesita saber qué está arriesgando antes de actuar.
+19. Anti-snowball y equilibrio de poder
+El problema clásico de los MMO territoriales es el snowball: los primeros o más organizados acumulan territorio, recursos, equipo, jugadores y reputación hasta volverse casi imposibles de tocar. Este proyecto necesita diseñar contra eso desde el día uno.
+Mecánica
+Qué limita
+Cómo ayuda
+Mantenimiento territorial
+Control infinito sin presencia.
+Cada activo exige suministros, plata, alimento, defensa y atención.
+Sobreextensión
+Imperios demasiado grandes.
+Más territorio aumenta rutas vulnerables, costos, corrupción y ventanas de ataque.
+Temporadas
+Poder eterno.
+Corona, títulos y control central se reevalúan cada tres meses.
+Legitimidad
+Gobierno abusivo.
+Impuestos, rutas cerradas o hambre pueden habilitar rebelión.
+Información filtrable
+Opacidad total de facciones grandes.
+Más miembros y activos generan más datos que proteger.
+Zonas seguras
+Borrado de jugadores nuevos.
+Nadie puede monopolizar el inicio ni expulsar por completo a una comunidad.
+Recursos regionales
+Autosuficiencia absoluta.
+Fomenta comercio, rutas, dependencia y conflicto logístico.
+Counters de combate
+Invulnerabilidad de gear alto.
+Terreno, peso, emboscada, desgaste y coordinación permiten respuesta.
+
+19.1 Señales de que el sistema falla
+Una facción controla demasiado sin jugar activamente.
+Los nuevos solo sirven como víctimas o mano de obra sin agencia.
+Las guerras se deciden antes de empezar por acumulación de equipo.
+La mejor estrategia es no arriesgar nunca y acumular en zona segura.
+El espionaje se vuelve irrelevante porque los números brutos ganan todo.
+El espionaje se vuelve excesivo y nadie confía lo suficiente para formar facciones.
+20. Moderación, operadores y el Reino como institución
+Como mencionaste que el mercado central o el Reino podría estar administrado por ustedes como moderadores, conviene separar dos conceptos: el Reino como institución del mundo y los operadores como cuidadores del servidor. Esa separación protege la confianza.
+20.1 Rol del operador
+Mantener estabilidad económica y técnica.
+Detectar exploits, duplicación, abuso, bots, RMT y griefing no deseado.
+Ajustar precios base, eventos y balance con transparencia.
+Intervenir en problemas fuera del marco jugable, no en guerras legítimas por preferencia personal.
+Publicar reglas claras sobre qué es espionaje jugable y qué es abuso fuera del juego.
+20.2 Mercado central administrado
+Compra de recursos básicos con precios piso.
+Venta limitada de herramientas o consumibles iniciales para evitar bloqueos.
+Tasas y sumideros para controlar inflación.
+Registro de volumen por recurso para detectar monopolios o inyección anormal.
+Eventos de demanda pública: el Reino compra grandes cantidades para obras, guerras NPC o crisis.
+21. Interfaz y sistemas de información
+La navegación principal debe distinguir portada, cuenta autenticada, roster y personaje activo. Las opciones son compartidas entre portada y pausa. El detalle operativo se mantiene en res://docs/design/menu_flow_and_settings.md.
+21.1 Flujo de entrada y estados de sesión
+Estado
+Pantalla principal
+Transición autorizada
+Sin autenticar
+Portada: Ingresar, Opciones, Créditos y Salir.
+Ingresar abre el formulario dentro de la misma experiencia visual.
+Cuenta autenticada
+Región provisional y roster.
+Crear o seleccionar un personaje de esa región.
+Personaje activo
+Mundo jugable y HUD.
+Esc abre pausa; salir exige guardado y desconexión.
+Desconectando
+Estado bloqueado con progreso visible.
+El roster se habilita solo después de confirmación del servidor.
+El login contiene correo, contraseña, mostrar contraseña, recordar únicamente el correo, Ingresar y Volver. Crear cuenta y recuperar contraseña quedan previstos para el backend real. La contraseña nunca se guarda ni se imprime en logs.
+21.2 Roster sin cambio directo de personaje
+El menú de pausa no ofrece Selección de personaje ni Cambiar personaje. Para usar otro, el jugador sale al menú principal, el servidor persiste el estado y elimina al personaje activo del mundo; solo entonces se regresa al roster. No existe intercambio instantáneo tipo hot swap.
+Solo puede existir un personaje activo por cuenta y región a la vez.
+Los inventarios son por personaje y no existe inventario global de cuenta en la primera versión.
+No existe correo directo entre personajes de la misma cuenta.
+Bancos, viviendas, mercados o almacenes compartidos se diseñan después con reglas explícitas.
+El logout en zonas peligrosas puede requerir una espera segura; la regla exacta queda pendiente.
+21.3 Regiones y traslado de servidor
+La separación entre Américas, Europa u otras regiones permanece pendiente hasta validar población, latencia, costes y backend. Si se implementa, la región se elige después del login y antes del roster; el personaje guarda un region_id y no puede cambiarlo desde las opciones ni durante el juego.
+Un posible traslado futuro no será un ajuste común ni una promesa de lanzamiento. Será un servicio separado que deberá resolver capacidad, nombres, inventario, monedas, mercado, correo, facción, territorio, reputación, viviendas y periodos de espera.
+21.4 Menú de pausa
+Acción
+Comportamiento
+Reanudar
+Cierra el menú y devuelve el control local.
+Opciones
+Abre la misma interfaz reutilizable disponible en portada.
+Salir al menú principal
+Confirma, guarda, desconecta y vuelve al roster autenticado.
+Salir del juego
+Confirma, cierra el personaje y termina la aplicación.
+En el prototipo local puede existir una pausa técnica temporal. En multiplayer, Esc no detiene el mundo ni el servidor: solo bloquea movimiento, cámara e interacción del cliente.
+21.5 Opciones compartidas
+Pestaña
+Alcance inicial
+General
+Idioma, región actual de solo lectura si aplica, consejos del tutorial, confirmación al salir, escala de UI y restablecer.
+Video
+Modo de pantalla, monitor, resolución desplegable, V-Sync, límite de FPS, preajuste, sombras y antialiasing.
+Audio
+Volumen general, música, efectos, ambiente, interfaz y voces mediante buses separados.
+Controles
+Velocidad de cámara y zoom, preferencias de mantener o alternar, y restablecer controles.
+Accesibilidad
+Protanopia, deuteranopia, tritanopia, intensidad, texto, escala de UI, movimiento, sacudidas, destellos y subtítulos.
+La resolución utiliza un selector desplegable, no un botón que recorre valores. Los cambios de resolución, monitor o modo requieren Aplicar y una confirmación con cuenta regresiva; si no se confirman, se restaura la configuración anterior.
+21.6 Arquitectura y propiedad de datos
+Dato
+Propietario
+Ejemplos
+Ajuste local
+Cliente
+Resolución, audio, idioma, accesibilidad y controles.
+Preferencia de cuenta
+Backend futuro
+Región preferida y ajustes sincronizados si se aprueban.
+Estado del personaje
+Servidor
+Región, posición, inventario, maestrías y facción.
+Sesión activa
+Servidor
+Cuenta, personaje activo, token, guardado y desconexión.
+SettingsManager carga, valida, aplica y guarda preferencias en user://settings.cfg. Una única escena options_menu.tscn se reutiliza desde portada y pausa. NetworkManager gestiona autenticación, región, roster y cierre autoritativo; GameManager coordina escenas sin almacenar credenciales sensibles.
+21.7 Sistemas de información del mundo
+Un juego de información necesita interfaces claras. Si los jugadores no pueden ver rutas, permisos, contratos, reputación o riesgos de forma comprensible, el sistema se vuelve confuso en vez de profundo.
+Mapa con capas: zonas seguras, riesgo, rutas conocidas, rutas privadas, control de facción y eventos.
+Panel de facción: miembros, rangos, permisos, almacenes, activos, mantenimiento, logs y tratados.
+Libro de contratos: transporte, escolta, información, crafting, recuperación y caza.
+Mercado: precios, volumen, historial, impuestos, origen de materiales y disponibilidad regional.
+Panel de territorio: estado de activo, suministros, moral, defensas, vulnerabilidades y producción.
+Registro de reputación: contratos, deudas, crímenes, bounties, honores y traiciones verificadas.
+Herramientas de espionaje: reportes, mapas, sellos, permisos, documentos y pistas de sabotaje.
+22. Alcance realista: del MMO al prototipo
+El concepto completo es ambicioso. Para avanzar de verdad, conviene prototipar primero una versión pequeña que demuestre el corazón: zona segura, zona peligrosa, recursos, muerte, saqueo, comercio, ruta y facción.
+Etapa
+Objetivo
+Debe demostrar
+0. Documento y reglas
+Cerrar un GDD base, preguntas abiertas y prioridades.
+Qué sistemas son esenciales y qué queda fuera del prototipo.
+1. Prototipo local
+Jugador, inventario, recolección, crafting simple, muerte y extracción.
+El loop individual funciona sin MMO completo.
+2. Multiplayer pequeño
+10-30 jugadores, una ciudad segura, una zona intermedia y una zona roja.
+Riesgo, saqueo, comercio y agrupación generan historias.
+3. Facción mínima
+Crear facciones, permisos, banco, ruta y puesto reclamable.
+La logística y la confianza importan.
+4. Espionaje mínimo
+Reportes, permisos, logs, filtración de ruta y sabotaje simple.
+La información cambia resultados reales.
+5. Temporada piloto
+Ciclo de 4-6 semanas con activo central y gobernanza básica.
+El poder puede ganarse, sostenerse y perderse.
+
+22.1 Vertical slice sugerida
+Una ciudad segura con banco, mercado, crafting básico y respawn sin pérdida.
+Una zona intermedia con recursos mejores, PvE, posibilidad de muerte y saqueo parcial.
+Una zona peligrosa central reducida con recurso raro, punto reclamable y riesgo de saqueo alto.
+Tres tipos de transporte: inventario personal, carro terrestre y montura básica.
+Dos o tres ramas de maestría iniciales: combate, recolección y crafteo.
+Facción simple con banco, rangos y permisos.
+Contrato de transporte y contrato de escolta.
+Un sistema mínimo de reputación o bounty.
+22.2 Métricas de éxito del prototipo
+Los jugadores entienden cuándo están seguros y cuándo están arriesgando.
+La gente vuelve a ciudad para convertir ganancias y preparar el siguiente viaje.
+Los recursos generan comercio entre jugadores, no solo venta al sistema.
+La pérdida duele, pero no provoca abandono inmediato.
+Los grupos coordinados tienen ventaja, pero los solitarios aún encuentran valor.
+Una filtración de ruta o mala decisión logística puede cambiar una operación.
+23. Decisiones cerradas y nuevas preguntas de prototipo
+23.1 Decisiones de diseño base ya cerradas
+Las preguntas anteriores sobre muerte, saqueo, política, rutas y dragones dejan de ser el centro del punto 23. Siguen siendo ajustables por balance, pero ya tienen una dirección de diseño suficiente para avanzar a prototipo.
+Zonas de riesgo: azul segura, amarilla de transición, roja peligrosa regional y negra/central con full loot.
+Muerte: el personaje conserva nivel, maestrías y progresión personal; la pérdida afecta la expedición y lo cargado.
+Equipo: no se destruye permanentemente por uso normal; cambia de estado entre estropeado, dañado, común, fino, excelente y radiante.
+Política: temporadas renuevan corona, cargos y control competitivo, pero no borran niveles ni maestrías.
+Rutas: mover materiales relevantes requiere planificación, manifiesto o contrato que genere información espiable.
+Dragones: míticos pero sistémicos; accesibles en casos raros, difíciles de mantener sin infraestructura.
+Mapa: dos medialunas laterales, centro peligroso, puertos, archipiélagos, rutas punteadas y biomas asimétricos.
+23.2 Decisiones técnicas iniciales (v0.5)
+Estas decisiones no cierran para siempre el stack técnico, pero fijan un camino de prototipo coherente con alcance indie, bajo costo y deseo de independencia.
+Pregunta
+Decisión v0.5
+Notas
+Motor
+Godot 4.
+Se elige por independencia, ligereza, licencia abierta y buen encaje con prototipo indie.
+Cámara/juego
+Isométrico tipo Albion, no tercera persona completa.
+Primero importa leer escala, rutas, territorios y movimiento.
+Plataforma inicial
+PC primero.
+Móvil o multiplataforma se reevalúa más adelante.
+Servidor
+Autoritativo desde el día uno en la arquitectura.
+Aunque el primer mapa pueda ser local, el diseño de sistemas debe asumir que el servidor decide la verdad.
+Primer prototipo
+Mapa y escala antes que combate/economía.
+Sin texturas complejas; solo lectura de tamaño, continentes, rutas, zonas y nodos.
+Visual
+Más simple que Albion si hace falta.
+Prioridad: claridad, bajo costo de producción, silueta fuerte y lectura sistémica.
+Backend
+No decidido aún.
+Primero prototipo Godot local; luego prueba Godot headless/Nakama/Colyseus/custom según necesidad.
+23.3 Qué significa servidor autoritativo
+Servidor autoritativo significa que el servidor es la fuente de verdad. El cliente del jugador muestra el mundo, recibe input y predice algunas sensaciones, pero no decide por sí solo lo importante.
+El cliente dice intención: quiero moverme, atacar, recoger, comerciar, abrir banco, salir por esta ruta.
+El servidor valida: posición real, distancia, permisos, inventario, daño, muerte, loot, ruta, mercado y logs.
+El servidor responde el estado aceptado y todos los clientes se sincronizan con esa verdad.
+Esto evita que un cliente modificado pueda inventar oro, teletransportarse, duplicar recursos, ignorar daño o saquear ilegalmente.
+Para este juego es especialmente importante porque inventario, rutas, manifiestos, mercado, muerte y territorio son sistemas competitivos.
+23.4 Primer prototipo: mapa y escala
+El primer prototipo no busca combate ni MMO completo. Busca contestar una pregunta más básica: ¿el mundo se siente grande, legible y jugable desde una cámara isométrica simple?
+Crear una escena Godot con cámara isométrica/panorámica, pan y zoom.
+Representar las dos medialunas, el continente central, archipiélagos, rutas marítimas y puertos como formas simples.
+Marcar zonas conceptuales: interiores seguros, costas/intermedias, rutas rojas y centro negro.
+Probar tamaño relativo: cuánto tarda recorrer visualmente el mapa, qué tan lejos se sienten las regiones y dónde aparecen chokepoints naturales.
+No usar texturas ni arte final: solo bloques, colores, líneas, puntos y etiquetas mínimas.
+23.5 Backend y networking: decisión por etapas
+No conviene decidir todo el backend antes de tener un mapa navegable. La ruta recomendada es avanzar por etapas y elegir complejidad solo cuando el prototipo la necesite.
+Etapa
+Opción recomendada
+Objetivo
+Mapa local
+Godot solo.
+Validar cámara, escala, lectura del mundo y rutas sin servidor.
+Movimiento online mínimo
+Godot headless + ENet o API multiplayer de Godot.
+Probar 2-5 clientes con servidor autoritativo simple.
+Prueba social pequeña
+5-10 jugadores simultáneos.
+Validar posiciones, zonas, rutas y logs básicos.
+Vertical slice
+20-30 jugadores simultáneos como meta inicial razonable.
+Probar pérdida, rutas, mercado mínimo y facciones pequeñas.
+Persistencia/economía
+Evaluar Nakama, Colyseus o backend propio con base de datos.
+Inventario persistente, mercado, manifiestos, casas, logs y cuentas.
+23.6 Zonas cargadas vs mundo seamless
+Zona cargada no significa que el PC del jugador sea dueño de esa zona. Significa que el mundo se divide en subregiones o escenas que el cliente carga cuando entra. El servidor, si el juego es autoritativo, sigue siendo quien decide la verdad.
+Para prototipo: usar un solo mapa visual grande para entender escala global.
+Para producción: probablemente dividir en subregiones cargadas por nivel, bioma, riesgo y territorio.
+El cliente renderiza y simula lo visible; el servidor valida posición, inventario, combate, rutas y estado real.
+Un mundo seamless completo puede ser más elegante, pero es más caro técnicamente. Las zonas cargadas calzan mejor con alcance indie y con el diseño por subregiones.
+23.7 Nuevas preguntas abiertas de producción
+Las nuevas preguntas abiertas ya no son sobre la fantasía base, sino sobre implementación, escala y validación.
+Pregunta nueva
+Por qué importa
+Primer criterio
+¿Qué tamaño real tendrá el primer mapa prototipo?
+Determina cámara, velocidad, tiempo de viaje y sensación de mundo.
+Debe sentirse enorme sin volverse imposible de recorrer visualmente.
+¿Qué unidad usará el mapa?
+Define escala entre dibujo, coordenadas y futuro gameplay.
+Probar metros/unidades Godot y ajustar con una barra de escala ficticia.
+¿Cuántos jugadores simultáneos se prueban primero?
+Afecta networking, servidor y complejidad.
+2 jugadores local/online primero; 5-10 para prueba pequeña; 20-30 como objetivo de vertical slice.
+¿Godot headless, Nakama, Colyseus o backend propio?
+Define persistencia, matches, autoridad y herramientas.
+No decidir hasta probar mapa y movimiento online mínimo.
+¿Cómo se traducen rutas/manifiestos a UI?
+El espionaje depende de que la ruta exista como información visible/robable.
+Diseñar un panel simple de ruta antes del mercado completo.
+¿Qué tan simple será el arte inicial?
+Evita morir produciendo assets antes de probar sistemas.
+Bloques, colores, siluetas, iconos y nombres temporales.
+24. Checklist de atención para avanzar
+La siguiente lista sirve para convertir imaginación en diseño accionable.
+Área
+Siguiente decisión útil
+Riesgo si se posterga
+Mapa conceptual
+Definir cantidad de subregiones iniciales y rol de cada una.
+El mundo se vuelve grande sin intención jugable.
+Muerte/loot
+Elegir prototipo de pérdida para zona intermedia y zona central.
+El juego puede sentirse injusto o sin tensión.
+Economía
+Separar usos de oro y plata, y listar primeros sumideros.
+Inflación temprana o progreso roto.
+Facciones
+Definir permisos mínimos, banco, rangos y reclamo de activo.
+No se puede probar confianza ni traición.
+Espionaje
+Elegir una mecánica mínima: reporte de ruta, log o sabotaje.
+La identidad del juego queda solo en discurso.
+Progresión
+Seleccionar ramas iniciales y cómo suben.
+Roles fluidos pueden volverse confusos o sin costo.
+Prototipo
+Construir vertical slice con una ruta valiosa y una pérdida medible.
+El proyecto se dispersa en ambición de MMO completo.
+
+25. Definición corta para recordar
+Frase guía
+Este juego no trata solamente de ser más fuerte. Trata de sostener poder cuando el mundo, la economía, tus aliados, tus enemigos y la información pueden volverse contra ti.
+
+La siguiente iteración recomendada es elegir el vertical slice: una ciudad segura, una zona intermedia, una zona peligrosa, un recurso valioso, una ruta, una forma de morir, una forma de saquear, una forma de comerciar y una forma mínima de traición.
+
+26. Actualización de proyecto e implementación (v0.8)
+Esta actualización consolida el estado documentado del repositorio al 4 de agosto de 2026. No cambia la visión del MMO territorial: traduce decisiones del GDD a un prototipo Godot navegable, editable por sectores y preparado para sustituir sus mocks locales por servicios autoritativos.
+26.1 Estado ejecutivo
+Área
+Estado documentado
+Lectura para el proyecto
+Mundo y terreno
+En implementación activa
+Mapa macro, sectores de 5 km x 5 km, exports Terrain3D y edición manual por sector.
+Navegación y costa
+Prototipo funcional
+Lectura local, minimapa, atlas conceptual, agua separada, vadeo/natación limitada y mar bloqueado sin embarcación.
+Entrada y personajes
+Prototipo funcional con mock
+Login, roster de cuatro slots, creador y entrada al sector inicial; la persistencia aún no es real.
+Tutorial vertical
+Prototipo funcional con mock
+Hacha equipable, tala canalizada, entrega de madera y respawn temporal.
+UI y opciones
+Implementación y auditoría en curso
+HUD modular, inventario, mapas, menú, ajustes y accesibilidad tienen dirección de producto definida.
+Multijugador y persistencia
+Arquitectura definida; no implementado
+Servidor Godot autoritativo, FastAPI y PostgreSQL son la dirección acordada; ServerMock sigue siendo transitorio.
+
+26.2 Decisiones confirmadas desde v0.7
+El primer producto sigue siendo un prototipo de herramientas y lectura territorial, no un MMO completo. La prioridad es validar mapa, escala, rutas, costa y sectores antes de ampliar combate, economía o contenido masivo.
+La unidad de mundo jugable es el sector de 5 km x 5 km. El mapa macro conserva la autoridad de diseño; Terrain3D es una capa de edición regional y no reemplaza la máscara ni los datos macro.
+El sector inicial oficial para personajes nuevos es [27, 30]. Sus vecinos y otros sectores históricos se conservan para comparación y pruebas, no como promesa de contenido final.
+La costa, el agua y el fondo se modelan como capas diferenciadas. El agua visual es una malla/sistema aparte de las texturas del terreno; el personaje distingue tierra, vadeo, natación y mar abierto.
+Los índices de textura Terrain3D son una convención de datos estable. No deben reordenarse porque los mapas de control guardan índices, no nombres de materiales.
+La interfaz se organiza en niveles de navegación: minimapa de HUD, mapa de sector con Tab y atlas mundial con M. Cada nivel responde una pregunta distinta y evita mezclar navegación local con estrategia macro.
+El roster admite un máximo de cuatro personajes por cuenta y seleccionar un personaje no inicia el mundo por sí solo: la entrada requiere una acción explícita.
+El cliente nunca será la fuente final de verdad para recompensas, inventario, daño, cooldowns o propiedad. El mock actual existe para validar UX y loops, no para definir la arquitectura final.
+26.3 Implementación ya documentada
+Sistema
+Qué existe o está preparado
+Límite actual
+Mapa y Terrain3D
+Dock propio para seleccionar, generar, cargar, guardar y regenerar sectores; heightmaps, previews, control maps y correcciones reversibles.
+El generador entrega una base; la dirección de arte final y el contenido por sector siguen siendo trabajo manual/iterativo.
+Materiales ambientales
+Biblioteca compartida de Terrain3D, primera pasada automática por superficie/bioma/pendiente/altura y herramientas de pintura.
+Los biomas no son aún reglas definitivas de gameplay; los assets y la lectura visual siguen en calibración.
+Agua y movimiento
+Agua costera con detección, ambiente, natación limitada y bloqueo de mar abierto sin vehículo.
+Barcos, transporte naval y objetos flotantes son extensiones futuras; la altura lógica ya deja espacio para ellos.
+Personajes
+Login, roster, creador, preview 3D y transición al mundo Terrain3D con pruebas automatizadas.
+Cuentas y personajes viven en memoria dentro de ServerMock y se pierden al cerrar.
+Inventario y tala
+Equipamiento de manos, hacha visible, requisito de herramienta, tala de siete segundos, madera y respawn de nueve minutos.
+Durabilidad, calidad, misión inicial, recursos persistentes y validación de servidor real siguen pendientes.
+UI de producto
+Dirección visual para HUD, módulos editables, inventario, mapas, menús y opciones; auditorías de botones y recorrido UI.
+Quedan prioridades de accesibilidad, respuesta visual y cierre de componentes antes de considerarla final.
+
+26.4 Arquitectura objetivo que se mantiene
+La implementación final se divide por responsabilidad. El cliente Godot presenta el mundo y predice la interacción; un servidor Godot headless conserva el estado oficial y valida acciones; FastAPI gestiona cuentas y sesiones; PostgreSQL conserva la información durable. Los sectores estáticos viajan como contenido versionado y el servidor persiste, sobre todo, las excepciones al estado base: recursos talados, inventarios, posiciones, acciones y cambios de mundo relevantes.
+Reemplazar el registro automático del mock por el flujo de cuentas.
+Definir contratos versionados entre cliente, API y servidor.
+Levantar servidor Godot headless con autenticación y sesión de personaje.
+Sincronizar dos clientes en un mismo sector y validar una tala autoritativa completa.
+Persistir inventario y excepciones de recursos en PostgreSQL antes de extender economía o combate.
+26.5 Riesgos y criterios incorporados
+No convertir cada sector en contenido artesanal irrepetible demasiado pronto: el costo de producción, migración y mantenimiento debe acompañar a la población real.
+No usar la distancia de dibujo del cliente como una regla de gameplay. El área de interés y la información sensible deben filtrarse desde el servidor.
+No reexportar ni regenerar sectores con ediciones sin una decisión explícita: los flujos de herramientas deben preservar exports y correcciones existentes.
+No confundir presentación con autoridad. Animaciones, barras de progreso y previews pueden anticipar una acción; la recompensa y el cambio persistente deben ser validados por el servidor.
+No cerrar números de combate, economía, capacidad de población o backend antes de contar con métricas del prototipo y pruebas de carga pertinentes.
+27. Preguntas abiertas priorizadas
+Prioridad
+Decisión por cerrar
+Primer criterio de validación
+P0
+Contratos reales de cuenta, sesión y servidor autoritativo.
+Dos clientes conectados, sesión validada y personaje cargado fuera del mock.
+P0
+Acción de tala autoritativa y persistencia de inventario/recurso.
+El servidor calcula recompensa, evita duplicados y conserva respawn tras reinicio.
+P1
+Cruce de borde, área de interés y carga de vecinos.
+El jugador cambia de sector sin exponer datos fuera de rango ni romper lectura local.
+P1
+Alcance exacto de la vertical de economía y muerte.
+Una ruta valiosa, una pérdida comprensible y una recuperación/retorno medibles.
+P1
+Reglas de navegación y primer vehículo/barco.
+El mar abierto deja de ser bloqueo sólo cuando el vehículo tiene coste, ruta y contrajuego.
+P2
+Backend específico y escalado por procesos.
+Elegir con perfiles de CPU, RAM, latencia, ancho de banda y consultas, no por anticipación.
+
+Anexo A. Mapa de documentación vigente
+Los siguientes documentos del repositorio complementan este GDD. El presente documento conserva la visión y decisiones macro; los anexos indican dónde vive el detalle operativo y técnico.
+Documento
+Contenido de referencia
+README.md
+Puerta de entrada del prototipo, mapa macro, sectores, Terrain3D, controles, flujo de edición y convenciones de textura.
+docs/design/albion_world_architecture_lessons.md
+Lecciones aplicables sobre topología, población, costo de mapas, recursos dinámicos y rendimiento.
+docs/design/map_navigation_flow.md
+Responsabilidad de minimapa, mapa de sector y atlas mundial; flujo de teclas y deuda del piloto.
+docs/design/hud_visual_direction.md y ui_product_audit_v2.md
+Dirección visual, componentes, auditorías, prioridades y uso de recursos UI.
+docs/design/water_and_navigation_flow.md
+Capas de agua, costa, detección, personaje, audio y navegación futura.
+docs/design/menu_flow_and_settings.md
+Portada, login, roster, pausa, opciones, accesibilidad y propiedad de datos.
+docs/design/mastery_tree.md y tutorial_scope.md
+Progresión, Legados, alcance pedagógico y tutorial inicial.
+docs/technical/authoritative_networking_and_persistence.md
+Cliente/servidor/API/base de datos, protocolos de acción, sectores, persistencia y orden de implementación.
+docs/technical/character_roster_flow.md
+Estados y reglas de roster/creador, máximo de personajes, spawn y pruebas.
+docs/technical/tutorial_axe_inventory_flow.md y harvestable_trees.md
+Vertical de hacha, inventario, tala, identidad de recursos y límites del mock.
+docs/technical/project_structure.md
+Estructura prevista del proyecto y ubicación de sistemas, herramientas, UI y pruebas.
+
+Anexo B. Convenciones que no deben romperse
+Sector jugable: 5 km x 5 km; el sector de spawn actual es [27, 30].
+La máscara y los datos macro permanecen separados de las correcciones reversibles de Terrain3D.
+Orden de slots Terrain3D: 0 tierra seca, 1 arena/costa, 2 pasto, 3 tierra húmeda, 4 roca, 5 roca secundaria, 6 nieve, 7 barro/pantano.
+El agua visual no se pinta como material principal Terrain3D; se trata como sistema separado con una altura lógica reutilizable.
+Las operaciones de inventario, recursos, combate y economía deben ser idempotentes, auditables y servidor-autoritativas cuando salgan del mock.
+Los sectores exportados o editados no se regeneran silenciosamente: la herramienta debe pedir una confirmación informada.
+Anexo C. Límite explícito de esta versión
+v0.8 documenta implementación, arquitectura y prioridades; no declara que el MMO, la economía territorial, el combate competitivo, los barcos, el backend ni la persistencia ya estén terminados. El criterio de avance sigue siendo validar primero loops pequeños, medibles y seguros antes de ampliar el alcance.

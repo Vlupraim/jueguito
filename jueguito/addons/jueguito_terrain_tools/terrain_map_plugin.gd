@@ -29,10 +29,17 @@ func _enter_tree() -> void:
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, dock)
 	if not scene_changed.is_connected(_on_scene_changed):
 		scene_changed.connect(_on_scene_changed)
+	var filesystem := get_editor_interface().get_resource_filesystem()
+	if not filesystem.resources_reimported.is_connected(_on_resources_reimported):
+		filesystem.resources_reimported.connect(_on_resources_reimported)
 	call_deferred("_ensure_current_workspace_structure")
+	call_deferred("_refresh_terrain_texture_arrays")
 
 
 func _exit_tree() -> void:
+	var filesystem := get_editor_interface().get_resource_filesystem()
+	if filesystem.resources_reimported.is_connected(_on_resources_reimported):
+		filesystem.resources_reimported.disconnect(_on_resources_reimported)
 	if scene_changed.is_connected(_on_scene_changed):
 		scene_changed.disconnect(_on_scene_changed)
 	if dock != null:
@@ -43,6 +50,22 @@ func _exit_tree() -> void:
 
 func _on_scene_changed(scene_root: Node) -> void:
 	_ensure_workspace_structure(scene_root)
+	call_deferred("_refresh_terrain_texture_arrays")
+
+
+func _on_resources_reimported(paths: PackedStringArray) -> void:
+	for path in paths:
+		if path.begins_with("res://assets/environment/terrain/"):
+			call_deferred("_refresh_terrain_texture_arrays")
+			return
+
+
+func _refresh_terrain_texture_arrays() -> void:
+	var scene := get_editor_interface().get_edited_scene_root()
+	if scene == null or scene.name != WORKSPACE_ROOT_NAME: return
+	var terrain := scene.get_node_or_null("Importer") as Terrain3D
+	if terrain == null: return
+	preload("res://scripts/tools/editor/terrain_texture_binding.gd").refresh(terrain)
 
 
 func _ensure_current_workspace_structure() -> void:

@@ -1,38 +1,27 @@
 [gd_resource type="Terrain3DAssets" format=3 uid="uid://dp4luima267ng"]
 
-[ext_resource type="PackedScene" uid="uid://d20d3dfpbytn6" path="res://assets/environment/vegetation/quaternius_stylized_nature/Grass_Common_Short.gltf" id="1_2km3p"]
-[ext_resource type="PackedScene" uid="uid://v4bdjd6fwn6g" path="res://assets/environment/vegetation/quaternius_stylized_nature/Grass_Wispy_Tall.gltf" id="2_k2uym"]
-[ext_resource type="PackedScene" uid="uid://dtoss3umf1cga" path="res://assets/environment/vegetation/quaternius_stylized_nature/Bush_Common.gltf" id="3_epnha"]
-[ext_resource type="PackedScene" uid="uid://cxbba7xpjp5x3" path="res://assets/environment/vegetation/quaternius_stylized_nature/CommonTree_1.gltf" id="4_x610r"]
-[ext_resource type="PackedScene" uid="uid://d2sm104fvfnpl" path="res://assets/environment/vegetation/quaternius_stylized_nature/CommonTree_3.gltf" id="5_f518s"]
-[ext_resource type="PackedScene" uid="uid://det68c77ebnot" path="res://assets/environment/vegetation/quaternius_stylized_nature/Pine_1.gltf" id="6_4iwij"]
-[ext_resource type="PackedScene" uid="uid://dte1pkvf2khx6" path="res://assets/environment/vegetation/quaternius_stylized_nature/Rock_Medium_1.gltf" id="7_rjpw7"]
-[ext_resource type="PackedScene" uid="uid://dybwuj102r3fi" path="res://assets/environment/vegetation/quaternius_stylized_nature/Mushroom_Common.gltf" id="8_1sa4c"]
-[ext_resource type="Texture2D" uid="uid://c54wm6ni1pnly" path="res://assets/environment/terrain/textures/stylized/terrain_slots/00_tierra_seca.png" id="9_7ypq1"]
-[ext_resource type="Texture2D" uid="uid://dxfnvpkewg274" path="res://assets/environment/terrain/textures/stylized/terrain_slots/01_arena.png" id="10_7au15"]
-[ext_resource type="Texture2D" uid="uid://dlngxlc16obfq" path="res://assets/environment/terrain/textures/stylized/terrain_slots/flat_normal_roughness.svg" id="10_k2uym"]
-[ext_resource type="Texture2D" uid="uid://hi4m7erd8td5" path="res://assets/environment/terrain/textures/stylized/terrain_slots/02_pasto.png" id="11_aku3s"]
-[ext_resource type="Texture2D" uid="uid://bk4yshjrmeenr" path="res://assets/environment/terrain/textures/stylized/terrain_slots/03_tierra_humeda.png" id="12_rlavl"]
-[ext_resource type="Texture2D" uid="uid://b1kj6ml85x6yd" path="res://assets/environment/terrain/textures/stylized/terrain_slots/04_roca.png" id="13_80gp5"]
-[ext_resource type="Texture2D" uid="uid://dr44qt7nfco5j" path="res://assets/environment/terrain/textures/stylized/terrain_slots/05_arcano.png" id="14_7y1bf"]
-[ext_resource type="Texture2D" uid="uid://bauysl2dj5mga" path="res://assets/environment/terrain/textures/stylized/terrain_slots/06_pasto_sombrio.png" id="16_f8nrl"]
-[ext_resource type="Texture2D" uid="uid://0jn6ctiwh8m6" path="res://assets/environment/terrain/textures/stylized/terrain_slots/07_pantano.png" id="16_wit6c"]
-[ext_resource type="Texture2D" uid="uid://bpd4xvw734wb3" path="res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_gris_con_gravilla_001.png" id="18_f8nrl"]
-[ext_resource type="Texture2D" uid="uid://dei4ovnw64sig" path="res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_rosa_con_gravilla_fina_015.png" id="19_73f6d"]
-[ext_resource type="Texture2D" uid="uid://cngkwpl4eluen" path="res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_clara_con_piedras_024.png" id="20_sx67w"]
-[ext_resource type="Texture2D" uid="uid://dwxqnge8kojf6" path="res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_ocre_con_piedras_031.png" id="21_2alk7"]
-[ext_resource type="Texture2D" uid="uid://cdcbw8biv555f" path="res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_gravilla_fina_033.png" id="22_mx8tf"]
-[ext_resource type="Texture2D" uid="uid://yx4ahkbsje6d" path="res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_grava_036.png" id="23_eny44"]
-[ext_resource type="Texture2D" uid="uid://dyr6dacuafuak" path="res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_de_lajas_grandes_040.png" id="24_7chev"]
-[ext_resource type="Texture2D" uid="uid://ce35hid1kef0m" path="res://assets/environment/terrain/textures/stylized/curated_ground/tierra/ceniza_gris_con_gravilla_048.png" id="25_osuom"]
-[ext_resource type="Texture2D" uid="uid://cwl6bji1ccfvj" path="res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/roca_marron_con_musgo_064.png" id="26_g7kuy"]
-[ext_resource type="Texture2D" uid="uid://dvaa2p6c7fo3c" path="res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png" id="27_0l4os"]
-[ext_resource type="Texture2D" uid="uid://b17r6ixuha23r" path="res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/musgo_con_rocas_grandes_071.png" id="28_kldab"]
-[ext_resource type="Texture2D" uid="uid://bscbqeps01gbn" path="res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_caliza_clara_077.png" id="29_3ex3o"]
-[ext_resource type="Texture2D" uid="uid://cie01xolqpn0p" path="res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_marron_en_lajas_079.png" id="30_201vi"]
-[ext_resource type="Texture2D" uid="uid://dkmc68cypqlki" path="res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_marrones_humedos_087.png" id="31_64du4"]
-[ext_resource type="Texture2D" uid="uid://bio2078tb2s66" path="res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_rojo_091.png" id="32_f26k3"]
-[ext_resource type="Texture2D" uid="uid://besmu8eeemmr1" path="res://assets/environment/terrain/textures/stylized/terrain_slots/23_pasto_rocas_sombrio.png" id="33_73f6d"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Grass_Common_Short.gltf" id="1_2km3p"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Grass_Wispy_Tall.gltf" id="2_k2uym"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Bush_Common.gltf" id="3_epnha"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/CommonTree_1.gltf" id="4_x610r"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/CommonTree_3.gltf" id="5_f518s"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Pine_1.gltf" id="6_4iwij"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Rock_Medium_1.gltf" id="7_rjpw7"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Mushroom_Common.gltf" id="8_1sa4c"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/soil.png" id="natural_0"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png" id="natural_1"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/sand.png" id="natural_2"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/micro_fine_normal_roughness.png" id="natural_3"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/grass.png" id="natural_4"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/micro_grass_normal_roughness.png" id="natural_5"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/damp_soil.png" id="natural_6"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/rock.png" id="natural_7"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png" id="natural_8"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/gravel.png" id="natural_9"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/ash.png" id="natural_10"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/moss.png" id="natural_11"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/flagstone.png" id="natural_12"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/snow.png" id="natural_13"]
 
 [sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_oo2ne"]
 name = "00_PastoCorto"
@@ -107,267 +96,300 @@ lod0_range = 48.0
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_osuom"]
 name = "00_TierraSeca"
-albedo_texture = ExtResource("9_7ypq1")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_texture = ExtResource("natural_0")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_g7kuy"]
 name = "01_Arena"
 id = 1
-albedo_texture = ExtResource("10_7au15")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.93, 0.92, 0.9, 1)
+albedo_texture = ExtResource("natural_2")
+normal_texture = ExtResource("natural_3")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_0l4os"]
 name = "02_Pasto"
 id = 2
-albedo_texture = ExtResource("11_aku3s")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.94, 1, 0.92, 1)
+albedo_texture = ExtResource("natural_4")
+normal_texture = ExtResource("natural_5")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_kldab"]
 name = "03_TierraHumeda"
 id = 3
-albedo_texture = ExtResource("12_rlavl")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_texture = ExtResource("natural_6")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+roughness = -0.04
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_3ex3o"]
 name = "04_Roca"
 id = 4
-albedo_texture = ExtResource("13_80gp5")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_texture = ExtResource("natural_7")
+normal_texture = ExtResource("natural_8")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.45
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_201vi"]
 name = "05_Arcano"
 id = 5
-albedo_texture = ExtResource("14_7y1bf")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.83, 0.88, 1, 1)
+albedo_texture = ExtResource("natural_7")
+normal_texture = ExtResource("natural_8")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.48
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_64du4"]
 name = "06_PastoSombrio"
 id = 6
-albedo_texture = ExtResource("16_f8nrl")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.8, 0.92, 0.83, 1)
+albedo_texture = ExtResource("natural_4")
+normal_texture = ExtResource("natural_5")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_f26k3"]
 name = "07_Pantano"
 id = 7
-albedo_texture = ExtResource("16_wit6c")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.83, 0.94, 0.83, 1)
+albedo_texture = ExtResource("natural_6")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+roughness = -0.04
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_k2uym"]
 name = "08_TierraGrisGravilla"
 id = 8
-albedo_texture = ExtResource("18_f8nrl")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.88, 0.92, 0.98, 1)
+albedo_texture = ExtResource("natural_9")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_epnha"]
 name = "09_ArenaRosaGravilla"
 id = 9
-albedo_texture = ExtResource("19_73f6d")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.99, 0.88, 0.82, 1)
+albedo_texture = ExtResource("natural_2")
+normal_texture = ExtResource("natural_3")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_x610r"]
 name = "10_ArenaClaraPiedras"
 id = 10
-albedo_texture = ExtResource("20_sx67w")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(1, 0.97, 0.89, 1)
+albedo_texture = ExtResource("natural_9")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_f518s"]
 name = "11_TierraOcrePiedras"
 id = 11
-albedo_texture = ExtResource("21_2alk7")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(1, 0.95, 0.86, 1)
+albedo_texture = ExtResource("natural_0")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_4iwij"]
 name = "12_TierraRojaFina"
 id = 12
-albedo_texture = ExtResource("22_mx8tf")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(1, 0.83, 0.76, 1)
+albedo_texture = ExtResource("natural_0")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_rjpw7"]
 name = "13_TierraRojaGrava"
 id = 13
-albedo_texture = ExtResource("23_eny44")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(1, 0.83, 0.76, 1)
+albedo_texture = ExtResource("natural_9")
+normal_texture = ExtResource("natural_1")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_1sa4c"]
 name = "14_RocaGrisLajas"
 id = 14
-albedo_texture = ExtResource("24_7chev")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.91, 0.96, 1, 1)
+albedo_texture = ExtResource("natural_7")
+normal_texture = ExtResource("natural_8")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.45
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_7ypq1"]
 name = "15_CenizaGrisGravilla"
 id = 15
-albedo_texture = ExtResource("25_osuom")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_texture = ExtResource("natural_10")
+normal_texture = ExtResource("natural_3")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_7au15"]
 name = "16_RocaMarronMusgo"
 id = 16
-albedo_texture = ExtResource("26_g7kuy")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.9, 0.96, 0.86, 1)
+albedo_texture = ExtResource("natural_11")
+normal_texture = ExtResource("natural_5")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_aku3s"]
 name = "17_PastoRocasDispersas"
 id = 17
-albedo_texture = ExtResource("27_0l4os")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.98, 1, 0.92, 1)
+albedo_texture = ExtResource("natural_11")
+normal_texture = ExtResource("natural_5")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_rlavl"]
 name = "18_MusgoRocasGrandes"
 id = 18
-albedo_texture = ExtResource("28_kldab")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.85, 0.91, 0.85, 1)
+albedo_texture = ExtResource("natural_11")
+normal_texture = ExtResource("natural_5")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_80gp5"]
 name = "19_RocaCalizaClara"
 id = 19
-albedo_texture = ExtResource("29_3ex3o")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(1, 1, 0.94, 1)
+albedo_texture = ExtResource("natural_7")
+normal_texture = ExtResource("natural_8")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.45
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_7y1bf"]
 name = "20_RocaMarronLajas"
 id = 20
-albedo_texture = ExtResource("30_201vi")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(1, 0.93, 0.84, 1)
+albedo_texture = ExtResource("natural_7")
+normal_texture = ExtResource("natural_8")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.45
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_mgue1"]
 name = "21_CantosMarronesHumedos"
 id = 21
-albedo_texture = ExtResource("31_64du4")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.77, 0.76, 0.71, 1)
+albedo_texture = ExtResource("natural_9")
+normal_texture = ExtResource("natural_8")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_wit6c"]
 name = "22_EmpedradoRojo"
 id = 22
-albedo_texture = ExtResource("32_f26k3")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(1, 0.9, 0.84, 1)
+albedo_texture = ExtResource("natural_12")
+normal_texture = ExtResource("natural_8")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.55
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_oo2ne"]
 name = "23_PastoRocasSombrio"
 id = 23
-albedo_texture = ExtResource("33_73f6d")
-normal_texture = ExtResource("10_k2uym")
-normal_depth = 0.722
-ao_strength = 0.813
-uv_scale = 0.684
+albedo_color = Color(0.76, 0.85, 0.78, 1)
+albedo_texture = ExtResource("natural_11")
+normal_texture = ExtResource("natural_5")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
+detiling_rotation = 0.298
+detiling_shift = 0.255
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_f8nrl"]
+name = "24_Nieve"
+id = 24
+albedo_texture = ExtResource("natural_13")
+normal_texture = ExtResource("natural_3")
+normal_depth = 0.6
+ao_strength = 0.25
+uv_scale = 0.68
 detiling_rotation = 0.298
 detiling_shift = 0.255
 
 [resource]
 mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_oo2ne"), SubResource("Terrain3DMeshAsset_f8nrl"), SubResource("Terrain3DMeshAsset_73f6d"), SubResource("Terrain3DMeshAsset_sx67w"), SubResource("Terrain3DMeshAsset_2alk7"), SubResource("Terrain3DMeshAsset_mx8tf"), SubResource("Terrain3DMeshAsset_eny44"), SubResource("Terrain3DMeshAsset_7chev")])
-texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_osuom"), SubResource("Terrain3DTextureAsset_g7kuy"), SubResource("Terrain3DTextureAsset_0l4os"), SubResource("Terrain3DTextureAsset_kldab"), SubResource("Terrain3DTextureAsset_3ex3o"), SubResource("Terrain3DTextureAsset_201vi"), SubResource("Terrain3DTextureAsset_64du4"), SubResource("Terrain3DTextureAsset_f26k3"), SubResource("Terrain3DTextureAsset_k2uym"), SubResource("Terrain3DTextureAsset_epnha"), SubResource("Terrain3DTextureAsset_x610r"), SubResource("Terrain3DTextureAsset_f518s"), SubResource("Terrain3DTextureAsset_4iwij"), SubResource("Terrain3DTextureAsset_rjpw7"), SubResource("Terrain3DTextureAsset_1sa4c"), SubResource("Terrain3DTextureAsset_7ypq1"), SubResource("Terrain3DTextureAsset_7au15"), SubResource("Terrain3DTextureAsset_aku3s"), SubResource("Terrain3DTextureAsset_rlavl"), SubResource("Terrain3DTextureAsset_80gp5"), SubResource("Terrain3DTextureAsset_7y1bf"), SubResource("Terrain3DTextureAsset_mgue1"), SubResource("Terrain3DTextureAsset_wit6c"), SubResource("Terrain3DTextureAsset_oo2ne")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_osuom"), SubResource("Terrain3DTextureAsset_g7kuy"), SubResource("Terrain3DTextureAsset_0l4os"), SubResource("Terrain3DTextureAsset_kldab"), SubResource("Terrain3DTextureAsset_3ex3o"), SubResource("Terrain3DTextureAsset_201vi"), SubResource("Terrain3DTextureAsset_64du4"), SubResource("Terrain3DTextureAsset_f26k3"), SubResource("Terrain3DTextureAsset_k2uym"), SubResource("Terrain3DTextureAsset_epnha"), SubResource("Terrain3DTextureAsset_x610r"), SubResource("Terrain3DTextureAsset_f518s"), SubResource("Terrain3DTextureAsset_4iwij"), SubResource("Terrain3DTextureAsset_rjpw7"), SubResource("Terrain3DTextureAsset_1sa4c"), SubResource("Terrain3DTextureAsset_7ypq1"), SubResource("Terrain3DTextureAsset_7au15"), SubResource("Terrain3DTextureAsset_aku3s"), SubResource("Terrain3DTextureAsset_rlavl"), SubResource("Terrain3DTextureAsset_80gp5"), SubResource("Terrain3DTextureAsset_7y1bf"), SubResource("Terrain3DTextureAsset_mgue1"), SubResource("Terrain3DTextureAsset_wit6c"), SubResource("Terrain3DTextureAsset_oo2ne"), SubResource("Terrain3DTextureAsset_f8nrl")])

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/environment/weather_wind.gd" id="1_wind"]
+
+[resource]
+script = ExtResource("1_wind")
+direction_xz = Vector2(1, 0.35)
+speed_meters_per_second = 6.0

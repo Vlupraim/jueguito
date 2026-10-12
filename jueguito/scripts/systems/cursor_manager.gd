@@ -85,6 +85,15 @@ func _ready() -> void:
 	set_cursor_mode(DEFAULT)
 
 
+func _exit_tree() -> void:
+	# Input retiene las texturas de los cursores personalizados. Soltarlas antes
+	# de destruir RenderingServer evita fugas y errores de ImageTexture al salir.
+	for shape in CURSOR_SHAPES.values():
+		Input.set_custom_mouse_cursor(null, shape)
+	Input.set_custom_mouse_cursor(null, Input.CURSOR_BUSY)
+	_cursor_textures.clear()
+
+
 func set_cursor_mode(mode: StringName) -> void:
 	if not CURSOR_PATHS.has(mode):
 		push_warning("Modo de cursor desconocido: %s" % mode)

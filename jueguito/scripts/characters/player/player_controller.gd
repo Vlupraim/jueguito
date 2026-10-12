@@ -4,6 +4,9 @@ signal water_state_changed(previous_state: String, next_state: String)
 signal timed_action_started(label: String, duration: float)
 signal timed_action_progress(elapsed: float, duration: float)
 signal timed_action_finished(completed: bool)
+signal stamina_changed(current: float, maximum: float)
+signal interaction_out_of_range
+signal camera_lock_changed(locked: bool)
 
 enum CameraMode { PERSPECTIVE_TACTICAL, PERSPECTIVE_CLOSE, ORTHOGRAPHIC }
 
@@ -18,6 +21,11 @@ const CHOP_LOOP_CAPTURE_DURATION := 0.28
 @export var sprint_speed := 9.1
 @export var acceleration := 18.0
 @export var gravity := 42.0
+@export var jump_speed := 10.5
+@export var max_stamina := 100.0
+@export var sprint_stamina_drain := 28.0
+@export var stamina_recovery := 22.0
+@export var stamina_recovery_delay := 0.8
 @export_range(0.1, 1.0, 0.05) var wade_speed_multiplier := 0.55
 @export var swim_speed := 2.6
 ## Distancia entre el origen del personaje y la superficie al nadar. Con el
@@ -64,10 +72,18 @@ var timed_action_elapsed := 0.0
 var timed_action_duration := 0.0
 var timed_action_animation := &""
 
-# Variables para movimiento tipo LoL (click-to-move)
+# Compatibilidad con herramientas antiguas; no gobiernan el movimiento WASD.
 var target_pos := Vector3.ZERO
 var has_target := false
 var gameplay_input_enabled := true
+var stamina := 100.0
+var _stamina_delay := 0.0
+var _sprint_exhausted := false
+var _grounded := true
+var _orbiting := false
+var _first_person := false
+var camera_locked := true
+var _locked_heading := 0.0
 
 
 func _ready() -> void:
@@ -75,6 +91,12 @@ func _ready() -> void:
 	camera_pivot = $CameraPivot
 	spring_arm = $CameraPivot/SpringArm3D
 	camera = $CameraPivot/SpringArm3D/Camera3D
+	spring_arm.add_excluded_object(get_rid())
+	var camera_shape := SphereShape3D.new()
+	camera_shape.radius = 0.18
+	spring_arm.shape = camera_shape
+	spring_arm.collision_mask = 13
+	spring_arm.margin = 0.1
 	visual = $Visual
 	_setup_character_visual()
 	if not GameManager.equipment_changed.is_connected(_on_equipment_changed):
@@ -83,44 +105,66 @@ func _ready() -> void:
 	camera_pivot.rotation_degrees = Vector3(0.0, 45.0, 0.0)
 	spring_arm.spring_length = initial_camera_distance
 	_apply_camera_mode()
+	_set_camera_pitch(float(SettingsManager.get_setting("controls", "camera_pitch", -15.0)))
 	last_safe_position = global_position
 	make_camera_current()
+	stamina = max_stamina
+	SettingsManager.setting_changed.connect(_on_camera_setting_changed)
+	SettingsManager.settings_reset.connect(_on_camera_settings_reset)
+	camera_locked = bool(SettingsManager.get_setting("controls", "camera_locked", true))
+	_locked_heading = visual.rotation.y
 	
 	# Suscripción al movimiento aprobado por el servidor
 	NetworkManager.movement_approved.connect(_on_movement_approved)
 
 
 func _on_movement_approved(approved_position: Vector3) -> void:
+	# Los destinos del prototipo no controlan la locomocion WASD.
 	target_pos = approved_position
-	has_target = true
+	has_target = false
+
+
+func _process(_delta: float) -> void:
+	if spring_arm != null and visual != null:
+		visual.visible = spring_arm.spring_length > 0.25 and spring_arm.get_hit_length() > 0.35
+	if camera_locked and not _orbiting and gameplay_input_enabled:
+		camera_pivot.rotation.y = lerp_angle(camera_pivot.rotation.y, visual.rotation.y, 1.0 - exp(-12.0 * _delta))
+
+
+func _exit_tree() -> void:
+	if _orbiting:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT and _orbiting:
+		_orbiting = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 
 func _physics_process(delta: float) -> void:
-	var move_direction := Vector3.ZERO
+	var move_direction := _movement_input_direction()
 	var target_speed := walk_speed
-	if Input.is_key_pressed(KEY_SHIFT):
+	var sprinting := gameplay_input_enabled and Input.is_action_pressed("player_sprint") \
+		and move_direction.length_squared() > 0.001 and not _sprint_exhausted \
+		and stamina > 0.0 and water_state == "dry"
+	_update_stamina(delta, sprinting)
+	if sprinting:
 		target_speed = sprint_speed
-
-	if gameplay_input_enabled and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		_set_movement_target_from_mouse()
+	if not _grounded and water_state == "dry":
+		var air_weight := clampf(acceleration * 0.25 * delta, 0.0, 1.0)
+		move_direction = Vector3(
+			lerpf(velocity.x / target_speed, move_direction.x, air_weight),
+			0.0,
+			lerpf(velocity.z / target_speed, move_direction.z, air_weight)
+		)
+	if move_direction.length_squared() > 0.001 or (gameplay_input_enabled and Input.is_action_just_pressed("player_jump")):
+		_cancel_timed_interaction()
+	if gameplay_input_enabled and Input.is_action_just_pressed("player_jump"):
+		try_jump()
 	if _update_timed_interaction(delta):
 		return
-	_update_pending_interaction()
-	if active_interactable != null:
-		return
-
-	if has_target:
-		var to_target = target_pos - global_position
-		var to_target_2d = Vector2(to_target.x, to_target.z)
-		if to_target_2d.length() > 0.2:
-			move_direction = to_target.normalized()
-			move_direction.y = 0.0
-			move_direction = move_direction.normalized()
-		else:
-			has_target = false
-			velocity.x = 0.0
-			velocity.z = 0.0
 
 	if use_generator_ground_snap and _has_generator_ground_provider():
 		_move_on_generator_ground(move_direction, target_speed, delta)
@@ -138,6 +182,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = -0.5
 
 	move_and_slide()
+	_grounded = is_on_floor()
 	_face_move_direction(move_direction, delta)
 	_update_locomotion(move_direction, target_speed)
 
@@ -152,19 +197,105 @@ func _unhandled_input(event: InputEvent) -> void:
 			adjust_camera_zoom(-_zoom_step_for_input())
 		elif mouse_button.pressed and mouse_button.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			adjust_camera_zoom(_zoom_step_for_input())
-		elif mouse_button.pressed and mouse_button.button_index == MOUSE_BUTTON_RIGHT:
-			_set_movement_target_from_mouse()
+		elif mouse_button.button_index == MOUSE_BUTTON_RIGHT:
+			_orbiting = mouse_button.pressed
+			if not _orbiting and camera_locked:
+				_locked_heading = visual.rotation.y
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if _orbiting else Input.MOUSE_MODE_VISIBLE
 		elif mouse_button.pressed and mouse_button.button_index == MOUSE_BUTTON_LEFT:
 			_try_interact_from_mouse()
+	elif event is InputEventMouseMotion and _orbiting:
+		orbit_camera((event as InputEventMouseMotion).relative)
+	elif event.is_action_pressed("player_recenter"):
+		recenter_camera()
+	elif event.is_action_pressed("player_interact"):
+		_try_interact_from_mouse()
 
 
 func set_gameplay_input_enabled(enabled: bool) -> void:
 	gameplay_input_enabled = enabled
 	if not enabled:
+		_orbiting = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		has_target = false
 		velocity.x = 0.0
 		velocity.z = 0.0
 		_cancel_timed_interaction()
+
+
+func _movement_input_direction() -> Vector3:
+	if not gameplay_input_enabled:
+		return Vector3.ZERO
+	var input := Input.get_vector("player_left", "player_right", "player_forward", "player_backward")
+	var reference := Basis(Vector3.UP, _locked_heading) if camera_locked and not _orbiting else camera_pivot.global_basis
+	var direction := reference * Vector3(input.x, 0.0, input.y)
+	direction.y = 0.0
+	return direction.limit_length(1.0)
+
+
+func try_jump() -> bool:
+	if not gameplay_input_enabled or not _grounded or water_state in ["swimming", "open_water"]:
+		return false
+	if not _has_generator_ground_provider() and not is_on_floor():
+		return false
+	_cancel_timed_interaction()
+	_grounded = false
+	velocity.y = jump_speed
+	var flight_time := maxf(2.0 * jump_speed / gravity, 0.1)
+	var clip_time := get_character_action_duration(&"jump")
+	play_character_action(&"jump", 0.06, maxf(clip_time / flight_time, 1.0))
+	return true
+
+
+func _update_stamina(delta: float, sprinting: bool) -> void:
+	var previous := stamina
+	if sprinting:
+		stamina = maxf(stamina - sprint_stamina_drain * delta, 0.0)
+		_stamina_delay = stamina_recovery_delay
+		if stamina <= 0.0:
+			_sprint_exhausted = true
+	else:
+		_stamina_delay = maxf(_stamina_delay - delta, 0.0)
+		if _stamina_delay <= 0.0:
+			stamina = minf(stamina + stamina_recovery * delta, max_stamina)
+		if stamina >= max_stamina * 0.25:
+			_sprint_exhausted = false
+	if not is_equal_approx(previous, stamina):
+		stamina_changed.emit(stamina, max_stamina)
+
+
+func orbit_camera(relative: Vector2) -> void:
+	if not gameplay_input_enabled:
+		return
+	var sensitivity := 0.18 * float(SettingsManager.get_setting("controls", "camera_sensitivity", 1.0))
+	var vertical_sign := -1.0 if bool(SettingsManager.get_setting("controls", "invert_camera_y", false)) else 1.0
+	camera_pivot.rotation_degrees.y -= relative.x * sensitivity
+	_set_camera_pitch(spring_arm.rotation_degrees.x - relative.y * sensitivity * vertical_sign)
+
+
+func recenter_camera() -> void:
+	if not gameplay_input_enabled:
+		return
+	camera_pivot.rotation.y = visual.rotation.y
+	_set_camera_pitch(float(SettingsManager.get_setting("controls", "camera_pitch", -15.0)))
+
+
+func _on_camera_setting_changed(section: String, key: String, value: Variant) -> void:
+	if section == "controls" and key == "camera_pitch":
+		_set_camera_pitch(float(value))
+	elif section == "controls" and key == "camera_locked":
+		camera_locked = bool(value)
+		_locked_heading = visual.rotation.y
+		camera_lock_changed.emit(camera_locked)
+
+
+func set_camera_locked(locked: bool) -> void:
+	SettingsManager.set_setting("controls", "camera_locked", locked)
+
+
+func _on_camera_settings_reset() -> void:
+	_set_camera_pitch(float(SettingsManager.get_setting("controls", "camera_pitch", -15.0)))
+	_on_camera_setting_changed("controls", "camera_locked", SettingsManager.get_setting("controls", "camera_locked", true))
 
 
 func hold_character_action_pose(action: StringName, pose_time := 0.0) -> bool:
@@ -182,25 +313,6 @@ func get_character_action_duration(action: StringName) -> float:
 	if not character_animation_player.has_animation(animation_name):
 		return 0.0
 	return character_animation_player.get_animation(animation_name).length
-
-
-func _set_movement_target_from_mouse() -> void:
-	if camera == null:
-		return
-	_cancel_timed_interaction()
-	var mouse_pos := get_viewport().get_mouse_position()
-	var ray_origin := camera.project_ray_origin(mouse_pos)
-	var ray_normal := camera.project_ray_normal(mouse_pos)
-	
-	var space_state := get_world_3d().direct_space_state
-	var query := PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_normal * 2000.0)
-	query.exclude = [get_rid()]
-	
-	var result := space_state.intersect_ray(query)
-	if not result.is_empty():
-		var click_pos: Vector3 = result.position
-		# Enviar petición de movimiento autoritativo al Servidor Mock
-		NetworkManager.request_move(click_pos)
 
 
 func _try_interact_from_mouse() -> void:
@@ -230,6 +342,8 @@ func _try_interact_from_mouse() -> void:
 
 
 func request_interaction_with(interactable: Node3D) -> bool:
+	if not gameplay_input_enabled or not _grounded:
+		return false
 	if not is_instance_valid(interactable):
 		return false
 	if interactable.has_method("can_interact") and not bool(
@@ -237,17 +351,12 @@ func request_interaction_with(interactable: Node3D) -> bool:
 	):
 		return false
 	_cancel_timed_interaction()
-	pending_interactable = interactable
 	if _interaction_distance(interactable) <= _interaction_range(interactable):
+		pending_interactable = interactable
 		_begin_pending_interaction()
 	else:
-		var approach_position := interactable.global_position
-		if interactable.has_method("get_interaction_position"):
-			approach_position = interactable.call(
-				"get_interaction_position",
-				global_position
-			)
-		NetworkManager.request_move(approach_position)
+		interaction_out_of_range.emit()
+		return false
 	return true
 
 
@@ -384,6 +493,8 @@ func face_world_position(world_target: Vector3) -> void:
 	if direction.length_squared() < 0.001:
 		return
 	visual.rotation.y = atan2(-direction.x, -direction.z)
+	if camera_locked:
+		_locked_heading = visual.rotation.y
 
 
 func get_facing_direction_xz() -> Vector2:
@@ -402,6 +513,8 @@ func set_camera_distance(next_distance: float) -> void:
 	if spring_arm == null:
 		return
 	spring_arm.spring_length = clampf(next_distance, min_camera_distance, max_camera_distance)
+	_first_person = spring_arm.spring_length <= 0.25
+	visual.visible = not _first_person
 
 
 func adjust_camera_distance(delta_distance: float) -> void:
@@ -464,11 +577,7 @@ func adjust_camera_zoom(delta_zoom: float) -> void:
 
 func _zoom_step_for_input() -> float:
 	var base_step := orthographic_zoom_step if _camera_uses_orthographic() else camera_zoom_step
-	if Input.is_key_pressed(KEY_CTRL):
-		return base_step * 0.25
-	if Input.is_key_pressed(KEY_SHIFT):
-		return base_step * 3.0
-	return base_step
+	return base_step * float(SettingsManager.get_setting("controls", "zoom_speed", 1.0))
 
 
 func _apply_camera_mode() -> void:
@@ -496,7 +605,7 @@ func _set_camera_pitch(pitch_degrees: float) -> void:
 	if spring_arm == null:
 		return
 	var next_rotation := spring_arm.rotation_degrees
-	next_rotation.x = pitch_degrees
+	next_rotation.x = clampf(pitch_degrees, -75.0, 65.0)
 	spring_arm.rotation_degrees = next_rotation
 
 
@@ -701,6 +810,11 @@ func _find_animation_player(root: Node) -> AnimationPlayer:
 func _update_locomotion(move_direction: Vector3, target_speed: float) -> void:
 	if character_animation_player == null:
 		return
+	if character_action_animation == AnimationRetargeter.shared_animation_name(&"jump") \
+	and (_grounded or water_state == "swimming"):
+		stop_character_action()
+	if not _grounded and water_state == "dry":
+		return
 	if not character_action_animation.is_empty():
 		return
 	if water_state == "swimming" or water_state == "open_water":
@@ -755,7 +869,9 @@ func stop_character_action() -> void:
 	character_action_speed = 1.0
 	locomotion_state = ""
 	if character_animation_player != null:
-		character_animation_player.stop()
+		# Preserve the final/current pose and playback position for the idle blend.
+		# stop() resets to frame zero (lying down for the tutorial stand-up).
+		character_animation_player.pause()
 
 
 func _on_character_animation_finished(animation_name: StringName) -> void:
@@ -798,6 +914,8 @@ func _face_move_direction(move_direction: Vector3, delta: float) -> void:
 	if move_direction.length_squared() < 0.001 or visual == null:
 		return
 	var target_yaw := atan2(-move_direction.x, -move_direction.z)
+	if camera_locked and not _orbiting:
+		target_yaw = _locked_heading
 	visual.rotation.y = lerp_angle(visual.rotation.y, target_yaw, minf(1.0, delta * 12.0))
 
 
@@ -820,11 +938,15 @@ func _move_on_generator_ground(move_direction: Vector3, target_speed: float, del
 		effective_speed = minf(target_speed, swim_speed)
 
 	var requested_position := global_position
+	if not _grounded:
+		velocity.y -= gravity * delta
+		requested_position.y += velocity.y * delta
 	if move_direction != Vector3.ZERO:
 		requested_position += move_direction * effective_speed * delta
 	var movement_blocked := _is_resource_collider_at(requested_position)
 	if movement_blocked:
-		requested_position = global_position
+		requested_position.x = global_position.x
+		requested_position.z = global_position.z
 
 	var ground_info: Variant = parent.call("get_player_ground_info", requested_position)
 	if not (ground_info is Dictionary):
@@ -833,16 +955,21 @@ func _move_on_generator_ground(move_direction: Vector3, target_speed: float, del
 	var info := ground_info as Dictionary
 	var water_info: Dictionary = info.get("water", {"in_water": false, "state": "dry"})
 	var next_water_state := String(water_info.get("state", "dry"))
+	if not _grounded and requested_position.y - ground_clearance > float(water_info.get("water_level", -INF)):
+		if next_water_state != "open_water":
+			next_water_state = "dry"
 	var current_ground_info := current_info as Dictionary
 	if not _is_platform_transition_allowed(current_ground_info, info):
 		global_position = last_safe_position
 		velocity = Vector3.ZERO
+		_grounded = true
 		return
 	_set_water_state(next_water_state)
 
 	if next_water_state == "open_water":
 		global_position = last_safe_position
 		velocity = Vector3.ZERO
+		_grounded = true
 		return
 	if next_water_state == "swimming":
 		# No existe buceo: al entrar a profundidad de nado, el personaje queda
@@ -858,17 +985,46 @@ func _move_on_generator_ground(move_direction: Vector3, target_speed: float, del
 			requested_position.z
 		)
 		velocity = Vector3.ZERO if movement_blocked else move_direction * effective_speed
+		_grounded = false
 		last_safe_position = global_position
 		return
 
 	if bool(info.get("walkable", false)):
 		var ground_position: Vector3 = info.get("position", global_position)
-		global_position = ground_position + Vector3.UP * ground_clearance
-		velocity = Vector3.ZERO if movement_blocked else move_direction * effective_speed
-		last_safe_position = global_position
+		var floor_y := ground_position.y + ground_clearance
+		# No aterrizar sobre un escalon que nunca estuvo bajo los pies.
+		if not _grounded and floor_y > maxf(global_position.y, requested_position.y) + 0.1:
+			requested_position.x = global_position.x
+			requested_position.z = global_position.z
+			var current_ground: Vector3 = current_ground_info.get("position", global_position - Vector3.UP * ground_clearance)
+			floor_y = current_ground.y + ground_clearance
+		if _grounded:
+			if floor_y - global_position.y > 0.65 and global_position.y >= ground_clearance:
+				velocity = Vector3.ZERO
+				return
+			if global_position.y - floor_y > 0.35:
+				_grounded = false
+			else:
+				requested_position.y = floor_y
+		if not _grounded and velocity.y <= 0.0 and requested_position.y <= floor_y:
+			requested_position.y = floor_y
+			velocity.y = 0.0
+			_grounded = true
+		var collision := move_and_collide(requested_position - global_position, true, 0.001)
+		if collision != null and collision.get_normal().y < 0.65:
+			requested_position = global_position + collision.get_travel()
+			if collision.get_normal().y < -0.5:
+				velocity.y = minf(velocity.y, 0.0)
+		global_position = requested_position
+		velocity.x = 0.0 if movement_blocked else move_direction.x * effective_speed
+		velocity.z = 0.0 if movement_blocked else move_direction.z * effective_speed
+		if _grounded:
+			velocity.y = 0.0
+			last_safe_position = global_position
 	else:
 		global_position = last_safe_position
 		velocity = Vector3.ZERO
+		_grounded = true
 		if String(info.get("reason", "")) == "limite_sector":
 				has_target = false
 
@@ -881,6 +1037,7 @@ func _is_resource_collider_at(requested_position: Vector3) -> bool:
 	query.shape = player_collision.shape
 	var next_transform := player_collision.global_transform
 	next_transform.origin.x = requested_position.x
+	next_transform.origin.y = requested_position.y
 	next_transform.origin.z = requested_position.z
 	query.transform = next_transform
 	# Capa 3 (valor 4): troncos y otros recursos solidos. El terreno se

@@ -1,0 +1,14 @@
+{
+  "bones": 24,
+  "actions": 20,
+  "meshes": {
+    "Body_Base": {
+      "vertices": 10970,
+      "triangles": 21936
+    },
+    "Base_Covering": {
+      "vertices": 1633,
+      "triangles": 3202
+    }
+  }
+}

@@ -12,10 +12,10 @@ El HUD debe sentirse como un conjunto de instrumentos fisicos del mundo: cartas 
   cuatro accesos y Maná forman otro a la derecha. Entre ambos, un tercer módulo
   usa un medallón circular grande como núcleo y monta `Q/E/R/F` sobre su borde,
   en distribución cardinal y sin una estrella literal.
-- La composición recomendada usa `65%` de escala en los tres módulos, alineados
+- La composición recomendada usa el antiguo `120%` como nuevo `100%` en los tres módulos, alineados
   al borde inferior y agrupados alrededor del núcleo. `Restaurar` recupera
   exactamente este tamaño y posición; el jugador puede ajustar cada módulo
-  entre `45%` y `160%`.
+  entre `35%` y `160%` respecto de la nueva base.
 - Las ranuras de habilidad usan una base compacta de 42 px antes del escalado.
   La tecla es metadata visual pequeña en la esquina inferior derecha; el centro
   queda reservado para el icono, cooldown y estados futuros. Nunca se presenta
@@ -32,10 +32,16 @@ El HUD debe sentirse como un conjunto de instrumentos fisicos del mundo: cartas 
 
 ### Edicion del HUD
 
-- Cada modulo persistente se puede mover dentro de una zona segura: personaje, acciones, oro y minimapa.
+- Los módulos persistentes visibles (Vida, Núcleo, Maná, estamina y minimapa)
+  comparten el mismo espacio de edición. Se pueden superponer libremente; solo
+  se limita su posición al viewport. Un clic en una parte visible trae ese
+  módulo al frente y permite arrastrarlo. Se guardan posición, tamaño y orden.
+- El tamaño físico que antes se mostraba como 120% pasa a mostrarse como 100%.
+  El default de los tres módulos de combate aumenta desde el antiguo 65%.
+  Los tamaños personalizados existentes conservan su dimensión física al migrar.
 - Las alas Vida/Habilidades, Núcleo insignia y Maná/Accesos son tres módulos
   independientes: el jugador decide su posición y escala. `Restaurar` recupera
-  la composición simétrica recomendada al `65%`.
+  la composición simétrica recomendada al nuevo `100%` (antiguo `120%`).
 - La escala se configura por modulo, ademas de una escala global de interfaz.
 - Las posiciones se guardan como ancla normalizada mas offset, no como pixeles absolutos, para sobrevivir a cambios de resolucion.
 - El modo de edicion muestra limites, alineacion y boton de restaurar valores recomendados.

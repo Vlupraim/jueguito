@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_05_base_color.jpg" id="1_color"]
+[ext_resource type="Texture2D" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_05_normal.jpg" id="2_normal"]
+[ext_resource type="Texture2D" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_05_metallic_roughness.jpg" id="3_roughness"]
+
+[resource]
+resource_name = "Tree05_NonEmissive"
+albedo_texture = ExtResource("1_color")
+metallic = 0.0
+metallic_specular = 0.25
+roughness = 1.0
+roughness_texture = ExtResource("3_roughness")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("2_normal")
+emission_enabled = false

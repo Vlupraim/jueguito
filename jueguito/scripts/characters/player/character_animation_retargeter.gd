@@ -102,7 +102,10 @@ static func install_shared_library(
 	for alias in ALIAS_TO_CANONICAL:
 		var canonical: StringName = ALIAS_TO_CANONICAL[alias]
 		if installed_by_name.has(canonical) and not library.has_animation(alias):
-			library.add_animation(alias, installed_by_name[canonical])
+			var alias_animation: Animation = installed_by_name[canonical]
+			if alias == &"jump":
+				alias_animation = _gameplay_jump_clip(alias_animation)
+			library.add_animation(alias, alias_animation)
 
 	var missing_list := PackedStringArray()
 	for bone_name in missing_bones:
@@ -114,6 +117,35 @@ static func install_shared_library(
 
 static func shared_animation_name(alias: StringName) -> StringName:
 	return StringName(String(LIBRARY_NAME) + "/" + String(alias))
+
+
+static func _gameplay_jump_clip(source: Animation) -> Animation:
+	# Basic_Jump contiene segundos de espera antes y despues del salto.
+	# Conservar el gesto util y dejar la traslacion vertical al controlador.
+	var clip := source.duplicate(true) as Animation
+	const START := 1.6
+	const END := 2.65
+	clip.length = END - START
+	clip.loop_mode = Animation.LOOP_NONE
+	for track in range(clip.get_track_count()):
+		var path := String(clip.track_get_path(track))
+		var root_origin := Vector3.ZERO
+		var root_track := clip.track_get_type(track) == Animation.TYPE_POSITION_3D and path.ends_with(":Hips")
+		if root_track and clip.track_get_key_count(track) > 0:
+			root_origin = clip.track_get_key_value(track, 0)
+		for key in range(clip.track_get_key_count(track) - 1, -1, -1):
+			var time := clip.track_get_key_time(track, key)
+			if time < START or time > END:
+				clip.track_remove_key(track, key)
+		for key in range(clip.track_get_key_count(track)):
+			clip.track_set_key_time(track, key, clip.track_get_key_time(track, key) - START)
+			if root_track:
+				var position: Vector3 = clip.track_get_key_value(track, key)
+				position.x = root_origin.x
+				position.z = root_origin.z
+				position.y = minf(position.y, root_origin.y)
+				clip.track_set_key_value(track, key, position)
+	return clip
 
 
 static func _retarget_animation(

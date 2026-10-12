@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/environment/water/textures/foam003_1k/Foam003_1K-JPG_Opacity.jpg" id="8_foam"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ocean"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_shader")
 shader_parameter/wave_normal = ExtResource("3_normal")
@@ -26,6 +27,11 @@ shader_parameter/normal_strength = 0.72
 shader_parameter/foam_amount = 0.58
 shader_parameter/foam_tiling = 22.0
 shader_parameter/foam_speed = 0.012
+shader_parameter/sea_haze_color = Color(0.65, 0.73, 0.79, 1)
+shader_parameter/sea_haze_strength = 0.38
+shader_parameter/sea_haze_begin = 140.0
+shader_parameter/sea_haze_end = 1050.0
+shader_parameter/sea_haze_enabled = true
 
 [node name="OceanWater" type="Node3D"]
 script = ExtResource("1_ocean")
@@ -41,6 +47,10 @@ collision_layer = 2
 collision_mask = 1
 monitoring = true
 monitorable = true
+
+[node name="HorizonSurface" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+cast_shadow = 0
 
 [node name="ShoreLoop" type="AudioStreamPlayer3D" parent="."]
 unique_name_in_owner = true

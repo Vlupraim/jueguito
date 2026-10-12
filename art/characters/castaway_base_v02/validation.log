@@ -1,0 +1,24 @@
+00:01.703  blend            | Read blend: "C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\rig_reference\strongman_recovered_reference_v01.blend"
+00:01.828  blend            | Read blend: "C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\castaway_base_v02\castaway_base_v02.blend"
+00:11.172  render           | Saved: 'C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\castaway_base_v02\pose_Idle_11.png'
+00:17.093  render           | Saved: 'C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\castaway_base_v02\pose_running.png'
+00:22.890  render           | Saved: 'C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\castaway_base_v02\pose_Heavy_Hammer_Swing.png'
+INFO Draco is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+15:13:50 | INFO: Starting glTF 2.0 export
+15:13:50 | INFO: Extracting primitive: Base_Covering
+15:13:50 | INFO: Primitives created: 1
+15:13:50 | INFO: Extracting primitive: HeadSculpt
+15:13:50 | INFO: Primitives created: 1
+15:15:42 | INFO: Finished glTF 2.0 export in 112.30896925926208 s
+
+Info: Saved as "castaway_base_v02.blend"
+Extensions: writing cache failed ([Errno 13] Permission denied: 'C:\\Users\\dzzav\\AppData\\Roaming\\Blender Foundation\\Blender\\5.2\\extensions\\.cache\\compat.dat').
+15:15:43 | INFO: Data are loaded, start creating Blender stuff
+15:15:43 | INFO: Blender create Mesh node Base_Covering
+15:15:43 | INFO: Blender create Mesh node HeadSculpt
+15:15:43 | INFO: glTF import finished in 0.28s
+VALIDATION_OK {'animations': ['Armature|Archery_Shot_1|baselayer', 'Armature|Archery_Shot|baselayer', 'Armature|Attack|baselayer', 'Armature|Axe_Spin_Attack|baselayer', 'Armature|Basic_Jump|baselayer', 'Armature|Charged_Slash|baselayer', 'Armature|Collect_Object|baselayer', 'Armature|Double_Blade_Spin|baselayer', 'Armature|Double_Combo_Attack|baselayer', 'Armature|Heavy_Hammer_Swing|baselayer', 'Armature|Idle_11|baselayer', 'Armature|Left_Slash|baselayer', 'Armature|running|baselayer', 'Armature|Sit_and_Doze_Off|baselayer', 'Armature|Stand_Up1|baselayer', 'Armature|Swim_Forward|baselayer', 'Armature|Swim_Idle|baselayer', 'Armature|Sword_Judgment|baselayer', 'Armature|Triple_Combo_Attack|baselayer', 'Armature|walking_man|baselayer'], 'joints': 24, 'embedded_textures': 2, 'triangles': 21873}
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

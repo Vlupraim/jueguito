@@ -7,8 +7,11 @@
 [ext_resource type="Script" uid="uid://cc5bn5p1qrb78" path="res://scripts/tools/editor/terrain3d_ocean_preview.gd" id="5_ocean_preview"]
 [ext_resource type="PackedScene" uid="uid://b0kcj5e5lue4" path="res://assets/environment/rocks/rock_1.glb" id="6_6wqa4"]
 [ext_resource type="PackedScene" uid="uid://gp6apv78uwua" path="res://assets/vehicles/boats/tutorial_ship/models/destroyed_ship.glb" id="7_q44vg"]
+[ext_resource type="PackedScene" path="res://scenes/world/sectors/handmade/tutorial_coast_dressing.tscn" id="8_coast"]
+[ext_resource type="Script" path="res://scripts/tools/editor/terrain_workspace_materials.gd" id="9_materials"]
 
 [node name="Terrain3DSectorWorkspace" type="Node3D" unique_id=1772857410]
+script = ExtResource("9_materials")
 metadata/loaded_sector_x = 27
 metadata/loaded_sector_y = 30
 
@@ -50,6 +53,8 @@ transform = Transform3D(1, 0, 0, 0, 0.9933046, 0.11552479, 0, -0.11552479, 0.993
 
 [node name="Vegetation" type="Node3D" parent="SectorContent" unique_id=356686219]
 metadata/_edit_lock_ = true
+
+[node name="CoastDressing" parent="SectorContent/Vegetation" instance=ExtResource("8_coast")]
 
 [node name="Buildings" type="Node3D" parent="SectorContent" unique_id=871814195]
 metadata/_edit_lock_ = true

@@ -19,6 +19,7 @@ var equipped_primary_item := ""
 var equipped_secondary_item := ""
 # Alias temporal para los sistemas de recoleccion escritos antes de las ranuras.
 var equipped_tool_name := ""
+var _quit_requested := false
 
 signal inventory_changed(new_inventory: Dictionary)
 signal equipment_changed(primary_item: String, secondary_item: String)
@@ -52,7 +53,19 @@ func request_login(username: String, password: String = "") -> void:
 	NetworkManager.request_login(username, password)
 
 func request_leave_world_to_roster() -> void:
+	if _quit_requested:
+		return
 	NetworkManager.request_despawn()
+
+func request_quit_game() -> void:
+	if _quit_requested:
+		return
+	_quit_requested = true
+	get_tree().paused = false
+	if NetworkManager.current_character_name.is_empty():
+		get_tree().quit()
+	else:
+		NetworkManager.request_despawn()
 
 func request_create_character(char_name: String, appearance: Dictionary) -> void:
 	NetworkManager.request_create_character(char_name, appearance)
@@ -241,7 +254,14 @@ func _on_player_despawned(success: bool, error_msg: String) -> void:
 		should_play_tutorial_intro = false
 		player_inventory = {}
 		clear_equipment()
-		change_scene(CHAR_SELECT_SCENE)
+		# El autoload sigue dentro del arbol durante la desconexion. Al cerrar
+		# el juego no debemos cambiar de escena ni dejar la salida a cargo del HUD.
+		if _quit_requested:
+			get_tree().quit()
+		else:
+			change_scene(CHAR_SELECT_SCENE)
+	else:
+		_quit_requested = false
 	world_exit_completed.emit(success, error_msg)
 
 func _on_inventory_updated(inventory: Dictionary) -> void:

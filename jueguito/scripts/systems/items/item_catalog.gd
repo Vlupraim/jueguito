@@ -33,7 +33,7 @@ const DEFINITIONS := {
 		"category": "weapon",
 		"stackable": false,
 		"weapon_type": "sword",
-		"hand_usage": "one_hand",
+		"hand_usage": "two_hand",
 		"allowed_slots": ["primary"],
 		"visual_slot": "primary",
 		"default_action": "attack",

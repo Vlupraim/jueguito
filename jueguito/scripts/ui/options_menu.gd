@@ -28,6 +28,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var camera_sensitivity_slider: HSlider = %CameraSensitivitySlider
 @onready var zoom_speed_slider: HSlider = %ZoomSpeedSlider
 @onready var camera_pitch_slider: HSlider = %CameraPitchSlider
+@onready var invert_camera_y_check: CheckButton = %InvertCameraYCheck
 @onready var colorblind_option: OptionButton = %ColorblindOption
 @onready var colorblind_intensity_slider: HSlider = %ColorblindIntensitySlider
 @onready var text_scale_slider: HSlider = %TextScaleSlider
@@ -94,6 +95,7 @@ func _connect_controls() -> void:
 	_bind_slider(camera_sensitivity_slider, "controls", "camera_sensitivity")
 	_bind_slider(zoom_speed_slider, "controls", "zoom_speed")
 	_bind_slider(camera_pitch_slider, "controls", "camera_pitch", true)
+	invert_camera_y_check.toggled.connect(func(value): _write_setting("controls", "invert_camera_y", value))
 	colorblind_option.item_selected.connect(func(index): _write_setting("accessibility", "colorblind_mode", index))
 	_bind_slider(colorblind_intensity_slider, "accessibility", "colorblind_intensity")
 	_bind_slider(text_scale_slider, "accessibility", "text_scale")
@@ -152,7 +154,8 @@ func _refresh_controls() -> void:
 	voice_slider.value = float(SettingsManager.get_setting("audio", "voice", 1.0))
 	camera_sensitivity_slider.value = float(SettingsManager.get_setting("controls", "camera_sensitivity", 1.0))
 	zoom_speed_slider.value = float(SettingsManager.get_setting("controls", "zoom_speed", 1.0))
-	camera_pitch_slider.value = float(SettingsManager.get_setting("controls", "camera_pitch", -45.0))
+	camera_pitch_slider.value = float(SettingsManager.get_setting("controls", "camera_pitch", -15.0))
+	invert_camera_y_check.button_pressed = bool(SettingsManager.get_setting("controls", "invert_camera_y", false))
 	colorblind_option.select(int(SettingsManager.get_setting("accessibility", "colorblind_mode", 0)))
 	colorblind_intensity_slider.value = float(SettingsManager.get_setting("accessibility", "colorblind_intensity", 1.0))
 	text_scale_slider.value = float(SettingsManager.get_setting("accessibility", "text_scale", 1.0))

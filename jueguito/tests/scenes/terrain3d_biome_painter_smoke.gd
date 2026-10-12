@@ -14,17 +14,22 @@ func _run() -> void:
 	for biome_id in range(0, 8):
 		var summary: Dictionary = painter.call("biome_profile_summary", biome_id)
 		var texture_ids: PackedInt32Array = summary.get("texture_ids", PackedInt32Array())
-		if texture_ids.is_empty() or texture_ids[0] < 0 or texture_ids[texture_ids.size() - 1] > 23:
+		if texture_ids.is_empty() or texture_ids[0] < 0 or texture_ids[texture_ids.size() - 1] > 24:
 			printerr("BIOME_PAINTER_PROFILE_ERROR biome=%d textures=%s" % [biome_id, str(texture_ids)])
 			quit(2)
 			return
-		if biome_id == 4 and str(summary.get("fallback_note", "")).is_empty():
-			printerr("BIOME_PAINTER_PROFILE_ERROR falta aviso de tundra polar")
+		if biome_id == 4 and (not 24 in texture_ids or 15 in texture_ids):
+			printerr("BIOME_PAINTER_PROFILE_ERROR polar debe usar nieve, no ceniza")
 			quit(3)
 			return
 
 	var terrain := Terrain3D.new()
+	terrain.assets = load("res://assets/environment/terrain/jueguito_terrain_assets.tres")
+	var camera := Camera3D.new()
+	root.add_child(camera)
+	camera.current = true
 	root.add_child(terrain)
+	terrain.set_camera(camera)
 	terrain.data_directory = EDIT_DIR
 	await process_frame
 	# Ejercita perfiles representativos sin guardar ni modificar el terreno.
@@ -44,5 +49,5 @@ func _run() -> void:
 			quit(5)
 			return
 
-	print("BIOME_PAINTER_SMOKE_OK profiles=8 dry_runs=4 slots=0-23 polar_fallback=tundra")
+	print("BIOME_PAINTER_SMOKE_OK profiles=8 dry_runs=4 slots=0-24 polar=snow")
 	quit(0)

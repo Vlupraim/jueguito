@@ -299,7 +299,7 @@ theme_override_constants/separation = 18
 
 [node name="Info" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content"]
 layout_mode = 2
-text = "La reasignación de teclas se conectará cuando esté cerrado el esquema definitivo de controles."
+text = "WASD: moverse · Shift: correr · Espacio: saltar\nClic derecho + arrastrar: mirar · Rueda: zoom · F: centrar · E: interactuar"
 autowrap_mode = 2
 
 [node name="Grid" type="GridContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content"]
@@ -336,16 +336,25 @@ value = 1.0
 
 [node name="CameraPitchLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
 layout_mode = 2
-text = "Inclinación de cámara (Visión al horizonte)"
+text = "Inclinación inicial de cámara"
 
 [node name="CameraPitchSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(360, 30)
 layout_mode = 2
-min_value = -60.0
-max_value = -30.0
+min_value = -75.0
+max_value = 65.0
 step = 1.0
-value = -45.0
+value = -15.0
+
+[node name="InvertCameraYLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+layout_mode = 2
+text = "Invertir mirada vertical"
+
+[node name="InvertCameraYCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Activado"
 
 [node name="Accessibility" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
 layout_mode = 2

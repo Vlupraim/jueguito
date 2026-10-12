@@ -22,22 +22,24 @@ albedo_color = Color(0.96, 0.86, 0.25, 1)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 1
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("1_player_controller")
 walk_speed = 3.85
 sprint_speed = 9.1
 acceleration = 12.0
-camera_mode = 0
-perspective_fov = 42.0
+camera_mode = 1
+perspective_fov = 65.0
+close_perspective_fov = 65.0
+close_camera_pitch_degrees = -15.0
 orthographic_zoom_step = 1.0
 min_orthographic_size = 5.0
 max_orthographic_size = 32.0
 initial_orthographic_size = 9.5
-camera_zoom_step = 6.0
-max_camera_distance = 260.0
-min_camera_distance = 5.0
-initial_camera_distance = 18.0
-close_camera_distance = 11.0
+camera_zoom_step = 0.8
+max_camera_distance = 18.0
+min_camera_distance = 0.0
+initial_camera_distance = 5.0
+close_camera_distance = 5.0
 ground_clearance = 0.78
 character_scene = ExtResource("2_character")
 animation_source_path = "res://assets/characters/player/models/char_6_c583a7dd/strong_man.glb"
@@ -61,7 +63,7 @@ mesh = SubResource("BoxMesh_forward")
 surface_material_override/0 = SubResource("StandardMaterial3D_forward")
 
 [node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 1.2, 0)
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0.85, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.615662, -0.788011, 0, 0.788011, 0.615662, 0, 0, 0)
@@ -69,5 +71,5 @@ spring_length = 18.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
 far = 12000.0
-fov = 42.0
+fov = 65.0
 size = 9.5

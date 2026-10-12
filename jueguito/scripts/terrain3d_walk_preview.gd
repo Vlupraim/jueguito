@@ -11,6 +11,8 @@ const TEMP_DATA_DIR := "user://walk_preview_temp"
 const PLAYER_SCENE := preload("res://scenes/characters/player/player.tscn")
 const GAMEPLAY_HUD_SCENE := preload("res://scenes/ui/gameplay_hud.tscn")
 const OCEAN_WATER_SCENE := preload("res://scenes/world/water/ocean_water.tscn")
+const COASTAL_ENVIRONMENT := preload("res://resources/environment/coastal_daylight.tres")
+const GROUND_GRASS_SCRIPT := preload("res://scripts/world/environment/ground_grass.gd")
 const TERRAIN_ASSETS := preload("res://assets/environment/terrain/jueguito_terrain_assets.tres")
 const TERRAIN_MATERIAL := preload("res://assets/environment/terrain/jueguito_terrain_material.tres")
 const LOCAL_MAP_TEXTURE_BUILDER := preload("res://scripts/ui/local_map_texture_builder.gd")
@@ -71,10 +73,14 @@ const CAMERA_RECENTER_SPEED := 7.0
 @export var spawn_xz := Vector2(512.0, 512.0)
 ## El texto tecnico puede reactivarse desde el Inspector cuando sea necesario.
 @export var show_debug_hud := false
+@export var show_ground_grass := true
+## Direction/speed shared by visual weather, available for future sailing.
+@export var weather_wind: Resource = preload("res://resources/environment/coastal_wind.tres")
 
 var terrain: Terrain3D
 var player: CharacterBody3D
 var ocean_water: OceanWater
+var ground_grass: Node3D
 var sector_content: Node3D
 var spawn_position := Vector3.ZERO
 var debug_label: Label
@@ -145,6 +151,7 @@ var world_map_info_label: Label
 var world_map_info_card: PanelContainer
 var world_map_drag_distance := 0.0
 var gameplay_hud: CanvasLayer
+var camera_lock_button: Button
 var minimap_hud_module: Control
 var tutorial_intro_active := false
 var tutorial_intro_overlay: ColorRect
@@ -173,6 +180,7 @@ func _ready() -> void:
 	_setup_terrain()
 	_setup_ocean()
 	_setup_sector_content()
+	_setup_ground_grass()
 	_setup_minimap()
 	await get_tree().process_frame
 	_place_player_on_ground()
@@ -218,41 +226,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 
-	if event is InputEventMouseButton:
-		var mouse_event := event as InputEventMouseButton
-		if mouse_event.button_index == MOUSE_BUTTON_MIDDLE:
-			if mouse_event.pressed:
-				if mouse_event.double_click:
-					is_middle_mouse_dragging = false
-					middle_mouse_is_panning = false
-					_request_camera_recenter()
-					get_viewport().set_input_as_handled()
-					return
-				if camera_rotation_tween != null and camera_rotation_tween.is_valid():
-					camera_rotation_tween.kill()
-				is_middle_mouse_dragging = true
-				middle_mouse_is_panning = Input.is_key_pressed(KEY_SHIFT)
-				get_viewport().set_input_as_handled()
-			else:
-				if is_middle_mouse_dragging:
-					is_middle_mouse_dragging = false
-					if not middle_mouse_is_panning:
-						SettingsManager.set_setting("controls", "camera_pitch", cam_pitch)
-					middle_mouse_is_panning = false
-					get_viewport().set_input_as_handled()
-
-	elif event is InputEventMouseMotion and is_middle_mouse_dragging:
-		var motion := event as InputEventMouseMotion
-		if middle_mouse_is_panning:
-			_pan_camera(motion.relative)
-		else:
-			var sensitivity := 0.25 * float(SettingsManager.get_setting("controls", "camera_sensitivity", 1.0))
-			cam_yaw = wrapf(cam_yaw + motion.relative.x * sensitivity, 0.0, 360.0)
-			cam_pitch = clampf(cam_pitch + motion.relative.y * sensitivity, -60.0, -30.0)
-			_apply_camera_angles()
-		get_viewport().set_input_as_handled()
-		return
-
 	if not (event is InputEventKey):
 		return
 	var key_event := event as InputEventKey
@@ -282,10 +255,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				_toggle_local_map()
 				get_viewport().set_input_as_handled()
 		KEY_C:
-			_cycle_camera_quadrant()
+			if show_debug_hud:
+				_cycle_camera_quadrant()
 			get_viewport().set_input_as_handled()
 		KEY_F:
-			_request_camera_recenter()
+			player.call("recenter_camera")
 			get_viewport().set_input_as_handled()
 		KEY_F4:
 			toggle_fog()
@@ -376,6 +350,8 @@ func set_fog_enabled(enabled: bool) -> void:
 	var world_env := get_node_or_null("Ambiente") as WorldEnvironment
 	if world_env != null and world_env.environment != null:
 		world_env.environment.fog_enabled = enabled
+	if ocean_water != null:
+		ocean_water.set_sea_haze_enabled(enabled)
 
 
 func toggle_fog() -> void:
@@ -392,44 +368,20 @@ func _setup_environment() -> void:
 
 	var world_env := WorldEnvironment.new()
 	world_env.name = "Ambiente"
-	var env := Environment.new()
-
-	# Cielo procedural cinemático equilibrado
-	var sky_material := ProceduralSkyMaterial.new()
-	sky_material.sky_top_color = Color(0.35, 0.48, 0.64)
-	sky_material.sky_horizon_color = Color(0.64, 0.70, 0.78)
-	sky_material.ground_bottom_color = Color(0.24, 0.26, 0.28)
-	sky_material.ground_horizon_color = Color(0.55, 0.60, 0.66)
-	sky_material.sun_angle_max = 30.0
-
-	var sky := Sky.new()
-	sky.sky_material = sky_material
-	env.background_mode = Environment.BG_SKY
-	env.sky = sky
-
-	# Tonemapping ACES cinemático (suave)
-	env.tonemap_mode = 3 # ToneMapper.TONEMAP_ACES
-	env.tonemap_exposure = 0.98
-
-	# Graduación de color equilibrada (50% menos sombría)
-	env.adjustment_enabled = true
-	env.adjustment_brightness = 0.96
-	env.adjustment_contrast = 1.05
-	env.adjustment_saturation = 0.90
-
-	# Niebla atmosférica sutil
+	var env := COASTAL_ENVIRONMENT.duplicate(true) as Environment
+	var wind_velocity: Vector3 = weather_wind.call("get_velocity")
+	(env.sky.sky_material as ShaderMaterial).set_shader_parameter("wind_velocity", Vector2(wind_velocity.x, wind_velocity.z))
 	env.fog_enabled = fog_enabled
-	env.fog_light_color = Color(0.58, 0.64, 0.72)
-	env.fog_density = 0.0003
-	env.fog_sky_affect = 0.3
-
-	# Luz ambiental para rellenar sombras oscuras
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
-	env.ambient_light_sky_contribution = 0.65
-	env.ambient_light_energy = 0.78
 
 	world_env.environment = env
 	add_child(world_env)
+	weather_wind.changed.connect(_sync_weather_wind)
+
+
+func _sync_weather_wind() -> void:
+	var env := get_node("Ambiente").environment as Environment
+	var wind_velocity: Vector3 = weather_wind.call("get_velocity")
+	(env.sky.sky_material as ShaderMaterial).set_shader_parameter("wind_velocity", Vector2(wind_velocity.x, wind_velocity.z))
 
 
 func _setup_gameplay_hud() -> void:
@@ -438,6 +390,7 @@ func _setup_gameplay_hud() -> void:
 	add_child(gameplay_hud)
 	gameplay_hud.visible = not tutorial_intro_active
 	gameplay_hud.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
+	gameplay_hud.pause_visibility_changed.connect(func(_visible): _refresh_player_input_enabled())
 	gameplay_hud.hud_edit_mode_changed.connect(_on_hud_edit_mode_changed)
 	var reset_button := gameplay_hud.find_child("Reset", true, false) as Button
 	if reset_button != null:
@@ -445,6 +398,7 @@ func _setup_gameplay_hud() -> void:
 
 
 func _on_hud_edit_mode_changed(enabled: bool) -> void:
+	_refresh_player_input_enabled()
 	if minimap_hud_module != null:
 		minimap_hud_module.call("set_edit_mode", enabled)
 
@@ -464,6 +418,8 @@ func _refresh_player_input_enabled() -> void:
 		player.call(
 			"set_gameplay_input_enabled",
 			not inventory_is_visible and not local_map_expanded and not tutorial_intro_active
+			and not bool(gameplay_hud.get("_hud_edit_mode"))
+			and not (gameplay_hud.get("pause_backdrop") as Control).visible
 		)
 
 
@@ -491,11 +447,22 @@ func _setup_terrain() -> void:
 	print("Terrain3DWalkPreview: cargado sector ", initial)
 
 
+func _setup_ground_grass() -> void:
+	if not show_ground_grass:
+		return
+	if ground_grass == null:
+		ground_grass = GROUND_GRASS_SCRIPT.new()
+		ground_grass.name = "GroundGrass"
+		add_child(ground_grass)
+	ground_grass.call("configure", terrain, ocean_water, current_sector)
+
+
 func _setup_ocean() -> void:
 	ocean_water = OCEAN_WATER_SCENE.instantiate() as OceanWater
 	ocean_water.name = "OceanWater"
 	add_child(ocean_water)
 	var has_water := ocean_water.configure_for_sector(current_sector, terrain)
+	ocean_water.set_sea_haze_enabled(fog_enabled)
 	print(
 		"Terrain3DWalkPreview: oceano sector ",
 		current_sector,
@@ -527,6 +494,12 @@ func _setup_sector_content() -> void:
 # damero. Debe llamarse DESPUES de cargar/importar datos de terreno.
 func _rebuild_textures() -> void:
 	if terrain == null or terrain.assets == null:
+		return
+	# A previous Terrain3D can clear the shared preload when it is freed. Recover
+	# from the saved library before entering the world again in the same process.
+	if saved_textures.is_empty():
+		if preload("res://scripts/tools/editor/terrain_texture_binding.gd").refresh(terrain):
+			saved_textures = terrain.assets.texture_list.duplicate()
 		return
 	for i in range(saved_textures.size()):
 		terrain.assets.set_texture(i, saved_textures[i])
@@ -599,13 +572,10 @@ func _create_player() -> void:
 		gameplay_hud.call("bind_player", player)
 	if player.has_method("make_camera_current"):
 		player.call("make_camera_current")
-	# El brazo de camara (SpringArm3D) choca con la colision de Terrain3D y se
-	# colapsa, dejando la camara pegada al suelo. Apagamos su colision en el preview.
 	cam_pivot = player.get_node_or_null("CameraPivot")
 	cam_arm = player.get_node_or_null("CameraPivot/SpringArm3D")
-	if cam_arm != null:
-		cam_arm.collision_mask = 0
-	_apply_camera_angles()
+	cam_yaw = cam_pivot.rotation_degrees.y
+	cam_pitch = cam_arm.rotation_degrees.x
 
 
 func _apply_camera_angles() -> void:
@@ -666,8 +636,7 @@ func _update_camera_recenter(delta: float) -> void:
 
 func _on_setting_changed(section: String, key: String, value: Variant) -> void:
 	if section == "controls" and key == "camera_pitch":
-		cam_pitch = clampf(float(value), -60.0, -30.0)
-		_apply_camera_angles()
+		cam_pitch = clampf(float(value), -75.0, 65.0)
 
 
 func _cycle_camera_quadrant() -> void:
@@ -1030,7 +999,7 @@ func _setup_minimap() -> void:
 	minimap_hud_module.custom_minimum_size = Vector2(292.0, 224.0)
 	minimap_hud_module.add_theme_constant_override("separation", 6)
 	minimap_hud_module.visible = not tutorial_intro_active
-	layer.add_child(minimap_hud_module)
+	(gameplay_hud.get("persistent_hud") as Control).add_child(minimap_hud_module)
 
 	var box := VBoxContainer.new()
 	box.name = "CartografiaLocal"
@@ -1095,6 +1064,23 @@ func _setup_minimap() -> void:
 	_style_minimap_edge_button(minimap_expand)
 	minimap_expand.pressed.connect(_open_regional_map)
 	minimap_controls.add_child(minimap_expand)
+	camera_lock_button = Button.new()
+	camera_lock_button.name = "CameraLockButton"
+	camera_lock_button.toggle_mode = true
+	camera_lock_button.icon = load("res://assets/ui/icons/camera_lock.svg")
+	camera_lock_button.expand_icon = true
+	camera_lock_button.add_theme_constant_override("icon_max_width", 20)
+	camera_lock_button.custom_minimum_size = Vector2(34.0, 32.0)
+	_style_minimap_edge_button(camera_lock_button)
+	camera_lock_button.toggled.connect(func(locked): player.call("set_camera_locked", locked))
+	camera_lock_button.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+			player.call("set_camera_locked", false)
+			camera_lock_button.accept_event()
+	)
+	minimap_controls.add_child(camera_lock_button)
+	player.connect("camera_lock_changed", _sync_camera_lock_button)
+	_sync_camera_lock_button(bool(player.get("camera_locked")))
 
 	var name_plate := PanelContainer.new()
 	name_plate.name = "NombreAreaLocal"
@@ -1445,6 +1431,17 @@ func _add_map_tool_button(
 		button.pressed.connect(callback)
 	parent.add_child(button)
 	return button
+
+
+func _sync_camera_lock_button(locked: bool) -> void:
+	if camera_lock_button == null:
+		return
+	camera_lock_button.set_pressed_no_signal(locked)
+	camera_lock_button.modulate = Color("efd697") if locked else Color("82969f")
+	camera_lock_button.tooltip_text = (
+		"Cámara vinculada al personaje · clic: liberar\nClic derecho y arrastrar: mirar temporalmente"
+		if locked else "Cámara libre · clic: vincular al personaje"
+	)
 
 
 func _load_map_preferences() -> void:
@@ -2776,6 +2773,7 @@ func _travel_to_sector(sec: Vector2i) -> void:
 		ocean_water.configure_for_sector(sec, terrain)
 	clear_sector_portal_openings()
 	_setup_sector_content()
+	_setup_ground_grass()
 	_load_local_minimap_texture()
 	expanded_map_texture = local_minimap_texture
 	_configure_regional_map_surface()

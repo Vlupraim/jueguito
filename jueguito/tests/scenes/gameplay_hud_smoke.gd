@@ -91,10 +91,10 @@ func _run() -> void:
 		_fail("Las habilidades no usan ranuras compactas con la tecla en una esquina")
 		return
 	hud.call("reset_hud_layout")
-	if not is_equal_approx(action_bar.scale.x, 0.65) \
-	or not is_equal_approx(signature_module.scale.x, 0.65) \
-	or not is_equal_approx(right_action_module.scale.x, 0.65):
-		_fail("Restaurar no fija 65% como escala predeterminada de combate")
+	if not is_equal_approx(action_bar.scale.x, 1.2) \
+	or not is_equal_approx(signature_module.scale.x, 1.2) \
+	or not is_equal_approx(right_action_module.scale.x, 1.2):
+		_fail("Restaurar no fija 100% como escala predeterminada de combate")
 		return
 	if not action_bar.global_position.x < signature_module.global_position.x \
 	or not signature_module.global_position.x < right_action_module.global_position.x:
@@ -125,23 +125,23 @@ func _run() -> void:
 		_fail("El modo editable no mostro su caja y tirador de escala")
 		return
 	character_status.call("set_module_scale", 1.2)
-	if not is_equal_approx(character_status.scale.x, 1.2):
+	if not is_equal_approx(character_status.scale.x, 1.44):
 		_fail("El modulo de personaje no admite escala proporcional")
 		return
 	character_status.call("reset_layout")
 	action_bar.call("set_module_scale", 0.5)
-	if not is_equal_approx(action_bar.scale.x, 0.5):
-		_fail("La edición no permite reducir el HUD por debajo de 65%")
+	if not is_equal_approx(action_bar.scale.x, 0.6):
+		_fail("La edición no permite reducir el HUD al 50% de la nueva base")
 		return
 	action_bar.call("reset_layout")
 	signature_module.call("set_module_scale", 1.15)
-	if not is_equal_approx(signature_module.scale.x, 1.15) \
-	or not is_equal_approx(action_bar.scale.x, 0.65) \
-	or not is_equal_approx(right_action_module.scale.x, 0.65):
+	if not is_equal_approx(signature_module.scale.x, 1.38) \
+	or not is_equal_approx(action_bar.scale.x, 1.2) \
+	or not is_equal_approx(right_action_module.scale.x, 1.2):
 		_fail("Escalar el núcleo también alteró uno de los módulos laterales")
 		return
 	hud.call("reset_hud_layout")
-	if not is_equal_approx(signature_module.scale.x, 0.65):
+	if not is_equal_approx(signature_module.scale.x, 1.2):
 		_fail("Restaurar no devolvió el núcleo a su escala recomendada")
 		return
 	hud.call("set_hud_edit_mode", false)
@@ -217,9 +217,9 @@ func _run() -> void:
 		_fail("La espada no quedo fijada a la mano principal")
 		return
 	_find_inventory_button(grid, "Escudo vikingo").pressed.emit()
-	if GameManager.equipped_primary_item != "Espada vikinga" \
+	if not GameManager.equipped_primary_item.is_empty() \
 	or GameManager.equipped_secondary_item != "Escudo vikingo":
-		_fail("El escudo no reemplazo correctamente la mano secundaria")
+		_fail("El escudo no liberó la espada de dos manos")
 		return
 	_find_inventory_button(grid, "Arco vikingo").pressed.emit()
 	if GameManager.equipped_primary_item != "Arco vikingo" \
@@ -234,7 +234,8 @@ func _run() -> void:
 	var secondary_slot := hud.find_child("SecondaryEquipmentSlot", true, false) as Button
 	if secondary_slot == null \
 	or str(secondary_slot.get_meta("equipment_item", "")) != "Arco vikingo" \
-	or "Dos manos" not in secondary_slot.tooltip_text:
+	or "Dos manos" not in secondary_slot.tooltip_text \
+	or secondary_slot.icon == primary_slot.icon:
 		_fail("La interfaz no marco la secundaria como reservada por el arco")
 		return
 	primary_slot.pressed.emit()
@@ -267,14 +268,22 @@ func _run() -> void:
 	if not inventory.visible:
 		_fail("No se abrio el inventario")
 		return
+	await get_tree().process_frame
+	await get_tree().process_frame
+	for child in grid.get_children():
+		var icon := child.find_child("ItemIcon", true, false) as TextureRect
+		if icon != null and (absf(icon.get_global_rect().get_center().x - child.get_global_rect().get_center().x) > 1.0 \
+		or absf(icon.get_global_rect().get_center().y - child.get_global_rect().get_center().y) > 5.0):
+			_fail("La imagen de la mochila quedó fuera del centro de su ranura")
+			return
 	mastery_button.pressed.emit()
 	await get_tree().process_frame
 	if not mastery_backdrop.visible \
 	or hud.find_child("MasteryTreeView", true, false) == null:
 		_fail("El botón de maestrías no abrió el árbol documentado")
 		return
-	var mastery_scroll := hud.find_child("MasteryTreeScroll", true, false) as ScrollContainer
-	var mastery_tree := hud.find_child("MasteryTreeView", true, false) as Control
+	var mastery_scroll := hud.find_child("MasteryTreeViewport", true, false) as Control
+	var mastery_tree := hud.find_child("MasteryTreeView", true, false) as MasteryTreeView
 	var mastery_center_button := hud.find_child("MasteryHubButton", true, false) as Button
 	var inventory_close := hud.find_child("InventoryCloseButton", true, false) as Button
 	if mastery_scroll == null or mastery_tree == null or mastery_center_button == null \
@@ -282,11 +291,19 @@ func _run() -> void:
 	or inventory_close == null or inventory_close.icon == null:
 		_fail("Los controles de Maestrías y cierre no usan recursos visuales consistentes")
 		return
-	var expected_center := maxi(int((mastery_tree.size.x - mastery_scroll.size.x) * 0.5), 0)
-	if absi(mastery_scroll.scroll_horizontal - expected_center) > 2:
+	await get_tree().process_frame
+	var pan: Vector2 = mastery_tree.get("_pan")
+	if (pan + MasteryTreeView.ROOT_POINT * mastery_tree.zoom).distance_to(mastery_tree.size * 0.5) > 2.0:
 		_fail("El Árbol de Maestrías no abrió centrado")
 		return
-	var scroll_before_drag := mastery_scroll.scroll_horizontal
+	var anchor := Vector2(400, 300)
+	var board_under_cursor := (anchor - pan) / mastery_tree.zoom
+	mastery_tree.set_zoom(mastery_tree.zoom * 1.15, anchor)
+	pan = mastery_tree.get("_pan")
+	if ((anchor - pan) / mastery_tree.zoom).distance_to(board_under_cursor) > 1.0:
+		_fail("El zoom no conserva el punto bajo el cursor")
+		return
+	var pan_before_drag: Vector2 = mastery_tree.get("_pan")
 	var press := InputEventMouseButton.new()
 	press.button_index = MOUSE_BUTTON_LEFT
 	press.pressed = true
@@ -301,8 +318,21 @@ func _run() -> void:
 	release.pressed = false
 	release.position = drag.position
 	mastery_tree.call("_gui_input", release)
-	if mastery_scroll.scroll_horizontal <= scroll_before_drag:
+	pan = mastery_tree.get("_pan")
+	if absf(pan.x - pan_before_drag.x + 55.0) > 1.0:
 		_fail("El cursor de mano no permitió arrastrar el Árbol de Maestrías")
+		return
+	mastery_tree.focus_family("OFICIO")
+	if hud.get("mastery_detail_title").text != "OFICIO":
+		_fail("El enfoque de rama no actualiza su ficha")
+		return
+	var selected: Control = mastery_tree.get("_selected")
+	if selected == null or not selected.get_node("Selection").visible:
+		_fail("La rama elegida no tiene indicador visual")
+		return
+	var native_nodes: Array = mastery_tree.get("_nodes")
+	if native_nodes.size() < 150:
+		_fail("El árbol no tiene sus recorridos extensos guardados en la escena")
 		return
 	hud.call("close_mastery_tree")
 	if mastery_backdrop.visible:

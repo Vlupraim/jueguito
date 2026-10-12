@@ -8,15 +8,15 @@ const MASTERY_ICON := preload("res://assets/ui/hud/generated/mastery_emblem.png"
 const CLOSE_ICON := preload("res://assets/ui/icons/close.svg")
 const CHEVRON_RIGHT_ICON := preload("res://assets/ui/icons/chevron_right.svg")
 const CHEVRON_DOWN_ICON := preload("res://assets/ui/icons/chevron_down.svg")
-const EQUIPMENT_BAG_ICON := preload("res://assets/ui/icons/equipment_bag.svg")
-const EQUIPMENT_HEAD_ICON := preload("res://assets/ui/icons/equipment_head.svg")
-const EQUIPMENT_CAPE_ICON := preload("res://assets/ui/icons/equipment_cape.svg")
-const EQUIPMENT_MAIN_HAND_ICON := preload("res://assets/ui/icons/equipment_main_hand.svg")
-const EQUIPMENT_CHEST_ICON := preload("res://assets/ui/icons/equipment_chest.svg")
-const EQUIPMENT_OFFHAND_ICON := preload("res://assets/ui/icons/equipment_offhand.svg")
-const EQUIPMENT_CONSUMABLE_ICON := preload("res://assets/ui/icons/equipment_consumable.svg")
-const EQUIPMENT_FEET_ICON := preload("res://assets/ui/icons/equipment_feet.svg")
-const EQUIPMENT_FOOD_ICON := preload("res://assets/ui/icons/equipment_food.svg")
+const EQUIPMENT_BAG_ICON := preload("res://assets/ui/inventory/v1/equipment_bag.svg")
+const EQUIPMENT_HEAD_ICON := preload("res://assets/ui/inventory/v1/equipment_head.svg")
+const EQUIPMENT_CAPE_ICON := preload("res://assets/ui/inventory/v1/equipment_cape.svg")
+const EQUIPMENT_MAIN_HAND_ICON := preload("res://assets/ui/inventory/v1/equipment_main_hand.svg")
+const EQUIPMENT_CHEST_ICON := preload("res://assets/ui/inventory/v1/equipment_chest.svg")
+const EQUIPMENT_OFFHAND_ICON := preload("res://assets/ui/inventory/v1/equipment_offhand.svg")
+const EQUIPMENT_CONSUMABLE_ICON := preload("res://assets/ui/inventory/v1/equipment_consumable.svg")
+const EQUIPMENT_FEET_ICON := preload("res://assets/ui/inventory/v1/equipment_feet.svg")
+const EQUIPMENT_FOOD_ICON := preload("res://assets/ui/inventory/v1/equipment_food.svg")
 const INVENTORY_CAPACITY := 24
 
 signal inventory_visibility_changed(is_visible: bool)
@@ -78,8 +78,14 @@ var inventory_mastery_button: Button
 var inventory_stats_toggle: Button
 var inventory_stats_panel: PanelContainer
 var inventory_stats_expanded := false
-var mastery_scroll: ScrollContainer
+var mastery_scroll: Control
+var mastery_zoom_caption: Label
 var mastery_tree_view: MasteryTreeView
+var stamina_bar: ProgressBar
+var stamina_caption: Label
+var interaction_hint: Label
+var interaction_hint_timer: Timer
+var stamina_module: EditableHUDModule
 
 
 func _ready() -> void:
@@ -87,6 +93,7 @@ func _ready() -> void:
 	_setup_action_hud_modules()
 	_setup_character_hub()
 	_setup_inventory_layout()
+	_apply_inventory_skin()
 	_setup_mastery_tree()
 	_apply_generated_button_icons()
 	currency_display.hide()
@@ -116,6 +123,7 @@ func _ready() -> void:
 		character_name_label.text = character_name
 		inventory_owner_name.text = character_name
 	_setup_timed_action_progress()
+	_setup_stamina_display()
 
 
 func _process(_delta: float) -> void:
@@ -221,15 +229,18 @@ func set_hud_edit_mode(enabled: bool) -> void:
 	character_status.call("set_edit_mode", enabled)
 	for module in action_hud_modules:
 		module.set_edit_mode(enabled)
+	stamina_module.set_edit_mode(enabled)
 	if signature_skill_hub != null:
 		signature_skill_hub.set_interaction_enabled(not enabled)
 	hud_edit_mode_changed.emit(enabled)
 
 
 func reset_hud_layout() -> void:
+	SettingsManager.set_setting("hud", "module_order", SettingsManager.DEFAULTS["hud"]["module_order"].duplicate(), false)
 	character_status.call("reset_layout")
 	for module in action_hud_modules:
 		module.reset_layout()
+	stamina_module.reset_layout()
 
 
 func _setup_action_hud_modules() -> void:
@@ -249,13 +260,13 @@ func _setup_action_hud_modules() -> void:
 
 	legacy_action_bar.name = "LegacyActionBar"
 	action_left_module = _create_editable_action_module(
-		"ActionBar", "action_left", Vector2(-145.0, 0.0), Vector2(216.0, 84.0)
+		"ActionBar", "action_left", Vector2(-265.0, 0.0), Vector2(216.0, 84.0)
 	)
 	action_center_module = _create_editable_action_module(
 		"SignatureHubModule", "action_center", Vector2.ZERO, Vector2(180.0, 180.0), false
 	)
 	action_right_module = _create_editable_action_module(
-		"RightActionModule", "action_right", Vector2(145.0, 0.0), Vector2(216.0, 84.0)
+		"RightActionModule", "action_right", Vector2(265.0, 0.0), Vector2(216.0, 84.0)
 	)
 	action_hud_modules.assign([
 		action_left_module,
@@ -281,7 +292,7 @@ func _create_editable_action_module(
 	module.layout_key = layout_key
 	module.default_normalized_position = Vector2(0.5, 1.0)
 	module.default_position_offset = default_offset
-	module.default_module_scale = 0.65
+	module.default_module_scale = 1.2
 	module.custom_minimum_size = module_size
 	module.size = module_size
 	persistent_hud.add_child(module)
@@ -516,7 +527,7 @@ func _setup_inventory_layout() -> void:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	inventory_grid.columns = 5
-	inventory_grid.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	inventory_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	inventory_grid.add_theme_constant_override("h_separation", 6)
 	inventory_grid.add_theme_constant_override("v_separation", 6)
 	var value_label := footer.get_node("InventoryValueLabel") as Label
@@ -592,10 +603,10 @@ func _set_inventory_stats_expanded(expanded: bool) -> void:
 
 func _configure_hand_equipment_slot(button: Button, slot_name: String) -> void:
 	button.set_meta("equipment_slot", slot_name)
-	button.custom_minimum_size = Vector2(64.0, 58.0)
+	button.custom_minimum_size = Vector2(74.0, 72.0)
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	button.expand_icon = true
-	button.add_theme_constant_override("icon_max_width", 32)
+	button.add_theme_constant_override("icon_max_width", 38)
 	button.add_theme_font_size_override("font_size", 9)
 
 
@@ -605,12 +616,12 @@ func _create_future_equipment_slot(
 	var button := Button.new()
 	button.name = "EquipmentSlot_%s" % slot_name
 	button.set_meta("equipment_slot", slot_name)
-	button.custom_minimum_size = Vector2(64.0, 58.0)
+	button.custom_minimum_size = Vector2(74.0, 72.0)
 	button.disabled = true
 	button.focus_mode = Control.FOCUS_NONE
 	button.icon = icon
 	button.expand_icon = true
-	button.add_theme_constant_override("icon_max_width", 28)
+	button.add_theme_constant_override("icon_max_width", 38)
 	button.add_theme_color_override("icon_disabled_color", Color("8c8066"))
 	button.tooltip_text = description
 	return button
@@ -665,21 +676,58 @@ func _setup_mastery_tree() -> void:
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.add_theme_constant_override("separation", 14)
 	shell.add_child(body)
-	mastery_scroll = ScrollContainer.new()
-	mastery_scroll.name = "MasteryTreeScroll"
+	mastery_scroll = Control.new()
+	mastery_scroll.name = "MasteryTreeViewport"
+	mastery_scroll.custom_minimum_size = Vector2(400.0, 400.0)
 	mastery_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	mastery_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.add_child(mastery_scroll)
 	mastery_tree_view = MasteryTreeViewScene.new() as MasteryTreeView
 	mastery_tree_view.name = "MasteryTreeView"
-	mastery_tree_view.mastery_selected.connect(_on_mastery_selected)
 	mastery_scroll.add_child(mastery_tree_view)
+	mastery_tree_view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var navigation := HBoxContainer.new()
+	navigation.add_theme_constant_override("separation", 8)
+	shell.add_child(navigation)
+	shell.move_child(navigation, 1)
+	for family in ["MARCIALES", "MUNDO", "OFICIO", "INFLUENCIA"]:
+		var family_button := Button.new()
+		family_button.text = String(family).capitalize()
+		var family_icons := {"MARCIALES": "main_hand", "MUNDO": "tree", "OFICIO": "hammer", "INFLUENCIA": "crown"}
+		var family_colors := {"MARCIALES": "d59476", "MUNDO": "86c6a5", "OFICIO": "ddbe7b", "INFLUENCIA": "a9a2d4"}
+		family_button.icon = load("res://assets/ui/inventory/v1/equipment_%s.svg" % family_icons[family])
+		family_button.expand_icon = true
+		family_button.add_theme_constant_override("icon_max_width", 24)
+		family_button.add_theme_color_override("font_color", Color(family_colors[family]))
+		family_button.custom_minimum_size = Vector2(116, 36)
+		family_button.pressed.connect(mastery_tree_view.focus_family.bind(family))
+		navigation.add_child(family_button)
+	var spacer_nav := Control.new()
+	spacer_nav.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	navigation.add_child(spacer_nav)
+	for action in ["−", "+", "Origen", "Ver todo"]:
+		var button := Button.new()
+		button.text = action
+		button.custom_minimum_size = Vector2(44, 36)
+		if action == "−":
+			button.pressed.connect(func(): mastery_tree_view.set_zoom(mastery_tree_view.zoom / 1.15))
+		elif action == "+":
+			button.pressed.connect(func(): mastery_tree_view.set_zoom(mastery_tree_view.zoom * 1.15))
+		elif action == "Origen":
+			button.pressed.connect(mastery_tree_view.center_on_root)
+		else:
+			button.pressed.connect(mastery_tree_view.show_entire_tree)
+		navigation.add_child(button)
+	mastery_zoom_caption = Label.new()
+	mastery_zoom_caption.custom_minimum_size.x = 64
+	navigation.add_child(mastery_zoom_caption)
+	mastery_tree_view.zoom_changed.connect(func(value): mastery_zoom_caption.text = "%d%%" % roundi(value * 100.0))
 	call_deferred("_center_mastery_tree")
 
 	var detail := PanelContainer.new()
 	detail.custom_minimum_size.x = 280.0
 	detail.add_theme_stylebox_override(
-		"panel", _inventory_slot_style(Color("80643d"), Color("10151aee"))
+		"panel", load("res://resources/ui/mastery/detail_panel.tres")
 	)
 	body.add_child(detail)
 	var detail_margin := MarginContainer.new()
@@ -700,12 +748,12 @@ func _setup_mastery_tree() -> void:
 	mastery_detail_title.add_theme_font_size_override("font_size", 22)
 	detail_content.add_child(mastery_detail_title)
 	var rank := Label.new()
-	rank.text = "INICIADO · NIVEL 1"
+	rank.text = "RECORRIDO DE MAESTRÍA"
 	rank.add_theme_color_override("font_color", Color("b69755"))
 	detail_content.add_child(rank)
 	var progress := ProgressBar.new()
 	progress.max_value = 100.0
-	progress.value = 8.0
+	progress.value = 0.0
 	progress.show_percentage = false
 	progress.custom_minimum_size.y = 12.0
 	detail_content.add_child(progress)
@@ -735,6 +783,7 @@ func _setup_mastery_tree() -> void:
 	legacy.add_theme_color_override("font_color", Color("787167"))
 	legacy.add_theme_font_size_override("font_size", 10)
 	detail_content.add_child(legacy)
+	mastery_tree_view.mastery_selected.connect(_on_mastery_selected)
 	mastery_backdrop.hide()
 
 
@@ -759,18 +808,15 @@ func close_mastery_tree() -> void:
 func _on_mastery_selected(title: String, family: String, description: String) -> void:
 	mastery_detail_title.text = title
 	mastery_detail_family.text = family
+	var colors := {"MARCIALES": "d59476", "MUNDO": "86c6a5", "OFICIO": "ddbe7b", "INFLUENCIA": "a9a2d4"}
+	mastery_detail_family.add_theme_color_override("font_color", Color(colors.get(family, "f0d599")))
 	mastery_detail_description.text = description
 
 
 func _center_mastery_tree() -> void:
 	if mastery_scroll == null or mastery_tree_view == null:
 		return
-	mastery_scroll.scroll_horizontal = maxi(
-		int((mastery_tree_view.size.x - mastery_scroll.size.x) * 0.5), 0
-	)
-	mastery_scroll.scroll_vertical = maxi(
-		int(mastery_tree_view.size.y - mastery_scroll.size.y), 0
-	)
+	mastery_tree_view.center_on_root()
 
 
 func _apply_generated_button_icons() -> void:
@@ -853,12 +899,77 @@ func bind_player(player: Node) -> void:
 			timed_action_player.disconnect("timed_action_progress", _on_timed_action_progress)
 		if timed_action_player.is_connected("timed_action_finished", _on_timed_action_finished):
 			timed_action_player.disconnect("timed_action_finished", _on_timed_action_finished)
+		if timed_action_player.has_signal("stamina_changed") and timed_action_player.is_connected("stamina_changed", _on_stamina_changed):
+			timed_action_player.disconnect("stamina_changed", _on_stamina_changed)
+		if timed_action_player.has_signal("interaction_out_of_range") and timed_action_player.is_connected("interaction_out_of_range", _show_interaction_hint):
+			timed_action_player.disconnect("interaction_out_of_range", _show_interaction_hint)
 	timed_action_player = player
 	if timed_action_player == null:
 		return
 	timed_action_player.connect("timed_action_started", _on_timed_action_started)
 	timed_action_player.connect("timed_action_progress", _on_timed_action_progress)
 	timed_action_player.connect("timed_action_finished", _on_timed_action_finished)
+	if player.has_signal("stamina_changed"):
+		player.connect("stamina_changed", _on_stamina_changed)
+		_on_stamina_changed(float(player.get("stamina")), float(player.get("max_stamina")))
+	if player.has_signal("interaction_out_of_range"):
+		player.connect("interaction_out_of_range", _show_interaction_hint)
+
+
+func _setup_stamina_display() -> void:
+	stamina_module = _create_editable_action_module(
+		"StaminaModule", "stamina", Vector2(0.0, -245.0), Vector2(220.0, 20.0), false
+	)
+	stamina_bar = ProgressBar.new()
+	stamina_bar.name = "StaminaBar"
+	stamina_bar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	stamina_bar.show_percentage = false
+	stamina_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var background := StyleBoxFlat.new()
+	background.bg_color = Color("151b1fee")
+	background.border_color = Color("a78d56")
+	background.set_border_width_all(1)
+	background.set_corner_radius_all(5)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color("779c57")
+	fill.set_corner_radius_all(5)
+	stamina_bar.add_theme_stylebox_override("background", background)
+	stamina_bar.add_theme_stylebox_override("fill", fill)
+	stamina_module.add_child(stamina_bar)
+	stamina_caption = Label.new()
+	stamina_caption.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	stamina_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	stamina_caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	stamina_caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stamina_caption.add_theme_font_size_override("font_size", 11)
+	stamina_bar.add_child(stamina_caption)
+	_on_stamina_changed(100.0, 100.0)
+	interaction_hint = Label.new()
+	interaction_hint.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	interaction_hint.offset_left = -200.0
+	interaction_hint.offset_right = 200.0
+	interaction_hint.offset_top = -300.0
+	interaction_hint.offset_bottom = -275.0
+	interaction_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	interaction_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	interaction_hint.text = "Acércate para interactuar"
+	persistent_hud.add_child(interaction_hint)
+	interaction_hint.hide()
+	interaction_hint_timer = Timer.new()
+	interaction_hint_timer.one_shot = true
+	interaction_hint_timer.timeout.connect(interaction_hint.hide)
+	add_child(interaction_hint_timer)
+
+
+func _on_stamina_changed(current: float, maximum: float) -> void:
+	stamina_bar.max_value = maximum
+	stamina_bar.value = current
+	stamina_caption.text = "ESTAMINA  %d / %d" % [roundi(current), roundi(maximum)]
+
+
+func _show_interaction_hint() -> void:
+	interaction_hint.show()
+	interaction_hint_timer.start(2.5)
 
 
 func _setup_timed_action_progress() -> void:
@@ -866,9 +977,9 @@ func _setup_timed_action_progress() -> void:
 	timed_action_panel.name = "TimedActionProgress"
 	timed_action_panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	timed_action_panel.offset_left = -190.0
-	timed_action_panel.offset_top = -300.0
+	timed_action_panel.offset_top = -370.0
 	timed_action_panel.offset_right = 190.0
-	timed_action_panel.offset_bottom = -240.0
+	timed_action_panel.offset_bottom = -310.0
 	timed_action_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var panel_style := StyleBoxFlat.new()
@@ -971,10 +1082,7 @@ func _quit_game() -> void:
 	if _owns_tree_pause:
 		get_tree().paused = false
 		_owns_tree_pause = false
-	if not NetworkManager.current_character_name.is_empty():
-		NetworkManager.request_despawn()
-		await NetworkManager.player_despawned
-	get_tree().quit()
+	GameManager.request_quit_game()
 
 
 func _render_inventory(inventory: Dictionary) -> void:
@@ -1077,6 +1185,8 @@ func _set_equipment_button(button: Button, label: String, item_name: String) -> 
 		suffix = " (Dos manos)"
 	button.text = ""
 	button.icon = ItemCatalog.get_icon(item_name)
+	if label == "Mano secundaria" and ItemCatalog.get_hand_usage(item_name) == "two_hand":
+		button.icon = load("res://assets/ui/inventory/v1/two_hand_reserved.svg")
 	button.tooltip_text = label + " · " + item_name + suffix + "\nClic para desequipar"
 	button.set_meta("equipment_item", item_name)
 	button.disabled = false
@@ -1103,10 +1213,10 @@ func _create_item_slot(item_name: String, quantity: int, instance_index := 0) ->
 			"normal", _inventory_slot_style(Color("665637d9"), Color("17140feb"))
 		)
 		slot_button.add_theme_stylebox_override(
-			"hover", _inventory_slot_style(Color("c6a557f2"), Color("292217f5"))
+			"hover", load("res://resources/ui/inventory/slot_hover.tres")
 		)
 		slot_button.add_theme_stylebox_override(
-			"pressed", _inventory_slot_style(Color("e2c677f2"), Color("100e0bf5"))
+			"pressed", load("res://resources/ui/inventory/slot_hover.tres")
 		)
 	else:
 		var slot_panel := slot as PanelContainer
@@ -1116,35 +1226,36 @@ func _create_item_slot(item_name: String, quantity: int, instance_index := 0) ->
 	if ItemCatalog.is_equippable(item_name):
 		slot.tooltip_text += "\nClic para equipar o guardar"
 
-	var margin := MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 3)
-	margin.add_theme_constant_override("margin_top", 4)
-	margin.add_theme_constant_override("margin_right", 3)
-	margin.add_theme_constant_override("margin_bottom", 4)
-	slot.add_child(margin)
-
-	var content := VBoxContainer.new()
-	content.alignment = BoxContainer.ALIGNMENT_CENTER
+	var content := Control.new()
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	margin.add_child(content)
+	slot.add_child(content)
+	if slot is Button:
+		content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	var icon := ItemCatalog.get_icon(item_name)
 	if icon != null:
 		var icon_rect := TextureRect.new()
 		icon_rect.name = "ItemIcon"
-		icon_rect.custom_minimum_size = Vector2(44.0, 44.0)
 		icon_rect.texture = icon
 		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		content.add_child(icon_rect)
+		icon_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		icon_rect.offset_left = 8
+		icon_rect.offset_top = 7
+		icon_rect.offset_right = -8
+		icon_rect.offset_bottom = -14
 	else:
 		var icon_placeholder := Label.new()
+		icon_placeholder.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		icon_placeholder.text = item_name.left(1).to_upper()
 		icon_placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		icon_placeholder.add_theme_font_size_override("font_size", 16)
 		icon_placeholder.add_theme_color_override("font_color", Color("c7a85c"))
 		content.add_child(icon_placeholder)
+		icon_placeholder.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		icon_placeholder.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 
 	if stackable and quantity > 1:
 		var quantity_label := Label.new()
@@ -1154,6 +1265,24 @@ func _create_item_slot(item_name: String, quantity: int, instance_index := 0) ->
 		quantity_label.add_theme_font_size_override("font_size", 9)
 		quantity_label.add_theme_color_override("font_color", Color("d5c59d"))
 		content.add_child(quantity_label)
+		quantity_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		quantity_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		quantity_label.offset_right = -6
+		quantity_label.offset_bottom = -4
+		quantity_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	if ItemCatalog.get_hand_usage(item_name) == "two_hand":
+		slot.tooltip_text += "\nOcupa ambas manos"
+		var hand_badge := Label.new()
+		hand_badge.name = "HandUsage"
+		hand_badge.text = "2M"
+		hand_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hand_badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		hand_badge.add_theme_font_size_override("font_size", 9)
+		hand_badge.add_theme_color_override("font_color", Color("d5c59d"))
+		content.add_child(hand_badge)
+		hand_badge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		hand_badge.offset_right = -6
+		hand_badge.offset_top = 4
 	var equipped_count := 0
 	if GameManager.equipped_primary_item == item_name:
 		equipped_count += 1
@@ -1170,6 +1299,10 @@ func _create_item_slot(item_name: String, quantity: int, instance_index := 0) ->
 		equipped_label.add_theme_font_size_override("font_size", 8)
 		equipped_label.add_theme_color_override("font_color", Color(0.42, 0.95, 0.55))
 		content.add_child(equipped_label)
+		equipped_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		equipped_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		equipped_label.offset_bottom = -3
+		equipped_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	return slot
 
 
@@ -1184,13 +1317,25 @@ func _create_empty_inventory_slot(index: int) -> PanelContainer:
 	return slot
 
 
-func _inventory_slot_style(border_color: Color, background_color: Color) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = background_color
-	style.border_color = border_color
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(5)
-	return style
+func _inventory_slot_style(_border_color: Color, background_color: Color) -> StyleBox:
+	var state := "empty" if background_color.a < 0.8 else "normal"
+	return load("res://resources/ui/inventory/slot_%s.tres" % state) as StyleBox
+
+
+func _apply_inventory_skin() -> void:
+	inventory_panel.get_node("Visual").hide()
+	inventory_panel.add_theme_stylebox_override("panel", load("res://resources/ui/inventory/parchment_panel.tres"))
+	for label in inventory_panel.find_children("*", "Label", true, false):
+		if not inventory_stats_panel.is_ancestor_of(label):
+			(label as Label).add_theme_color_override("font_color", Color("45351f"))
+	inventory_gold_label.add_theme_color_override("font_color", Color("e0c68c"))
+	inventory_item_count.add_theme_color_override("font_color", Color("e0c68c"))
+	for button in inventory_panel.find_children("*", "Button", true, false):
+		if button.has_meta("equipment_slot"):
+			(button as Button).add_theme_stylebox_override("normal", load("res://resources/ui/inventory/slot_normal.tres"))
+			(button as Button).add_theme_stylebox_override("disabled", load("res://resources/ui/inventory/slot_empty.tres"))
+			(button as Button).add_theme_stylebox_override("hover", load("res://resources/ui/inventory/slot_hover.tres"))
+			(button as Button).add_theme_color_override("icon_disabled_color", Color.WHITE)
 
 
 func _is_key(event: InputEventKey, expected_key: Key) -> bool:

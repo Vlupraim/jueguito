@@ -21,7 +21,7 @@ func _initialize() -> void:
 		quit(3)
 		return
 	var texture_assets := assets as Terrain3DAssets
-	if texture_assets.get_texture_count() != 24:
+	if texture_assets.get_texture_count() != 25:
 		printerr("TERRAIN_WORKSPACE_ASSETS_ERROR texture_count=%d" % texture_assets.get_texture_count())
 		quit(4)
 		return
@@ -31,5 +31,5 @@ func _initialize() -> void:
 			printerr("TERRAIN_WORKSPACE_ASSETS_ERROR slot=%d vacio" % texture_id)
 			quit(5)
 			return
-	print("TERRAIN_WORKSPACE_ASSETS_OK path=%s slots=24 dark_grass=6,23" % actual_path)
+	print("TERRAIN_WORKSPACE_ASSETS_OK path=%s slots=25 dark_grass=6,23 snow=24" % actual_path)
 	quit(0)

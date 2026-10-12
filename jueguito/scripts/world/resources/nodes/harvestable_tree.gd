@@ -15,6 +15,7 @@ signal respawned(resource_id: String)
 @export var respawn_player_radius := 60.0
 @export var required_tool_type := "axe"
 @export var model_scene: PackedScene
+@export var foliage_material_override: Material
 @export var visual_height := 8.0
 @export var visual_yaw_degrees := 0.0
 @export var trunk_radius := 0.42
@@ -172,6 +173,9 @@ func _instantiate_model() -> void:
 		return
 	model.name = "TreeModel"
 	visual_pivot.add_child(model)
+	if foliage_material_override != null:
+		for mesh: MeshInstance3D in model.find_children("*", "MeshInstance3D", true, false):
+			mesh.material_override = foliage_material_override
 	model_bounds = _calculate_model_bounds(model)
 	if model_bounds.size.y <= 0.001:
 		return

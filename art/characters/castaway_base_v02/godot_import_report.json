@@ -1,0 +1,28 @@
+{
+  "animations": [
+    "Armature|Archery_Shot_1|baselayer",
+    "Armature|Archery_Shot|baselayer",
+    "Armature|Attack|baselayer",
+    "Armature|Axe_Spin_Attack|baselayer",
+    "Armature|Basic_Jump|baselayer",
+    "Armature|Charged_Slash|baselayer",
+    "Armature|Collect_Object|baselayer",
+    "Armature|Double_Blade_Spin|baselayer",
+    "Armature|Double_Combo_Attack|baselayer",
+    "Armature|Heavy_Hammer_Swing|baselayer",
+    "Armature|Idle_11|baselayer",
+    "Armature|Left_Slash|baselayer",
+    "Armature|Sit_and_Doze_Off|baselayer",
+    "Armature|Stand_Up1|baselayer",
+    "Armature|Swim_Forward|baselayer",
+    "Armature|Swim_Idle|baselayer",
+    "Armature|Sword_Judgment|baselayer",
+    "Armature|Triple_Combo_Attack|baselayer",
+    "Armature|running|baselayer",
+    "Armature|walking_man|baselayer"
+  ],
+  "bones": 24,
+  "embedded_material_textures": true,
+  "engine": "4.7-stable (official)",
+  "meshes": 2
+}

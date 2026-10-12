@@ -2,7 +2,7 @@
 extends SceneTree
 
 const ASSETS_PATH := "res://assets/environment/terrain/jueguito_terrain_assets.tres"
-const ASSETS_UID := "uid://culjong3w41jq"
+const ASSETS_UID := "uid://dp4luima267ng"
 const MATERIAL_PATH := "res://assets/environment/terrain/jueguito_terrain_material.tres"
 const FLAT_NORMAL_PATH := "res://assets/environment/terrain/textures/stylized/terrain_slots/flat_normal_roughness.svg"
 const QUATERNIUS_PATH := "res://assets/environment/vegetation/quaternius_stylized_nature/"
@@ -212,6 +212,10 @@ func _init() -> void:
 		texture.detiling_shift = TEXTURE_DETILING_SHIFT
 		assets.set_texture(index, texture)
 	assets.texture_list.resize(TEXTURES.size())
+	# Apply the saved art profiles last, preserving painted IDs on every rebuild.
+	if not preload("res://scripts/tools/editor/natural_terrain_profiles.gd").apply(assets):
+		had_load_error = true
+		push_error("No pude aplicar la biblioteca natural de materiales")
 
 	for index in range(MESH_ASSETS.size()):
 		var mesh_data: Dictionary = MESH_ASSETS[index]

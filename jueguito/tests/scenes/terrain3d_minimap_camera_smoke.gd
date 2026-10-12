@@ -45,7 +45,7 @@ func _run() -> void:
 	if world.has_method("_toggle_expanded_map_view"):
 		_fail("La antigua vista de terreno 3D sigue expuesta")
 		return
-	var minimap_module := world.get_node_or_null("MinimapaUI/MinimapModule") as Control
+	var minimap_module := world.get("minimap_hud_module") as Control
 	var hud_tools := world.find_child("ControlesMapaLocal", true, false) as VBoxContainer
 	if hud_tools == null:
 		_fail("Faltan las herramientas junto al minimapa")

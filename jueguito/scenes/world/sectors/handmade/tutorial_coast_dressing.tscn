@@ -1,0 +1,618 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/pine_tall_01.tscn" id="1_mpqr4"]
+[ext_resource type="Script" path="res://scripts/world/resources/nodes/harvestable_tree.gd" id="2_jrntv"]
+[ext_resource type="PackedScene" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_01.glb" id="3_okt1v"]
+[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/acacia_01.tscn" id="4_bqmf8"]
+[ext_resource type="Material" path="res://resources/environment/coastal_pine_matte.tres" id="4_okt1v"]
+[ext_resource type="PackedScene" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_03.glb" id="5_efygi"]
+[ext_resource type="PackedScene" path="res://scenes/world/resources/coastal_rock.tscn" id="6_qmp8s"]
+[ext_resource type="Material" path="res://resources/environment/coastal_acacia_matte.tres" id="7_bqmf8"]
+[ext_resource type="Script" path="res://scripts/world/environment/matte_geometry.gd" id="7_nqdw4"]
+[ext_resource type="Material" path="res://resources/environment/coastal_rock_matte.tres" id="8_v7n2s"]
+[ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Grass_Common_Short.gltf" id="9_bw6xn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efygi"]
+resource_name = "DuneGrass_MutedStraw"
+cull_mode = 2
+albedo_color = Color(0.5372549, 0.5686275, 0.43137255, 1)
+metallic_specular = 0.1
+roughness = 0.98
+
+[node name="CoastDressing" type="Node3D" unique_id=754718364]
+metadata/art_version = 1
+metadata/sector = Vector2i(27, 30)
+
+[node name="HarvestableTrees" type="Node3D" parent="." unique_id=1953802363]
+
+[node name="CoastalTree_01" type="Node3D" parent="HarvestableTrees" unique_id=735880725 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 270.15015, 6.656542, 239.99196)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_01"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 6.0
+visual_yaw_degrees = 121.71210050582886
+trunk_radius = 0.38
+trunk_height = 3.5999999999999996
+
+[node name="CoastalTree_02" type="Node3D" parent="HarvestableTrees" unique_id=1351812546 instance=ExtResource("4_bqmf8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 286.15015, 5.912073, 257.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_02"
+display_name = "Acacia"
+model_scene = ExtResource("5_efygi")
+foliage_material_override = ExtResource("7_bqmf8")
+visual_height = 4.5
+visual_yaw_degrees = 241.77292585372925
+trunk_radius = 0.4
+trunk_height = 2.6999999999999997
+
+[node name="CoastalTree_03" type="Node3D" parent="HarvestableTrees" unique_id=224548386 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 251.15015, 7.2173605, 257.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_03"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 7.0
+visual_yaw_degrees = 235.78595638275146
+trunk_radius = 0.38
+trunk_height = 4.2
+
+[node name="CoastalTree_04" type="Node3D" parent="HarvestableTrees" unique_id=21413870 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 261.15015, 8.522153, 273.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_04"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 6.5
+visual_yaw_degrees = 119.19940710067749
+trunk_radius = 0.38
+trunk_height = 3.9
+
+[node name="CoastalTree_05" type="Node3D" parent="HarvestableTrees" unique_id=1716525624 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 277.15015, 8.02625, 280.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_05"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 7.3
+visual_yaw_degrees = 111.46321892738342
+trunk_radius = 0.38
+trunk_height = 4.38
+
+[node name="CoastalTree_06" type="Node3D" parent="HarvestableTrees" unique_id=1018471689 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 287.15015, 9.449345, 278.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_06"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 5.4
+visual_yaw_degrees = 351.243360042572
+trunk_radius = 0.38
+trunk_height = 3.24
+
+[node name="CoastalTree_07" type="Node3D" parent="HarvestableTrees" unique_id=1629602752 instance=ExtResource("4_bqmf8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307.15015, 6.34683, 263.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_07"
+display_name = "Acacia"
+model_scene = ExtResource("5_efygi")
+foliage_material_override = ExtResource("7_bqmf8")
+visual_height = 5.2
+visual_yaw_degrees = 342.4686312675476
+trunk_radius = 0.4
+trunk_height = 3.12
+
+[node name="CoastalTree_08" type="Node3D" parent="HarvestableTrees" unique_id=1655833531 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245.15015, 8.237963, 279.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_08"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 6.2
+visual_yaw_degrees = 272.2823452949524
+trunk_radius = 0.38
+trunk_height = 3.7199999999999998
+
+[node name="CoastalTree_09" type="Node3D" parent="HarvestableTrees" unique_id=1030059132 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 310.15015, 9.08313, 276.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_09"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 6.8
+visual_yaw_degrees = 294.65628147125244
+trunk_radius = 0.38
+trunk_height = 4.08
+
+[node name="CoastalTree_10" type="Node3D" parent="HarvestableTrees" unique_id=1389379854 instance=ExtResource("4_bqmf8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 350.15015, 9.964536, 261.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_10"
+display_name = "Acacia"
+model_scene = ExtResource("5_efygi")
+foliage_material_override = ExtResource("7_bqmf8")
+visual_height = 4.8
+visual_yaw_degrees = 223.72545719146729
+trunk_radius = 0.4
+trunk_height = 2.88
+
+[node name="CoastalTree_11" type="Node3D" parent="HarvestableTrees" unique_id=1123901151 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 335.15015, 11.697291, 281.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_11"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 7.1
+visual_yaw_degrees = 268.4562921524048
+trunk_radius = 0.38
+trunk_height = 4.26
+
+[node name="CoastalTree_12" type="Node3D" parent="HarvestableTrees" unique_id=929230047 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 315.15015, 19.889423, 304.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_12"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 6.6
+visual_yaw_degrees = 25.4233181476593
+trunk_radius = 0.38
+trunk_height = 3.9599999999999995
+
+[node name="CoastalTree_13" type="Node3D" parent="HarvestableTrees" unique_id=150329585 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 251.15015, 9.985045, 304.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_13"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 7.5
+visual_yaw_degrees = 136.99386835098267
+trunk_radius = 0.38
+
+[node name="CoastalTree_14" type="Node3D" parent="HarvestableTrees" unique_id=1163613223 instance=ExtResource("1_mpqr4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 365.15015, 18.07328, 269.99194)
+script = ExtResource("2_jrntv")
+resource_id = "sector_27_30/coast_tree_14"
+display_name = "Pino alto"
+amount = 4
+model_scene = ExtResource("3_okt1v")
+foliage_material_override = ExtResource("4_okt1v")
+visual_height = 5.8
+visual_yaw_degrees = 108.77748012542725
+trunk_radius = 0.38
+trunk_height = 3.48
+
+[node name="CoastalStones" type="Node3D" parent="." unique_id=141609725]
+
+[node name="Stone_00" type="Node3D" parent="CoastalStones" unique_id=2134316948 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(-0.5796919, -0.015817104, -0.62126774, 0.061791502, 0.5010931, -0.0937359, 0.61875916, -0.06485938, -0.5726812, 310.92502, 5.351506, 199.96014)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_01" type="Node3D" parent="CoastalStones" unique_id=391672401 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.43653864, -0.00922222, 0.14149995, 0.024431782, 0.32827514, -0.033878103, -0.13996528, 0.028539168, 0.43541157, 307.40533, 5.303952, 200.86766)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_02" type="Node3D" parent="CoastalStones" unique_id=1861950136 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.36474922, 0.030800696, -0.07962072, -0.040367838, 0.23289894, 0.044588026, 0.084419504, -0.021711854, 0.36533636, 311.1486, 5.5041933, 198.62799)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_03" type="Node3D" parent="CoastalStones" unique_id=669258749 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.25508812, -0.0039785854, 0.009767527, 0.0038363393, 0.18007292, 0.0430583, -0.010564135, -0.030676348, 0.25148928, 309.63034, 5.621768, 197.7988)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_04" type="Node3D" parent="CoastalStones" unique_id=75186300 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.7063683, -0.06899667, 0.6322274, 0.046200756, 0.73512423, 0.08166004, -0.6367775, -0.023200825, 0.7072457, 342.12833, 4.5993834, 217.39961)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_05" type="Node3D" parent="CoastalStones" unique_id=56479878 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.01703639, -0.026014756, 0.18761039, 0.02052757, 0.14303917, 0.03224997, -0.18957922, 0.013150432, 0.020351477, 341.07657, 4.6898584, 216.75484)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_06" type="Node3D" parent="CoastalStones" unique_id=488506812 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.14706302, 0.017395373, 0.15184845, -0.029308973, 0.14430763, -0.0068808417, -0.15114385, -0.011057625, 0.14908288, 344.00803, 4.5204687, 215.04088)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_07" type="Node3D" parent="CoastalStones" unique_id=415314880 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.28897506, -0.010699441, 0.15006676, 0.006821048, 0.17158136, 0.030682608, -0.15127307, -0.012702239, 0.28805417, 341.46146, 4.6771355, 216.3614)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_08" type="Node3D" parent="CoastalStones" unique_id=773303774 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(-0.9785035, 0.06870615, -0.010383795, 0.13268912, 0.5059364, 0.016533233, 0.012512702, 0.0077493982, -0.98734546, 254.73038, 6.818748, 238.18852)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_09" type="Node3D" parent="CoastalStones" unique_id=162249544 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(-0.053910755, 0.0010360103, -0.23986487, -0.027617663, 0.13427137, 0.008124893, 0.23827711, 0.01579721, -0.05332827, 256.71448, 6.8987646, 240.52327)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_10" type="Node3D" parent="CoastalStones" unique_id=1055167936 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.22991526, 0.0018363745, -0.25900692, 0.008725688, 0.21181226, 0.011753726, 0.25887728, -0.008770249, 0.22963424, 251.22476, 6.6873283, 238.80833)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_11" type="Node3D" parent="CoastalStones" unique_id=1742028801 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.2200976, -0.026406452, -0.2101769, -0.0002138773, 0.23171505, -0.04974379, 0.21297975, 0.027521657, 0.21715112, 255.5, 6.958743, 241.53496)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_12" type="Node3D" parent="CoastalStones" unique_id=1958932718 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.68606734, -0.029500576, 0.5569381, 0.014383316, 0.45220476, 0.07348065, -0.5597202, -0.024539357, 0.6845455, 329.16745, 3.6934366, 243.2455)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_13" type="Node3D" parent="CoastalStones" unique_id=516016306 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(-0.040482994, -0.020795407, -0.31738085, 0.022320889, 0.17866018, -0.040122055, 0.31876227, -0.015151462, -0.037498064, 329.3037, 3.7780442, 244.01239)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_14" type="Node3D" parent="CoastalStones" unique_id=883018319 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.14304921, -0.005967465, -0.17706652, -0.027219607, 0.1674595, -0.03207501, 0.17514358, 0.030899351, 0.13963489, 326.57083, 3.6630588, 246.78009)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_15" type="Node3D" parent="CoastalStones" unique_id=1138206383 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.1635831, 0.004630635, 0.20117405, -0.031716626, 0.15561797, 0.016023943, -0.19880521, -0.021016467, 0.16297585, 328.9275, 3.714337, 243.82799)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_16" type="Node3D" parent="CoastalStones" unique_id=1552556672 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.8591087, 0.055037085, -0.25882807, -0.10333658, 0.50944906, -0.007538177, 0.25630763, 0.020919709, 0.86451787, 369.3141, 15.8982525, 246.8939)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_17" type="Node3D" parent="CoastalStones" unique_id=708430708 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.37440288, -0.02696577, 0.018149951, 0.052481107, 0.19275014, 0.00039862117, -0.018029846, 0.001091351, 0.37805727, 364.7538, 14.11738, 246.54425)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_18" type="Node3D" parent="CoastalStones" unique_id=1972979190 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.05512693, 0.041679263, -0.42849538, 0.0074370634, 0.2543193, 0.07224074, 0.43423364, -0.00964697, 0.053161193, 365.31543, 13.884677, 243.95058)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="Stone_19" type="Node3D" parent="CoastalStones" unique_id=1631892667 instance=ExtResource("6_qmp8s")]
+transform = Transform3D(0.05303555, -0.0115238065, -0.2316097, 0.032067407, 0.17890914, -0.008117399, 0.22988124, -0.022298386, 0.054566663, 364.20905, 13.753185, 246.00482)
+script = ExtResource("7_nqdw4")
+surface_material = ExtResource("8_v7n2s")
+
+[node name="DuneGrass" type="Node3D" parent="." unique_id=1206709298]
+
+[node name="DuneGrass_000" type="Node3D" parent="DuneGrass" unique_id=1574763404 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.5239468, 0, -0.5704443, 0, 0.21515265, 0, 0.5704443, 0, -0.5239468, 260.91342, 6.7616835, 238.97539)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_001" type="Node3D" parent="DuneGrass" unique_id=739480785 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.99831325, 0, -0.23963998, 0, 0.28518683, 0, 0.23963998, 0, 0.99831325, 255.44995, 6.874495, 236.71526)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_002" type="Node3D" parent="DuneGrass" unique_id=794906465 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.017534861, 0, 0.8658194, 0, 0.24055472, 0, -0.8658194, 0, 0.017534861, 261.00366, 6.7738028, 237.11514)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_003" type="Node3D" parent="DuneGrass" unique_id=1803775422 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.8469869, 0, -0.22605777, 0, 0.24350971, 0, 0.22605777, 0, -0.8469869, 259.53256, 6.8358426, 238.5727)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_004" type="Node3D" parent="DuneGrass" unique_id=1842579717 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.3353396, 0, 1.0007144, 0, 0.29316837, 0, -1.0007144, 0, 0.3353396, 256.43582, 6.9921694, 232.0222)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_005" type="Node3D" parent="DuneGrass" unique_id=379799355 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.8574966, 0, 0.5292803, 0, 0.27991375, 0, -0.5292803, 0, 0.8574966, 262.2018, 6.7623105, 235.54747)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_006" type="Node3D" parent="DuneGrass" unique_id=1710243543 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.10357716, 0, -0.7770231, 0, 0.21774893, 0, 0.7770231, 0, -0.10357716, 257.99368, 6.885014, 236.5274)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_007" type="Node3D" parent="DuneGrass" unique_id=367612863 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(1.0740192, 0, -0.09740372, 0, 0.29956305, 0, 0.09740372, 0, 1.0740192, 255.5722, 6.8859534, 237.84676)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_008" type="Node3D" parent="DuneGrass" unique_id=1926348717 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.72019255, 0, -0.049690574, 0, 0.2005291, 0, 0.049690574, 0, 0.72019255, 253.19635, 6.9099703, 232.24261)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_009" type="Node3D" parent="DuneGrass" unique_id=203449214 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.72885114, 0, 0.17916133, 0, 0.20848565, 0, -0.17916133, 0, 0.72885114, 263.10217, 6.7088, 236.77788)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_010" type="Node3D" parent="DuneGrass" unique_id=2023092092 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.29611552, 0, 0.68186945, 0, 0.20649754, 0, -0.68186945, 0, -0.29611552, 255.53204, 6.8743253, 236.52078)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_011" type="Node3D" parent="DuneGrass" unique_id=1142191090 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.91078657, 0, 0.42426318, 0, 0.27909845, 0, -0.42426318, 0, 0.91078657, 258.38705, 6.8788457, 236.80273)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_012" type="Node3D" parent="DuneGrass" unique_id=478321508 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.5525356, 0, -0.47734466, 0, 0.20282602, 0, 0.47734466, 0, -0.5525356, 272.9892, 6.2722282, 243.1697)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_013" type="Node3D" parent="DuneGrass" unique_id=795074102 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(1.0163143, 0, 0.010424331, 0, 0.28232437, 0, -0.010424331, 0, 1.0163143, 266.79697, 6.2401447, 242.31337)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_014" type="Node3D" parent="DuneGrass" unique_id=1307113828 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.7853601, 0, 0.10685925, 0, 0.22016571, 0, -0.10685925, 0, -0.7853601, 272.77533, 6.545549, 241.32498)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_015" type="Node3D" parent="DuneGrass" unique_id=692972886 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.41913322, 0, -0.69680756, 0, 0.22587508, 0, 0.69680756, 0, 0.41913322, 272.7375, 6.716306, 240.3269)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_016" type="Node3D" parent="DuneGrass" unique_id=271926720 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.14195426, 0, 0.9182068, 0, 0.25808752, 0, -0.9182068, 0, 0.14195426, 269.9078, 6.329624, 242.06311)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_017" type="Node3D" parent="DuneGrass" unique_id=2140265117 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.024327587, 0, -0.7499232, 0, 0.2084216, 0, 0.7499232, 0, -0.024327587, 270.81604, 6.4447637, 241.53091)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_018" type="Node3D" parent="DuneGrass" unique_id=885109672 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.19651645, 0, 1.0609235, 0, 0.29971403, 0, -1.0609235, 0, 0.19651645, 272.3209, 6.783305, 239.83368)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_019" type="Node3D" parent="DuneGrass" unique_id=1487727759 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.47695744, 0, -0.653908, 0, 0.22482574, 0, 0.653908, 0, -0.47695744, 273.4471, 6.2844243, 243.05829)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_020" type="Node3D" parent="DuneGrass" unique_id=1211219810 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.19442046, 0, -0.77560276, 0, 0.2221109, 0, 0.77560276, 0, 0.19442046, 272.65256, 6.9469285, 238.85513)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_021" type="Node3D" parent="DuneGrass" unique_id=1978619891 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.025526203, 0, 0.88909817, 0, 0.24707347, 0, -0.88909817, 0, 0.025526203, 269.70233, 6.2150345, 243.17685)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_022" type="Node3D" parent="DuneGrass" unique_id=711352152 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.8517224, 0, 0.44858202, 0, 0.26739728, 0, -0.44858202, 0, -0.8517224, 270.01157, 6.24288, 242.97404)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_023" type="Node3D" parent="DuneGrass" unique_id=287291022 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.72260594, 0, -0.49571562, 0, 0.24341536, 0, 0.49571562, 0, -0.72260594, 271.2685, 6.137055, 244.34468)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_024" type="Node3D" parent="DuneGrass" unique_id=176057668 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.8643395, 0, -0.20958729, 0, 0.247052, 0, 0.20958729, 0, -0.8643395, 282.67358, 5.3845754, 257.28027)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_025" type="Node3D" parent="DuneGrass" unique_id=1424569910 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.7839699, 0, -0.61056036, 0, 0.2760212, 0, 0.61056036, 0, -0.7839699, 286.3522, 5.7945333, 256.1433)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_026" type="Node3D" parent="DuneGrass" unique_id=1486741255 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.5884195, 0, 0.43866587, 0, 0.20387171, 0, -0.43866587, 0, -0.5884195, 247.4672, 7.2407537, 250.69292)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_027" type="Node3D" parent="DuneGrass" unique_id=1839305622 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.7489228, 0, -0.6868629, 0, 0.28227827, 0, 0.6868629, 0, -0.7489228, 255.14905, 6.991476, 252.19722)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_028" type="Node3D" parent="DuneGrass" unique_id=1780877617 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.2570317, 0, -0.9050156, 0, 0.26133537, 0, 0.9050156, 0, 0.2570317, 249.55988, 7.1768217, 247.59735)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_029" type="Node3D" parent="DuneGrass" unique_id=44940127 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(1.0167977, 0, -0.30013588, 0, 0.2944915, 0, 0.30013588, 0, 1.0167977, 250.82928, 7.2034802, 252.5473)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_030" type="Node3D" parent="DuneGrass" unique_id=1996202479 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.9184577, 0, 0.15600042, 0, 0.25878108, 0, -0.15600042, 0, 0.9184577, 245.2084, 7.2838316, 252.94554)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_031" type="Node3D" parent="DuneGrass" unique_id=715315358 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.59988713, 0, -0.7249253, 0, 0.26137418, 0, 0.7249253, 0, 0.59988713, 248.50684, 7.2580338, 253.30824)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_032" type="Node3D" parent="DuneGrass" unique_id=42641187 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.84977317, 0, 0.15697655, 0, 0.2400418, 0, -0.15697655, 0, -0.84977317, 250.64368, 7.1864066, 250.00504)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_033" type="Node3D" parent="DuneGrass" unique_id=1327440695 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.9611676, 0, 0.19508506, 0, 0.27243492, 0, -0.19508506, 0, 0.9611676, 250.60904, 7.2118683, 252.8223)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_034" type="Node3D" parent="DuneGrass" unique_id=683477012 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.7040998, 0, -0.20722911, 0, 0.20387837, 0, 0.20722911, 0, -0.7040998, 251.02646, 7.1793513, 249.25557)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_035" type="Node3D" parent="DuneGrass" unique_id=538947067 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.8416036, 0, 0.3711388, 0, 0.2555013, 0, -0.3711388, 0, -0.8416036, 253.68378, 7.1805263, 248.68068)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_036" type="Node3D" parent="DuneGrass" unique_id=1094695308 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.58573353, 0, 0.73418653, 0, 0.2608914, 0, -0.73418653, 0, 0.58573353, 247.8692, 7.279399, 253.95996)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_037" type="Node3D" parent="DuneGrass" unique_id=1043123743 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.8562868, 0, -0.6019358, 0, 0.29074642, 0, 0.6019358, 0, -0.8562868, 249.09961, 7.2484784, 254.79128)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_038" type="Node3D" parent="DuneGrass" unique_id=1494422267 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.41182914, 0, -0.7694779, 0, 0.24243167, 0, 0.7694779, 0, 0.41182914, 348.7985, 7.68136, 245.94482)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_039" type="Node3D" parent="DuneGrass" unique_id=983878948 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.56252444, 0, -0.7075356, 0, 0.25108415, 0, 0.7075356, 0, 0.56252444, 344.05682, 6.490891, 245.09767)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_040" type="Node3D" parent="DuneGrass" unique_id=1951371620 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.8763911, 0, -0.4059652, 0, 0.2682921, 0, 0.4059652, 0, 0.8763911, 341.0797, 5.780664, 247.79454)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_041" type="Node3D" parent="DuneGrass" unique_id=1582500681 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.60412747, 0, 0.4151111, 0, 0.20361078, 0, -0.4151111, 0, 0.60412747, 346.1912, 7.0408225, 246.66647)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_042" type="Node3D" parent="DuneGrass" unique_id=1360620498 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.7596603, 0, 0.6492595, 0, 0.27758628, 0, -0.6492595, 0, -0.7596603, 348.51263, 7.73988, 248.08069)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_043" type="Node3D" parent="DuneGrass" unique_id=537910283 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.8605196, 0, -0.23936515, 0, 0.24810855, 0, 0.23936515, 0, 0.8605196, 343.242, 6.298933, 244.9959)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_044" type="Node3D" parent="DuneGrass" unique_id=1463601893 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.14669794, 0, 0.9411199, 0, 0.26457906, 0, -0.9411199, 0, 0.14669794, 342.81412, 6.5562887, 252.64183)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_045" type="Node3D" parent="DuneGrass" unique_id=1024280867 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.79496, 0, -0.018615825, 0, 0.22088276, 0, 0.018615825, 0, -0.79496, 343.22168, 6.6853447, 252.87267)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_046" type="Node3D" parent="DuneGrass" unique_id=143329245 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.73507327, 0, 0.35609418, 0, 0.2268844, 0, -0.35609418, 0, 0.73507327, 345.2303, 6.862157, 249.421)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_047" type="Node3D" parent="DuneGrass" unique_id=1665133555 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.92953753, 0, -0.23416756, 0, 0.26627207, 0, 0.23416756, 0, -0.92953753, 348.55667, 7.8888025, 249.80463)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_048" type="Node3D" parent="DuneGrass" unique_id=595561323 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.1961812, 0, -0.7934431, 0, 0.22703792, 0, 0.7934431, 0, 0.1961812, 349.3439, 7.83649, 246.01675)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_049" type="Node3D" parent="DuneGrass" unique_id=1381235165 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.93673235, 0, 0.33505824, 0, 0.27634794, 0, -0.33505824, 0, 0.93673235, 349.64117, 8.246872, 249.8182)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_050" type="Node3D" parent="DuneGrass" unique_id=314157818 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.39266267, 0, -0.7552427, 0, 0.23645002, 0, 0.7552427, 0, -0.39266267, 318.92255, 8.567894, 273.63702)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_051" type="Node3D" parent="DuneGrass" unique_id=708287290 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.48980466, 0, 0.6701574, 0, 0.23057556, 0, -0.6701574, 0, -0.48980466, 319.35577, 7.700994, 270.0647)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_052" type="Node3D" parent="DuneGrass" unique_id=2131011893 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.40077475, 0, -0.64334524, 0, 0.21054631, 0, 0.64334524, 0, -0.40077475, 313.684, 8.295826, 271.68488)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_053" type="Node3D" parent="DuneGrass" unique_id=1258770107 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.7609942, 0, -0.09102043, 0, 0.21289396, 0, 0.09102043, 0, 0.7609942, 316.08438, 8.3840885, 272.4267)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_054" type="Node3D" parent="DuneGrass" unique_id=840413607 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.4178099, 0, 0.64071155, 0, 0.21247303, 0, -0.64071155, 0, -0.4178099, 315.8472, 7.4055657, 267.75208)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_055" type="Node3D" parent="DuneGrass" unique_id=664328475 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.08962794, 0, -0.9053886, 0, 0.25272614, 0, 0.9053886, 0, 0.08962794, 315.0954, 8.425485, 272.43878)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_056" type="Node3D" parent="DuneGrass" unique_id=1292567573 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.23081781, 0, -0.75733346, 0, 0.21992403, 0, 0.75733346, 0, -0.23081781, 317.84024, 7.4393935, 268.33435)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_057" type="Node3D" parent="DuneGrass" unique_id=1703769904 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(-0.5286005, 0, 0.72291815, 0, 0.2487669, 0, -0.72291815, 0, -0.5286005, 318.69293, 8.510477, 273.39764)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_058" type="Node3D" parent="DuneGrass" unique_id=1271169029 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.44622144, 0, -0.6878241, 0, 0.22774655, 0, 0.6878241, 0, 0.44622144, 318.65234, 8.33205, 272.71198)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_059" type="Node3D" parent="DuneGrass" unique_id=1285394516 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.11058389, 0, -0.8249936, 0, 0.23121446, 0, 0.8249936, 0, 0.11058389, 317.50174, 7.298034, 267.59955)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_060" type="Node3D" parent="DuneGrass" unique_id=1247380454 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.5668437, 0, 0.9113499, 0, 0.29812562, 0, -0.9113499, 0, 0.5668437, 316.04492, 7.542525, 268.42517)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
+
+[node name="DuneGrass_061" type="Node3D" parent="DuneGrass" unique_id=331683262 instance=ExtResource("9_bw6xn")]
+transform = Transform3D(0.117917895, 0, -0.7145864, 0, 0.2011806, 0, 0.7145864, 0, 0.117917895, 318.4343, 7.7746463, 270.1062)
+script = ExtResource("7_nqdw4")
+surface_material = SubResource("StandardMaterial3D_efygi")
