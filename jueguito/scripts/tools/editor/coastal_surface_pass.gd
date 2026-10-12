@@ -1,7 +1,7 @@
 extends Node
 
 const DIRECTORY := "res://data/terrain3d_edits/sector_27_30"
-const BACKUP := "res://data/terrain3d_edit_backups/coast_surface_v2_before"
+const BACKUP := "res://data/terrain3d_edit_backups/coast_pines_v3_before"
 const SIZE := 512
 var terrain: Terrain3D
 
@@ -55,6 +55,12 @@ func _run() -> void:
 				var slope := rad_to_deg(atan(sqrt(dx*dx+dz*dz)))
 				var organic := noise.get_noise_2d(wx,wz)
 				var grass := smoothstep(6.1+organic*1.1,11.8+organic*1.1,height)
+				# A continuous forest edge reaches the retained pines. Low shoreline
+				# stays sandy; this is a belt connected to inland grass, not tree circles.
+				var forest_front := 232.0+(wx-270)*0.23+sin(wx*0.04)*2.0+organic*3.0
+				var forest_width := smoothstep(205.0,235.0,float(wx))*(1.0-smoothstep(390.0,425.0,float(wx)))
+				var forest_grass := smoothstep(forest_front-7.0,forest_front+10.0,float(wz))*forest_width*smoothstep(4.1,5.6,height)
+				grass = maxf(grass,forest_grass)
 				var exposed := smoothstep(22.0+organic*5.0,38.0+organic*5.0,slope)
 				var soil := grass*(0.12+smoothstep(-0.22,0.32,organic)*0.18)
 				var weights := [[1,(1.0-grass)*(1.0-exposed)],[2,(grass-soil)*(1.0-exposed)],[0,soil*(1.0-exposed)],[4,exposed]]

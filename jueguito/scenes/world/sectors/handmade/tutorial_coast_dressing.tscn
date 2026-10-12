@@ -3,11 +3,8 @@
 [ext_resource type="PackedScene" path="res://scenes/world/resources/trees/pine_tall_01.tscn" id="1_mpqr4"]
 [ext_resource type="Script" path="res://scripts/world/resources/nodes/harvestable_tree.gd" id="2_jrntv"]
 [ext_resource type="PackedScene" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_01.glb" id="3_okt1v"]
-[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/acacia_01.tscn" id="4_bqmf8"]
 [ext_resource type="Material" path="res://resources/environment/coastal_pine_matte.tres" id="4_okt1v"]
-[ext_resource type="PackedScene" path="res://assets/environment/foliage/trees/harvestable/harvestable_tree_03.glb" id="5_efygi"]
 [ext_resource type="PackedScene" path="res://scenes/world/resources/coastal_rock.tscn" id="6_qmp8s"]
-[ext_resource type="Material" path="res://resources/environment/coastal_acacia_matte.tres" id="7_bqmf8"]
 [ext_resource type="Script" path="res://scripts/world/environment/matte_geometry.gd" id="7_nqdw4"]
 [ext_resource type="Material" path="res://resources/environment/coastal_rock_matte.tres" id="8_v7n2s"]
 [ext_resource type="PackedScene" path="res://assets/environment/vegetation/quaternius_stylized_nature/Grass_Common_Short.gltf" id="9_bw6xn"]
@@ -38,17 +35,6 @@ visual_yaw_degrees = 121.71210050582886
 trunk_radius = 0.38
 trunk_height = 3.5999999999999996
 
-[node name="CoastalTree_02" type="Node3D" parent="HarvestableTrees" unique_id=1351812546 instance=ExtResource("4_bqmf8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 286.15015, 5.912073, 257.99194)
-script = ExtResource("2_jrntv")
-resource_id = "sector_27_30/coast_tree_02"
-display_name = "Acacia"
-model_scene = ExtResource("5_efygi")
-foliage_material_override = ExtResource("7_bqmf8")
-visual_height = 4.5
-visual_yaw_degrees = 241.77292585372925
-trunk_radius = 0.4
-trunk_height = 2.6999999999999997
 
 [node name="CoastalTree_03" type="Node3D" parent="HarvestableTrees" unique_id=224548386 instance=ExtResource("1_mpqr4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 251.15015, 7.2173605, 257.99194)
@@ -102,17 +88,6 @@ visual_yaw_degrees = 351.243360042572
 trunk_radius = 0.38
 trunk_height = 3.24
 
-[node name="CoastalTree_07" type="Node3D" parent="HarvestableTrees" unique_id=1629602752 instance=ExtResource("4_bqmf8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307.15015, 6.34683, 263.99194)
-script = ExtResource("2_jrntv")
-resource_id = "sector_27_30/coast_tree_07"
-display_name = "Acacia"
-model_scene = ExtResource("5_efygi")
-foliage_material_override = ExtResource("7_bqmf8")
-visual_height = 5.2
-visual_yaw_degrees = 342.4686312675476
-trunk_radius = 0.4
-trunk_height = 3.12
 
 [node name="CoastalTree_08" type="Node3D" parent="HarvestableTrees" unique_id=1655833531 instance=ExtResource("1_mpqr4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245.15015, 8.237963, 279.99194)
@@ -140,17 +115,6 @@ visual_yaw_degrees = 294.65628147125244
 trunk_radius = 0.38
 trunk_height = 4.08
 
-[node name="CoastalTree_10" type="Node3D" parent="HarvestableTrees" unique_id=1389379854 instance=ExtResource("4_bqmf8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 350.15015, 9.964536, 261.99194)
-script = ExtResource("2_jrntv")
-resource_id = "sector_27_30/coast_tree_10"
-display_name = "Acacia"
-model_scene = ExtResource("5_efygi")
-foliage_material_override = ExtResource("7_bqmf8")
-visual_height = 4.8
-visual_yaw_degrees = 223.72545719146729
-trunk_radius = 0.4
-trunk_height = 2.88
 
 [node name="CoastalTree_11" type="Node3D" parent="HarvestableTrees" unique_id=1123901151 instance=ExtResource("1_mpqr4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 335.15015, 11.697291, 281.99194)

@@ -18,9 +18,13 @@ func _run() -> void:
 	var ocean: OceanWater = world.get("ocean_water")
 	var dressing := world.get_node("SectorContent/Vegetation/CoastDressing")
 	var trees := dressing.get_node("HarvestableTrees").get_children()
-	assert(trees.size() == 14)
+	assert(trees.size() == 11)
 	var ids := {}
 	for tree: HarvestableTree in trees:
+		assert(tree.model_scene.resource_path.ends_with("harvestable_tree_01.glb"), "Tree from another biome remained on coast")
+		var painted := terrain.data.get_texture_id(tree.global_position)
+		var dominant := int(painted.x if painted.z < 0.5 else painted.y)
+		assert(dominant == 2, "Pine remains on sand or rock")
 		assert(not ids.has(tree.resource_id), "Duplicate harvest resource ID")
 		ids[tree.resource_id] = true
 		assert(absf(tree.global_position.y - terrain.data.get_height(tree.global_position)) < 0.03, "Floating tree")
@@ -44,7 +48,7 @@ func _run() -> void:
 	await get_tree().create_timer(6.5).timeout
 	assert(not tree.available and tree.get_node("StumpVisual").visible, "Harvested tree did not leave a stump")
 	assert(int(GameManager.player_inventory.get("Madera",0)) == 14, "Wood reward was not delivered")
-	print("TUTORIAL_COAST_PLAYTEST_OK trees=14 grounded=true dry=true axe=true chop=true wood=4 stump=true")
+	print("TUTORIAL_COAST_PLAYTEST_OK trees=11 pine_only=true grass_under_all=true grounded=true dry=true axe=true chop=true wood=4 stump=true")
 	world.queue_free()
 	await get_tree().process_frame
 	var workspace := WORKSPACE.instantiate()
@@ -54,7 +58,7 @@ func _run() -> void:
 	var importer := workspace.get_node("Importer") as Terrain3D
 	assert(importer.assets.get_texture_count() == 25)
 	assert(not importer.material.show_checkered)
-	assert(workspace.get_node("SectorContent/Vegetation/CoastDressing/HarvestableTrees").get_child_count() == 14)
+	assert(workspace.get_node("SectorContent/Vegetation/CoastDressing/HarvestableTrees").get_child_count() == 11)
 	if DisplayServer.get_name() != "headless":
 		var camera := workspace.get_node("WorkspaceCamera") as Camera3D
 		workspace.get_node("SectorGuide").hide()
@@ -65,7 +69,7 @@ func _run() -> void:
 		for _frame in range(20): await get_tree().process_frame
 		await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png(ProjectSettings.globalize_path(OUTPUT+"workspace_costa_v1.png"))
-	print("TUTORIAL_COAST_WORKSPACE_OK slots=25 checkered=false trees=14")
+	print("TUTORIAL_COAST_WORKSPACE_OK slots=25 checkered=false trees=11")
 	workspace.queue_free()
 	await get_tree().process_frame
 	var reopened := WORLD.instantiate()

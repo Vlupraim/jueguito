@@ -38,6 +38,11 @@ func _run() -> void:
 	var trees := _category("HarvestableTrees")
 	for index in range(TREE_PLANS.size()):
 		var plan: Array = TREE_PLANS[index]
+		# Reserve the original IDs and random sequence; acacias belong to another
+		# biome. Keeping their slots avoids moving/reidentifying the existing pines.
+		if plan[0] != "pine_tall_01":
+			rng.randf()
+			continue
 		var point := _ground(Vector2(plan[1], plan[2]))
 		assert(_dry(point), "Invalid tree location")
 		var tree := load("res://scenes/world/resources/trees/%s.tscn" % plan[0]).instantiate() as HarvestableTree
@@ -126,7 +131,7 @@ func _paint_root_soil() -> void:
 		for z in range(floori(point.z)-4,floori(point.z)+5):
 			for x in range(floori(point.x)-4,floori(point.x)+5):
 				var distance := Vector2(x-point.x,z-point.z).length()
-				if distance > 4: continue
+				if distance > 1.8: continue
 				var location := Vector2i(x/256,z/256)
 				if not maps.has(location): continue
 				var bytes: PackedByteArray = maps[location]
@@ -134,7 +139,7 @@ func _paint_root_soil() -> void:
 				var old := int(bytes.decode_u32(offset))
 				var base := (old >> 27) & 31
 				if not base in [0,1,2,6,16,17,18,23]: continue
-				var blend := int(165.0 * smoothstep(4.0,0.8,distance))
+				var blend := int(45.0 * smoothstep(1.8,0.5,distance))
 				# Only overlay/blend bits change; base, navigation and holes survive.
 				var updated := (old & ~((31 << 22) | (255 << 14))) | (blend << 14)
 				bytes.encode_u32(offset,updated)
@@ -147,4 +152,4 @@ func _paint_root_soil() -> void:
 		region.edited = true
 	terrain.data.update_maps(Terrain3DRegion.TYPE_CONTROL,true,false)
 	terrain.data.save_directory("res://data/terrain3d_edits/sector_27_30")
-	print("TREE_ROOT_SOIL_PAINTED regions=", changed.size(), " radius=4m backup=", backup)
+	print("TREE_ROOT_SOIL_PAINTED regions=", changed.size(), " radius=1.8m backup=", backup)

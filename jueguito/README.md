@@ -139,7 +139,7 @@ Terrain3D soporta pintura de texturas, colores, roughness/wetness, agujeros y fo
 
 ## Texturas de terreno
 
-La revisión actual usa diez bases naturales en **25 slots**, con nieve en `24`, ceniza en `15` y pasto sombrío en `6`/`23`. Los materiales anteriores siguen en el banco original. Detalles, crítica completa y límites: `docs/design/materiales_entorno_v1.md`. El sector del naufragio tiene una pasada de superficies más suave, vegetación baja y 14 árboles talables; ver `docs/design/tutorial_coast_v2.md`.
+La revisión actual usa diez bases naturales en **25 slots**, con nieve en `24`, ceniza en `15` y pasto sombrío en `6`/`23`. Los materiales anteriores siguen en el banco original. Detalles, crítica completa y límites: `docs/design/materiales_entorno_v1.md`. El sector del naufragio tiene una pasada de superficies más suave, vegetación baja y 11 pinos talables sobre pasto; ver `docs/design/tutorial_coast_v2.md`.
 
 La idea correcta no es que cada bioma sea una sola textura. Un sector puede ser templado, pero tener pasto en planicies, roca en laderas fuertes, arena en playas y nieve en cumbres. Por eso conviene separar:
 
