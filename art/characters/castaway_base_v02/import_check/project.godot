@@ -1,0 +1,7 @@
+config_version=5
+
+[application]
+config/name="Castaway asset import check"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"

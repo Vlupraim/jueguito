@@ -28,7 +28,7 @@ func _run() -> void:
 
 	if not _validate_empty_roster():
 		return
-	selector.call("_show_creator")
+	selector.call("_select_slot", 0)
 	await get_tree().process_frame
 	if not _validate_creator_state():
 		return
@@ -50,19 +50,24 @@ func _run() -> void:
 	if not _is_roster_visible():
 		_fail("La interfaz no regreso al roster despues de crear")
 		return
+	var action_button := selector.find_child("PrimaryActionButton", true, false) as Button
+	if not action_button.visible or action_button.text != "Iniciar aventura":
+		_fail("Un personaje seleccionado no ofrece Iniciar aventura")
+		return
 	if selector.get("current_spawned_character") == null:
 		_fail("El personaje creado no tiene preview central")
 		return
 
 	selector.call("_select_slot", 1)
 	await get_tree().process_frame
-	var action_button := selector.find_child("PrimaryActionButton", true, false) as Button
-	if action_button.text != "Crear personaje":
-		_fail("Un slot vacio no ofrece la accion Crear personaje")
+	if not _is_creator_visible():
+		_fail("Un slot vacio no abre directamente el creador")
 		return
-	if selector.get("current_spawned_character") != null:
-		_fail("Un slot vacio conserva un preview que no corresponde")
+	if action_button.visible:
+		_fail("El creador conserva una accion de aventura que no corresponde")
 		return
+	selector.call("_show_roster")
+	await get_tree().process_frame
 
 	var account_characters: Array = NetworkManager.server.accounts[TEST_USERNAME]["characters"]
 	for index in range(2, 5):
@@ -108,17 +113,17 @@ func _validate_empty_roster() -> bool:
 	if not (selector.get("characters") as Array).is_empty():
 		_fail("La cuenta de prueba no comienza vacia")
 		return false
-	if action_button == null or action_button.text != "Crear personaje":
-		_fail("El primer slot vacio no queda listo para crear")
+	if action_button == null or action_button.visible:
+		_fail("Una cuenta vacia muestra una accion inferior innecesaria")
 		return false
 	return true
 
 
 func _validate_creator_state() -> bool:
 	var list_panel := selector.find_child("ListPanel", true, false) as Control
-	var selection_panel := selector.find_child("SelectionPanel", true, false) as Control
 	var creation_panel := selector.find_child("CreationPanel", true, false) as Control
-	if list_panel.visible or selection_panel.visible or not creation_panel.visible:
+	var action_button := selector.find_child("PrimaryActionButton", true, false) as Button
+	if list_panel.visible or not creation_panel.visible or action_button.visible:
 		_fail("Roster y creador no estan separados visualmente")
 		return false
 	if selector.get("current_spawned_character") == null:
@@ -129,9 +134,14 @@ func _validate_creator_state() -> bool:
 
 func _is_roster_visible() -> bool:
 	var list_panel := selector.find_child("ListPanel", true, false) as Control
-	var selection_panel := selector.find_child("SelectionPanel", true, false) as Control
 	var creation_panel := selector.find_child("CreationPanel", true, false) as Control
-	return list_panel.visible and selection_panel.visible and not creation_panel.visible
+	return list_panel.visible and not creation_panel.visible
+
+
+func _is_creator_visible() -> bool:
+	var list_panel := selector.find_child("ListPanel", true, false) as Control
+	var creation_panel := selector.find_child("CreationPanel", true, false) as Control
+	return not list_panel.visible and creation_panel.visible
 
 
 func _fail(message: String) -> void:

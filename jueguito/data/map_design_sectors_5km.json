@@ -44836,8 +44836,9 @@
 				13,
 				15
 			],
-			"biome_id": 4,
-			"biome": "Nieve / polar",
+			"biome_id": 1,
+			"biome": "Templado",
+			"name": "Costa del Naufragio",
 			"dominant_surface_id": 0,
 			"dominant_surface": "unknown",
 			"surface_counts": {

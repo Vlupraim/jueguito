@@ -1,0 +1,5 @@
+# Local authoring backups. Keep the editable Blender sources themselves.
+*.blend1
+*.blend2
+__pycache__/
+dist/

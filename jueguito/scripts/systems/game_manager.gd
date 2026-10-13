@@ -12,12 +12,14 @@ const WORLD_SCENE := "res://scenes/terrain3d_walk_preview.tscn"
 
 var current_username := ""
 var current_character: Dictionary = {}
+var should_play_tutorial_intro := false
 var player_inventory: Dictionary = {}
 # El item de dos manos se guarda en primary y obliga a secondary a estar vacio.
 var equipped_primary_item := ""
 var equipped_secondary_item := ""
 # Alias temporal para los sistemas de recoleccion escritos antes de las ranuras.
 var equipped_tool_name := ""
+var _quit_requested := false
 
 signal inventory_changed(new_inventory: Dictionary)
 signal equipment_changed(primary_item: String, secondary_item: String)
@@ -38,7 +40,9 @@ func change_scene(scene_path: String) -> void:
 	get_tree().change_scene_to_file(scene_path)
 
 func return_to_main_menu() -> void:
+	CoopSession.leave()
 	current_character = {}
+	should_play_tutorial_intro = false
 	player_inventory = {}
 	clear_equipment()
 	current_username = ""
@@ -50,14 +54,41 @@ func request_login(username: String, password: String = "") -> void:
 	NetworkManager.request_login(username, password)
 
 func request_leave_world_to_roster() -> void:
+	if CoopSession.active:
+		get_tree().paused = false
+		return_to_main_menu()
+		return
+	if _quit_requested:
+		return
 	NetworkManager.request_despawn()
+
+func request_quit_game() -> void:
+	if _quit_requested:
+		return
+	_quit_requested = true
+	if CoopSession.active:
+		CoopSession.leave()
+		get_tree().quit()
+		return
+	get_tree().paused = false
+	if NetworkManager.current_character_name.is_empty():
+		get_tree().quit()
+	else:
+		NetworkManager.request_despawn()
 
 func request_create_character(char_name: String, appearance: Dictionary) -> void:
 	NetworkManager.request_create_character(char_name, appearance)
 
 func request_select_character(char_data: Dictionary) -> void:
 	current_character = char_data
+	should_play_tutorial_intro = not bool(char_data.get("tutorial_intro_completed", false))
 	NetworkManager.request_spawn(char_data["name"])
+
+
+func complete_tutorial_intro() -> void:
+	should_play_tutorial_intro = false
+	current_character["tutorial_intro_completed"] = true
+	NetworkManager.mark_tutorial_intro_completed()
 
 
 func toggle_item_equipped(item_name: String) -> bool:
@@ -229,9 +260,17 @@ func _on_player_spawned(sector_coord: Vector2i, spawn_position: Vector3, spawn_r
 func _on_player_despawned(success: bool, error_msg: String) -> void:
 	if success:
 		current_character = {}
+		should_play_tutorial_intro = false
 		player_inventory = {}
 		clear_equipment()
-		change_scene(CHAR_SELECT_SCENE)
+		# El autoload sigue dentro del arbol durante la desconexion. Al cerrar
+		# el juego no debemos cambiar de escena ni dejar la salida a cargo del HUD.
+		if _quit_requested:
+			get_tree().quit()
+		else:
+			change_scene(CHAR_SELECT_SCENE)
+	else:
+		_quit_requested = false
 	world_exit_completed.emit(success, error_msg)
 
 func _on_inventory_updated(inventory: Dictionary) -> void:

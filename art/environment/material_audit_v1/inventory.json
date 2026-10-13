@@ -1,0 +1,2162 @@
+[
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arcilla_clara_agrietada_026.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "5408fbdd98a1c94ba654e33192804cf04adf87a14bae1244d3623ac5581ced04"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arcilla_naranja_agrietada_029.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "6a04157c502bfbf81722e9852f9d861437cd2f9c790c73cfa3c4456ff4e74c0d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_clara_con_piedras_024.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "8f20939ef64308cfe594aa76c4c433e94d44d31512b01fbbc9b5d9ab15825bd8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_clara_lisa_023.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "48484ca18e7015ea9b4e63d71c5c66a8e95e3dbd5cd987cb7e8b37dfde128e35"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_ocre_lisa_047.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "58a21678e79863c2ccc3bc83f68583a7f723562c5f698a1000feb59f55308cf8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_rosa_con_gravilla_densa_016.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "6ef7d68e69b014b065ca722945eab27009b2247b849833d0b3ec3b17a5c1c3c7"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_rosa_con_gravilla_fina_015.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ac395de532fd6a0faae5ba5368d078e88c98b603b0c3a9c4d40115033629b50f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/agua_turquesa_con_rocas_073.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "092abb0118e9ed01920fac679ca11798bf44c887725430639122616e385fc7fa"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/arcano_turquesa_con_piedras_072.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "438923199511e95a1a5c2d81c6f7af3b27cb9954efd9161aa6573239831ab823"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/lava_con_roca_negra_021.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "52fd7087e355ba4128f3cbd2342b3bb1e690982b10ce387712950cd82945120b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/lava_con_roca_negra_022.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0570cba04b0db7936d4827e95fe6561b04a81c9550fc4a2e977731e193f277ad"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/nieve_con_gravilla_086.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "bb3114d3dad4f93b80a50a006d8719539292067aced3edc326cc254a5dd9f359"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/nieve_con_rocas_085.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "07ee905eb959be37a9f8afb7a10adb701d271020d675587a5deb2c3fb8189621"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/roca_de_magma_naranja_062.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "7b05cc56faf51a3fa977836ea74521392a2bcab019c7e709b59ace147002d1af"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/suelo_de_calaveras_oscuro_020.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4aad6f55e018484de1ad42b626f6a8f284c052a17543ba0791147591473415ea"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/suelo_de_calaveras_violeta_019.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "fe9b51581e6aa834be9865a9d0b09d62a35f7d1afc78cb67a212adc3040c5e9a"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/especiales/suelo_violeta_liso_058.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "839d8e9899bdc16f2d12f5d7590091e0074e0fd8206cec7df5165bc4608aecbf"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_cobrizos_humedos_088.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "43a8dc0b9f68a98a85a850567e5d4cf938982dd48bf5f56161b2fb2194b508af"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_marrones_humedos_087.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4728fa2ca51277663fc1e4d97fbc3d840888a2e51ea6fb102615456fd56765ff"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_negros_brillantes_060.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0a6863757ecda74b1ab5323e991440d231b06aa3e7a9b340c28c679047f3da3f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_negros_brillantes_061.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "23db3c557400ed874de3f730e1fbbeecdad538fa5aa18dd36b5321930a1c2d37"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_negros_grandes_083.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "14530f681a9849f95923d929634c54fcece07f5aab4b7c949880e6c647eca043"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_violeta_humedos_012.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "836bce883a9b674cc95f3950c7ec0d7d48f6bfbefb1e278c94f6ce5ff9387edf"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cristales_naranja_099.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "deb1efbb4c599e6a1931e6718d8a071fcd15b17d5d8953190ebad60041ecb248"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_beige_097.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "c6a12a2c6142cf916e544e11906de14f80570b8b587d019a8228c75665619e2e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_dorado_089.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "17c4cf215188d3204d76e46bdff1dd207d746137e341e4932b89cd8f9aeb2d11"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_dorado_090.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "37b48f1048827859601a84a0b2595f2f00dbb450f4adbfeef0f490663a61829d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_marron_093.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f56a1fae872afb5c1e1ccc7d29a28f98d68d969d4991ef744c047e7da958caca"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_naranja_092.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "e37a42f302688013ab3212d24d827b40dd80ecb394b05059362fd40b47ce5953"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_ocre_094.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "656415f1641b30c08bf4841d7e7a7f173f38dd74d5c0aca42ffd4dcf0db98672"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_rojo_091.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4ca40414ce19d1356569bd5ce6765fc190354e980a243f33e87e2d1aacf7187f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_tostado_098.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "cdd611aabd8356edb5bd00de8ed4cae3eb6601c848c09b097e110643feb3790f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/grava_beige_clara_069.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "1f387957c7e8b39c534f9c7d418825974875d50f1e637653ad3290c11ba127d3"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/grava_beige_con_rocas_068.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "e4dfca84243dbfc93f6a2b1c6f349481aea1c69d1e89fffd4b3d19d3466f895b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/grava_naranja_brillante_100.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "61bf1334b14380a292d73cd61a3b3840db2d23cc1c67cf6fa97e32c8512892db"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/grava_negra_fina_050.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "5b0602d77c050dcb5726a20e2f970c50e4b4526ecc8951a5e448a95bbddc56a3"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/grava_roja_oscura_075.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "099d5aa0ebe86dc62bef89d38db32243b0ee21ac10bc4cb8b7bc32fce2701795"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/grava_rosa_clara_025.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "a7f482c937ea734406cc667fc143f3b709248cf3d0a3e21d183e479c424ea842"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/acantilado_marron_calido_009.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "d6afc5bb38255ab7811eca839175dd0b6fbed0f5815dcadfdf63058758e07e08"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/acantilado_marron_oscuro_008.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "55b1bea3a80fe0019502e6e2c5876b477d52d14b1b4eaec9de850f554aebcc9c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/arenisca_clara_irregular_018.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "d2b690a1b248205a9e597d45478441d9046cfc668e941a712436535b5a8e0fea"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/arenisca_de_lajas_claras_082.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "02980dfd2c4524dd61d128169e65d0379ad096cc48024273d2e454393e91e6b1"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/arenisca_dorada_irregular_017.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "83ba1ea22f6e46b4e0faaccdfc05383ca679d8cdcae73c2a87fe8fe93f146711"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_ambar_agrietada_096.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "3bc366654bb84bd972b7590f9d173aad04507ab89fe321849d37e4c1ed3b636b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_ambar_grande_095.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ee6c338389d29517cf8a0a14a539e7bc4a6a0d52c211d5662ecd395ca74e3a24"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_arcilla_agrietada_003.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "574dd2aaf3f1fe67cf052c795589dcb2908e7fa78322a142da31cd674fe27884"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_arcilla_en_lajas_002.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "e5d58a2623f48a2326ac8b8cf801e0db08701835e91882000a97accbddc74d43"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_beige_de_lajas_grandes_080.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "7d30f9b3338fa4aec869ae53beefd3c1cca771d89d5f609a71037833644369e2"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_beige_en_lajas_013.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "78e3a651b0b9a245f22c5a235a36362e6a6fb05eec691b539ec698b4dba59cf0"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_beige_fragmentada_011.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0b912f981062c7c8b51280888aeb862804ce7478e490cb5310e1e473ab16a87e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_burdeos_agrietada_038.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "8d693750cd77a83593047cd7b9f941a96f35aba6ad98bb3f5212e2c119514780"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_caliza_clara_077.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4afa27cc7043ad9848b62b8498bc35a5833bc494a47afd019578ad8d782daf37"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_caliza_en_estratos_078.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9ca59e1b3aaffb5961bbb10e0b1fc2201cb23e5ee5e6b29079aa41f86346ad11"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_agrietada_027.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "d427a2175bd84af01bdcd49f91a2885e14be109d718dd2120a192b11ec8995ce"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_de_lajas_grandes_040.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "b1a2d95d31945204d9a81b5749e6e85aa481803ab7a179cbb7b63f8589a0a177"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_en_lajas_028.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f1aab235f0038751f8535ffbcc1ec821667af3287ca41b9a3b5634671a0ca7c1"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_helada_azulada_007.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "52ac0d5a3e569c6ad0857e36df26683f76a584f71ab1e667481d3899768baaf8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_marron_en_lajas_079.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "a548d23b00bc2df219c6ba70071e2cd6a4c61fc4a80c236042db4849c54335db"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_naranja_en_lajas_030.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ec8e4bc57f36fdff2343f3a8c4f7685b93913825bb8229d406615b6753851057"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_naranja_pintada_063.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "6ae11af471751da6fa59ae4fbef5d6207f8b3f6fcf77416987c710170c1e923d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_negra_en_bloques_084.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "89f5e85c7efe8e6f85f6b486e21c22eeededf2de960e3c40e05c2c64f7fa2cfc"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_ocre_agrietada_081.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "380a98e3d85919cb99194c03c4e8706bfeb581ce844571515d71ca79ec573f1e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_oliva_fragmentada_042.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "30d7743d4aed48260d8435ab8d16bc7c2a99629836df2b7cf09635009d18ae3d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_oscura_agrietada_049.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "86fb1b0fe76d8e21741fc1aaadc4b44023fb2621cb0fff1359f841189c262740"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_oscura_empedrada_054.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "71c4226b420108225e4bc0362fb729d8864522201c4d74dd87e9b512d13faf30"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_oscura_en_bloques_053.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "55ec3e35bd82095383631eef69baac77a18ecb62454ec9ec5b8ef512b2695d2a"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_roja_agrietada_074.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "86a84498c27b7396bd568d50d89565442faf3fee39f91700104cff14513ad908"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_roja_fragmentada_076.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ee94706d9c7fbac5dc4b7d9deee3926a74045a1c171f4ecaec169be2cff92ed0"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_violeta_fragmentada_010.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "8e0f5230e7081e35f821dfc86f6818765c57e705211aa05bab36153897ea7018"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/barro_marron_con_gravilla_056.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0d0362c1bbb4ef33c6ceb43ccc04e59b82e43847a7dcebf88117df27ce607d3e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/barro_marron_con_rocas_057.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0c26c000b4cbb8eb7fb0edb82378a5cd2f3044bf5fcb4b05e33c99305e100f09"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/barro_oscuro_agrietado_034.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "b95d10a81cfbc70d3ece71a82d775110d208df484a4f9fa75d84f6814ebb0d6b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/barro_oscuro_agrietado_035.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "315fe1fed49757881eda87b4aaae03d2ee36a0f2c7d75ed30cea7333a89d8760"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/barro_oscuro_con_piedras_006.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2ccab030fdff3702ba5e3b3df6c3989de4c3fb79df11e172a4139d0dcc417827"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/barro_rojo_rocoso_051.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "3d3852d28c7dcae6674695554bffebc945418d16337f28a065a7d25e841b03c7"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/ceniza_gris_con_gravilla_048.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ec2ed13c480d36327860aa655faff858a7bddd29391e58adb2413a79de344dc5"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_burdeos_con_gravilla_052.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "cee1e39c15527a7bb697f436f590be9da596870b772a54579815060408319e26"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_clara_moteada_044.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "451c447d09058f13c8e3fc7672839bf85b3e2bc66aec91320b0532c1043c154e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_cobriza_moteada_045.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2fbc813f06f21fb3b8668c380a54855614b6c67b98c7fcfc16ab4c90709e8512"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_cobriza_rocosa_046.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "05d8e1ab060e38c04e6166e55f5f8211c1b63811d6b1b3f96f5c60d639d1fa23"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_gris_con_gravilla_001.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4acaeb5d8cbd3bd577b041be05844a8e411a4a464df01c3eb9d84d1a489b505a"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_humeda_marron_055.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "bfc825d0bb7db1ad00673ea63376985d7be09edec40790b1e62b851374d2ad4c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_marron_rocosa_039.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f97e7d8ad689d399dfdb5c1d603dfd6cea91511d2361cae765831c50863c8cf5"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_ocre_con_gravilla_032.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f65b7c5317b6f145f75d2c4b3cb336cb87b6b5e1414a502ece679bc65f614ae6"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_ocre_con_piedras_031.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "43fff17fc8d7cc56876dda992e1720c4d058f710fba3cf921b5cf039a2bd2297"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_oliva_pedregosa_041.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "c84e9e8e9f1ac8fd5e539465e230ee97446cce41101aef7d5953e2e9c9e458d6"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_oscura_agrietada_004.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "fa41f7eec2cfd6db93894e974483bb8a3066dbc72f935d58224cf30c5feb0445"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_oscura_con_gravilla_005.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "10bfe13fc4da0821e8ff5b03a8085b53c02d48491f865fef3a0307bcaf228d76"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_grava_036.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "89d4712ef37b0db7b9cbedae462b598226b6f43df43c710f011ed2f638d40c02"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_gravilla_fina_033.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "517eac125737ec22bc49d14ee6ecbfd6b19c18b8f726fc6190b8a3f130e2614c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_piedras_059.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "22680bde40a128bb032e36bbfe3b0a65bbc6522c558f5e406ec44d6d04fa46e0"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_rocas_037.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "db7550ce34dc282feab457535fbedcb7f6014bba8d2071c380ab660621376111"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_seca_moteada_043.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4e0eefdca37a1604cba1a3a80967432cb5ec8b456ef8ead056ed6e8735b99f5c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_violeta_suave_014.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9c20662f0fc3ce6292d43bd49d5c2548db48367303dda25b1912d16c50041808"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/musgo_con_rocas_grandes_071.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9071bda6598ae180e2095c7833e31549281ec37f34a18e631f3770060a6c661f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pantano_de_piedra_verde_066.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "04c2e2b7fe2ee9affb08a872073012cbe3b853a75d2d57e3a5727c6ddd6d3291"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pantano_de_roca_agrietada_067.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "a1e58eec7c793db16be28b60bd7b03400249a4370874fb72cb79476b052109f2"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "193a1f826cb60b773cfed9f58678e87618cd9d433a252d47c543e680f7c68d17"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/roca_agrietada_con_musgo_065.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "14c0834edfb6d9593be89dd556556124a41d0cabe61e6e76df50dfadb0e4ce90"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/roca_marron_con_musgo_064.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9d645414b29aff0d9de2064d6207c3b988d1137a463bef068da3dcbf4430b8d8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (1).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4acaeb5d8cbd3bd577b041be05844a8e411a4a464df01c3eb9d84d1a489b505a"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (10).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "8e0f5230e7081e35f821dfc86f6818765c57e705211aa05bab36153897ea7018"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (100).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "61bf1334b14380a292d73cd61a3b3840db2d23cc1c67cf6fa97e32c8512892db"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (11).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0b912f981062c7c8b51280888aeb862804ce7478e490cb5310e1e473ab16a87e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (12).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "836bce883a9b674cc95f3950c7ec0d7d48f6bfbefb1e278c94f6ce5ff9387edf"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (13).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "78e3a651b0b9a245f22c5a235a36362e6a6fb05eec691b539ec698b4dba59cf0"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (14).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9c20662f0fc3ce6292d43bd49d5c2548db48367303dda25b1912d16c50041808"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (15).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ac395de532fd6a0faae5ba5368d078e88c98b603b0c3a9c4d40115033629b50f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (16).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "6ef7d68e69b014b065ca722945eab27009b2247b849833d0b3ec3b17a5c1c3c7"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (17).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "83ba1ea22f6e46b4e0faaccdfc05383ca679d8cdcae73c2a87fe8fe93f146711"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (18).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "d2b690a1b248205a9e597d45478441d9046cfc668e941a712436535b5a8e0fea"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (19).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "fe9b51581e6aa834be9865a9d0b09d62a35f7d1afc78cb67a212adc3040c5e9a"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (2).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "e5d58a2623f48a2326ac8b8cf801e0db08701835e91882000a97accbddc74d43"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (20).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4aad6f55e018484de1ad42b626f6a8f284c052a17543ba0791147591473415ea"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (21).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "52fd7087e355ba4128f3cbd2342b3bb1e690982b10ce387712950cd82945120b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (22).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0570cba04b0db7936d4827e95fe6561b04a81c9550fc4a2e977731e193f277ad"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (23).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "48484ca18e7015ea9b4e63d71c5c66a8e95e3dbd5cd987cb7e8b37dfde128e35"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (24).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "8f20939ef64308cfe594aa76c4c433e94d44d31512b01fbbc9b5d9ab15825bd8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (25).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "a7f482c937ea734406cc667fc143f3b709248cf3d0a3e21d183e479c424ea842"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (26).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "5408fbdd98a1c94ba654e33192804cf04adf87a14bae1244d3623ac5581ced04"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (27).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "d427a2175bd84af01bdcd49f91a2885e14be109d718dd2120a192b11ec8995ce"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (28).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f1aab235f0038751f8535ffbcc1ec821667af3287ca41b9a3b5634671a0ca7c1"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (29).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "6a04157c502bfbf81722e9852f9d861437cd2f9c790c73cfa3c4456ff4e74c0d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (3).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "574dd2aaf3f1fe67cf052c795589dcb2908e7fa78322a142da31cd674fe27884"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (30).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ec8e4bc57f36fdff2343f3a8c4f7685b93913825bb8229d406615b6753851057"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (31).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "43fff17fc8d7cc56876dda992e1720c4d058f710fba3cf921b5cf039a2bd2297"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (32).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f65b7c5317b6f145f75d2c4b3cb336cb87b6b5e1414a502ece679bc65f614ae6"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (33).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "517eac125737ec22bc49d14ee6ecbfd6b19c18b8f726fc6190b8a3f130e2614c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (34).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "b95d10a81cfbc70d3ece71a82d775110d208df484a4f9fa75d84f6814ebb0d6b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (35).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "315fe1fed49757881eda87b4aaae03d2ee36a0f2c7d75ed30cea7333a89d8760"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (36).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "89d4712ef37b0db7b9cbedae462b598226b6f43df43c710f011ed2f638d40c02"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (37).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "db7550ce34dc282feab457535fbedcb7f6014bba8d2071c380ab660621376111"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (38).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "8d693750cd77a83593047cd7b9f941a96f35aba6ad98bb3f5212e2c119514780"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (39).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f97e7d8ad689d399dfdb5c1d603dfd6cea91511d2361cae765831c50863c8cf5"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (4).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "fa41f7eec2cfd6db93894e974483bb8a3066dbc72f935d58224cf30c5feb0445"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (40).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "b1a2d95d31945204d9a81b5749e6e85aa481803ab7a179cbb7b63f8589a0a177"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (41).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "c84e9e8e9f1ac8fd5e539465e230ee97446cce41101aef7d5953e2e9c9e458d6"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (42).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "30d7743d4aed48260d8435ab8d16bc7c2a99629836df2b7cf09635009d18ae3d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (43).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4e0eefdca37a1604cba1a3a80967432cb5ec8b456ef8ead056ed6e8735b99f5c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (44).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "451c447d09058f13c8e3fc7672839bf85b3e2bc66aec91320b0532c1043c154e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (45).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2fbc813f06f21fb3b8668c380a54855614b6c67b98c7fcfc16ab4c90709e8512"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (46).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "05d8e1ab060e38c04e6166e55f5f8211c1b63811d6b1b3f96f5c60d639d1fa23"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (47).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "58a21678e79863c2ccc3bc83f68583a7f723562c5f698a1000feb59f55308cf8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (48).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ec2ed13c480d36327860aa655faff858a7bddd29391e58adb2413a79de344dc5"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (49).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "86fb1b0fe76d8e21741fc1aaadc4b44023fb2621cb0fff1359f841189c262740"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (5).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "10bfe13fc4da0821e8ff5b03a8085b53c02d48491f865fef3a0307bcaf228d76"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (50).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "5b0602d77c050dcb5726a20e2f970c50e4b4526ecc8951a5e448a95bbddc56a3"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (51).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "3d3852d28c7dcae6674695554bffebc945418d16337f28a065a7d25e841b03c7"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (52).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "cee1e39c15527a7bb697f436f590be9da596870b772a54579815060408319e26"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (53).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "55ec3e35bd82095383631eef69baac77a18ecb62454ec9ec5b8ef512b2695d2a"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (54).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "71c4226b420108225e4bc0362fb729d8864522201c4d74dd87e9b512d13faf30"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (55).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "bfc825d0bb7db1ad00673ea63376985d7be09edec40790b1e62b851374d2ad4c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (56).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0d0362c1bbb4ef33c6ceb43ccc04e59b82e43847a7dcebf88117df27ce607d3e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (57).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0c26c000b4cbb8eb7fb0edb82378a5cd2f3044bf5fcb4b05e33c99305e100f09"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (58).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "839d8e9899bdc16f2d12f5d7590091e0074e0fd8206cec7df5165bc4608aecbf"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (59).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "22680bde40a128bb032e36bbfe3b0a65bbc6522c558f5e406ec44d6d04fa46e0"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (6).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2ccab030fdff3702ba5e3b3df6c3989de4c3fb79df11e172a4139d0dcc417827"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (60).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "0a6863757ecda74b1ab5323e991440d231b06aa3e7a9b340c28c679047f3da3f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (61).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "23db3c557400ed874de3f730e1fbbeecdad538fa5aa18dd36b5321930a1c2d37"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (62).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "7b05cc56faf51a3fa977836ea74521392a2bcab019c7e709b59ace147002d1af"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (63).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "6ae11af471751da6fa59ae4fbef5d6207f8b3f6fcf77416987c710170c1e923d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (64).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9d645414b29aff0d9de2064d6207c3b988d1137a463bef068da3dcbf4430b8d8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (65).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "14c0834edfb6d9593be89dd556556124a41d0cabe61e6e76df50dfadb0e4ce90"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (66).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "04c2e2b7fe2ee9affb08a872073012cbe3b853a75d2d57e3a5727c6ddd6d3291"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (67).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "a1e58eec7c793db16be28b60bd7b03400249a4370874fb72cb79476b052109f2"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (68).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "e4dfca84243dbfc93f6a2b1c6f349481aea1c69d1e89fffd4b3d19d3466f895b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (69).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "1f387957c7e8b39c534f9c7d418825974875d50f1e637653ad3290c11ba127d3"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (7).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "52ac0d5a3e569c6ad0857e36df26683f76a584f71ab1e667481d3899768baaf8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (70).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "193a1f826cb60b773cfed9f58678e87618cd9d433a252d47c543e680f7c68d17"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (71).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9071bda6598ae180e2095c7833e31549281ec37f34a18e631f3770060a6c661f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (72).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "438923199511e95a1a5c2d81c6f7af3b27cb9954efd9161aa6573239831ab823"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (73).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "092abb0118e9ed01920fac679ca11798bf44c887725430639122616e385fc7fa"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (74).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "86a84498c27b7396bd568d50d89565442faf3fee39f91700104cff14513ad908"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (75).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "099d5aa0ebe86dc62bef89d38db32243b0ee21ac10bc4cb8b7bc32fce2701795"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (76).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ee94706d9c7fbac5dc4b7d9deee3926a74045a1c171f4ecaec169be2cff92ed0"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (77).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4afa27cc7043ad9848b62b8498bc35a5833bc494a47afd019578ad8d782daf37"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (78).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9ca59e1b3aaffb5961bbb10e0b1fc2201cb23e5ee5e6b29079aa41f86346ad11"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (79).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "a548d23b00bc2df219c6ba70071e2cd6a4c61fc4a80c236042db4849c54335db"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (8).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "55b1bea3a80fe0019502e6e2c5876b477d52d14b1b4eaec9de850f554aebcc9c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (80).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "7d30f9b3338fa4aec869ae53beefd3c1cca771d89d5f609a71037833644369e2"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (81).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "380a98e3d85919cb99194c03c4e8706bfeb581ce844571515d71ca79ec573f1e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (82).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "02980dfd2c4524dd61d128169e65d0379ad096cc48024273d2e454393e91e6b1"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (83).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "14530f681a9849f95923d929634c54fcece07f5aab4b7c949880e6c647eca043"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (84).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "89f5e85c7efe8e6f85f6b486e21c22eeededf2de960e3c40e05c2c64f7fa2cfc"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (85).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "07ee905eb959be37a9f8afb7a10adb701d271020d675587a5deb2c3fb8189621"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (86).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "bb3114d3dad4f93b80a50a006d8719539292067aced3edc326cc254a5dd9f359"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (87).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4728fa2ca51277663fc1e4d97fbc3d840888a2e51ea6fb102615456fd56765ff"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (88).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "43a8dc0b9f68a98a85a850567e5d4cf938982dd48bf5f56161b2fb2194b508af"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (89).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "17c4cf215188d3204d76e46bdff1dd207d746137e341e4932b89cd8f9aeb2d11"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (9).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "d6afc5bb38255ab7811eca839175dd0b6fbed0f5815dcadfdf63058758e07e08"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (90).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "37b48f1048827859601a84a0b2595f2f00dbb450f4adbfeef0f490663a61829d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (91).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4ca40414ce19d1356569bd5ce6765fc190354e980a243f33e87e2d1aacf7187f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (92).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "e37a42f302688013ab3212d24d827b40dd80ecb394b05059362fd40b47ce5953"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (93).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "f56a1fae872afb5c1e1ccc7d29a28f98d68d969d4991ef744c047e7da958caca"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (94).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "656415f1641b30c08bf4841d7e7a7f173f38dd74d5c0aca42ffd4dcf0db98672"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (95).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "ee6c338389d29517cf8a0a14a539e7bc4a6a0d52c211d5662ecd395ca74e3a24"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (96).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "3bc366654bb84bd972b7590f9d173aad04507ab89fe321849d37e4c1ed3b636b"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (97).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "c6a12a2c6142cf916e544e11906de14f80570b8b587d019a8228c75665619e2e"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (98).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "cdd611aabd8356edb5bd00de8ed4cae3eb6601c848c09b097e110643feb3790f"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_ground/Ground (99).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "deb1efbb4c599e6a1931e6718d8a071fcd15b17d5d8953190ebad60041ecb248"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (31).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "sha256": "116d6983fb38af25614443115bdb5c667114b24d75fb5aa987f6cfa37ea1c598"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (32).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "b176103e3cfc45b897221f5f30b389840e13284b563d1357b690a89e9b952f55"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (33).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "9f2fabb2e6e163c3c80051172584782202f437983dc65efccbf73e36a01250e3"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (34).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "fdc970cd1561e28476d8f61f265dd4878c50de1738434107750e3e86e37778bd"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (35).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "3f1ab6c8cab9f22969fafd60616473d1acc8352b730ba29ae678be8d4c5fa8c8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (36).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2ba8fa54d0d68b8467e744983c67ea5126bd92796137e1db51d79d3cc7d69de3"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (37).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "86795a618ce747207489d1abca8ba198afc98a7beb537ee711c83975206ee024"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (38).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "84e577a198f6b446571721c8ed45227f4d2fa1abe50ec79a46f5966d27a87162"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (39).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "7eeb1d93e57ba4c203cebce9c27ff7f565b4397c9f8f53801f3fc9c4ae6bcbe7"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (40).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "3d1bda8d555c8eec341375dc536a2443849f8254926cf04946352fe78ac594e8"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (41).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "5c591af5955aa3e827ebdcc3780a442687ffefe6f4515608ca12174b235ee6fa"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (42).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "925d97eb7a49bb340707607eda62714d4be30cf7b80f9d231f49d6b2109a65b5"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (43).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "634e841f5b71f90a3d050d55cec3a78e972fa15cae3d045837f0a6dc6b23c8c2"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (44).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "5f7dede7eb04ababe69514a1450c175a2c77a4ec9ca100a71517aad1e2edb3e5"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (45).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "7ad23e7f9b525c71175d8eadb9bb4ec1884cbbf3fc0bff40ffda8d8384527e0c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (46).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2ae7ad1d0eb95a9b8255ad68ec33749b0020a65c580ea44ff1024922e4794ea4"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (47).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2dba4965f045d0e29046ffd1d696b6a10c6be4ff9839321c8cb5efbfa73f42c6"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (48).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "e689b0b5ccfd6b7c617d3d6e3ffbd695ee80be73b4b82fc7971f66dd9508b949"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (49).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "d17a7da4a12ee3e6d14006a384f8af69730c71c49868516352aaa46dffdee702"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (50).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "sha256": "60f86953c3ab9423da23471f4212e4dcac9e3940ef513a0a1fb34c4321404124"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (51).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4ccda960fa902353b2d49548855ccc5b3ad83032b56ebac5c02b63b75777df57"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (52).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "526ef02f4b3969d32c08acbc965f46842b82aaeb3dffc145dec1dc2a796ed201"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (53).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "3fb022e86b28c67a6a1ae0decdb6cd274c9afc0c8c7c95bf3ee3c7f1bc6eb232"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (54).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "6f23fd8f624932c63f051c504609b08086c22641631028eb7b7e2cb2ad0f7231"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (55).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "02241037679a1576561eec2d5e543c87b362f8aeec7e4c89d0fe49118a9746ab"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (56).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "c8d1ddca6b75861eb90555f486904994fdcdb3f5b9f0ecf7cd8948bfe18ed79d"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (57).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "982e2496ee656b029ef438f8c0d9642d302c5a6c7454ba5ee6dac5885ca81aaa"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (58).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "sha256": "0ee9a00e5999a6e780456fc1af277ddc51baf2a51a1fb0ad4c9696117695be2c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (59).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "c578a4d643b797b72894027fe9d66a3cc7e87aa320768d0249591f0d0a29f675"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/kalponic_vegetation/Vegetation (60).png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "sha256": "bdbf5bcd57a2295866e8e23a96993871356b4e073b7724e48465508055701617"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/00_tierra_seca.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "4e0eefdca37a1604cba1a3a80967432cb5ec8b456ef8ead056ed6e8735b99f5c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/01_arena.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "48484ca18e7015ea9b4e63d71c5c66a8e95e3dbd5cd987cb7e8b37dfde128e35"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/02_pasto.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2dba4965f045d0e29046ffd1d696b6a10c6be4ff9839321c8cb5efbfa73f42c6"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/03_tierra_humeda.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "bfc825d0bb7db1ad00673ea63376985d7be09edec40790b1e62b851374d2ad4c"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/04_roca.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "89f5e85c7efe8e6f85f6b486e21c22eeededf2de960e3c40e05c2c64f7fa2cfc"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/05_arcano.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "438923199511e95a1a5c2d81c6f7af3b27cb9954efd9161aa6573239831ab823"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/06_nieve.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "07ee905eb959be37a9f8afb7a10adb701d271020d675587a5deb2c3fb8189621"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/06_pasto_sombrio.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "b04e2f3cfb1f75cd6eff12d28638617772f340f710d683ff1b14541d71723f45"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/07_pantano.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "04c2e2b7fe2ee9affb08a872073012cbe3b853a75d2d57e3a5727c6ddd6d3291"
+  },
+  {
+    "path": "assets/environment/terrain/textures/stylized/terrain_slots/23_pasto_rocas_sombrio.png",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGB",
+    "sha256": "2cb933fe5a908b41d76276e897f676e98d1803f4e4fd47b866c6dac06944023a"
+  }
+]

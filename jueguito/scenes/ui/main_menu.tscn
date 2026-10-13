@@ -1,9 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5qyh3x2lye2y"]
+[gd_scene load_steps=11 format=3 uid="uid://c5qyh3x2lye2y"]
 
 [ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/ui/options_menu.tscn" id="2_options"]
 [ext_resource type="Texture2D" path="res://assets/ui/backgrounds/medieval_lowpoly_viking_camp_v2.png" id="3_background"]
 [ext_resource type="Theme" path="res://assets/ui/medieval_ui_theme.tres" id="4_theme"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/play.svg" id="6_play"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/settings.svg" id="7_settings"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/credits.svg" id="8_credits"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/exit.svg" id="9_exit"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/back.svg" id="10_back"]
+
+[ext_resource type="Script" path="res://scripts/ui/coop_connection.gd" id="11_coop"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_main"]
 bg_color = Color(0.062, 0.048, 0.032, 0.94)
@@ -62,26 +69,26 @@ grow_vertical = 2
 
 [node name="MainPanel" type="PanelContainer" parent="Center"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 550)
+custom_minimum_size = Vector2(455, 520)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_main")
 
 [node name="Margin" type="MarginContainer" parent="Center/MainPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 42
-theme_override_constants/margin_top = 36
-theme_override_constants/margin_right = 42
-theme_override_constants/margin_bottom = 36
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 30
 
 [node name="Content" type="VBoxContainer" parent="Center/MainPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 12
 
 [node name="LogoText" type="Label" parent="Center/MainPanel/Margin/Content"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.76, 0.45, 1)
-theme_override_font_sizes/font_size = 38
-text = "MMO Territorial"
+theme_override_font_sizes/font_size = 34
+text = "MMO TERRITORIAL"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Center/MainPanel/Margin/Content"]
@@ -97,33 +104,112 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 14
+theme_override_constants/separation = 10
 alignment = 1
+
+[node name="OnlineButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "Jugar en línea"
 
 [node name="EnterButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "Ingresar"
+text = "Iniciar aventura"
+icon = ExtResource("6_play")
+expand_icon = true
+icon_max_width = 21
 
 [node name="OptionsButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Opciones"
+icon = ExtResource("7_settings")
+expand_icon = true
+icon_max_width = 20
 
 [node name="CreditsButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Créditos"
+icon = ExtResource("8_credits")
+expand_icon = true
+icon_max_width = 20
 
 [node name="ExitButton" type="Button" parent="Center/MainPanel/Margin/Content/LandingView"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Salir"
+icon = ExtResource("9_exit")
+expand_icon = true
+icon_max_width = 20
+
+[node name="ConnectionView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 6
+script = ExtResource("11_coop")
+
+[node name="AddressLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Dirección del servidor"
+
+[node name="Address" type="LineEdit" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+placeholder_text = "127.0.0.1 / IP pública / dominio"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="PortLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Puerto UDP"
+
+[node name="Port" type="SpinBox" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+min_value = 1.0
+max_value = 65535.0
+value = 7777.0
+custom_minimum_size = Vector2(0, 40)
+
+[node name="NicknameLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Tu nombre (distinto del de tu amigo)"
+
+[node name="Nickname" type="LineEdit" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+max_length = 24
+custom_minimum_size = Vector2(0, 40)
+
+[node name="KeyLabel" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Clave de partida"
+
+[node name="Key" type="LineEdit" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+secret = true
+placeholder_text = "La clave de server.cfg"
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Status" type="Label" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+autowrap_mode = 2
+text = ""
+custom_minimum_size = Vector2(0, 45)
+
+[node name="Connect" type="Button" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Entrar a la costa"
+custom_minimum_size = Vector2(0, 46)
+
+[node name="Back" type="Button" parent="Center/MainPanel/Margin/Content/ConnectionView"]
+layout_mode = 2
+text = "Volver"
 
 [node name="LoginView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
 unique_name_in_owner = true
@@ -189,12 +275,18 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "Ingresar"
+icon = ExtResource("6_play")
+expand_icon = true
+icon_max_width = 20
 
 [node name="LoginBackButton" type="Button" parent="Center/MainPanel/Margin/Content/LoginView"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 text = "Volver"
+icon = ExtResource("10_back")
+expand_icon = true
+icon_max_width = 19
 
 [node name="CreditsView" type="VBoxContainer" parent="Center/MainPanel/Margin/Content"]
 unique_name_in_owner = true
@@ -227,6 +319,9 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 text = "Volver"
+icon = ExtResource("10_back")
+expand_icon = true
+icon_max_width = 19
 
 [node name="VersionLabel" type="Label" parent="."]
 layout_mode = 1

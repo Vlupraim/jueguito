@@ -17,12 +17,33 @@ func _capture() -> void:
 	add_child(menu)
 	for _frame in range(4):
 		await get_tree().process_frame
-	_save_viewport("main_menu_medieval_v1.png")
+	_save_viewport("main_menu_product_v2.png")
 
 	menu.call("_show_login")
 	for _frame in range(3):
 		await get_tree().process_frame
-	_save_viewport("login_medieval_v1.png")
+	_save_viewport("login_product_v2.png")
+
+	menu.call("_show_view", menu.get("credits_view"))
+	for _frame in range(3):
+		await get_tree().process_frame
+	_save_viewport("credits_product_v2.png")
+	menu.call("_show_landing")
+	menu.get("exit_confirmation").popup_centered()
+	for _frame in range(3):
+		await get_tree().process_frame
+	_save_viewport("exit_confirmation_product_v2.png")
+	menu.get("exit_confirmation").hide()
+
+	var options: Control = menu.get("options_menu")
+	options.call("open")
+	var option_names := ["general", "video", "audio", "controls", "accessibility"]
+	for tab_index in range(option_names.size()):
+		options.get("tabs").current_tab = tab_index
+		for _frame in range(2):
+			await get_tree().process_frame
+		_save_viewport("options_%s_product_v2.png" % option_names[tab_index])
+	options.call("close")
 
 	menu.queue_free()
 	await get_tree().process_frame
@@ -30,10 +51,11 @@ func _capture() -> void:
 	add_child(selector)
 	for _frame in range(12):
 		await get_tree().process_frame
+	_save_viewport("character_roster_product_v2.png")
 	selector.call("_show_creator")
 	for _frame in range(30):
 		await get_tree().process_frame
-	_save_viewport("character_selection_medieval_v1.png")
+	_save_viewport("character_creator_product_v2.png")
 
 	selector.queue_free()
 	await get_tree().process_frame

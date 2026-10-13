@@ -1,0 +1,36 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_tutorial_cove_stamp.gd:29)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_tutorial_cove_stamp.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_tutorial_cove_stamp.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 7 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_tutorial_cove_stamp.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_tutorial_cove_stamp.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 6 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_tutorial_cove_stamp.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_tutorial_cove_stamp.gd:30)
+ERROR: Terrain3D#2561:_grab_camera:155: Cannot find the active camera. Set it manually with Terrain3D.set_camera(). Stopping _physics_process()
+   at: push_error (core/variant/variant_utility.cpp:1023)
+COVE_STAMP_OK mode=verify regions=4 pixels=0 min=-3.95 max=37.60 error=0.00097 ship=2.57 spawn=1.66 arch_floor=-3.52 preview=res://docs/design/concepts/tutorial/shipwreck_cove_height_plan_v1.png

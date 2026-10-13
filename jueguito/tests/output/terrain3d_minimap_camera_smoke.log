@@ -1,0 +1,39 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+   GDScript backtrace (most recent call first):
+       [0] _setup_terrain (res://scripts/terrain3d_walk_preview.gd:478)
+       [1] _ready (res://scripts/terrain3d_walk_preview.gd:173)
+       [2] _run (res://tests/scenes/terrain3d_minimap_camera_smoke.gd:12)
+Terrain3DWalkPreview: cargado sector (27, 30)
+Terrain3DWalkPreview: oceano sector (27, 30) | agua=true | celdas=1769 | colliders=20
+Terrain3DWalkPreview: contenido artesanal sector (27, 30)
+Terrain3DWalkPreview: jugador en (283.0, 7.0, 211.0)
+Terrain3DWalkPreview: camara activa = Camera3D
+WARNING: No se pudieron guardar los ajustes: Can't open file
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_settings (res://scripts/systems/settings_manager.gd:134)
+       [1] set_setting (res://scripts/systems/settings_manager.gd:85)
+       [2] _change_local_minimap_zoom (res://scripts/terrain3d_walk_preview.gd:1747)
+       [3] _run (res://tests/scenes/terrain3d_minimap_camera_smoke.gd:133)
+WARNING: No se pudieron guardar los ajustes: Can't open file
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_settings (res://scripts/systems/settings_manager.gd:134)
+       [1] set_setting (res://scripts/systems/settings_manager.gd:85)
+       [2] _change_local_minimap_zoom (res://scripts/terrain3d_walk_preview.gd:1747)
+       [3] _run (res://tests/scenes/terrain3d_minimap_camera_smoke.gd:137)
+WARNING: No se pudieron guardar los ajustes: Can't open file
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_settings (res://scripts/systems/settings_manager.gd:134)
+       [1] set_setting (res://scripts/systems/settings_manager.gd:85)
+       [2] _change_local_minimap_zoom (res://scripts/terrain3d_walk_preview.gd:1747)
+       [3] _run (res://tests/scenes/terrain3d_minimap_camera_smoke.gd:145)
+MINIMAP_DEBUG player=(283.3243, 6.648211, 210.5792) bounds=[P: (0.0, 0.0), S: (512.0, 512.0)] marker=(140.913, 92.63614)
+TERRAIN3D_MINIMAP_CAMERA_OK marker=(141.0, 93.0) quadrants=4 pan_limit=30 recenter=true wasd=false regional_tab=true world_grid=67x38 region_window=11 hud_tools=2 map_tabs=2 duplicate_minimap=false terrain_view=false debug_hidden=true

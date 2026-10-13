@@ -4,7 +4,7 @@ class_name EditableHUDModule
 @export var layout_key := "module"
 @export var default_normalized_position := Vector2.ZERO
 @export var default_position_offset := Vector2.ZERO
-@export_range(0.65, 1.6, 0.05) var default_module_scale := 1.0
+@export_range(0.45, 1.6, 0.05) var default_module_scale := 1.2
 
 var edit_mode := false
 var _dragging := false
@@ -13,9 +13,11 @@ var _drag_offset := Vector2.ZERO
 var _resize_start_mouse := Vector2.ZERO
 var _resize_start_scale := 1.0
 var _edit_overlay: Node2D
+var _module_scale := 1.0
+var _edit_mouse_filters: Dictionary = {}
 
 const RESIZE_HANDLE_SIZE := 22.0
-const MIN_MODULE_SCALE := 0.65
+const MIN_MODULE_SCALE := 0.35
 const MAX_MODULE_SCALE := 1.6
 
 
@@ -30,7 +32,17 @@ func _ready() -> void:
 
 
 func set_edit_mode(enabled: bool) -> void:
+	if enabled != edit_mode:
+		if enabled:
+			_ignore_child_mouse_filters(self)
+		else:
+			for control in _edit_mouse_filters:
+				if is_instance_valid(control):
+					control.mouse_filter = _edit_mouse_filters[control]
+			_edit_mouse_filters.clear()
 	edit_mode = enabled
+	_dragging = false
+	_resizing = false
 	mouse_filter = Control.MOUSE_FILTER_STOP if enabled else Control.MOUSE_FILTER_IGNORE
 	mouse_default_cursor_shape = Control.CURSOR_DRAG if enabled else Control.CURSOR_ARROW
 	modulate = Color(1.08, 1.02, 0.84, 1.0) if enabled else Color.WHITE
@@ -41,18 +53,20 @@ func set_edit_mode(enabled: bool) -> void:
 
 
 func set_module_scale(value: float) -> void:
-	var next_scale := clampf(value, MIN_MODULE_SCALE, MAX_MODULE_SCALE)
-	scale = Vector2.ONE * next_scale
-	SettingsManager.set_setting("hud", "%s_scale" % layout_key, next_scale, false)
+	_module_scale = clampf(value, MIN_MODULE_SCALE, MAX_MODULE_SCALE)
+	scale = Vector2.ONE * default_module_scale * _module_scale
+	SettingsManager.set_setting("hud", "%s_scale" % layout_key, _module_scale, false)
 	_clamp_to_viewport()
 	if _edit_overlay != null:
 		_edit_overlay.queue_redraw()
 
 
 func reset_layout() -> void:
+	_module_scale = 1.0
 	scale = Vector2.ONE * default_module_scale
 	_place_from_normalized(default_normalized_position, true)
 	_save_layout()
+	_restore_stack_order()
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -62,12 +76,13 @@ func _gui_input(event: InputEvent) -> void:
 		var button := event as InputEventMouseButton
 		if button.button_index == MOUSE_BUTTON_LEFT:
 			if button.pressed:
+				bring_to_front()
 				if _resize_handle_rect().has_point(button.position):
 					_resizing = true
 					_dragging = false
 					mouse_default_cursor_shape = Control.CURSOR_FDIAGSIZE
-					_resize_start_mouse = get_global_mouse_position()
-					_resize_start_scale = scale.x
+					_resize_start_mouse = get_global_transform() * button.position
+					_resize_start_scale = _module_scale
 				else:
 					_dragging = true
 					_resizing = false
@@ -81,10 +96,10 @@ func _gui_input(event: InputEvent) -> void:
 				_save_layout()
 			accept_event()
 		elif button.pressed and button.button_index == MOUSE_BUTTON_WHEEL_UP:
-			set_module_scale(scale.x + 0.05)
+			set_module_scale(_module_scale + 0.05)
 			accept_event()
 		elif button.pressed and button.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			set_module_scale(scale.x - 0.05)
+			set_module_scale(_module_scale - 0.05)
 			accept_event()
 	elif event is InputEventMouseMotion and not _resizing and not _dragging:
 		mouse_default_cursor_shape = (
@@ -93,14 +108,14 @@ func _gui_input(event: InputEvent) -> void:
 			else Control.CURSOR_DRAG
 		)
 	elif event is InputEventMouseMotion and _resizing:
-		var resize_delta := get_global_mouse_position() - _resize_start_mouse
-		var reference_size := maxf(size.x, size.y)
+		var resize_delta := get_global_transform() * (event as InputEventMouseMotion).position - _resize_start_mouse
+		var reference_size := maxf(size.x, size.y) * default_module_scale
 		var proportional_delta := (resize_delta.x + resize_delta.y) * 0.5 / maxf(reference_size, 1.0)
 		set_module_scale(_resize_start_scale + proportional_delta)
 		accept_event()
 	elif event is InputEventMouseMotion and _dragging:
 		var motion := event as InputEventMouseMotion
-		global_position += motion.position - _drag_offset
+		global_position += (motion.position - _drag_offset) * scale
 		_clamp_to_viewport()
 		accept_event()
 
@@ -110,12 +125,50 @@ func _load_layout() -> void:
 		"hud", "%s_position" % layout_key, default_normalized_position
 	)
 	var stored_scale := float(SettingsManager.get_setting(
-		"hud", "%s_scale" % layout_key, default_module_scale
+		"hud", "%s_scale" % layout_key, 1.0
 	))
-	scale = Vector2.ONE * clampf(stored_scale, MIN_MODULE_SCALE, MAX_MODULE_SCALE)
+	_module_scale = clampf(stored_scale, MIN_MODULE_SCALE, MAX_MODULE_SCALE)
+	scale = Vector2.ONE * default_module_scale * _module_scale
 	var normalized: Vector2 = stored_position if stored_position is Vector2 else default_normalized_position
 	_place_from_normalized(normalized, normalized == default_normalized_position)
 	set_edit_mode(false)
+	_restore_stack_order()
+
+
+func get_module_scale() -> float:
+	return _module_scale
+
+
+func _ignore_child_mouse_filters(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control:
+			_edit_mouse_filters[child] = child.mouse_filter
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_ignore_child_mouse_filters(child)
+
+
+func bring_to_front() -> void:
+	var order: Array = Array(SettingsManager.get_setting("hud", "module_order", []))
+	order.erase(layout_key)
+	order.append(layout_key)
+	SettingsManager.set_setting("hud", "module_order", order, false)
+	_restore_stack_order()
+
+
+func _restore_stack_order() -> void:
+	var parent := get_parent()
+	if parent == null:
+		return
+	var order: Array = Array(SettingsManager.get_setting("hud", "module_order", []))
+	var modules: Array[Control] = []
+	for child in parent.get_children():
+		if child is EditableHUDModule:
+			modules.append(child)
+	modules.sort_custom(func(a, b): return order.find(a.layout_key) < order.find(b.layout_key))
+	for index in range(modules.size()):
+		# El orden de hermanos controla el clic; Z mantiene juntos sus dibujos.
+		parent.move_child(modules[index], -1)
+		modules[index].z_index = index * 128
 
 
 func _place_from_normalized(normalized: Vector2, apply_default_offset := false) -> void:
@@ -153,7 +206,7 @@ func _clamp_to_viewport() -> void:
 
 func _save_layout() -> void:
 	SettingsManager.set_setting("hud", "%s_position" % layout_key, _normalized_position(), false)
-	SettingsManager.set_setting("hud", "%s_scale" % layout_key, scale.x, false)
+	SettingsManager.set_setting("hud", "%s_scale" % layout_key, _module_scale, false)
 	SettingsManager.save_settings()
 
 
@@ -179,7 +232,7 @@ func _draw_edit_overlay() -> void:
 			Color("d9bc67"),
 			1.0
 		)
-	var scale_caption := "%d%%" % roundi(scale.x * 100.0)
+	var scale_caption := "%d%%" % roundi(_module_scale * 100.0)
 	_edit_overlay.draw_rect(Rect2(Vector2(4.0, 4.0), Vector2(48.0, 20.0)), Color("17140ee8"), true)
 	_edit_overlay.draw_string(
 		ThemeDB.fallback_font,

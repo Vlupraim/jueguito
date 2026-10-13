@@ -9,6 +9,6 @@ display_name = "Escudo vikingo"
 category = "offhand"
 allowed_slots = Array[String](["secondary"])
 visual_slot = "secondary"
-icon_path = "res://assets/items/icons/viking_shield.png"
+icon_path = "res://assets/items/icons/viking_shield_inventory.png"
 source_model_path = "res://assets/items/equipment/shields/viking_shield/viking_shield.glb"
 held_scene_path = "res://assets/items/equipment/shields/viking_shield/viking_shield_held.tscn"

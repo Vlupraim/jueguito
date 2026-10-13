@@ -1,0 +1,70 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+WARNING: Terrain3DTextureAsset#1997:set_albedo_texture:79: Texture 'tierra_gris_con_gravilla_001' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#9214:set_albedo_texture:79: Texture 'arena_rosa_con_gravilla_fina_015' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#6431:set_albedo_texture:79: Texture 'arena_clara_con_piedras_024' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#3648:set_albedo_texture:79: Texture 'tierra_ocre_con_piedras_031' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#0865:set_albedo_texture:79: Texture 'tierra_roja_con_gravilla_fina_033' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#8082:set_albedo_texture:79: Texture 'tierra_roja_con_grava_036' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#5299:set_albedo_texture:79: Texture 'roca_gris_de_lajas_grandes_040' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#2516:set_albedo_texture:79: Texture 'ceniza_gris_con_gravilla_048' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#9733:set_albedo_texture:79: Texture 'roca_marron_con_musgo_064' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#6950:set_albedo_texture:79: Texture 'pasto_con_rocas_dispersas_070' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#4167:set_albedo_texture:79: Texture 'musgo_con_rocas_grandes_071' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#1384:set_albedo_texture:79: Texture 'roca_caliza_clara_077' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#8601:set_albedo_texture:79: Texture 'roca_marron_en_lajas_079' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#5818:set_albedo_texture:79: Texture 'cantos_marrones_humedos_087' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#3035:set_albedo_texture:79: Texture 'empedrado_rojo_091' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+WARNING: Terrain3DTextureAsset#0252:set_albedo_texture:79: Texture 'empedrado_beige_097' has no mipmaps. Change on the Import panel if desired.
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:187)
+Terrain3D resources listos: res://assets/environment/terrain/jueguito_terrain_assets.tres | res://assets/environment/terrain/jueguito_terrain_material.tres
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.

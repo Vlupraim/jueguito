@@ -237,13 +237,19 @@ acción de silencio. Los buses se preparan aunque todavía no tengan contenido.
 
 Alcance inicial:
 
-- Sensibilidad o velocidad de cámara.
+- Acciones reasignables para movimiento, salto, carrera, interacción, cámara y
+  apertura de interfaces.
+- Sensibilidad horizontal y vertical de cámara.
+- Inversión del eje vertical.
 - Velocidad de zoom.
-- Preferencias de mantener o alternar cuando corresponda.
+- Preferencias de mantener o alternar para carrera y control de cámara cuando
+  corresponda.
 - Restablecer controles.
 
-La reasignación completa de teclas se añade cuando las acciones de gameplay
-estén estabilizadas.
+Los valores predeterminados y su semántica se definen en
+`res://docs/design/player_movement_camera_interaction.md`. Teclado y mando deben
+usar acciones de `InputMap`; las teclas físicas no se consultan directamente
+desde la lógica final de gameplay.
 
 ### Accesibilidad
 

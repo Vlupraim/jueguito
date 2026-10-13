@@ -10,6 +10,18 @@ arboles talables. Todavia no reemplaza al futuro sistema persistente de items.
 - La espada vikinga permite espada + espada o espada + escudo.
 - El arco vikingo es de dos manos: se muestra en principal y vacia secundaria.
 - El hacha sigue siendo de una mano y conserva el tipo de herramienta `axe`.
+- La interfaz reserva desde ahora una matriz de nueve categorías de equipo:
+  mochila, cabeza, capa, mano principal, torso, mano secundaria, consumible,
+  pies y alimento. Solo las dos manos tienen comportamiento en esta vertical;
+  las restantes se muestran desactivadas para estabilizar la arquitectura sin
+  prometer funcionalidad todavía.
+- El equipo se representa como unidades no apilables dentro de la mochila. Dos
+  espadas ocupan dos espacios aunque el mock de persistencia todavía almacene
+  `"Espada vikinga": 2`. Los recursos como madera e hierro conservan el formato
+  apilable y muestran `xN`.
+- Los iconos del inventario son PNG 2D transparentes de 256 px. No instancian ni
+  renderizan el GLB de equipamiento; el modelo se usa únicamente cuando el
+  objeto está montado en el personaje 3D.
 - Las animaciones base asignadas son `attack` para espada, `archery_shot` para
   arco y `chop` para hacha. Por ahora `chop` reutiliza el ataque basico
   `attack`, reproducido a `1.30x`. Durante la tala, cada repeticion

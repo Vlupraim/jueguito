@@ -9,7 +9,9 @@ func _ready() -> void:
 
 
 func _capture() -> void:
-	get_window().size = Vector2i(1280, 720)
+	# El HUD se evalua en la resolucion objetivo del juego; a 1280 px los textos
+	# del marco no representan el encuadre que vera el jugador con F5.
+	get_window().size = Vector2i(1920, 1080)
 	var world := WORLD_SCENE.instantiate()
 	add_child(world)
 	for _frame in range(120):
@@ -23,14 +25,18 @@ func _capture() -> void:
 	_save_viewport("implemented_map_regional_v2.png")
 
 	world.call("_toggle_world_map")
+	world.call("_reset_world_map_view")
+	for _frame in range(3):
+		await get_tree().process_frame
+	_save_viewport("implemented_world_atlas_full_v2.png")
 	world.call("_center_world_map_on_current_sector")
 	await get_tree().process_frame
 	var view_size: Vector2 = world.call("_world_map_view_size")
 	var texture_rect: Rect2 = world.call("_world_map_texture_rect", view_size)
-	var sector_rect: Rect2 = world.call(
-		"_world_map_sector_rect", texture_rect, world.get("current_sector")
+	var sector_center: Vector2 = world.call(
+		"_world_map_sector_center", texture_rect, world.get("current_sector")
 	)
-	world.call("_select_world_map_sector_at", sector_rect.get_center())
+	world.call("_select_world_map_sector_at", sector_center)
 	for _frame in range(3):
 		await get_tree().process_frame
 	_save_viewport("implemented_world_atlas_v2.png")

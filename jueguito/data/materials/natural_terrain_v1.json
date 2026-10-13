@@ -1,0 +1,377 @@
+[
+  {
+    "id": 0,
+    "name": "00_TierraSeca",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/soil.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      1,
+      1,
+      1
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 1,
+    "name": "01_Arena",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/sand.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_fine_normal_roughness.png",
+    "tint": [
+      0.93,
+      0.92,
+      0.9
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 2,
+    "name": "02_Pasto",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/grass.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_grass_normal_roughness.png",
+    "tint": [
+      0.94,
+      1,
+      0.92
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 3,
+    "name": "03_TierraHumeda",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/damp_soil.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      1,
+      1,
+      1
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": -0.04
+  },
+  {
+    "id": 4,
+    "name": "04_Roca",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/rock.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png",
+    "tint": [
+      1,
+      1,
+      1
+    ],
+    "uv_scale": 0.45,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 5,
+    "name": "05_Arcano",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/rock.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png",
+    "tint": [
+      0.83,
+      0.88,
+      1
+    ],
+    "uv_scale": 0.48,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 6,
+    "name": "06_PastoSombrio",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/grass.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_grass_normal_roughness.png",
+    "tint": [
+      0.8,
+      0.92,
+      0.83
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 7,
+    "name": "07_Pantano",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/damp_soil.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      0.83,
+      0.94,
+      0.83
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": -0.04
+  },
+  {
+    "id": 8,
+    "name": "08_TierraGrisGravilla",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/gravel.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      0.88,
+      0.92,
+      0.98
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 9,
+    "name": "09_ArenaRosaGravilla",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/sand.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_fine_normal_roughness.png",
+    "tint": [
+      0.99,
+      0.88,
+      0.82
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 10,
+    "name": "10_ArenaClaraPiedras",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/gravel.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      1,
+      0.97,
+      0.89
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 11,
+    "name": "11_TierraOcrePiedras",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/soil.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      1,
+      0.95,
+      0.86
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 12,
+    "name": "12_TierraRojaFina",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/soil.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      1,
+      0.83,
+      0.76
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 13,
+    "name": "13_TierraRojaGrava",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/gravel.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_earth_normal_roughness.png",
+    "tint": [
+      1,
+      0.83,
+      0.76
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 14,
+    "name": "14_RocaGrisLajas",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/rock.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png",
+    "tint": [
+      0.91,
+      0.96,
+      1
+    ],
+    "uv_scale": 0.45,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 15,
+    "name": "15_CenizaGrisGravilla",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/ash.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_fine_normal_roughness.png",
+    "tint": [
+      1,
+      1,
+      1
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 16,
+    "name": "16_RocaMarronMusgo",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/moss.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_grass_normal_roughness.png",
+    "tint": [
+      0.9,
+      0.96,
+      0.86
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 17,
+    "name": "17_PastoRocasDispersas",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/moss.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_grass_normal_roughness.png",
+    "tint": [
+      0.98,
+      1,
+      0.92
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 18,
+    "name": "18_MusgoRocasGrandes",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/moss.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_grass_normal_roughness.png",
+    "tint": [
+      0.85,
+      0.91,
+      0.85
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 19,
+    "name": "19_RocaCalizaClara",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/rock.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png",
+    "tint": [
+      1,
+      1,
+      0.94
+    ],
+    "uv_scale": 0.45,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 20,
+    "name": "20_RocaMarronLajas",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/rock.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png",
+    "tint": [
+      1,
+      0.93,
+      0.84
+    ],
+    "uv_scale": 0.45,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 21,
+    "name": "21_CantosMarronesHumedos",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/gravel.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png",
+    "tint": [
+      0.77,
+      0.76,
+      0.71
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 22,
+    "name": "22_EmpedradoRojo",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/flagstone.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png",
+    "tint": [
+      1,
+      0.9,
+      0.84
+    ],
+    "uv_scale": 0.55,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 23,
+    "name": "23_PastoRocasSombrio",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/moss.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_grass_normal_roughness.png",
+    "tint": [
+      0.76,
+      0.85,
+      0.78
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  },
+  {
+    "id": 24,
+    "name": "24_Nieve",
+    "albedo": "res://assets/environment/terrain/textures/natural_v1/snow.png",
+    "normal": "res://assets/environment/terrain/textures/natural_v1/micro_fine_normal_roughness.png",
+    "tint": [
+      1,
+      1,
+      1
+    ],
+    "uv_scale": 0.68,
+    "normal_depth": 0.6,
+    "ao_strength": 0.25,
+    "roughness": 0
+  }
+]

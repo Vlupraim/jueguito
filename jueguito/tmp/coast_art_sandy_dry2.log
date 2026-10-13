@@ -1,0 +1,36 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_coast_art_painter.gd:29)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_coast_art_painter.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_coast_art_painter.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 7 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_coast_art_painter.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_coast_art_painter.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 6 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_coast_art_painter.gd:30)
+WARNING: Terrain3DInstancer#1733:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/tools/editor/terrain3d_coast_art_painter.gd:30)
+ERROR: Terrain3D#2561:_grab_camera:155: Cannot find the active camera. Set it manually with Terrain3D.set_camera(). Stopping _physics_process()
+   at: push_error (core/variant/variant_utility.cpp:1023)
+COAST_ART_PAINT_OK mode=dry-run height=[-6.49,57.38] max_slope=79.7 wet=88670 beach=22670 cliff=46970 rocky_grass=59744 grass=44090 trail=0 preview=res://docs/design/concepts/tutorial/coast_art_paint_preview_v1.png

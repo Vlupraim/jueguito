@@ -99,9 +99,8 @@ func _setup_flat_world() -> void:
 
 
 func _build_preview_texture() -> ImageTexture:
-	var source := Image.new()
-	var error := source.load(ProjectSettings.globalize_path(SURFACE_MASK_PATH))
-	if error != OK:
+	var source := preload("res://scripts/systems/imported_image.gd").read(SURFACE_MASK_PATH)
+	if source == null or source.is_empty():
 		source = Image.create(int(MAP_IMAGE_SIZE.x), int(MAP_IMAGE_SIZE.y), false, Image.FORMAT_RGBA8)
 		source.fill(Color(0.26, 0.40, 0.28, 1.0))
 	source.convert(Image.FORMAT_RGBA8)

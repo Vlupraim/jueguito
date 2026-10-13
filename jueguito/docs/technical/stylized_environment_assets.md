@@ -4,6 +4,7 @@
 
 - Texturas que usa Terrain3D ahora: `res://assets/environment/terrain/textures/stylized/terrain_slots/`
 - Biblioteca completa Kalponic ground: `res://assets/environment/terrain/textures/stylized/kalponic_ground/`
+- Biblioteca Kalponic curada y nombrada: `res://assets/environment/terrain/textures/stylized/curated_ground/`
 - Biblioteca completa Kalponic vegetation: `res://assets/environment/terrain/textures/stylized/kalponic_vegetation/`
 - Modelos Quaternius para pasto, arboles, rocas y props: `res://assets/environment/vegetation/quaternius_stylized_nature/`
 - Respaldo de texturas realistas antiguas: `res://_incoming_assets/_legacy_realistic_terrain_textures/`
@@ -22,6 +23,12 @@ Los IDs se mantienen compatibles con el generador:
 - `5` - `05_Arcano`
 - `6` - `06_Nieve`
 - `7` - `07_Pantano`
+
+Los slots `8` a `23` contienen una seleccion adicional de tierras con gravilla,
+arenas pedregosas, roca en lajas, suelos con musgo y empedrados. Las 100
+variantes originales siguen disponibles, organizadas por categoria y con nombres
+descriptivos en `curated_ground`. Consulta `curated_ground/catalogo.csv` para ver
+la correspondencia con los archivos originales y qué texturas ya estan activas.
 
 Para cambiar una textura base, reemplaza el PNG correspondiente en `terrain_slots` o cambia la entrada en `res://scripts/tools/editor/setup_terrain3d_resources.gd` y ejecuta:
 

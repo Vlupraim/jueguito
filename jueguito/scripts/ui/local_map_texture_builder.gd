@@ -20,7 +20,7 @@ const LAND_LIGHT := Color("7f8b63")
 const LAND_DARK := Color("4f6043")
 
 
-static func build(surface_texture: Texture2D, _height_texture: Texture2D) -> ImageTexture:
+static func build(surface_texture: Texture2D, height_texture: Texture2D) -> ImageTexture:
 	if surface_texture == null:
 		return null
 	var surface := surface_texture.get_image()
@@ -38,6 +38,7 @@ static func build(surface_texture: Texture2D, _height_texture: Texture2D) -> Ima
 	# una campana gaussiana. El contorno resultante es curvo incluso cuando la
 	# fuente fue pintada sobre celdas grandes y ortogonales.
 	var surface_mask := _build_smoothed_surface_mask(surface, target_size)
+	var height_map := _build_smoothed_height_map(height_texture, target_size)
 
 	var output := Image.create(target_size.x, target_size.y, false, Image.FORMAT_RGBA8)
 	for y in range(target_size.y):
@@ -87,6 +88,30 @@ static func build(surface_texture: Texture2D, _height_texture: Texture2D) -> Ima
 				absf(land_brush) * 0.30 * land_weight
 			)
 
+			# La altura real entra como una aguada, no como geometria 3D. Se omite
+			# casi por completo en el mar y se conserva contenida en playa para que
+			# la carta siga perteneciendo a la misma familia visual que el atlas.
+			if height_map != null:
+				var sample_radius := 4
+				var left_h := height_map.get_pixel(maxi(x - sample_radius, 0), y).r
+				var right_h := height_map.get_pixel(mini(x + sample_radius, target_size.x - 1), y).r
+				var up_h := height_map.get_pixel(x, maxi(y - sample_radius, 0)).r
+				var down_h := height_map.get_pixel(x, mini(y + sample_radius, target_size.y - 1)).r
+				var height_value := height_map.get_pixel(x, y).r
+				var terrain_weight := clampf(land_weight + sand_weight * 0.34, 0.0, 1.0)
+				var directional_relief := clampf(
+					((left_h - right_h) * 0.62 + (up_h - down_h) * 0.78) * 2.7,
+					-0.14,
+					0.16
+				) * terrain_weight
+				var elevation_wash := clampf((height_value - 0.48) * 0.16, -0.07, 0.08) \
+					* terrain_weight
+				var relief_amount := clampf(directional_relief + elevation_wash, -0.16, 0.18)
+				map_color = map_color.lerp(
+					LAND_LIGHT if relief_amount >= 0.0 else LAND_DARK,
+					absf(relief_amount) * 0.62
+				)
+
 			# Marcas de cerdas: bandas largas en agua, barrido seco en arena y
 			# manchas cruzadas en vegetacion. Son pigmento plano, no iluminacion.
 			var water_brush_mark := pow(absf(sin(
@@ -121,6 +146,27 @@ static func build(surface_texture: Texture2D, _height_texture: Texture2D) -> Ima
 			output.set_pixel(x, y, map_color)
 
 	return ImageTexture.create_from_image(output)
+
+
+static func _build_smoothed_height_map(height_texture: Texture2D, target_size: Vector2i) -> Image:
+	if height_texture == null:
+		return null
+	var height := height_texture.get_image()
+	if height == null or height.is_empty():
+		return null
+	height = height.duplicate() as Image
+	if height.is_compressed():
+		height.decompress()
+	height.convert(Image.FORMAT_RF)
+	# Reducir y reconstruir elimina el escalonado de las celdas exportadas sin
+	# inventar montanas que no existan en el terreno jugable.
+	var reduced_size := Vector2i(
+		maxi(target_size.x / 6, 64),
+		maxi(target_size.y / 6, 64)
+	)
+	height.resize(reduced_size.x, reduced_size.y, Image.INTERPOLATE_LANCZOS)
+	height.resize(target_size.x, target_size.y, Image.INTERPOLATE_CUBIC)
+	return height
 
 
 static func _build_smoothed_surface_mask(surface: Image, target_size: Vector2i) -> Image:

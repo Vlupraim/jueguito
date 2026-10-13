@@ -1,0 +1,32 @@
+00:02.766  blend            | Read blend: "C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\rig_reference\strongman_recovered_reference_v01.blend"
+C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\scripts\build_castaway_pilot.py:26: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name); m.diffuse_color=(*color,1); m.use_nodes=True
+C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\scripts\build_castaway_pilot.py:213: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.diffuse_color=(*c,1);m.use_nodes=True
+00:20.610  render           | Saved: 'C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\castaway_male_v01\review_full.png'
+00:32.813  render           | Saved: 'C:\Users\dzzav\OneDrive\Documentos\repo\jueguito\art\characters\castaway_male_v01\review_face.png'
+Info: Applied modifier was not first, result may not be as expected
+Info: Applied modifier was not first, result may not be as expected
+Info: Applied modifier was not first, result may not be as expected
+Info: Applied modifier was not first, result may not be as expected
+Info: Applied modifier was not first, result may not be as expected
+Info: Saved as "castaway_male_v01.blend"
+INFO Draco is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+22:08:40 | INFO: Starting glTF 2.0 export
+22:08:40 | INFO: Extracting primitive: Brow
+22:08:40 | INFO: Primitives created: 6
+22:08:40 | INFO: Extracting primitive: Boot_foot_Left
+22:08:40 | INFO: Primitives created: 2
+22:08:40 | INFO: Extracting primitive: Hair_cap
+22:08:40 | INFO: Primitives created: 1
+22:08:40 | INFO: Extracting primitive: Trousers_Left
+22:08:40 | INFO: Primitives created: 1
+22:08:40 | INFO: Extracting primitive: Belt
+22:08:40 | INFO: Primitives created: 4
+22:08:51 | INFO: Finished glTF 2.0 export in 10.470956325531006 s
+
+BUILD_OK {"bones": 24, "actions": 20, "modules": {"Body": {"vertices": 1456, "triangles": 2757}, "Tunic": {"vertices": 412, "triangles": 774}, "Trousers": {"vertices": 168, "triangles": 328}, "Boots": {"vertices": 348, "triangles": 672}, "Hair_Default": {"vertices": 94, "triangles": 164}}, "gameplay_changed": false}
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

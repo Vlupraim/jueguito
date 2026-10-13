@@ -16,11 +16,13 @@ segura sobre el barco.
 
 ## Orientacion y mapa local
 
-La camara tactica sigue al personaje. El boton central permite orbitarla;
-`Shift` + boton central desplaza temporalmente la vista dentro de un radio
-limitado. Al caminar vuelve suavemente al personaje, y `F` o doble clic central
-la recentran manualmente. `C` conserva el acceso rapido a cuatro orientaciones
-fijas. El HUD no muestra el texto tecnico de depuracion durante el juego normal.
+La direccion aprobada de movimiento, camara e interaccion se define en
+`res://docs/design/player_movement_camera_interaction.md`. La camara en tercera
+persona sigue al personaje. El boton derecho permite orbitarla y orientar la
+intencion frontal, la rueda controla el zoom y `F` la recentra. `WASD` mueve al
+personaje con relacion a la camara, `Shift` permite correr y `Espacio` saltar.
+Las orientaciones fijas y camaras cenitales se reservan para depuracion. El HUD
+no muestra texto tecnico durante el juego normal.
 
 Cada chunk tiene dos representaciones locales. El minimapa pequeno es una carta
 medieval generada desde `surface_reference.png` y `height_preview.png`, con costa
@@ -36,11 +38,11 @@ Ensenar el bucle minimo sin introducir sistemas que aun no estan terminados.
 
 1. **Orientacion inicial**
    - Presentar el lugar y un objetivo visible cercano.
-   - Explicar movimiento con clic derecho y carrera manteniendo `Shift`.
-   - Explicar zoom con la rueda, orbita con boton central y recentrado con `F`.
+   - Explicar movimiento con `WASD`, carrera con `Shift` y salto con `Espacio`.
+   - Explicar zoom con la rueda, orbita con boton derecho y recentrado con `F`.
 2. **Primera interaccion**
    - Acercarse a un objeto sencillo del mundo.
-   - Interactuar con clic izquierdo.
+   - Seleccionarlo con clic izquierdo e interactuar en rango con `E` o clic.
    - Recibir un recurso de prueba.
 3. **Inventario**
    - Abrir el panel lateral con `I`.
@@ -60,5 +62,8 @@ Ensenar el bucle minimo sin introducir sistemas que aun no estan terminados.
 - El inventario y el progreso pertenecen al personaje, no a la escena.
 - NPC, indicadores y mensajes tutoriales pueden mostrarse solo al jugador que los
   necesita, aunque la isla sea compartida.
+- Ningun paso del tutorial usa click-to-move ni autoaproximacion a objetivos.
+- El salto no permite evitar la rampa del naufragio, los limites del sector ni
+  los bloqueos de mar abierto.
 - Combate, equipamiento, crafting y mercado se agregaran cuando sus sistemas base
   existan; no deben bloquear esta primera version.

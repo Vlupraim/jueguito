@@ -1,0 +1,38 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+   GDScript backtrace (most recent call first):
+       [0] _setup_terrain (res://scripts/terrain3d_walk_preview.gd:469)
+       [1] _ready (res://scripts/terrain3d_walk_preview.gd:164)
+       [2] _run (res://tests/scenes/map_tab_state_smoke.gd:12)
+Terrain3DWalkPreview: cargado sector (27, 30)
+Terrain3DWalkPreview: oceano sector (27, 30) | agua=true | celdas=1769 | colliders=20
+Terrain3DWalkPreview: contenido artesanal sector (27, 30)
+ERROR: Node not inside tree. Use look_at_from_position() instead.
+   at: look_at (scene/3d/node_3d.cpp:1253)
+   GDScript backtrace (most recent call first):
+       [0] _ensure_viewport (res://scripts/ui/sector_map_3d_renderer.gd:157)
+       [1] _ready (res://scripts/ui/sector_map_3d_renderer.gd:29)
+       [2] _setup_minimap (res://scripts/terrain3d_walk_preview.gd:1208)
+       [3] _ready (res://scripts/terrain3d_walk_preview.gd:167)
+       [4] _run (res://tests/scenes/map_tab_state_smoke.gd:12)
+WARNING: Can't change the size of a `SubViewport` with a `SubViewportContainer` parent that has `stretch` enabled. Set `SubViewportContainer.stretch` to `false` to allow changing the size manually.
+   at: _internal_set_size (scene/main/viewport.cpp:5627)
+   GDScript backtrace (most recent call first):
+       [0] _sync_viewport_size (res://scripts/ui/sector_map_3d_renderer.gd:167)
+       [1] _ensure_viewport (res://scripts/ui/sector_map_3d_renderer.gd:161)
+       [2] _ready (res://scripts/ui/sector_map_3d_renderer.gd:29)
+       [3] _setup_minimap (res://scripts/terrain3d_walk_preview.gd:1208)
+       [4] _ready (res://scripts/terrain3d_walk_preview.gd:167)
+       [5] _run (res://tests/scenes/map_tab_state_smoke.gd:12)
+WARNING: Can't change the size of a `SubViewport` with a `SubViewportContainer` parent that has `stretch` enabled. Set `SubViewportContainer.stretch` to `false` to allow changing the size manually.
+   at: _internal_set_size (scene/main/viewport.cpp:5627)
+   GDScript backtrace (most recent call first):
+       [0] _sync_viewport_size (res://scripts/ui/sector_map_3d_renderer.gd:167)
+Terrain3DWalkPreview: jugador en (283.0, 7.0, 211.0)
+Terrain3DWalkPreview: camara activa = Camera3D
+MAP_TAB_STATE_SMOKE_OK

@@ -19,6 +19,11 @@ uniform float normal_strength = 0.72;
 uniform float foam_amount = 0.58;
 uniform float foam_tiling = 22.0;
 uniform float foam_speed = 0.012;
+uniform vec3 sea_haze_color : source_color = vec3(0.65, 0.73, 0.79);
+uniform float sea_haze_strength : hint_range(0.0, 1.0) = 0.38;
+uniform float sea_haze_begin = 140.0;
+uniform float sea_haze_end = 1050.0;
+uniform bool sea_haze_enabled = true;
 
 void vertex() {
 	vec2 large_uv = UV * wave_tiling + vec2(TIME * wave_speed, TIME * wave_speed * 0.55);
@@ -63,4 +68,10 @@ void fragment() {
 	
 	float adapt_alpha = clamp(water.a + fresnel * 0.28, 0.0, 0.95);
 	ALPHA = max(adapt_alpha, foam_mask * foam_color.a);
+	// Extra maritime haze affects the ocean only; nearby beach stays clear.
+	float haze = sea_haze_enabled ? smoothstep(sea_haze_begin, sea_haze_end, length(VERTEX)) * sea_haze_strength : 0.0;
+	// Keep Godot's environment fog active (writing FOG would replace it).
+	ALBEDO *= 1.0 - haze;
+	SPECULAR *= 1.0 - haze;
+	EMISSION = sea_haze_color * haze;
 }

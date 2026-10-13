@@ -1,0 +1,6 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+TERRAIN_TEXTURE_NORMALIZE_OK textures=24 normal_depth=0.722 ao=0.813 roughness=0.000 uv=0.684 rotation=0.298 shift=0.255
+[MapDataManager] Cargados 2546 sectores desde JSON.

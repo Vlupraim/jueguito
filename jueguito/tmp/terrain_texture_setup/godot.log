@@ -1,0 +1,133 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_gris_con_gravilla_001.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_gris_con_gravilla_001.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_rosa_con_gravilla_fina_015.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_rosa_con_gravilla_fina_015.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_clara_con_piedras_024.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_clara_con_piedras_024.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_ocre_con_piedras_031.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_ocre_con_piedras_031.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_gravilla_fina_033.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_gravilla_fina_033.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_grava_036.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_grava_036.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_de_lajas_grandes_040.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_de_lajas_grandes_040.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/ceniza_gris_con_gravilla_048.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/tierra/ceniza_gris_con_gravilla_048.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/roca_marron_con_musgo_064.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/roca_marron_con_musgo_064.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/musgo_con_rocas_grandes_071.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/musgo_con_rocas_grandes_071.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_caliza_clara_077.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_caliza_clara_077.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_marron_en_lajas_079.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_marron_en_lajas_079.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_marrones_humedos_087.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_marrones_humedos_087.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_rojo_091.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_rojo_091.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: No loader found for resource: res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_beige_097.png (expected type: unknown)
+   at: _load (core/io/resource_loader.cpp:332)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:185)
+ERROR: No pude cargar la textura albedo: res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_beige_097.png
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://scripts/tools/editor/setup_terrain3d_resources.gd:190)
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.

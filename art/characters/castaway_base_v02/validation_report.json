@@ -1,0 +1,940 @@
+{
+  "donor_rest_matrices_unchanged": true,
+  "bone_count": 24,
+  "sampled_frames": [
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 1,
+      "size_m": [
+        1.092839777469635,
+        0.5456849634647369,
+        1.65620225854218
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 7,
+      "size_m": [
+        0.921297013759613,
+        0.9688660800457001,
+        1.6651981379836798
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 13,
+      "size_m": [
+        0.97305828332901,
+        0.719240665435791,
+        1.6565055828541517
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 19,
+      "size_m": [
+        1.1557261049747467,
+        0.6322316974401474,
+        1.689214238896966
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot_1|baselayer",
+      "frame": 26,
+      "size_m": [
+        1.2514306604862213,
+        0.519867867231369,
+        1.7117666900157928
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.7592198848724365,
+        0.39664092659950256,
+        1.7118911445140839
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 31,
+      "size_m": [
+        0.6881329119205475,
+        0.5964686423540115,
+        1.6940616257488728
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 61,
+      "size_m": [
+        1.1052288711071014,
+        0.47327739000320435,
+        1.7149867974221706
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 91,
+      "size_m": [
+        1.2557899355888367,
+        0.4891190677881241,
+        1.7141518481075764
+      ]
+    },
+    {
+      "action": "Armature|Archery_Shot|baselayer",
+      "frame": 121,
+      "size_m": [
+        0.7593801319599152,
+        0.39662979543209076,
+        1.7118804873898625
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.8790454864501953,
+        0.7949176728725433,
+        1.5327486377209425
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 18,
+      "size_m": [
+        0.6407199203968048,
+        0.7974297404289246,
+        1.8278208374977112
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 34,
+      "size_m": [
+        0.7223750054836273,
+        1.315234661102295,
+        1.2892882898449898
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 51,
+      "size_m": [
+        0.736670970916748,
+        1.1198574006557465,
+        1.448218461126089
+      ]
+    },
+    {
+      "action": "Armature|Attack|baselayer",
+      "frame": 68,
+      "size_m": [
+        0.8824032843112946,
+        0.8009922504425049,
+        1.5336970910429955
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.7468272596597672,
+        0.7165196537971497,
+        1.630173433572054
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 16,
+      "size_m": [
+        0.6938630640506744,
+        0.65290442481637,
+        1.6878580749034882
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 31,
+      "size_m": [
+        1.0500487983226776,
+        0.7512042573653162,
+        1.6144157126545906
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 46,
+      "size_m": [
+        0.8852861821651459,
+        0.8206473886966705,
+        1.692959263920784
+      ]
+    },
+    {
+      "action": "Armature|Axe_Spin_Attack|baselayer",
+      "frame": 61,
+      "size_m": [
+        0.737470418214798,
+        0.7285042554140091,
+        1.6295847035944462
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.7312391698360443,
+        1.107314258813858,
+        1.5802482217550278
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 36,
+      "size_m": [
+        0.7852521538734436,
+        1.159420371055603,
+        1.4538191258907318
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 72,
+      "size_m": [
+        0.8428515791893005,
+        1.4022272825241089,
+        0.9741578362882137
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 107,
+      "size_m": [
+        0.7476001679897308,
+        0.9606646299362183,
+        1.6085797026753426
+      ]
+    },
+    {
+      "action": "Armature|Basic_Jump|baselayer",
+      "frame": 142,
+      "size_m": [
+        0.7303711771965027,
+        1.1095468997955322,
+        1.5933090448379517
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.5451786071062088,
+        1.2486488223075867,
+        1.5809278041124344
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 14,
+      "size_m": [
+        0.7111606895923615,
+        1.1501362323760986,
+        1.6596536189317703
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 28,
+      "size_m": [
+        0.5668157041072845,
+        1.0171450078487396,
+        1.6832252517342567
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 41,
+      "size_m": [
+        0.5906827747821808,
+        1.1955057084560394,
+        1.5878339558839798
+      ]
+    },
+    {
+      "action": "Armature|Charged_Slash|baselayer",
+      "frame": 54,
+      "size_m": [
+        0.5463146418333054,
+        1.2436720132827759,
+        1.5630062893033028
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.783809244632721,
+        0.42483291029930115,
+        1.7376572228968143
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 37,
+      "size_m": [
+        0.6891327798366547,
+        0.8614817559719086,
+        0.9745642519555986
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 73,
+      "size_m": [
+        0.8963285684585571,
+        0.7651854753494263,
+        0.966368236579001
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 109,
+      "size_m": [
+        0.7095602750778198,
+        0.49353785812854767,
+        1.7019057516008615
+      ]
+    },
+    {
+      "action": "Armature|Collect_Object|baselayer",
+      "frame": 145,
+      "size_m": [
+        0.7839344143867493,
+        0.42485208809375763,
+        1.7376614287495613
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.6316119879484177,
+        0.6830176413059235,
+        1.727205254137516
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 35,
+      "size_m": [
+        1.5937141850590706,
+        0.8469830751419067,
+        1.4836961477994919
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 69,
+      "size_m": [
+        0.7665646076202393,
+        1.1005682945251465,
+        1.2683292478322983
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 103,
+      "size_m": [
+        0.8646971881389618,
+        1.109176754951477,
+        1.3048996441066265
+      ]
+    },
+    {
+      "action": "Armature|Double_Blade_Spin|baselayer",
+      "frame": 137,
+      "size_m": [
+        0.9702477157115936,
+        0.8614836931228638,
+        1.1884562373161316
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.646279439330101,
+        0.931779146194458,
+        1.6110072135925293
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 18,
+      "size_m": [
+        0.8502135872840881,
+        0.8058363199234009,
+        1.4578152559697628
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 35,
+      "size_m": [
+        0.6523739397525787,
+        1.2520517781376839,
+        1.814122848212719
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 52,
+      "size_m": [
+        0.5752009302377701,
+        1.2597232460975647,
+        1.6676236242055893
+      ]
+    },
+    {
+      "action": "Armature|Double_Combo_Attack|baselayer",
+      "frame": 69,
+      "size_m": [
+        0.6516942828893661,
+        0.9273254871368408,
+        1.605719842016697
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.5231436043977737,
+        0.833747386932373,
+        1.720122218132019
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 12,
+      "size_m": [
+        0.5974553786218166,
+        0.8432208150625229,
+        1.5449550822377205
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 23,
+      "size_m": [
+        0.6347022652626038,
+        0.9842892065644264,
+        2.006585754454136
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 34,
+      "size_m": [
+        0.6976367328315973,
+        1.2558636665344238,
+        1.6016599610447884
+      ]
+    },
+    {
+      "action": "Armature|Heavy_Hammer_Swing|baselayer",
+      "frame": 45,
+      "size_m": [
+        0.8042206540703773,
+        0.9844484031200409,
+        1.0974230542778969
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.7399868369102478,
+        0.408775195479393,
+        1.7381082475185394
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 12,
+      "size_m": [
+        0.7171867489814758,
+        0.40518638491630554,
+        1.7419891357421875
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 24,
+      "size_m": [
+        0.7466679215431213,
+        0.40540093183517456,
+        1.741544909775257
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 35,
+      "size_m": [
+        0.7569139897823334,
+        0.4079838842153549,
+        1.7390121221542358
+      ]
+    },
+    {
+      "action": "Armature|Idle_11|baselayer",
+      "frame": 46,
+      "size_m": [
+        0.7419523000717163,
+        0.4090920090675354,
+        1.7379158362746239
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.729967474937439,
+        1.111418217420578,
+        1.5812007188796997
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 20,
+      "size_m": [
+        0.8755612075328827,
+        1.0851106643676758,
+        1.6159915253520012
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 39,
+      "size_m": [
+        0.616493821144104,
+        1.260596752166748,
+        1.4521680176258087
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 58,
+      "size_m": [
+        0.7552638053894043,
+        1.1288725435733795,
+        1.6163494735956192
+      ]
+    },
+    {
+      "action": "Armature|Left_Slash|baselayer",
+      "frame": 77,
+      "size_m": [
+        0.7308557629585266,
+        1.1078693568706512,
+        1.5703439489006996
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.7759498953819275,
+        0.9122339487075806,
+        1.691502494737506
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 5,
+      "size_m": [
+        0.7400494515895844,
+        1.0084804892539978,
+        1.704999441979453
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 8,
+      "size_m": [
+        0.7491479218006134,
+        0.9214328825473785,
+        1.653101222589612
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 12,
+      "size_m": [
+        0.7209098935127258,
+        1.23848158121109,
+        1.6867744736373425
+      ]
+    },
+    {
+      "action": "Armature|running|baselayer",
+      "frame": 16,
+      "size_m": [
+        0.7768082916736603,
+        0.8839223384857178,
+        1.6906602000817657
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.6893760561943054,
+        0.6663304269313812,
+        1.3320385441184044
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 105,
+      "size_m": [
+        0.6902544498443604,
+        0.6508384495973587,
+        1.3444991540163755
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 208,
+      "size_m": [
+        0.6954608261585236,
+        0.6507596671581268,
+        1.3188697323203087
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 312,
+      "size_m": [
+        0.6944110989570618,
+        0.6599362939596176,
+        1.3207591995596886
+      ]
+    },
+    {
+      "action": "Armature|Sit_and_Doze_Off|baselayer",
+      "frame": 416,
+      "size_m": [
+        0.6893727779388428,
+        0.6662813723087311,
+        1.332007672637701
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 1,
+      "size_m": [
+        1.583484411239624,
+        1.7356409132480621,
+        0.38956161588430405
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 50,
+      "size_m": [
+        0.8651206195354462,
+        1.615105614066124,
+        0.6993071362376213
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 100,
+      "size_m": [
+        0.782443106174469,
+        0.9887942895293236,
+        1.0338460803031921
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 150,
+      "size_m": [
+        0.8066669702529907,
+        0.38797958195209503,
+        1.7414997443556786
+      ]
+    },
+    {
+      "action": "Armature|Stand_Up1|baselayer",
+      "frame": 199,
+      "size_m": [
+        0.701062023639679,
+        0.38759884238243103,
+        1.7412321902811527
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.9420381188392639,
+        1.506895363330841,
+        0.6818749308586121
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 28,
+      "size_m": [
+        1.521622896194458,
+        1.7104576528072357,
+        0.5314479172229767
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 55,
+      "size_m": [
+        0.9707585275173187,
+        1.5153868198394775,
+        0.6987864673137665
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 82,
+      "size_m": [
+        1.5258140563964844,
+        1.681452989578247,
+        0.5293664634227753
+      ]
+    },
+    {
+      "action": "Armature|Swim_Forward|baselayer",
+      "frame": 110,
+      "size_m": [
+        0.941070020198822,
+        1.4683856964111328,
+        0.672047883272171
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 1,
+      "size_m": [
+        1.0183948278427124,
+        1.1545373797416687,
+        1.5266355723142624
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 19,
+      "size_m": [
+        1.1293819546699524,
+        1.0453609228134155,
+        1.5501313209533691
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 37,
+      "size_m": [
+        0.9613435566425323,
+        1.1133109033107758,
+        1.5062144100666046
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 55,
+      "size_m": [
+        0.9470295310020447,
+        1.0887199342250824,
+        1.489981234073639
+      ]
+    },
+    {
+      "action": "Armature|Swim_Idle|baselayer",
+      "frame": 73,
+      "size_m": [
+        1.016577661037445,
+        1.1561014354228973,
+        1.5250429213047028
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.8657131791114807,
+        0.8788953125476837,
+        1.6944052800536156
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 27,
+      "size_m": [
+        1.3836366832256317,
+        0.884595550596714,
+        1.5640994906425476
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 53,
+      "size_m": [
+        1.2133652865886688,
+        0.9395076148211956,
+        1.6505158804357052
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 79,
+      "size_m": [
+        1.236950010061264,
+        0.8420574069023132,
+        1.7095813155174255
+      ]
+    },
+    {
+      "action": "Armature|Sword_Judgment|baselayer",
+      "frame": 106,
+      "size_m": [
+        0.5646439976990223,
+        1.1096695065498352,
+        1.6731056421995163
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.7535329461097717,
+        1.0185957849025726,
+        1.5760157257318497
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 27,
+      "size_m": [
+        0.6119391918182373,
+        1.3601113557815552,
+        1.5867558270692825
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 53,
+      "size_m": [
+        0.7868942469358444,
+        0.720761775970459,
+        1.593482255935669
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 79,
+      "size_m": [
+        1.0256744027137756,
+        1.0720391273498535,
+        1.600996933877468
+      ]
+    },
+    {
+      "action": "Armature|Triple_Combo_Attack|baselayer",
+      "frame": 105,
+      "size_m": [
+        0.7413234412670135,
+        1.0714645385742188,
+        1.573061965405941
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 1,
+      "size_m": [
+        0.7776820957660675,
+        0.4055280238389969,
+        1.7611226616427302
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 7,
+      "size_m": [
+        0.7576523721218109,
+        0.9722084999084473,
+        1.6926643112674356
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 13,
+      "size_m": [
+        0.783163458108902,
+        0.4107297211885452,
+        1.744896361604333
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 19,
+      "size_m": [
+        0.7071484625339508,
+        0.9660990834236145,
+        1.7052862548734993
+      ]
+    },
+    {
+      "action": "Armature|walking_man|baselayer",
+      "frame": 26,
+      "size_m": [
+        0.7759513258934021,
+        0.40413355827331543,
+        1.7617160584777594
+      ]
+    }
+  ],
+  "modules": [
+    "Body_Base",
+    "Base_Covering"
+  ],
+  "hair": "Bald base; Head attachment marker only. No new hairstyle included.",
+  "glb": {
+    "animations": [
+      "Armature|Archery_Shot_1|baselayer",
+      "Armature|Archery_Shot|baselayer",
+      "Armature|Attack|baselayer",
+      "Armature|Axe_Spin_Attack|baselayer",
+      "Armature|Basic_Jump|baselayer",
+      "Armature|Charged_Slash|baselayer",
+      "Armature|Collect_Object|baselayer",
+      "Armature|Double_Blade_Spin|baselayer",
+      "Armature|Double_Combo_Attack|baselayer",
+      "Armature|Heavy_Hammer_Swing|baselayer",
+      "Armature|Idle_11|baselayer",
+      "Armature|Left_Slash|baselayer",
+      "Armature|running|baselayer",
+      "Armature|Sit_and_Doze_Off|baselayer",
+      "Armature|Stand_Up1|baselayer",
+      "Armature|Swim_Forward|baselayer",
+      "Armature|Swim_Idle|baselayer",
+      "Armature|Sword_Judgment|baselayer",
+      "Armature|Triple_Combo_Attack|baselayer",
+      "Armature|walking_man|baselayer"
+    ],
+    "joints": 24,
+    "embedded_textures": 2,
+    "triangles": 21873
+  },
+  "roundtrip_blender": "passed",
+  "original_sha256": "0d0b01d2835678c05e155a6bd3734212b536c7f6a27b88199a9705a7e0258730"
+}

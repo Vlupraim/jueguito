@@ -19,6 +19,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var resolution_option: OptionButton = %ResolutionOption
 @onready var vsync_option: OptionButton = %VsyncOption
 @onready var fps_option: OptionButton = %FpsOption
+@onready var world_detail_option: OptionButton = %WorldDetailOption
 @onready var master_slider: HSlider = %MasterSlider
 @onready var music_slider: HSlider = %MusicSlider
 @onready var sfx_slider: HSlider = %SfxSlider
@@ -28,6 +29,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var camera_sensitivity_slider: HSlider = %CameraSensitivitySlider
 @onready var zoom_speed_slider: HSlider = %ZoomSpeedSlider
 @onready var camera_pitch_slider: HSlider = %CameraPitchSlider
+@onready var invert_camera_y_check: CheckButton = %InvertCameraYCheck
 @onready var colorblind_option: OptionButton = %ColorblindOption
 @onready var colorblind_intensity_slider: HSlider = %ColorblindIntensitySlider
 @onready var text_scale_slider: HSlider = %TextScaleSlider
@@ -65,6 +67,7 @@ func _populate_options() -> void:
 		resolution_option.add_item("%d × %d" % [resolution.x, resolution.y])
 	_add_options(vsync_option, ["Desactivado", "Activado", "Adaptativo"])
 	_add_options(fps_option, ["30", "60", "120", "144", "Sin límite"])
+	_add_options(world_detail_option, ["Bajo", "Medio", "Alto"])
 	_add_options(colorblind_option, ["Desactivado", "Protanopia", "Deuteranopia", "Tritanopia"])
 
 
@@ -85,6 +88,7 @@ func _connect_controls() -> void:
 	resolution_option.item_selected.connect(func(index): _write_setting("video", "resolution", RESOLUTIONS[index], false))
 	vsync_option.item_selected.connect(func(index): _write_setting("video", "vsync", index, false))
 	fps_option.item_selected.connect(func(index): _write_setting("video", "max_fps", [30, 60, 120, 144, 0][index], false))
+	world_detail_option.item_selected.connect(func(index): _write_setting("video", "world_detail", index))
 	_bind_slider(master_slider, "audio", "master")
 	_bind_slider(music_slider, "audio", "music")
 	_bind_slider(sfx_slider, "audio", "sfx")
@@ -94,6 +98,7 @@ func _connect_controls() -> void:
 	_bind_slider(camera_sensitivity_slider, "controls", "camera_sensitivity")
 	_bind_slider(zoom_speed_slider, "controls", "zoom_speed")
 	_bind_slider(camera_pitch_slider, "controls", "camera_pitch", true)
+	invert_camera_y_check.toggled.connect(func(value): _write_setting("controls", "invert_camera_y", value))
 	colorblind_option.item_selected.connect(func(index): _write_setting("accessibility", "colorblind_mode", index))
 	_bind_slider(colorblind_intensity_slider, "accessibility", "colorblind_intensity")
 	_bind_slider(text_scale_slider, "accessibility", "text_scale")
@@ -140,9 +145,10 @@ func _refresh_controls() -> void:
 	confirm_exit_check.button_pressed = bool(SettingsManager.get_setting("general", "confirm_exit", true))
 	ui_scale_slider.value = float(SettingsManager.get_setting("general", "ui_scale", 1.0))
 	window_mode_option.select(int(SettingsManager.get_setting("video", "window_mode", 0)))
-	_select_resolution(SettingsManager.get_setting("video", "resolution", Vector2i(1280, 720)))
+	_select_resolution(SettingsManager.get_setting("video", "resolution", Vector2i(1920, 1080)))
 	vsync_option.select(int(SettingsManager.get_setting("video", "vsync", 1)))
 	var fps_values := [30, 60, 120, 144, 0]
+	world_detail_option.select(clampi(int(SettingsManager.get_setting("video", "world_detail", 1)), 0, 2))
 	fps_option.select(maxi(0, fps_values.find(int(SettingsManager.get_setting("video", "max_fps", 60)))))
 	master_slider.value = float(SettingsManager.get_setting("audio", "master", 1.0))
 	music_slider.value = float(SettingsManager.get_setting("audio", "music", 0.8))
@@ -152,7 +158,8 @@ func _refresh_controls() -> void:
 	voice_slider.value = float(SettingsManager.get_setting("audio", "voice", 1.0))
 	camera_sensitivity_slider.value = float(SettingsManager.get_setting("controls", "camera_sensitivity", 1.0))
 	zoom_speed_slider.value = float(SettingsManager.get_setting("controls", "zoom_speed", 1.0))
-	camera_pitch_slider.value = float(SettingsManager.get_setting("controls", "camera_pitch", -45.0))
+	camera_pitch_slider.value = float(SettingsManager.get_setting("controls", "camera_pitch", -15.0))
+	invert_camera_y_check.button_pressed = bool(SettingsManager.get_setting("controls", "invert_camera_y", false))
 	colorblind_option.select(int(SettingsManager.get_setting("accessibility", "colorblind_mode", 0)))
 	colorblind_intensity_slider.value = float(SettingsManager.get_setting("accessibility", "colorblind_intensity", 1.0))
 	text_scale_slider.value = float(SettingsManager.get_setting("accessibility", "text_scale", 1.0))

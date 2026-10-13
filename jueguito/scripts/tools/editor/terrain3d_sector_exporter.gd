@@ -33,7 +33,8 @@ const TEXTURE_GRASS := 2
 const TEXTURE_HUMID_EARTH := 3
 const TEXTURE_ROCK := 4
 const TEXTURE_ARCANE := 5
-const TEXTURE_SNOW := 6
+# La nieve tiene un slot propio: no reutilizar ceniza ni pasto sombrío.
+const TEXTURE_SNOW := 24
 const TEXTURE_SWAMP := 7
 
 const ROCK_SLOPE_START_DEGREES := 28.0
@@ -604,8 +605,10 @@ func _texture_convention() -> Dictionary:
 		"3": "tierra humeda / selva",
 		"4": "roca / acantilado",
 		"5": "roca secundaria / arcano provisional",
-		"6": "nieve",
+		"6": "pasto sombrio",
 		"7": "barro / pantano",
+		"15": "ceniza / gravilla gris",
+		"24": "nieve",
 	}
 
 

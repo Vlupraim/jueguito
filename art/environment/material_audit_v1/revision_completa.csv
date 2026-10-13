@@ -1,0 +1,133 @@
+﻿biblioteca;id_fuente;archivo;decision;critica
+Ground;1;tierra_gris_con_gravilla_001.png;candidato;"Gravilla legible; bajar contraste de piedras y comprobar tamaño junto al personaje."
+Ground;2;roca_arcilla_en_lajas_002.png;rehacer;Arcilla dividida en placas con bordes oscuros demasiado dibujados.
+Ground;3;roca_arcilla_agrietada_003.png;rehacer;Arcilla dividida en placas con bordes oscuros demasiado dibujados.
+Ground;4;tierra_oscura_agrietada_004.png;rehacer;"Grietas enormes y repetidas; parece una superficie rota, no tierra general."
+Ground;5;tierra_oscura_con_gravilla_005.png;candidato;"Granulado útil; quitar sombras y brillos pintados antes de usar iluminación dinámica."
+Ground;6;barro_oscuro_con_piedras_006.png;candidato;"Granulado útil; quitar sombras y brillos pintados antes de usar iluminación dinámica."
+Ground;7;roca_helada_azulada_007.png;rehacer;"Azul frío y contornos pétreos; no sirve como hielo o nieve natural."
+Ground;8;acantilado_marron_oscuro_008.png;rehacer;"Acantilado con sombras profundas pintadas; relieve aparente contradice la luz del juego."
+Ground;9;acantilado_marron_calido_009.png;rehacer;"Acantilado con sombras profundas pintadas; relieve aparente contradice la luz del juego."
+Ground;10;roca_violeta_fragmentada_010.png;reserva fantástica;"Piedra violeta pulida; mantener para un lugar mágico definido, no suelo común."
+Ground;11;roca_beige_fragmentada_011.png;rehacer;"Facetas y realces claros demasiado grandes; suavizar formas y reducir contraste."
+Ground;12;cantos_violeta_humedos_012.png;reserva fantástica;"Piedra violeta pulida; mantener para un lugar mágico definido, no suelo común."
+Ground;13;roca_beige_en_lajas_013.png;rehacer;"Facetas y realces claros demasiado grandes; suavizar formas y reducir contraste."
+Ground;14;tierra_violeta_suave_014.png;reserva fantástica;"Tierra violeta homogénea; carece de identidad mineral y necesita contexto fantástico."
+Ground;15;arena_rosa_con_gravilla_fina_015.png;candidato;"Gravilla útil pero rosa/salmón excesivo; reducir saturación y escala de marcas."
+Ground;16;arena_rosa_con_gravilla_densa_016.png;candidato;"Gravilla útil pero rosa/salmón excesivo; reducir saturación y escala de marcas."
+Ground;17;arenisca_dorada_irregular_017.png;rehacer;"Lajas ocres con brillos dibujados muy fuertes; aspecto de piezas de juguete."
+Ground;18;arenisca_clara_irregular_018.png;rehacer;"Lajas ocres con brillos dibujados muy fuertes; aspecto de piezas de juguete."
+Ground;19;suelo_de_calaveras_violeta_019.png;reserva temática;"Cráneos reconocibles repitiéndose en cada baldosa; reservar para decoración localizada."
+Ground;20;suelo_de_calaveras_oscuro_020.png;reserva temática;"Cráneos reconocibles repitiéndose en cada baldosa; reservar para decoración localizada."
+Ground;21;lava_con_roca_negra_021.png;reserva fantástica;"Lava muy luminosa; precisa material emisivo específico, no diffuse del suelo normal."
+Ground;22;lava_con_roca_negra_022.png;reserva fantástica;"Lava muy luminosa; precisa material emisivo específico, no diffuse del suelo normal."
+Ground;23;arena_clara_lisa_023.png;candidato;"La arena más aprovechable del banco; aún demasiado amarilla bajo el sol del tutorial."
+Ground;24;arena_clara_con_piedras_024.png;rehacer;"Piedras abultadas o bloques grandes; rompe la escala visual de una playa."
+Ground;25;grava_rosa_clara_025.png;rehacer;"Piedras abultadas o bloques grandes; rompe la escala visual de una playa."
+Ground;26;arcilla_clara_agrietada_026.png;rehacer;"Arcilla con grietas claras y contornos uniformes; las líneas se repiten demasiado."
+Ground;27;roca_gris_agrietada_027.png;rehacer;"Roca gris con bordes fuertes y sombras dibujadas; iluminación plana de ilustración."
+Ground;28;roca_gris_en_lajas_028.png;rehacer;"Roca gris con bordes fuertes y sombras dibujadas; iluminación plana de ilustración."
+Ground;29;arcilla_naranja_agrietada_029.png;rehacer;Arcilla naranja muy saturada y grandes formas repetidas.
+Ground;30;roca_naranja_en_lajas_030.png;rehacer;Arcilla naranja muy saturada y grandes formas repetidas.
+Ground;31;tierra_ocre_con_piedras_031.png;candidato;"Suelo granular útil; ocre saturado y piedras algo grandes para cubrir toda una región."
+Ground;32;tierra_ocre_con_gravilla_032.png;candidato;"Suelo granular útil; ocre saturado y piedras algo grandes para cubrir toda una región."
+Ground;33;tierra_roja_con_gravilla_fina_033.png;candidato;"Tierra roja fina legible; conservar concepto mineral con un rojo menos dominante."
+Ground;34;barro_oscuro_agrietado_034.png;rehacer;"Barro fracturado en placas secas; incoherente para zonas húmedas continuas."
+Ground;35;barro_oscuro_agrietado_035.png;rehacer;"Barro fracturado en placas secas; incoherente para zonas húmedas continuas."
+Ground;36;tierra_roja_con_grava_036.png;candidato;"Grava rojiza útil para variación; piedras demasiado identificables al repetirse."
+Ground;37;tierra_roja_con_rocas_037.png;candidato;"Grava rojiza útil para variación; piedras demasiado identificables al repetirse."
+Ground;38;roca_burdeos_agrietada_038.png;rehacer;Tono marrón aprovechable pero facetas grandes y bordes oscuros dominan.
+Ground;39;tierra_marron_rocosa_039.png;rehacer;Tono marrón aprovechable pero facetas grandes y bordes oscuros dominan.
+Ground;40;roca_gris_de_lajas_grandes_040.png;rehacer;"Lajas grises desproporcionadas; parecen adoquines incluso en acantilados."
+Ground;41;tierra_oliva_pedregosa_041.png;rehacer;"Verde oliva confunde barro con roca; falta grano fino y separación material."
+Ground;42;roca_oliva_fragmentada_042.png;rehacer;"Verde oliva confunde barro con roca; falta grano fino y separación material."
+Ground;43;tierra_seca_moteada_043.png;candidato;"Tierra moteada relativamente discreta; mejorar rugosidad y evitar repetición a distancia."
+Ground;44;tierra_clara_moteada_044.png;candidato;"Tierra moteada relativamente discreta; mejorar rugosidad y evitar repetición a distancia."
+Ground;45;tierra_cobriza_moteada_045.png;candidato;"Suelo fino aprovechable; naranja/cobre demasiado dominante con iluminación cálida."
+Ground;46;tierra_cobriza_rocosa_046.png;rehacer;"Relieve pétreo grueso para una base de suelo; luces pintadas demasiado fuertes."
+Ground;47;arena_ocre_lisa_047.png;candidato;"Arena ocre usable como variante seca; moderar amarillo y contraste."
+Ground;48;ceniza_gris_con_gravilla_048.png;rehacer;"La ceniza parece grava; necesita polvo fino y menos piedras protagonistas."
+Ground;49;roca_oscura_agrietada_049.png;rehacer;"Piedras oscuras con contornos negros uniformes; aspecto de mosaico dibujado."
+Ground;50;grava_negra_fina_050.png;rehacer;"Piedras oscuras con contornos negros uniformes; aspecto de mosaico dibujado."
+Ground;51;barro_rojo_rocoso_051.png;candidato;"Tierra y pequeñas piedras legibles; saturación rojiza excesiva para superficie general."
+Ground;52;tierra_burdeos_con_gravilla_052.png;candidato;"Tierra y pequeñas piedras legibles; saturación rojiza excesiva para superficie general."
+Ground;53;roca_oscura_en_bloques_053.png;rehacer;"Bloques de barro chocolate; tamaño y volumen ilustrado no encajan con suelo húmedo."
+Ground;54;roca_oscura_empedrada_054.png;rehacer;"Bloques de barro chocolate; tamaño y volumen ilustrado no encajan con suelo húmedo."
+Ground;55;tierra_humeda_marron_055.png;rehacer;El nombre de tierra húmeda contradice las grandes placas secas agrietadas.
+Ground;56;barro_marron_con_gravilla_056.png;candidato;"Barro con grava útil; moderar brillo pintado y escala de piedras."
+Ground;57;barro_marron_con_rocas_057.png;rehacer;"Bultos enormes con reflejos claros; parece piedra brillante y no barro."
+Ground;58;suelo_violeta_liso_058.png;reserva fantástica;"Violeta oscuro sin identidad terrestre; reservar hasta definir bioma arcano."
+Ground;59;tierra_roja_con_piedras_059.png;candidato;"Tierra roja granular; usable como acento después de rebajar saturación."
+Ground;60;cantos_negros_brillantes_060.png;rehacer;"Cantos negros con brillo dorado pintado; humedad debería responder a la luz real."
+Ground;61;cantos_negros_brillantes_061.png;rehacer;"Cantos negros con brillo dorado pintado; humedad debería responder a la luz real."
+Ground;62;roca_de_magma_naranja_062.png;reserva fantástica;"Magma naranja muy evidente; necesita shader y transición propia."
+Ground;63;roca_naranja_pintada_063.png;reserva fantástica;"Magma naranja muy evidente; necesita shader y transición propia."
+Ground;64;roca_marron_con_musgo_064.png;rehacer;"Musgo sobre bloques contorneados; interior del tutorial parece roca pintada y no humus."
+Ground;65;roca_agrietada_con_musgo_065.png;rehacer;"Musgo sobre bloques contorneados; interior del tutorial parece roca pintada y no humus."
+Ground;66;pantano_de_piedra_verde_066.png;rehacer;"Pantano representado por polígonos verdes de roca; no transmite barro o materia orgánica."
+Ground;67;pantano_de_roca_agrietada_067.png;rehacer;"Pantano representado por polígonos verdes de roca; no transmite barro o materia orgánica."
+Ground;68;grava_beige_con_rocas_068.png;rehacer;"Grava beige demasiado ordenada y facetada; repetición visible."
+Ground;69;grava_beige_clara_069.png;rehacer;"Grava beige demasiado ordenada y facetada; repetición visible."
+Ground;70;pasto_con_rocas_dispersas_070.png;rehacer;"Pasto con piedras blancas muy luminosas; escala y brillo distraen del personaje."
+Ground;71;musgo_con_rocas_grandes_071.png;rehacer;"Musgo con grandes rocas y luces pintadas; el verde funciona como relleno plano."
+Ground;72;arcano_turquesa_con_piedras_072.png;reserva fantástica;"Gemas turquesa brillantes; no pueden sustituir un suelo arcano completo."
+Ground;73;agua_turquesa_con_rocas_073.png;reserva temática;"Agua dibujada dentro de una imagen estática; no es la superficie OceanWater usada en juego."
+Ground;74;roca_roja_agrietada_074.png;rehacer;"Roca roja/naranja de contornos fuertes y grandes facetas; aspecto muy caricaturesco."
+Ground;75;grava_roja_oscura_075.png;rehacer;"Roca roja/naranja de contornos fuertes y grandes facetas; aspecto muy caricaturesco."
+Ground;76;roca_roja_fragmentada_076.png;rehacer;"Roca roja/naranja de contornos fuertes y grandes facetas; aspecto muy caricaturesco."
+Ground;77;roca_caliza_clara_077.png;rehacer;"Caliza blanca abultada con bordes dibujados; confunde nieve, roca y espuma."
+Ground;78;roca_caliza_en_estratos_078.png;rehacer;"Caliza blanca abultada con bordes dibujados; confunde nieve, roca y espuma."
+Ground;79;roca_marron_en_lajas_079.png;rehacer;"Lajas marrones con relieve y brillo pintados; demasiada información repetida."
+Ground;80;roca_beige_de_lajas_grandes_080.png;rehacer;"Lajas marrones con relieve y brillo pintados; demasiada información repetida."
+Ground;81;roca_ocre_agrietada_081.png;rehacer;"Lajas marrones con relieve y brillo pintados; demasiada información repetida."
+Ground;82;arenisca_de_lajas_claras_082.png;rehacer;"Lajas marrones con relieve y brillo pintados; demasiada información repetida."
+Ground;83;cantos_negros_grandes_083.png;rehacer;"Roca negra pulida con reflejos incrustados; bajo el sol parece plástico mojado."
+Ground;84;roca_negra_en_bloques_084.png;rehacer;"Roca negra pulida con reflejos incrustados; bajo el sol parece plástico mojado."
+Ground;85;nieve_con_rocas_085.png;rehacer;"La nieve se lee como piedras blancas; reemplazar por grano y acumulaciones suaves."
+Ground;86;nieve_con_gravilla_086.png;rehacer;"La nieve se lee como piedras blancas; reemplazar por grano y acumulaciones suaves."
+Ground;87;cantos_marrones_humedos_087.png;rehacer;"Cantos húmedos con pequeños reflejos duros pintados; no siguen la dirección del sol."
+Ground;88;cantos_cobrizos_humedos_088.png;rehacer;"Cantos húmedos con pequeños reflejos duros pintados; no siguen la dirección del sol."
+Ground;89;empedrado_dorado_089.png;rehacer;"Empedrado dorado con facetas exageradas; usar desgaste y juntas menos fuertes."
+Ground;90;empedrado_dorado_090.png;rehacer;"Empedrado dorado con facetas exageradas; usar desgaste y juntas menos fuertes."
+Ground;91;empedrado_rojo_091.png;rehacer;Empedrado rojo/naranja muy saturado y contornos uniformes.
+Ground;92;empedrado_naranja_092.png;rehacer;Empedrado rojo/naranja muy saturado y contornos uniformes.
+Ground;93;empedrado_marron_093.png;rehacer;"Empedrado marrón con luces pintadas; el patrón de baldosa es demasiado protagonista."
+Ground;94;empedrado_ocre_094.png;rehacer;"Empedrado marrón con luces pintadas; el patrón de baldosa es demasiado protagonista."
+Ground;95;roca_ambar_grande_095.png;reserva fantástica;"Rocas ámbar semejantes a caramelos; conservar sólo como recurso mineral especial."
+Ground;96;roca_ambar_agrietada_096.png;reserva fantástica;"Rocas ámbar semejantes a caramelos; conservar sólo como recurso mineral especial."
+Ground;97;empedrado_beige_097.png;rehacer;"Pavimento facetado y muy amarillo; reducir contraste de juntas y crear desgaste."
+Ground;98;empedrado_tostado_098.png;rehacer;"Pavimento facetado y muy amarillo; reducir contraste de juntas y crear desgaste."
+Ground;99;cristales_naranja_099.png;reserva fantástica;"Cristales naranja brillantes; deben ser acentos o geometría mineral, no base repetida."
+Ground;100;grava_naranja_brillante_100.png;reserva fantástica;"Cristales naranja brillantes; deben ser acentos o geometría mineral, no base repetida."
+Vegetation;31;Vegetation (31).png;"referencia; sustituida como base activa";Pasto suave pintado: candidato para variación lejana, no sustituye hojas 3D.
+Vegetation;32;Vegetation (32).png;"referencia; sustituida como base activa";Hojas verdes grandes y duras: parece alfombra decorativa.
+Vegetation;33;Vegetation (33).png;"referencia; sustituida como base activa";Cobertura amarilla de hojas: reservar para otoño con escala menor.
+Vegetation;34;Vegetation (34).png;"referencia; sustituida como base activa";Verde fluorescente: descartar como base del entorno.
+Vegetation;35;Vegetation (35).png;"referencia; sustituida como base activa";Flores pintadas: decoración puntual, no cobertura repetida de todo el suelo.
+Vegetation;36;Vegetation (36).png;"referencia; sustituida como base activa";Hojas salvia grandes: demasiado planas y de escala evidente.
+Vegetation;37;Vegetation (37).png;"referencia; sustituida como base activa";Verde oscuro esponjoso: posible variación de musgo, necesita fibras finas.
+Vegetation;38;Vegetation (38).png;"referencia; sustituida como base activa";Pasto con formas de almohadilla: demasiado caricaturesco.
+Vegetation;39;Vegetation (39).png;"referencia; sustituida como base activa";Cian frío en hojas: no encaja con pradera natural común.
+Vegetation;40;Vegetation (40).png;"referencia; sustituida como base activa";Hojas rojas: otoño o bioma definido, no pradera general.
+Vegetation;41;Vegetation (41).png;"referencia; sustituida como base activa";Hojarasca marrón: concepto aprovechable, falta irregularidad y relieve sutil.
+Vegetation;42;Vegetation (42).png;"referencia; sustituida como base activa";Manchas de pasto neón sobre arena: saturación y transición duras.
+Vegetation;43;Vegetation (43).png;"referencia; sustituida como base activa";Flores amarillas como manchas: escala excesiva y repetición visible.
+Vegetation;44;Vegetation (44).png;"referencia; sustituida como base activa";Otoño muy denso e ilustrado: sólo cobertura secundaria localizada.
+Vegetation;45;Vegetation (45).png;"referencia; sustituida como base activa";Hojas cian brillantes: reserva fantástica, no base terrestre.
+Vegetation;46;Vegetation (46).png;"referencia; sustituida como base activa";Azul-violeta: reserva fantástica con iluminación y bioma propios.
+Vegetation;47;Vegetation (47).png;"referencia; sustituida como base activa";Pasto activo original: hojas muy grandes, verde saturado y volúmenes pintados.
+Vegetation;48;Vegetation (48).png;"referencia; sustituida como base activa";"Pasto apagado: candidato más coherente; aún hay formas gruesas repetidas."
+Vegetation;49;Vegetation (49).png;"referencia; sustituida como base activa";Pasto apagado alternativo: candidato, bajar contraste y escala de hojas.
+Vegetation;50;Vegetation (50).png;"referencia; sustituida como base activa";Tierra negra con hojas grandes y piedras rojas: demasiadas formas protagonistas.
+Vegetation;51;Vegetation (51).png;"referencia; sustituida como base activa";Variante oscura con hojas y piedras: bordes dibujados y contraste excesivo.
+Vegetation;52;Vegetation (52).png;"referencia; sustituida como base activa";"Flores rosas pintadas: acento puntual; mejor separarlas en vegetación 3D."
+Vegetation;53;Vegetation (53).png;"referencia; sustituida como base activa";Hoja/roca plana: bordes fuertes confunden los materiales.
+Vegetation;54;Vegetation (54).png;"referencia; sustituida como base activa";"Trébol verde uniforme: plano y grande; patrón de alfombra."
+Vegetation;55;Vegetation (55).png;"referencia; sustituida como base activa";Pasto fino con piedras: candidato útil, quitar sombras ya dibujadas.
+Vegetation;56;Vegetation (56).png;"referencia; sustituida como base activa";Pasto seco: buena variedad conceptual, falta grano fino y escala uniforme.
+Vegetation;57;Vegetation (57).png;"referencia; sustituida como base activa";Hoja oscura con flor azul: cobertura decorativa puntual, no suelo general.
+Vegetation;58;Vegetation (58).png;"referencia; sustituida como base activa";Humus otoñal suave: candidato como variante secundaria, evitar cobertura homogénea.
+Vegetation;59;Vegetation (59).png;"referencia; sustituida como base activa";Hojas verdes duras y claras: brillo pintado y patrón reconocible.
+Vegetation;60;Vegetation (60).png;"referencia; sustituida como base activa";Trébol amarillo grande: saturación y escala excesivas.
+Derivada;pasto_a;pasto variante preparada;sustituida;Deriva del mismo pasto original: cambiar color no elimina las hojas grandes dibujadas.
+Derivada;pasto_b;pasto variante preparada;sustituida;La copia con otro tinte conserva el patrón y el relieve pintado del original.

@@ -3,13 +3,15 @@
 [ext_resource type="PackedScene" uid="uid://blaieaqp413k7" path="res://addons/terrain_3d/tools/importer.tscn" id="1_importer"]
 [ext_resource type="Script" uid="uid://dovao3onwcvpo" path="res://scripts/tools/editor/terrain3d_sector_guide.gd" id="2_guide"]
 [ext_resource type="Terrain3DMaterial" uid="uid://bawc1rfkg2itm" path="res://assets/environment/terrain/jueguito_terrain_material.tres" id="3_material"]
-[ext_resource type="Terrain3DAssets" uid="uid://culjong3w41jq" path="res://assets/environment/terrain/jueguito_terrain_assets.tres" id="4_assets"]
+[ext_resource type="Terrain3DAssets" uid="uid://dp4luima267ng" path="res://assets/environment/terrain/jueguito_terrain_assets.tres" id="4_assets"]
 [ext_resource type="Script" uid="uid://cc5bn5p1qrb78" path="res://scripts/tools/editor/terrain3d_ocean_preview.gd" id="5_ocean_preview"]
-[ext_resource type="PackedScene" uid="uid://b0kcj5e5lue4" path="res://assets/environment/rocks/rock_1.glb" id="6_8ncfo"]
-[ext_resource type="PackedScene" uid="uid://gp6apv78uwua" path="res://assets/vehicles/boats/tutorial_ship/models/destroyed_ship.glb" id="7_6wqa4"]
-[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/pine_tall_01.tscn" id="7_q44vg"]
+[ext_resource type="PackedScene" uid="uid://b0kcj5e5lue4" path="res://assets/environment/rocks/rock_1.glb" id="6_6wqa4"]
+[ext_resource type="PackedScene" uid="uid://gp6apv78uwua" path="res://assets/vehicles/boats/tutorial_ship/models/destroyed_ship.glb" id="7_q44vg"]
+[ext_resource type="PackedScene" path="res://scenes/world/sectors/handmade/tutorial_coast_dressing.tscn" id="8_coast"]
+[ext_resource type="Script" path="res://scripts/tools/editor/terrain_workspace_materials.gd" id="9_materials"]
 
 [node name="Terrain3DSectorWorkspace" type="Node3D" unique_id=1772857410]
+script = ExtResource("9_materials")
 metadata/loaded_sector_x = 27
 metadata/loaded_sector_y = 30
 
@@ -46,35 +48,13 @@ metadata/_edit_lock_ = true
 [node name="Rocks" type="Node3D" parent="SectorContent" unique_id=1554852972]
 metadata/_edit_lock_ = true
 
-[node name="rock_2" parent="SectorContent/Rocks" unique_id=2032881430 instance=ExtResource("6_8ncfo")]
+[node name="rock_2" type="Node3D" parent="SectorContent/Rocks" unique_id=2032881430 instance=ExtResource("6_6wqa4")]
 transform = Transform3D(1, 0, 0, 0, 0.9933046, 0.11552479, 0, -0.11552479, 0.9933046, 282.25974, 4.2218566, 188.18723)
 
 [node name="Vegetation" type="Node3D" parent="SectorContent" unique_id=356686219]
 metadata/_edit_lock_ = true
 
-[node name="PineTall02" parent="SectorContent/Vegetation" unique_id=1909626864 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 347.36676, 7.014783, 306.47675)
-
-[node name="PineTall03" parent="SectorContent/Vegetation" unique_id=915288904 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.6201, 7.014783, 295.4411)
-
-[node name="PineTall04" parent="SectorContent/Vegetation" unique_id=23968472 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 347.36676, 7.014783, 299.1341)
-
-[node name="PineTall05" parent="SectorContent/Vegetation" unique_id=1780384698 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340.33, 7.014783, 302.78375)
-
-[node name="PineTall06" parent="SectorContent/Vegetation" unique_id=575930003 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 336.0357, 7.014783, 310.4201)
-
-[node name="PineTall07" parent="SectorContent/Vegetation" unique_id=1565857523 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340.33, 7.014783, 295.4411)
-
-[node name="PineTall08" parent="SectorContent/Vegetation" unique_id=447171556 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 333.07666, 7.014783, 299.1341)
-
-[node name="PineTall01" parent="SectorContent/Vegetation" unique_id=1015208729 instance=ExtResource("7_q44vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.6201, 7.014783, 302.78375)
+[node name="CoastDressing" parent="SectorContent/Vegetation" instance=ExtResource("8_coast")]
 
 [node name="Buildings" type="Node3D" parent="SectorContent" unique_id=871814195]
 metadata/_edit_lock_ = true
@@ -85,5 +65,5 @@ metadata/_edit_lock_ = true
 [node name="Props" type="Node3D" parent="SectorContent" unique_id=886929279]
 metadata/_edit_lock_ = true
 
-[node name="destroyed_ship" parent="SectorContent/Props" unique_id=1556019215 instance=ExtResource("7_6wqa4")]
-transform = Transform3D(2.6609085, -0.75314635, -12.702455, 2.536996, 12.748073, -0.22440135, 12.469292, -2.4329975, 2.756322, 283.47443, 2.5446196, 181.37114)
+[node name="destroyed_ship" type="Node3D" parent="SectorContent/Props" unique_id=1556019215 instance=ExtResource("7_q44vg")]
+transform = Transform3D(2.0468528, -0.5793434, -9.771118, 1.9515352, 9.806208, -0.17261647, 9.591763, -1.871536, 2.1202474, 283.47443, 2.6027756, 180.07071)

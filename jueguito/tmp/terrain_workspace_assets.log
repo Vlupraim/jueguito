@@ -1,0 +1,12 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: res://scenes/tools/editor/terrain3d_sector_workspace.tscn:6 - ext_resource, invalid UID: uid://ceigyi7jxlo83 - using text path instead: res://assets/environment/terrain/jueguito_terrain_assets.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tests/scenes/terrain3d_workspace_assets_smoke.gd:9)
+TERRAIN_WORKSPACE_ASSETS_OK path=res://assets/environment/terrain/jueguito_terrain_assets.tres slots=24 dark_grass=6,23
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+[MapDataManager] Cargados 2546 sectores desde JSON.

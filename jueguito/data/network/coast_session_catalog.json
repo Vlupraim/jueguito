@@ -1,0 +1,414 @@
+{
+	"build_id": "363481a4016651b8",
+	"combat_blockers": [
+		{
+			"height": 3.59999990463257,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_01",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					270.0,
+					8.26027584075928,
+					240.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 4.19999980926514,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_03",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					251.0,
+					9.12109375,
+					258.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 3.90000009536743,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_04",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					261.0,
+					10.2758865356445,
+					274.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 4.38000011444092,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_05",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					277.0,
+					10.019983291626,
+					281.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 3.24000000953674,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_06",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					287.0,
+					10.8730783462524,
+					279.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 3.72000002861023,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_08",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					245.0,
+					9.90169620513916,
+					280.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 4.07999992370605,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_09",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					310.0,
+					10.9268636703491,
+					277.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 4.26000022888184,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_11",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					335.0,
+					13.6310253143311,
+					282.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 3.96000003814697,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_12",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					315.0,
+					21.6731567382813,
+					305.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 4.80000019073486,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_13",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					251.0,
+					12.1887798309326,
+					305.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		},
+		{
+			"height": 3.48000001907349,
+			"radius": 0.379999995231628,
+			"resource_id": "sector_27_30/coast_tree_14",
+			"transform": [
+				[
+					1.0,
+					0.0,
+					0.0
+				],
+				[
+					0.0,
+					1.0,
+					0.0
+				],
+				[
+					0.0,
+					0.0,
+					1.0
+				],
+				[
+					365.0,
+					19.6170139312744,
+					270.0
+				]
+			],
+			"type": "CapsuleShape3D"
+		}
+	],
+	"trees": {
+		"sector_27_30/coast_tree_01": {
+			"amount": 4,
+			"position": [
+				270.0,
+				6.46027565002441,
+				240.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_03": {
+			"amount": 4,
+			"position": [
+				251.0,
+				7.02109432220459,
+				258.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_04": {
+			"amount": 4,
+			"position": [
+				261.0,
+				8.32588672637939,
+				274.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_05": {
+			"amount": 4,
+			"position": [
+				277.0,
+				7.82998371124268,
+				281.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_06": {
+			"amount": 4,
+			"position": [
+				287.0,
+				9.25307846069336,
+				279.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_08": {
+			"amount": 4,
+			"position": [
+				245.0,
+				8.04169654846191,
+				280.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_09": {
+			"amount": 4,
+			"position": [
+				310.0,
+				8.88686370849609,
+				277.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_11": {
+			"amount": 4,
+			"position": [
+				335.0,
+				11.5010251998901,
+				282.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_12": {
+			"amount": 4,
+			"position": [
+				315.0,
+				19.6931571960449,
+				305.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_13": {
+			"amount": 4,
+			"position": [
+				251.0,
+				9.78877925872803,
+				305.0
+			],
+			"respawn_seconds": 540.0
+		},
+		"sector_27_30/coast_tree_14": {
+			"amount": 4,
+			"position": [
+				365.0,
+				17.8770141601563,
+				270.0
+			],
+			"respawn_seconds": 540.0
+		}
+	}
+}

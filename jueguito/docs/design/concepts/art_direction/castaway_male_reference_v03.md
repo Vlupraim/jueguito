@@ -1,0 +1,15 @@
+# Referencia masculina v03
+
+Generada con la herramienta integrada de imágenes, 2026-09-14. Imagen: `castaway_male_reference_v03.png`. Referencia de estilo: `costa_direction_02.png`.
+
+Propuesta pendiente de valoración del usuario. Corrige la dirección del prototipo 3D, rechazado para este proyecto por su apariencia de plastilina/stop motion. Esta lámina es una ilustración de referencia, no evidencia del acabado ya conseguido en Blender. Las vistas generadas requieren conciliación al modelar.
+
+Prioridades: anatomía continua, ojos integrados, silueta adulta sencilla, tela con pliegues amplios, cabello intercambiable. Las manchas angulares de color deben interpretarse principalmente como pintura y sombreado, no convertir cada mancha en una faceta geométrica. Reducir el ruido de textura al trasladarlo al juego y evaluar desde su cámara habitual.
+
+## Prompt final
+
++Use case: stylized-concept.
+Create a new character modeling reference sheet for a grounded medieval maritime MMORPG. The attached image is STYLE REFERENCE: match its adult, restrained hand-painted male character direction, simple forms, subdued brushwork, natural integrated facial features. Focus on ONE coherent male castaway character, age about 28, lean ordinary build, seven-and-a-half-head adult proportions. Worn sand-colored linen tunic to mid-thigh with subtle side slits, simple brown belt, muted olive trousers, worn ankle boots with cloth wraps. Fully modest and clothed. No armor, weapons, cape or bags. Short dark brown hair, clean shaven so facial construction is visible.
+Wide high quality production concept sheet on plain warm off-white. Three equally sized full-body orthographic-like views: front, side, back, neutral relaxed A pose with separated arms and open relaxed hands. Consistent same anatomy and clothing across views, all feet visible. To the right two larger head studies: three-quarter with hair, and front bald to show the underlying head for future modular hairstyles. Keep hairstyle as a simple fitted volume, a few soft angular locks.
+Style: polished restrained 2D digitally hand-painted game art, economical broad painted color shapes and gently shaded connected surfaces, clear silhouette and readable face. Low-poly-compatible silhouette but NOT a triangulation visualization. Face has normal inset eyes with subtle eyelids integrated into the head, proportionate ears and understated nose. Clothing has a few convincing broad folds at shoulders, waist, elbows and knees, hem thickness and seams subdued. Texture supports form, no random noise. Matte cloth, subtle leather differentiation, soft neutral diffuse light, no dramatic cinematic lighting.
+Avoid clay, plasticine, stop-motion puppets, toy proportions, bulging bead eyes, protruding socket rings, cylinder limbs, ball joints, thick geometric slabs of hair, flat triangular facets across the face, photorealistic pores, tiny ornamental detail, exaggerated muscles, cute cartoon. No text, labels or logos. This is an attainable visual target for a modest game character, not a high-detail cinematic sculpture.

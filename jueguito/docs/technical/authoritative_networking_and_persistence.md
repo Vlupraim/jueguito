@@ -203,6 +203,15 @@ no debe persistirse en PostgreSQL por frame. El cliente predice, el servidor
 mantiene una posición oficial, aplica límites de velocidad y corrige divergencias.
 La posición se persiste en checkpoints, cambios de sector y desconexiones.
 
+El contrato de entrada se define en
+`res://docs/design/player_movement_camera_interaction.md`. Para la locomoción
+normal el cliente comunica intención direccional, carrera, orientación relevante
+y solicitud de salto; no una posición de destino elegida por clic. El servidor
+valida velocidad horizontal y vertical, estado apoyado, impulso de salto,
+gravedad, control aéreo, superficies, agua y límites del sector antes de aceptar
+el estado resultante. La predicción local debe poder reconciliar posición y
+velocidad sin reproducir un segundo salto ni una interacción ya cancelada.
+
 ## Capas de persistencia
 
 ### RAM del cliente
@@ -317,4 +326,3 @@ Estas decisiones pueden variar por sistema sin cambiar la arquitectura general.
 7. Implementar movimiento oficial con predicción y corrección.
 8. Diseñar el combate autoritativo sobre el mismo modelo de intenciones.
 9. Medir CPU, RAM, latencia, ancho de banda y consultas antes de escalar.
-

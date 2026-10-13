@@ -1,0 +1,36 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/scenes/terrain3d_biome_painter_smoke.gd:27)
+WARNING: Terrain3DInstancer#3271:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/scenes/terrain3d_biome_painter_smoke.gd:28)
+WARNING: Terrain3DInstancer#3271:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/scenes/terrain3d_biome_painter_smoke.gd:28)
+WARNING: Terrain3DInstancer#3271:_update_mmis:58: MeshAsset 7 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/scenes/terrain3d_biome_painter_smoke.gd:28)
+WARNING: Terrain3DInstancer#3271:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/scenes/terrain3d_biome_painter_smoke.gd:28)
+WARNING: Terrain3DInstancer#3271:_update_mmis:58: MeshAsset 6 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/scenes/terrain3d_biome_painter_smoke.gd:28)
+WARNING: Terrain3DInstancer#3271:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tests/scenes/terrain3d_biome_painter_smoke.gd:28)
+ERROR: Terrain3D#4101:_grab_camera:155: Cannot find the active camera. Set it manually with Terrain3D.set_camera(). Stopping _physics_process()
+   at: push_error (core/variant/variant_utility.cpp:1023)
+BIOME_PAINTER_SMOKE_OK profiles=8 dry_runs=4 slots=0-23 polar_fallback=tundra

@@ -1,0 +1,13 @@
+{
+  "sample_grid": "64x64, cell centers, original map source before artistic smoothing",
+  "sector_bounds": "[P: (0.0, 0.0), S: (512.0, 512.0)]",
+  "source_dry_world_wet": 0,
+  "source_map_disagreements": 250,
+  "valid_samples": 4096,
+  "warm_reconfigure_ms": 382.894,
+  "water_cells": 1769,
+  "water_collision_shapes": 20,
+  "water_level": 2.0,
+  "water_triangles": 3538,
+  "world_water_samples": 1363
+}

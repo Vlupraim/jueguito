@@ -32,6 +32,13 @@ Moverse con clic derecho, cerrar el control jugable o salir del rango cancela la
 canalizacion. Todavia no se exige un hacha; esa validacion se incorporara cuando
 exista el sistema de equipamiento.
 
+Este flujo describe el prototipo previo a la migracion. La direccion aprobada en
+`res://docs/design/player_movement_camera_interaction.md` elimina el movimiento
+por clic y la autoaproximacion. En el flujo objetivo el jugador se acerca con
+`WASD`; un clic lejano solo selecciona el arbol y la tala comienza con `E` o clic
+izquierdo cuando ya esta dentro del alcance. Moverse, saltar, perder el rango o
+cerrar el control jugable cancela la canalizacion.
+
 ## Identidad y persistencia
 
 Cada colocacion puede definir manualmente `resource_id`. Si queda vacio, se deriva

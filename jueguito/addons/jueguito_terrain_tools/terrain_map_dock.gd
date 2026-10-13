@@ -7,7 +7,9 @@ const SURFACE_MASK_PATH := "res://data/map_design_surface_mask.png"
 const SECTOR_OVERRIDES_PATH := "res://data/terrain3d_sector_overrides.json"
 const TERRAIN3D_EXPORT_DIR := "res://data/terrain3d_exports"
 const TERRAIN3D_EDIT_DIR := "res://data/terrain3d_edits"
-const TERRAIN3D_EDIT_BACKUP_DIR := "res://data/terrain3d_edit_backups"
+# Los .res respaldados conservan UID. Dentro de res://data Godot los escanea como
+# recursos activos y genera colisiones; .godot queda fuera del FileSystem dock.
+const TERRAIN3D_EDIT_BACKUP_DIR := "res://.godot/terrain3d_backups"
 const SECTOR_CONTENT_DIR := "res://scenes/world/sectors/handmade"
 const SECTOR_CONTENT_BACKUP_DIR := "res://data/sector_content_backups"
 const SECTOR_CONTENT_ROOT_NAME := &"SectorContent"
@@ -34,6 +36,8 @@ const TERRAIN3D_REGION_SIZE := 256
 const NO_SECTOR := Vector2i(-9999, -9999)
 const SECTOR_EXPORTER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_sector_exporter.gd")
 const HEIGHTMAP_NORMALIZER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_heightmap_normalizer.gd")
+const AUTO_PAINTER_SCRIPT := preload("res://scripts/tools/editor/terrain3d_auto_painter.gd")
+const TERRAIN3D_PAINT_PREVIEW_DIR := "res://data/terrain3d_paint_previews"
 const MAP_IMAGE_SIZE := Vector2(1672.0, 941.0)
 const MAP_WORLD_SCALE := 200.0
 const MAP_WORLD_SIZE := MAP_IMAGE_SIZE * MAP_WORLD_SCALE
@@ -88,6 +92,10 @@ var smooth_loaded_button: Button
 var smooth_selection_button: Button
 var repair_loaded_button: Button
 var repair_selection_button: Button
+var paint_edge_radius_spin: SpinBox
+var analyze_paint_button: Button
+var paint_loaded_button: Button
+var paint_selection_button: Button
 var exported_sectors: Dictionary = {}
 var multi_selected_sectors: Dictionary = {}
 var selected_sector := Vector2i(33, 19)
@@ -519,6 +527,55 @@ func _build_ui() -> void:
 	repair_selection_button.pressed.connect(_repair_multi_selection_pressed)
 	smooth_button_grid.add_child(repair_selection_button)
 
+	var paint_section := _make_section("Pintura automatica", false)
+	var paint_settings_grid := GridContainer.new()
+	paint_settings_grid.columns = 2
+	paint_settings_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	paint_settings_grid.add_theme_constant_override("h_separation", 8)
+	paint_settings_grid.add_theme_constant_override("v_separation", 6)
+	paint_section.add_child(paint_settings_grid)
+
+	var paint_radius_label := Label.new()
+	paint_radius_label.text = "Borde pincel px"
+	paint_radius_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	paint_settings_grid.add_child(paint_radius_label)
+
+	paint_edge_radius_spin = SpinBox.new()
+	paint_edge_radius_spin.min_value = 0.0
+	paint_edge_radius_spin.max_value = 12.0
+	paint_edge_radius_spin.step = 1.0
+	paint_edge_radius_spin.value = 5.0
+	paint_edge_radius_spin.tooltip_text = "Radio de mezcla entre superficies. 0 deja cortes duros; 4-7 produce un borde rociado suave."
+	paint_edge_radius_spin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	paint_settings_grid.add_child(paint_edge_radius_spin)
+
+	var paint_help := Label.new()
+	paint_help.text = "Analiza altura, pendiente y pintura previa. No modifica el relieve."
+	paint_help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	paint_section.add_child(paint_help)
+
+	var paint_button_grid := _make_button_grid(paint_section, 2)
+	analyze_paint_button = Button.new()
+	analyze_paint_button.text = "Analizar pintura"
+	analyze_paint_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	analyze_paint_button.tooltip_text = "Genera una previsualizacion PNG del sector cargado sin modificarlo."
+	analyze_paint_button.pressed.connect(_analyze_loaded_sector_paint_pressed)
+	paint_button_grid.add_child(analyze_paint_button)
+
+	paint_loaded_button = Button.new()
+	paint_loaded_button.text = "Pintar cargado"
+	paint_loaded_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	paint_loaded_button.tooltip_text = "Respalda y pinta automaticamente el sector cargado."
+	paint_loaded_button.pressed.connect(_paint_loaded_sector_pressed)
+	paint_button_grid.add_child(paint_loaded_button)
+
+	paint_selection_button = Button.new()
+	paint_selection_button.text = "Pintar seleccion"
+	paint_selection_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	paint_selection_button.tooltip_text = "Carga, respalda y pinta todos los sectores seleccionados en el mapa MMO."
+	paint_selection_button.pressed.connect(_paint_multi_selection_pressed)
+	paint_section.add_child(paint_selection_button)
+
 	status_label = Label.new()
 	status_label.text = "Abre el workspace Terrain3D y carga sectores exportados."
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -909,6 +966,11 @@ func _initialize_workspace_state() -> void:
 	var workspace := _find_workspace_root()
 	if workspace == null:
 		return
+	var importer := workspace.find_child("Importer", true, false)
+	if _looks_like_importer(importer):
+		# El workspace siempre debe usar la biblioteca vigente. Esto también
+		# autocorrige escenas antiguas que quedaron apuntando a un respaldo.
+		_ensure_importer_shared_resources(importer)
 	var content := _find_sector_content_node()
 	_repair_misplaced_workspace_infrastructure(content, workspace)
 	var inferred_sector := _infer_workspace_sector()
@@ -2095,6 +2157,160 @@ func _repair_multi_selection_pressed() -> void:
 	_queue_map_redraw()
 
 
+func _analyze_loaded_sector_paint_pressed() -> void:
+	if generation_in_progress:
+		return
+	if loaded_sector == NO_SECTOR:
+		if not await _import_selected_sector_centered(false):
+			_set_status("Carga un sector Terrain3D antes de analizar su pintura.")
+			return
+	var importer := _find_importer_node()
+	if importer == null:
+		_set_status("No encontre nodo Importer para analizar pintura.")
+		return
+	generation_in_progress = true
+	_set_generation_buttons_enabled(false)
+	_show_generation_progress(10.0, "Analizando altura, pendientes y superficies...")
+	await get_tree().process_frame
+	var result := _process_importer_auto_paint(importer, false)
+	if bool(result.get("ok", false)):
+		var preview_path := _save_auto_paint_preview(result.get("preview") as Image, loaded_sector)
+		var fallback_note := str(result.get("fallback_note", ""))
+		var fallback_suffix := " | " + fallback_note if not fallback_note.is_empty() else ""
+		_set_status("Analisis listo para " + _sector_label(loaded_sector) + " | perfil " + str(result.get("biome_name", "Templado")) + " | borde " + str(int(result.get("edge_radius", 0))) + " px" + fallback_suffix + " | preview: " + preview_path)
+	else:
+		_set_status(str(result.get("message", "No pude analizar la pintura.")))
+	_show_generation_progress(100.0, "Listo.")
+	await get_tree().process_frame
+	_hide_generation_progress()
+	generation_in_progress = false
+	_set_generation_buttons_enabled(true)
+
+
+func _paint_loaded_sector_pressed() -> void:
+	if generation_in_progress:
+		return
+	if loaded_sector == NO_SECTOR:
+		if not await _import_selected_sector_centered(false):
+			_set_status("Carga un sector Terrain3D antes de pintarlo.")
+			return
+	var importer := _find_importer_node()
+	if importer == null:
+		_set_status("No encontre nodo Importer para pintar.")
+		return
+	generation_in_progress = true
+	_set_generation_buttons_enabled(false)
+	_show_generation_progress(5.0, "Guardando base y creando respaldo...")
+	await get_tree().process_frame
+	var edit_dir := _sector_edit_dir(loaded_sector)
+	_save_loaded_sector_to(importer, edit_dir)
+	var backup_dir := _backup_edit_dir(edit_dir)
+	if backup_dir.is_empty():
+		_set_status("No pude crear el respaldo; pintura cancelada.")
+		_hide_generation_progress()
+		generation_in_progress = false
+		_set_generation_buttons_enabled(true)
+		return
+	_show_generation_progress(30.0, "Pintando con transiciones suaves...")
+	await get_tree().process_frame
+	var result := _process_importer_auto_paint(importer, true)
+	if bool(result.get("ok", false)):
+		_save_loaded_sector_to(importer, edit_dir)
+		var preview_path := _save_auto_paint_preview(result.get("preview") as Image, loaded_sector)
+		var fallback_note := str(result.get("fallback_note", ""))
+		var fallback_suffix := " | " + fallback_note if not fallback_note.is_empty() else ""
+		_set_status("Pintura aplicada a " + _sector_label(loaded_sector) + " | perfil " + str(result.get("biome_name", "Templado")) + " | " + str(int(result.get("pixels", 0))) + " pixeles" + fallback_suffix + " | respaldo: " + backup_dir + " | preview: " + preview_path)
+	else:
+		_set_status(str(result.get("message", "No pude pintar el sector.")))
+	_show_generation_progress(100.0, "Listo.")
+	await get_tree().process_frame
+	_hide_generation_progress()
+	generation_in_progress = false
+	_set_generation_buttons_enabled(true)
+
+
+func _paint_multi_selection_pressed() -> void:
+	if generation_in_progress:
+		return
+	var selected_queue := _multi_selected_sector_list()
+	if selected_queue.is_empty():
+		_set_status("No hay seleccion multiple para pintar.")
+		return
+	generation_in_progress = true
+	batch_current_index = 0
+	batch_total_count = selected_queue.size()
+	_set_generation_buttons_enabled(false)
+	_show_generation_progress(0.0, "Preparando pintura de " + str(batch_total_count) + " sectores...")
+	await get_tree().process_frame
+	var painted_count := 0
+	var skipped_count := 0
+	for sector in selected_queue:
+		batch_current_index += 1
+		selected_sector = sector
+		_update_labels()
+		_update_sector_guide()
+		_queue_map_redraw()
+		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Cargando " + _sector_label(sector) + "...")
+		await get_tree().process_frame
+		if not await _import_selected_sector_centered(false):
+			skipped_count += 1
+			continue
+		var importer := _find_importer_node()
+		if importer == null:
+			skipped_count += 1
+			continue
+		var edit_dir := _sector_edit_dir(loaded_sector)
+		_save_loaded_sector_to(importer, edit_dir)
+		if _backup_edit_dir(edit_dir).is_empty():
+			skipped_count += 1
+			continue
+		_show_generation_progress(float(batch_current_index - 1) / float(batch_total_count) * 100.0, "Pintando " + _sector_label(sector) + "...")
+		await get_tree().process_frame
+		var result := _process_importer_auto_paint(importer, true)
+		if bool(result.get("ok", false)):
+			_save_loaded_sector_to(importer, edit_dir)
+			_save_auto_paint_preview(result.get("preview") as Image, loaded_sector)
+			painted_count += 1
+		else:
+			skipped_count += 1
+		_show_generation_progress(float(batch_current_index) / float(batch_total_count) * 100.0, "Procesados " + str(batch_current_index) + "/" + str(batch_total_count) + ".")
+		await get_tree().process_frame
+	_hide_generation_progress()
+	generation_in_progress = false
+	_set_generation_buttons_enabled(true)
+	_set_status("Pintura automatica aplicada a " + str(painted_count) + " sector(es). Omitidos: " + str(skipped_count) + ".")
+	_update_labels()
+	_queue_map_redraw()
+
+
+func _process_importer_auto_paint(importer: Node, apply: bool) -> Dictionary:
+	var terrain_data: Variant = importer.get("data")
+	if terrain_data == null:
+		return {"ok": false, "message": "El Importer no tiene Terrain3DData cargado."}
+	var painter: RefCounted = AUTO_PAINTER_SCRIPT.new()
+	var sector_info := _get_sector_dict(loaded_sector)
+	var biome_id := _effective_biome_id_for_sector(loaded_sector, sector_info)
+	var surface_id := _effective_surface_id_for_sector(loaded_sector, sector_info)
+	return painter.call("process_terrain_data", terrain_data, {
+		"apply": apply,
+		"edge_radius": int(paint_edge_radius_spin.value) if paint_edge_radius_spin != null else 5,
+		"water_level": 2.0,
+		"beach_height": 4.6,
+		"cliff_slope": 27.0,
+		"biome_id": biome_id,
+		"surface_id": surface_id,
+	})
+
+
+func _save_auto_paint_preview(image: Image, sector: Vector2i) -> String:
+	if image == null:
+		return ""
+	var absolute_dir := ProjectSettings.globalize_path(TERRAIN3D_PAINT_PREVIEW_DIR)
+	DirAccess.make_dir_recursive_absolute(absolute_dir)
+	var path := TERRAIN3D_PAINT_PREVIEW_DIR + "/sector_%d_%d.png" % [sector.x, sector.y]
+	return path if image.save_png(ProjectSettings.globalize_path(path)) == OK else ""
+
+
 func _smooth_importer_terrain(importer: Node) -> Dictionary:
 	return _process_importer_height_maps(importer, false)
 
@@ -2480,6 +2696,14 @@ func _set_generation_buttons_enabled(enabled: bool) -> void:
 		repair_loaded_button.disabled = not enabled
 	if repair_selection_button != null:
 		repair_selection_button.disabled = not enabled
+	if paint_edge_radius_spin != null:
+		paint_edge_radius_spin.editable = enabled
+	if analyze_paint_button != null:
+		analyze_paint_button.disabled = not enabled
+	if paint_loaded_button != null:
+		paint_loaded_button.disabled = not enabled
+	if paint_selection_button != null:
+		paint_selection_button.disabled = not enabled
 
 
 func _show_generation_progress(value: float, message: String) -> void:

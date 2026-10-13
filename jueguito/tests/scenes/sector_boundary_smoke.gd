@@ -18,8 +18,15 @@ func _run() -> void:
 	if ocean == null:
 		_fail("No se cargaron los limites del sector")
 		return
-	var bounds := ocean.sector_bounds
+	var visual_bounds := ocean.sector_bounds
+	var bounds := world.call("_sector_walkable_bounds") as Rect2
 	var center := bounds.get_center()
+	if not is_equal_approx(bounds.position.x - visual_bounds.position.x, 48.0) \
+	or not is_equal_approx(bounds.position.y - visual_bounds.position.y, 48.0) \
+	or not is_equal_approx(visual_bounds.end.x - bounds.end.x, 48.0) \
+	or not is_equal_approx(visual_bounds.end.y - bounds.end.y, 48.0):
+		_fail("La cinta visual no conserva 48 metros alrededor del area jugable")
+		return
 	if not bool(world.call("_is_position_inside_sector_or_portal", center)):
 		_fail("El centro del chunk fue bloqueado")
 		return
@@ -32,9 +39,14 @@ func _run() -> void:
 		if bool(world.call("_is_position_inside_sector_or_portal", outside_point)):
 			_fail("Un borde cerrado permitio salir del chunk")
 			return
+	# El terreno de la cinta sigue visible, pero no es caminable.
+	var belt_point := Vector2(bounds.end.x + 1.0, center.y)
+	if not visual_bounds.has_point(belt_point):
+		_fail("El punto de prueba no quedo dentro de la cinta visual")
+		return
 	var blocked_info: Dictionary = world.call(
 		"get_player_ground_info",
-		Vector3(bounds.end.x + 0.1, 0.0, center.y)
+		Vector3(belt_point.x, 0.0, belt_point.y)
 	)
 	if bool(blocked_info.get("walkable", true)) or String(blocked_info.get("reason", "")) != "limite_sector":
 		_fail("El movimiento no reconoce el limite invisible")
@@ -49,9 +61,12 @@ func _run() -> void:
 		return
 
 	world.call("register_sector_portal_opening", "E", center.y, 18.0, Vector2i(28, 30), "este_tutorial")
-	var portal_point := Vector2(bounds.end.x + 1.0, center.y)
+	var portal_point := belt_point
 	if not bool(world.call("_is_position_inside_sector_or_portal", portal_point)):
 		_fail("Una abertura de portal registrada sigue cerrada")
+		return
+	if bool(world.call("_is_position_inside_sector_or_portal", Vector2(bounds.end.x + 3.1, center.y))):
+		_fail("El portal permitio atravesar demasiado terreno de la cinta visual")
 		return
 	if int((world.get("sector_portal_openings") as Array).size()) != 1:
 		_fail("La abertura no quedo registrada para el mapa local")
@@ -61,7 +76,11 @@ func _run() -> void:
 		_fail("El borde no se cerro al retirar el portal")
 		return
 
-	print("SECTOR_BOUNDARY_OK size=", bounds.size, " closed=true portal_extension=true")
+	print(
+		"SECTOR_BOUNDARY_OK playable=", bounds.size,
+		" visual=", visual_bounds.size,
+		" belt=48 closed=true portal_extension=true"
+	)
 	world.queue_free()
 	await get_tree().process_frame
 	await get_tree().process_frame

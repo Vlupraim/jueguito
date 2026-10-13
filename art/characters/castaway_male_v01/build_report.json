@@ -1,0 +1,27 @@
+{
+  "bones": 24,
+  "actions": 20,
+  "modules": {
+    "Body": {
+      "vertices": 1456,
+      "triangles": 2757
+    },
+    "Tunic": {
+      "vertices": 412,
+      "triangles": 774
+    },
+    "Trousers": {
+      "vertices": 168,
+      "triangles": 328
+    },
+    "Boots": {
+      "vertices": 348,
+      "triangles": 672
+    },
+    "Hair_Default": {
+      "vertices": 94,
+      "triangles": 164
+    }
+  },
+  "gameplay_changed": false
+}

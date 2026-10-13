@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/options_menu.gd" id="1_options"]
 [ext_resource type="Theme" path="res://assets/ui/medieval_ui_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/close.svg" id="3_close"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
 bg_color = Color(0.065, 0.052, 0.036, 0.98)
@@ -69,13 +70,16 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
-text = "Opciones"
+text = "OPCIONES"
 
 [node name="CloseOptionsButton" type="Button" parent="Center/SettingsPanel/Margin/Content/Header"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(44, 40)
 layout_mode = 2
-text = "×"
+theme_type_variation = &"IconButton"
+icon = ExtResource("3_close")
+expand_icon = true
+icon_max_width = 27
 tooltip_text = "Cerrar opciones"
 
 [node name="SettingsTabs" type="TabContainer" parent="Center/SettingsPanel/Margin/Content"]
@@ -111,8 +115,9 @@ text = "Mostrar consejos del tutorial"
 
 [node name="TutorialHintsCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 36)
 layout_mode = 2
-text = "Activado"
+tooltip_text = "Activar o desactivar los consejos del tutorial"
 
 [node name="ConfirmExitLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
 layout_mode = 2
@@ -120,8 +125,9 @@ text = "Confirmar antes de salir"
 
 [node name="ConfirmExitCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 36)
 layout_mode = 2
-text = "Activado"
+tooltip_text = "Pedir confirmación antes de cerrar el juego"
 
 [node name="UIScaleLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/General/Grid"]
 layout_mode = 2
@@ -188,6 +194,15 @@ text = "Límite de FPS"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 38)
 layout_mode = 2
+
+[node name="WorldDetailLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+layout_mode = 2
+text = "Texturas y detalle del entorno"
+
+[node name="WorldDetailOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Ajusta la nitidez del terreno, la bruma y la distancia del decorado. La visibilidad de jugadores y las fronteras son iguales para todos."
 
 [node name="ApplyVideoButton" type="Button" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content"]
 unique_name_in_owner = true
@@ -293,7 +308,7 @@ theme_override_constants/separation = 18
 
 [node name="Info" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content"]
 layout_mode = 2
-text = "La reasignación de teclas se conectará cuando esté cerrado el esquema definitivo de controles."
+text = "WASD: moverse · Shift: correr · Espacio: saltar\nClic derecho + arrastrar: mirar · Rueda: zoom · F: centrar · E: interactuar"
 autowrap_mode = 2
 
 [node name="Grid" type="GridContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content"]
@@ -330,16 +345,25 @@ value = 1.0
 
 [node name="CameraPitchLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
 layout_mode = 2
-text = "Inclinación de cámara (Visión al horizonte)"
+text = "Inclinación inicial de cámara"
 
 [node name="CameraPitchSlider" type="HSlider" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(360, 30)
 layout_mode = 2
-min_value = -60.0
-max_value = -30.0
+min_value = -75.0
+max_value = 65.0
 step = 1.0
-value = -45.0
+value = -15.0
+
+[node name="InvertCameraYLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+layout_mode = 2
+text = "Invertir mirada vertical"
+
+[node name="InvertCameraYCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Controls/Content/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Activado"
 
 [node name="Accessibility" type="MarginContainer" parent="Center/SettingsPanel/Margin/Content/SettingsTabs"]
 layout_mode = 2
@@ -394,8 +418,9 @@ text = "Reducir movimiento de cámara"
 
 [node name="ReduceMotionCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 36)
 layout_mode = 2
-text = "Activado"
+tooltip_text = "Reducir animaciones y movimiento de cámara"
 
 [node name="CameraShakeLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
 layout_mode = 2
@@ -403,9 +428,10 @@ text = "Sacudida de cámara"
 
 [node name="CameraShakeCheck" type="CheckButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Accessibility/Grid"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 36)
 layout_mode = 2
 button_pressed = true
-text = "Activado"
+tooltip_text = "Permitir sacudidas de cámara"
 
 [node name="Footer" type="HBoxContainer" parent="Center/SettingsPanel/Margin/Content"]
 layout_mode = 2
@@ -413,8 +439,8 @@ layout_mode = 2
 [node name="PendingLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/Footer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.58, 0.65, 0.76, 1)
-text = "La región del servidor se elegirá antes de crear personajes."
+theme_override_colors/font_color = Color(0.58, 0.56, 0.5, 1)
+text = "Los cambios se guardan automáticamente."
 
 [node name="ResetSettingsButton" type="Button" parent="Center/SettingsPanel/Margin/Content/Footer"]
 unique_name_in_owner = true

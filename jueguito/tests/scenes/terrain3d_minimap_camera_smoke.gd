@@ -45,7 +45,7 @@ func _run() -> void:
 	if world.has_method("_toggle_expanded_map_view"):
 		_fail("La antigua vista de terreno 3D sigue expuesta")
 		return
-	var minimap_module := world.get_node_or_null("MinimapaUI/MinimapModule") as Control
+	var minimap_module := world.get("minimap_hud_module") as Control
 	var hud_tools := world.find_child("ControlesMapaLocal", true, false) as VBoxContainer
 	if hud_tools == null:
 		_fail("Faltan las herramientas junto al minimapa")
@@ -156,17 +156,29 @@ func _run() -> void:
 	var world_view_size: Vector2 = world.call("_world_map_view_size")
 	var world_texture_rect: Rect2 = world.call("_world_map_texture_rect", world_view_size)
 	var current_sector: Vector2i = world.get("current_sector")
+	var tutorial_art_sector: Vector2i = world.call("_world_map_art_sector_coord", current_sector)
+	if current_sector == Vector2i(27, 30) and tutorial_art_sector != Vector2i(26, 30):
+		_fail("El atlas no corrigio el anclaje visual del tutorial sobre la costa")
+		return
 	var current_sector_rect: Rect2 = world.call(
 		"_world_map_sector_rect",
 		world_texture_rect,
 		current_sector
 	)
-	world.call("_update_world_map_hover", current_sector_rect.get_center())
+	var current_sector_center: Vector2 = world.call(
+		"_world_map_sector_center",
+		world_texture_rect,
+		current_sector
+	)
+	world.call("_update_world_map_hover", current_sector_center)
+	if world.get("world_map_hovered_sector") != current_sector:
+		_fail("La correccion cartografica no conserva la coordenada logica del tutorial")
+		return
 	var hover_label := world.get("world_map_hover_label") as Label
 	if hover_label == null or not hover_label.text.contains("Grado"):
 		_fail("El atlas no recupero los datos reales del territorio bajo el puntero")
 		return
-	world.call("_select_world_map_sector_at", current_sector_rect.get_center())
+	world.call("_select_world_map_sector_at", current_sector_center)
 	var info_card := world.get("world_map_info_card") as PanelContainer
 	var info_label := world.get("world_map_info_label") as Label
 	if info_card == null or not info_card.visible \

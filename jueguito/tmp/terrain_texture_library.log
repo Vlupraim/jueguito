@@ -1,0 +1,31 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+TERRAIN_TEXTURE_LIBRARY count=24
+slot=00 name=00_TierraSeca albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/00_tierra_seca.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=01 name=01_Arena albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/01_arena.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=02 name=02_Pasto albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/02_pasto.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=03 name=03_TierraHumeda albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/03_tierra_humeda.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=04 name=04_Roca albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/04_roca.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=05 name=05_Arcano albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/05_arcano.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=06 name=06_PastoSombrio albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/02_pasto.png size=(512, 512) format=4 tint=(0.4667, 0.5216, 0.4353, 1.0) valid=true
+slot=07 name=07_Pantano albedo=res://assets/environment/terrain/textures/stylized/terrain_slots/07_pantano.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=08 name=08_TierraGrisGravilla albedo=res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_gris_con_gravilla_001.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=09 name=09_ArenaRosaGravilla albedo=res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_rosa_con_gravilla_fina_015.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=10 name=10_ArenaClaraPiedras albedo=res://assets/environment/terrain/textures/stylized/curated_ground/arena_arcilla/arena_clara_con_piedras_024.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=11 name=11_TierraOcrePiedras albedo=res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_ocre_con_piedras_031.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=12 name=12_TierraRojaFina albedo=res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_gravilla_fina_033.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=13 name=13_TierraRojaGrava albedo=res://assets/environment/terrain/textures/stylized/curated_ground/tierra/tierra_roja_con_grava_036.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=14 name=14_RocaGrisLajas albedo=res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_gris_de_lajas_grandes_040.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=15 name=15_CenizaGrisGravilla albedo=res://assets/environment/terrain/textures/stylized/curated_ground/tierra/ceniza_gris_con_gravilla_048.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=16 name=16_RocaMarronMusgo albedo=res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/roca_marron_con_musgo_064.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=17 name=17_PastoRocasDispersas albedo=res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=18 name=18_MusgoRocasGrandes albedo=res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/musgo_con_rocas_grandes_071.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=19 name=19_RocaCalizaClara albedo=res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_caliza_clara_077.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=20 name=20_RocaMarronLajas albedo=res://assets/environment/terrain/textures/stylized/curated_ground/roca_acantilado/roca_marron_en_lajas_079.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=21 name=21_CantosMarronesHumedos albedo=res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/cantos_marrones_humedos_087.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=22 name=22_EmpedradoRojo albedo=res://assets/environment/terrain/textures/stylized/curated_ground/grava_cantos/empedrado_rojo_091.png size=(512, 512) format=4 tint=(1.0, 1.0, 1.0, 1.0) valid=true
+slot=23 name=23_PastoRocasSombrio albedo=res://assets/environment/terrain/textures/stylized/curated_ground/vegetacion_humedad/pasto_con_rocas_dispersas_070.png size=(512, 512) format=4 tint=(0.498, 0.5333, 0.4706, 1.0) valid=true
+TERRAIN_TEXTURE_LIBRARY_OK
+[MapDataManager] Cargados 2546 sectores desde JSON.

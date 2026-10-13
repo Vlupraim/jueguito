@@ -16,7 +16,7 @@ func _run() -> void:
 		get_tree().quit(0)
 		return
 	GameManager.player_inventory = {
-		"Espada vikinga": 2,
+		"Espada vikinga": 1,
 		"Escudo vikingo": 1,
 		"Arco vikingo": 1,
 	}
@@ -25,8 +25,8 @@ func _run() -> void:
 	add_child(player)
 	player.process_mode = Node.PROCESS_MODE_DISABLED
 	_setup_stage()
-	await _capture_combo("dual_swords", ["Espada vikinga", "Espada vikinga"])
-	await _capture_combo("sword_shield", ["Espada vikinga", "Escudo vikingo"])
+	await _capture_combo("two_hand_sword", ["Espada vikinga"])
+	await _capture_combo("shield", ["Escudo vikingo"])
 	await _capture_combo("two_hand_bow", ["Arco vikingo"])
 	print("HAND_EQUIPMENT_VISUAL_CAPTURE_OK")
 	get_tree().quit(0)

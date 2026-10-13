@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/rock.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/terrain/textures/natural_v1/micro_stone_normal_roughness.png" id="2"]
+[resource]
+resource_name = "CoastalStone_Natural"
+albedo_color = Color(0.94, 0.95, 0.93, 1)
+albedo_texture = ExtResource("1")
+uv1_triplanar = true
+uv1_world_triplanar = true
+uv1_scale = Vector3(0.65, 0.65, 0.65)
+normal_enabled = true
+normal_texture = ExtResource("2")
+normal_scale = 0.6
+metallic = 0.0
+metallic_specular = 0.23
+roughness = 0.9

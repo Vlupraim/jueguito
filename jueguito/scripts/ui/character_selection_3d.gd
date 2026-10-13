@@ -1,5 +1,7 @@
 extends Node3D
 
+const PLAY_ICON := preload("res://assets/ui/icons/play.svg")
+
 # Selector y creador 3D. La lista y la personalizacion son estados separados que
 # reutilizan el mismo pedestal, camara y preview animado.
 
@@ -30,12 +32,9 @@ const HAIRS := [
 
 @onready var screen_title: Label = $CanvasLayer/UI/ScreenTitle
 @onready var list_panel: PanelContainer = %ListPanel
-@onready var selection_panel: PanelContainer = %SelectionPanel
 @onready var creation_panel: PanelContainer = %CreationPanel
 @onready var character_list_container: VBoxContainer = %CharacterListContainer
 @onready var slot_counter_label: Label = %SlotCounterLabel
-@onready var selected_name_label: Label = %SelectedNameLabel
-@onready var selected_details_label: Label = %SelectedDetailsLabel
 @onready var primary_action_button: Button = %PrimaryActionButton
 @onready var char_name_input: LineEdit = %CharNameInput
 @onready var create_button: Button = %CreateButton
@@ -45,12 +44,13 @@ const HAIRS := [
 @onready var hair_option_button: OptionButton = %HairOptionButton
 @onready var hair_color_picker_button: ColorPickerButton = %HairColorPickerButton
 @onready var rotate_area: Control = %RotateArea
+@onready var rotate_hint: Label = $CanvasLayer/UI/RotateHint
 @onready var spawn_point: Node3D = $CharacterSpawn
 
 var view_state := ViewState.ROSTER
 var characters: Array[Dictionary] = []
 var slot_buttons: Array[Button] = []
-var selected_slot_index := 0
+var selected_slot_index := -1
 var selected_character: Dictionary = {}
 var current_spawned_character: Node3D
 var current_animation_player: AnimationPlayer
@@ -103,9 +103,10 @@ func _on_character_list_refreshed(next_characters: Array) -> void:
 	if view_state != ViewState.ROSTER:
 		return
 	var next_slot := _find_character_slot(previous_name)
-	if next_slot < 0:
-		next_slot = mini(characters.size(), MAX_CHARACTERS - 1) if characters.is_empty() else 0
-	_select_slot(next_slot)
+	if next_slot >= 0:
+		_select_slot(next_slot, false)
+	else:
+		_clear_roster_selection()
 
 
 func _render_slots() -> void:
@@ -128,7 +129,7 @@ func _render_slots() -> void:
 			]
 			button.tooltip_text = "Seleccionar %s" % character_data.get("name", "personaje")
 		else:
-			button.text = "Espacio %d\n＋ Crear personaje" % (slot_index + 1)
+			button.text = "Espacio %d" % (slot_index + 1)
 			button.modulate = Color(0.78, 0.83, 0.92, 0.82)
 			button.tooltip_text = "Usar este espacio para un personaje nuevo"
 		button.pressed.connect(_select_slot.bind(slot_index))
@@ -141,25 +142,32 @@ func _render_slots() -> void:
 	]
 
 
-func _select_slot(slot_index: int) -> void:
+func _select_slot(slot_index: int, open_empty := true) -> void:
 	selected_slot_index = clampi(slot_index, 0, MAX_CHARACTERS - 1)
 	selected_character = {}
 	if selected_slot_index < characters.size():
 		selected_character = characters[selected_slot_index]
-		selected_name_label.text = String(selected_character.get("name", "Personaje"))
-		selected_details_label.text = "Nivel %d · %s" % [
-			int(selected_character.get("level", 1)),
-			_body_display_name(String(selected_character.get("body_id", ""))),
-		]
 		primary_action_button.text = "Iniciar aventura"
+		primary_action_button.icon = PLAY_ICON
 		primary_action_button.disabled = false
+		primary_action_button.show()
 		_update_3d_character(selected_character)
+		rotate_hint.show()
 	else:
-		selected_name_label.text = "Espacio vacío"
-		selected_details_label.text = "Crea un personaje para comenzar tu aventura."
-		primary_action_button.text = "Crear personaje"
-		primary_action_button.disabled = characters.size() >= MAX_CHARACTERS
+		primary_action_button.hide()
 		_clear_3d_character()
+		rotate_hint.hide()
+	_update_slot_highlight()
+	if selected_character.is_empty() and open_empty and characters.size() < MAX_CHARACTERS:
+		_show_creator()
+
+
+func _clear_roster_selection() -> void:
+	selected_slot_index = -1
+	selected_character = {}
+	primary_action_button.hide()
+	_clear_3d_character()
+	rotate_hint.hide()
 	_update_slot_highlight()
 
 
@@ -176,7 +184,6 @@ func _update_slot_highlight() -> void:
 
 func _on_primary_action_pressed() -> void:
 	if selected_character.is_empty():
-		_show_creator()
 		return
 	primary_action_button.disabled = true
 	primary_action_button.text = "Cargando aventura..."
@@ -185,13 +192,13 @@ func _on_primary_action_pressed() -> void:
 
 func _show_creator() -> void:
 	if characters.size() >= MAX_CHARACTERS:
-		selected_details_label.text = "La cuenta ya alcanzó el máximo de personajes."
 		return
 	view_state = ViewState.CREATOR
-	screen_title.text = "Crea tu personaje"
+	screen_title.text = "CREA TU AVENTURERO"
 	list_panel.hide()
-	selection_panel.hide()
+	primary_action_button.hide()
 	creation_panel.show()
+	rotate_hint.show()
 	create_error_label.hide()
 	create_button.disabled = false
 	char_name_input.clear()
@@ -203,13 +210,15 @@ func _show_creator() -> void:
 
 func _show_roster() -> void:
 	view_state = ViewState.ROSTER
-	screen_title.text = "Elige tu personaje"
+	screen_title.text = "ELIGE TU PERSONAJE"
 	creation_panel.hide()
 	list_panel.show()
-	selection_panel.show()
 	create_error_label.hide()
 	create_button.disabled = false
-	_select_slot(selected_slot_index)
+	if selected_slot_index >= 0 and selected_slot_index < characters.size():
+		_select_slot(selected_slot_index, false)
+	else:
+		_clear_roster_selection()
 
 
 func _on_create_pressed() -> void:

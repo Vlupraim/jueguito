@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/gameplay_hud.gd" id="1_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/options_menu.tscn" id="2_options"]
@@ -7,8 +7,12 @@
 [ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/action_slot_frame.png" id="5_slot"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/resource_bar_frame.png" id="6_bar"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/pause_panel.png" id="7_pause"]
-[ext_resource type="Texture2D" path="res://assets/ui/hud/runtime/menu_button.png" id="8_button"]
 [ext_resource type="Theme" path="res://assets/ui/medieval_ui_theme.tres" id="9_theme"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/play.svg" id="10_play"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/settings.svg" id="11_settings"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/layout.svg" id="12_layout"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/back.svg" id="13_back"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/exit.svg" id="14_exit"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
 bg_color = Color(0.0627451, 0.0823529, 0.12549, 0.94)
@@ -127,29 +131,6 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_menu_normal"]
-texture = ExtResource("8_button")
-texture_margin_left = 18.0
-texture_margin_top = 10.0
-texture_margin_right = 18.0
-texture_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_menu_hover"]
-texture = ExtResource("8_button")
-texture_margin_left = 18.0
-texture_margin_top = 10.0
-texture_margin_right = 18.0
-texture_margin_bottom = 10.0
-modulate_color = Color(1.18, 1.12, 0.84, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_menu_pressed"]
-texture = ExtResource("8_button")
-texture_margin_left = 18.0
-texture_margin_top = 10.0
-texture_margin_right = 18.0
-texture_margin_bottom = 10.0
-modulate_color = Color(0.72, 0.69, 0.62, 1)
-
 [node name="GameplayHUD" type="CanvasLayer"]
 layer = 20
 script = ExtResource("1_hud")
@@ -166,6 +147,7 @@ theme = ExtResource("9_theme")
 
 [node name="PersistentHUD" type="Control" parent="Screen"]
 unique_name_in_owner = true
+z_index = -2048
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,6 +158,7 @@ mouse_filter = 2
 
 [node name="CharacterStatus" type="PanelContainer" parent="Screen/PersistentHUD"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(92, 92)
 offset_right = 92.0
 offset_bottom = 92.0
@@ -331,15 +314,15 @@ text = "Nivel —"
 
 [node name="ActionBar" type="PanelContainer" parent="Screen/PersistentHUD"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(650, 90)
-offset_right = 650.0
-offset_bottom = 90.0
+custom_minimum_size = Vector2(720, 158)
+offset_right = 720.0
+offset_bottom = 158.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
 script = ExtResource("3_editable")
 layout_key = "action_bar"
 default_normalized_position = Vector2(0.5, 1)
-default_position_offset = Vector2(0, -99)
+default_position_offset = Vector2(0, -166)
 
 [node name="Margin" type="MarginContainer" parent="Screen/PersistentHUD/ActionBar"]
 layout_mode = 2
@@ -347,7 +330,7 @@ mouse_filter = 2
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_bottom = 34
 
 [node name="Slots" type="HBoxContainer" parent="Screen/PersistentHUD/ActionBar/Margin"]
 layout_mode = 2
@@ -583,7 +566,7 @@ unique_name_in_owner = true
 layout_mode = 1
 anchor_left = 0.01
 anchor_top = 1.0
-anchor_right = 0.34
+anchor_right = 0.32
 anchor_bottom = 1.0
 offset_top = -24.0
 offset_bottom = -7.0
@@ -611,7 +594,7 @@ vertical_alignment = 1
 [node name="CombatManaBar" type="ProgressBar" parent="Screen/PersistentHUD/ActionBar/CombatResourceBars"]
 unique_name_in_owner = true
 layout_mode = 1
-anchor_left = 0.66
+anchor_left = 0.68
 anchor_top = 1.0
 anchor_right = 0.99
 anchor_bottom = 1.0
@@ -640,6 +623,7 @@ vertical_alignment = 1
 
 [node name="CurrencyDisplay" type="PanelContainer" parent="Screen/PersistentHUD"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(286, 40)
 offset_right = 286.0
 offset_bottom = 40.0
@@ -741,7 +725,7 @@ alignment = 1
 [node name="Hint" type="Label" parent="Screen/HUDEditToolbar/Row"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Mover: arrastra · Escalar: tirador inferior derecho o rueda"
+text = "Clic: traer al frente · Arrastra para mover · Tirador o rueda: tamaño · 100%: tamaño base"
 horizontal_alignment = 1
 
 [node name="Reset" type="Button" parent="Screen/HUDEditToolbar/Row"]
@@ -756,20 +740,21 @@ text = "Listo"
 
 [node name="InventoryPanel" type="PanelContainer" parent="Screen"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(430, 660)
+custom_minimum_size = Vector2(390, 680)
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -454.0
+offset_left = -406.0
 offset_top = -340.0
-offset_right = -24.0
+offset_right = -16.0
 offset_bottom = 340.0
 grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 0
+z_index = 40
 theme_override_styles/panel = SubResource("StyleBoxFlat_hud_frame")
 
 [node name="Visual" type="TextureRect" parent="Screen/InventoryPanel"]
@@ -781,10 +766,10 @@ stretch_mode = 0
 
 [node name="Margin" type="MarginContainer" parent="Screen/InventoryPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 26
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 26
-theme_override_constants/margin_bottom = 22
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
 
 [node name="Content" type="VBoxContainer" parent="Screen/InventoryPanel/Margin"]
 layout_mode = 2
@@ -837,6 +822,7 @@ text = "Inventario"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
+theme_type_variation = &"IconButton"
 text = "X"
 tooltip_text = "Cerrar inventario (I o Esc)"
 
@@ -1034,13 +1020,13 @@ theme_override_constants/separation = 12
 layout_mode = 2
 theme_override_colors/font_color = Color(0.94, 0.86, 0.68, 1)
 theme_override_font_sizes/font_size = 28
-text = "Menú"
+text = "MENÚ DEL JUEGO"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.62, 0.59, 0.51, 1)
-text = "La aventura está en pausa"
+text = "El mundo continúa activo"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
@@ -1054,50 +1040,50 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.92, 0.86, 0.72, 1)
 theme_override_colors/font_hover_color = Color(1, 0.96, 0.84, 1)
-theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Continuar"
+icon = ExtResource("10_play")
+expand_icon = true
+icon_max_width = 20
 
 [node name="PauseOptionsButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Opciones"
+icon = ExtResource("11_settings")
+expand_icon = true
+icon_max_width = 20
 
 [node name="EditHUDButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Editar HUD"
+icon = ExtResource("12_layout")
+expand_icon = true
+icon_max_width = 20
 
 [node name="MainMenuButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Salir a selección de personaje"
+icon = ExtResource("13_back")
+expand_icon = true
+icon_max_width = 20
 
 [node name="QuitGameButton" type="Button" parent="Screen/PauseBackdrop/Center/MenuPanel/Margin/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxTexture_menu_normal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_menu_hover")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_menu_pressed")
 text = "Salir del juego"
+icon = ExtResource("14_exit")
+expand_icon = true
+icon_max_width = 20
 
 [node name="OptionsMenu" parent="Screen" instance=ExtResource("2_options")]
 unique_name_in_owner = true

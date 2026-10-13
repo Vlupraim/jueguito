@@ -1,0 +1,6 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+Terrain3D resources listos: res://assets/environment/terrain/jueguito_terrain_assets.tres | res://assets/environment/terrain/jueguito_terrain_material.tres
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.

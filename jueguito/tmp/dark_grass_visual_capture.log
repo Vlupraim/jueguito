@@ -1,0 +1,54 @@
+Godot Engine v4.7.stable.official.5b4e0cb0f - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[MapDataManager] Cargados 2546 sectores desde JSON.
+WARNING: instance_reset_physics_interpolation() is deprecated.
+   at: _instance_reset_physics_interpolation_bind_compat_104269 (servers/rendering/rendering_server.compat.inc:62)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:33)
+WARNING: Terrain3DInstancer#8330:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8330:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8330:_update_mmis:58: MeshAsset 7 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8330:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8330:_update_mmis:58: MeshAsset 6 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+WARNING: Terrain3DInstancer#8330:_update_mmis:58: MeshAsset 1 is null, skipping
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:34)
+ERROR: Terrain3DAssets#3085:_update_texture_files:203: Texture ID 6 albedo format: 5 doesn't match format of first texture: 4. They must be identical. Read Texture Prep in docs.
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:35)
+ERROR: Terrain3DAssets#3085:_update_texture_files:203: Texture ID 23 albedo format: 5 doesn't match format of first texture: 4. They must be identical. Read Texture Prep in docs.
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:35)
+ERROR: Terrain3DAssets#3085:_update_texture_files:203: Texture ID 6 albedo format: 5 doesn't match format of first texture: 4. They must be identical. Read Texture Prep in docs.
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Terrain3DAssets#3085:_update_texture_files:203: Texture ID 23 albedo format: 5 doesn't match format of first texture: 4. They must be identical. Read Texture Prep in docs.
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:36)
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tests/scenes/terrain3d_coast_visual_capture.gd:58)
+COAST_VISUAL_CAPTURE_ERROR viewport sin imagen

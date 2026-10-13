@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://b7pxjs6c46l0b"]
+[gd_scene format=3 uid="uid://4n0s3jirabx7"]
 
 [ext_resource type="PackedScene" uid="uid://b0kcj5e5lue4" path="res://assets/environment/rocks/rock_1.glb" id="1_iibds"]
 [ext_resource type="PackedScene" uid="uid://gp6apv78uwua" path="res://assets/vehicles/boats/tutorial_ship/models/destroyed_ship.glb" id="2_feuyp"]
-[ext_resource type="PackedScene" path="res://scenes/world/resources/trees/pine_tall_01.tscn" id="3_pine_tall"]
+[ext_resource type="PackedScene" path="res://scenes/world/sectors/handmade/tutorial_coast_dressing.tscn" id="3_coast"]
 
 [node name="SectorContent" type="Node3D" unique_id=639310997]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15013885, -0.19626617, 0.008041382)
@@ -20,29 +20,7 @@ transform = Transform3D(1, 0, 0, 0, 0.9933046, 0.11552479, 0, -0.11552479, 0.993
 [node name="Vegetation" type="Node3D" parent="." unique_id=356686219]
 metadata/_edit_lock_ = true
 
-[node name="PineTall02" parent="Vegetation" unique_id=1909626864 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 347.36676, 7.014783, 306.47675)
-
-[node name="PineTall03" parent="Vegetation" unique_id=915288904 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.6201, 7.014783, 295.4411)
-
-[node name="PineTall04" parent="Vegetation" unique_id=23968472 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 347.36676, 7.014783, 299.1341)
-
-[node name="PineTall05" parent="Vegetation" unique_id=1780384698 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340.33, 7.014783, 302.78375)
-
-[node name="PineTall06" parent="Vegetation" unique_id=575930003 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 333.07666, 7.014783, 306.47675)
-
-[node name="PineTall07" parent="Vegetation" unique_id=1565857523 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 340.33, 7.014783, 295.4411)
-
-[node name="PineTall08" parent="Vegetation" unique_id=447171556 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 333.07666, 7.014783, 299.1341)
-
-[node name="PineTall01" parent="Vegetation" unique_id=1015208729 instance=ExtResource("3_pine_tall")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 354.6201, 7.014783, 302.78375)
+[node name="CoastDressing" parent="Vegetation" instance=ExtResource("3_coast")]
 
 [node name="Buildings" type="Node3D" parent="." unique_id=871814195]
 metadata/_edit_lock_ = true
@@ -54,4 +32,4 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="destroyed_ship" type="Node3D" parent="Props" unique_id=1556019215 instance=ExtResource("2_feuyp")]
-transform = Transform3D(2.6609085, -0.75314635, -12.702455, 2.536996, 12.748073, -0.22440135, 12.469292, -2.4329975, 2.756322, 283.47443, 2.5446196, 181.37114)
+transform = Transform3D(2.0468528, -0.5793434, -9.771118, 1.9515352, 9.806208, -0.17261647, 9.591763, -1.871536, 2.1202474, 283.47443, 2.6027756, 180.07071)

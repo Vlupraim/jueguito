@@ -1,0 +1,87 @@
+{
+  "source": "C:\\Users\\dzzav\\OneDrive\\Documentos\\repo\\jueguito\\jueguito\\assets\\characters\\player\\models\\char_6_c583a7dd\\strong_man.glb",
+  "source_sha256": "0d0b01d2835678c05e155a6bd3734212b536c7f6a27b88199a9705a7e0258730",
+  "blend": "C:\\Users\\dzzav\\OneDrive\\Documentos\\repo\\jueguito\\art\\characters\\rig_reference\\strongman_recovered_reference_v01.blend",
+  "blender": "5.2.0 LTS",
+  "bones": [
+    "Hips",
+    "LeftUpLeg",
+    "LeftLeg",
+    "LeftFoot",
+    "LeftToeBase",
+    "RightUpLeg",
+    "RightLeg",
+    "RightFoot",
+    "RightToeBase",
+    "Spine02",
+    "Spine01",
+    "Spine",
+    "LeftShoulder",
+    "LeftArm",
+    "LeftForeArm",
+    "LeftHand",
+    "RightShoulder",
+    "RightArm",
+    "RightForeArm",
+    "RightHand",
+    "neck",
+    "Head",
+    "head_end",
+    "headfront"
+  ],
+  "actions": [
+    "Armature|Archery_Shot_1|baselayer",
+    "Armature|Archery_Shot|baselayer",
+    "Armature|Attack|baselayer",
+    "Armature|Axe_Spin_Attack|baselayer",
+    "Armature|Basic_Jump|baselayer",
+    "Armature|Charged_Slash|baselayer",
+    "Armature|Collect_Object|baselayer",
+    "Armature|Double_Blade_Spin|baselayer",
+    "Armature|Double_Combo_Attack|baselayer",
+    "Armature|Heavy_Hammer_Swing|baselayer",
+    "Armature|Idle_11|baselayer",
+    "Armature|Left_Slash|baselayer",
+    "Armature|Sit_and_Doze_Off|baselayer",
+    "Armature|Stand_Up1|baselayer",
+    "Armature|Swim_Forward|baselayer",
+    "Armature|Swim_Idle|baselayer",
+    "Armature|Sword_Judgment|baselayer",
+    "Armature|Triple_Combo_Attack|baselayer",
+    "Armature|running|baselayer",
+    "Armature|walking_man|baselayer"
+  ],
+  "meshes": [
+    {
+      "name": "char1",
+      "vertices": 80507,
+      "bound_to_rig": true,
+      "users_collection": [
+        "Scene Collection"
+      ],
+      "vertex_groups": 24,
+      "dimensions": [
+        1.2461421489715576,
+        0.5932573080062866,
+        1.6110559701919556
+      ]
+    },
+    {
+      "name": "Icosphere",
+      "vertices": 42,
+      "bound_to_rig": false,
+      "users_collection": [
+        "glTF_not_exported"
+      ],
+      "vertex_groups": 0,
+      "dimensions": [
+        1.9021157026290894,
+        1.9999998807907104,
+        2.0
+      ]
+    }
+  ],
+  "save_reopen_verified": true,
+  "source_unchanged": true,
+  "limits": "Structure and persistence verified; new meshes, garment weights, retargeting and visual animation QA remain to be done."
+}
