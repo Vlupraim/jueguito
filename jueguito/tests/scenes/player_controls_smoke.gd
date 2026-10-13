@@ -42,7 +42,7 @@ func _run() -> void:
 	Input.action_press("player_forward")
 	player.call("_physics_process", 0.2)
 	Input.action_release("player_forward")
-	if player.position.z > -0.7:
+	if player.position.z > -0.4:
 		_fail("W no mueve hacia delante respecto de la camara")
 		return
 	var stopped := player.position
@@ -54,7 +54,7 @@ func _run() -> void:
 	Input.action_press("player_forward")
 	player.call("_physics_process", 0.2)
 	Input.action_release("player_forward")
-	if player.position.x > -0.7:
+	if player.position.x > -0.4:
 		_fail("W no sigue el giro de camara")
 		return
 	player.position = Vector3(0, 0.78, 0)
@@ -104,7 +104,7 @@ func _run() -> void:
 		return
 	Input.action_press("player_sprint")
 	Input.action_press("player_forward")
-	for _tick in range(240):
+	for _tick in range(900):
 		player.call("_physics_process", 1.0 / 60.0)
 	if not bool(player.get("_sprint_exhausted")):
 		_fail("Correr no agota la estamina")

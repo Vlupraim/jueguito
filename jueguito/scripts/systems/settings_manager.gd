@@ -23,7 +23,8 @@ const DEFAULTS := {
 		"window_mode": 1,
 		"resolution": Vector2i(1920, 1080),
 		"vsync": 1,
-		"max_fps": 60
+		"max_fps": 60,
+		"world_detail": 1
 	},
 	"audio": {
 		"master": 1.0,

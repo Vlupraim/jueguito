@@ -162,6 +162,7 @@ func _ready() -> void:
 	cam_pitch = float(SettingsManager.get_setting("controls", "camera_pitch", -45.0))
 	if not SettingsManager.setting_changed.is_connected(_on_setting_changed):
 		SettingsManager.setting_changed.connect(_on_setting_changed)
+	SettingsManager.settings_reset.connect(_apply_world_detail)
 	_apply_character_sector()
 	tutorial_intro_active = (
 		current_sector == TUTORIAL_SECTOR
@@ -346,9 +347,41 @@ func _update_debug_hud() -> void:
 
 
 var fog_enabled := true
+var sector_mist: MeshInstance3D
+
+func _setup_sector_mist() -> void:
+	if sector_mist == null:
+		sector_mist = preload("res://scripts/world/environment/sector_mist.gd").new()
+		sector_mist.name = "SectorMist"
+		_player_camera().add_child(sector_mist)
+	sector_mist.call("configure", _sector_visual_bounds(), weather_wind.call("get_velocity"), int(SettingsManager.get_setting("video","world_detail",1)))
+	sector_mist.visible = true
+	_apply_world_detail()
+
+func _apply_world_detail() -> void:
+	var quality := clampi(int(SettingsManager.get_setting("video","world_detail",1)),0,2)
+	var distance: float = [380.0,440.0,550.0][quality]
+	var camera := _player_camera()
+	if camera != null: camera.far = distance+100.0
+	if terrain != null and terrain.material != null:
+		terrain.material.set_shader_param("mipmap_bias",[1.3,0.85,0.35][quality])
+		for texture in terrain.assets.texture_list:
+			texture.normal_depth = [0.36,0.45,0.6][quality]
+	var content := get_node_or_null("SectorContent")
+	if ground_grass != null:
+		for batch: Node in ground_grass.get_children():
+			if batch is GeometryInstance3D:
+				batch.visibility_range_end = [45.0,65.0,90.0][quality]
+	if content != null:
+		for node: Node in content.find_children("*","GeometryInstance3D",true,false):
+			(node as GeometryInstance3D).visibility_range_end = distance
+	if sector_mist != null:
+		sector_mist.call("configure",_sector_visual_bounds(),weather_wind.call("get_velocity"),quality)
 
 
 func set_fog_enabled(enabled: bool) -> void:
+	if CoopSession.active and not enabled:
+		return
 	fog_enabled = enabled
 	var world_env := get_node_or_null("Ambiente") as WorldEnvironment
 	if world_env != null and world_env.environment != null:
@@ -385,6 +418,8 @@ func _sync_weather_wind() -> void:
 	var env := get_node("Ambiente").environment as Environment
 	var wind_velocity: Vector3 = weather_wind.call("get_velocity")
 	(env.sky.sky_material as ShaderMaterial).set_shader_parameter("wind_velocity", Vector2(wind_velocity.x, wind_velocity.z))
+	if sector_mist != null:
+		sector_mist.call("configure",_sector_visual_bounds(),wind_velocity,int(SettingsManager.get_setting("video","world_detail",1)))
 
 
 func _setup_gameplay_hud() -> void:
@@ -458,6 +493,7 @@ func _setup_ground_grass() -> void:
 		ground_grass.name = "GroundGrass"
 		add_child(ground_grass)
 	ground_grass.call("configure", terrain, ocean_water, current_sector)
+	_apply_world_detail()
 
 
 func _setup_ocean() -> void:
@@ -466,6 +502,7 @@ func _setup_ocean() -> void:
 	add_child(ocean_water)
 	var has_water := ocean_water.configure_for_sector(current_sector, terrain)
 	ocean_water.set_sea_haze_enabled(fog_enabled)
+	_setup_sector_mist()
 	print(
 		"Terrain3DWalkPreview: oceano sector ",
 		current_sector,
@@ -490,6 +527,7 @@ func _setup_sector_content() -> void:
 	sector_content = content_scene.instantiate() as Node3D
 	sector_content.name = "SectorContent"
 	add_child(sector_content)
+	_apply_world_detail()
 	print("Terrain3DWalkPreview: contenido artesanal sector ", current_sector)
 
 
@@ -638,6 +676,8 @@ func _update_camera_recenter(delta: float) -> void:
 
 
 func _on_setting_changed(section: String, key: String, value: Variant) -> void:
+	if section == "video" and key == "world_detail":
+		_apply_world_detail()
 	if section == "controls" and key == "camera_pitch":
 		cam_pitch = clampf(float(value), -75.0, 65.0)
 
@@ -2782,6 +2822,7 @@ func _travel_to_sector(sec: Vector2i) -> void:
 	_setup_sector_content()
 	_setup_ground_grass()
 	_load_local_minimap_texture()
+	_setup_sector_mist()
 	expanded_map_texture = local_minimap_texture
 	_configure_regional_map_surface()
 	_place_player_on_ground()
@@ -2829,5 +2870,41 @@ func _setup_coop_status() -> void:
 	layer.add_child(label)
 	var refresh := func(): label.text = "En línea · %d jugadores · %s" % [CoopSession.players.size(),CoopSession.nickname]
 	CoopSession.players_changed.connect(refresh)
-	CoopSession.status_changed.connect(func(message: String): label.text = message)
+	var notice := Label.new()
+	notice.position = Vector2(24,90)
+	notice.add_theme_color_override("font_color",Color("f4e7bf"))
+	notice.add_theme_color_override("font_shadow_color",Color.BLACK)
+	notice.add_theme_constant_override("shadow_offset_x",2)
+	notice.add_theme_constant_override("shadow_offset_y",2)
+	layer.add_child(notice)
+	var notice_timer := Timer.new()
+	notice_timer.one_shot = true
+	notice_timer.wait_time = 3.0
+	layer.add_child(notice_timer)
+	notice_timer.timeout.connect(notice.hide)
+	var show_notice := func(message: String):
+		notice.text = message
+		notice.show()
+		notice_timer.start()
+	CoopSession.status_changed.connect(show_notice)
 	refresh.call()
+	var pvp_button := Button.new()
+	pvp_button.name = "PvPToggle"
+	pvp_button.position = Vector2(24,48)
+	pvp_button.tooltip_text = "Ambos deben activar PvP. Clic izquierdo en otro jugador para golpear a corta distancia. Escape no te protege."
+	layer.add_child(pvp_button)
+	var update_pvp := func():
+		var state: Dictionary = CoopSession.players.get(CoopSession.local_peer_id,{})
+		pvp_button.text = "PvP: ACTIVADO" if state.get("pvp",false) else "PvP: DESACTIVADO"
+		pvp_button.modulate = Color("e8a195") if state.get("pvp",false) else Color.WHITE
+	CoopSession.combat_state_changed.connect(update_pvp)
+	pvp_button.pressed.connect(func():
+		var state: Dictionary = CoopSession.players.get(CoopSession.local_peer_id,{})
+		CoopSession.set_pvp(not bool(state.get("pvp",false)))
+	)
+	update_pvp.call()
+	tree_exiting.connect(func():
+		CoopSession.players_changed.disconnect(refresh)
+		CoopSession.status_changed.disconnect(show_notice)
+		CoopSession.combat_state_changed.disconnect(update_pvp)
+	)

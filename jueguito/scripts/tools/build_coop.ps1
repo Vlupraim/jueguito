@@ -1,11 +1,12 @@
 param(
     [Parameter(Mandatory=$true)][string]$Engine,
-    [switch]$PackageOnly
+    [switch]$PackageOnly,
+    [string]$OutputRoot = ""
 )
 $ErrorActionPreference = 'Stop'
 $project = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $repo = Split-Path $project -Parent
-$distribution = Join-Path $repo 'dist'
+$distribution = if ($OutputRoot) { [IO.Path]::GetFullPath($OutputRoot) } else { Join-Path $repo 'dist' }
 $logs = Join-Path $project '.godot/build_coop'
 New-Item -ItemType Directory -Force $logs,(Join-Path $distribution 'cliente'),(Join-Path $distribution 'servidor') | Out-Null
 if (!$PackageOnly) {
@@ -18,7 +19,9 @@ if (!$PackageOnly) {
     if ($LASTEXITCODE -ne 0) { throw 'Catalog generation failed; inspect catalog.log.' }
     foreach ($target in @('Client','Server')) {
         $log = Join-Path $logs "$target.log"
-        & $Engine --headless --path $project --export-release "Windows $target" *> $log
+        $folderName = if ($target -eq 'Client') { 'cliente' } else { 'servidor' }
+        $programName = if ($target -eq 'Client') { 'Jueguito.exe' } else { 'JueguitoServidor.exe' }
+        & $Engine --headless --path $project --export-release "Windows $target" (Join-Path (Join-Path $distribution $folderName) $programName) *> $log
         if ($LASTEXITCODE -ne 0 -or (Select-String -Path $log -Pattern "Can't open file.*project.binary|SCRIPT ERROR:|Failed to export|Unable to save export" -Quiet)) { throw "Export failed: $log" }
     }
 }
@@ -89,7 +92,7 @@ foreach ($folder in @($clientFolder,$serverFolder)) {
     foreach ($file in Get-ChildItem -LiteralPath $folder -File) {
         if ($file.Extension -in @('.exe','.dll','.pck')) { $checksums[$file.Name] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant() }
     }
-    @{ version='0.1.0'; godot='4.7.stable'; world_build=$catalog.build_id; protocol='coast-coop-v1'; files=$checksums } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $folder 'manifest.json') -Encoding utf8
+    @{ version='0.2.0'; godot='4.7.stable'; world_build=$catalog.build_id; protocol='coast-coop-v2'; files=$checksums } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $folder 'manifest.json') -Encoding utf8
 }
 # Exclude live server_data and logs from packages; updates preserve host saves.
 foreach ($pair in @(@('cliente','Jueguito-Cliente-Windows.zip'),@('servidor','Jueguito-Servidor-Windows.zip'))) {

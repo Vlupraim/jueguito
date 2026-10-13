@@ -3,9 +3,12 @@ extends Node
 signal status_changed(message: String)
 signal players_changed
 signal resource_changed(resource_id: String, local_respawn_at: float)
+signal combat_state_changed
+signal combat_hit(attacker_id: int, target_id: int, damage: int)
 
 const DEFAULT_PORT := 7777
-const PROTOCOL := "coast-coop-v1"
+const PROTOCOL := "coast-coop-v2"
+const COMBAT := preload("res://scripts/network/coast_combat_rules.gd")
 const STARTER := {"Hacha de leñador":1,"Espada vikinga":1,"Escudo vikingo":1,"Arco vikingo":1,"Madera":0}
 const AVATAR_SCRIPT := preload("res://scripts/network/remote_avatar.gd")
 const WORLD_DATA := preload("res://scripts/network/coast_server_world.gd")
@@ -33,6 +36,10 @@ var _state_path := ""
 var _sequence := 0
 var _received_sequence := -1
 var _port := DEFAULT_PORT
+var _swings: Array[Dictionary] = []
+var _combat_request_at := 0
+var _snapshot_parts := {}
+var _assembling_sequence := -1
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -73,6 +80,7 @@ func start_server() -> void:
 		push_error("No se pudo cargar la costa del servidor")
 		get_tree().quit(3)
 		return
+	server_world.install_combat_colliders(self)
 	_state_path = option("state",str(config.get_value("server","state_file","user://coop_server_state.json")))
 	if not _state_path.is_absolute_path() and not _state_path.begins_with("user://"):
 		_state_path = config_path.get_base_dir().path_join(_state_path)
@@ -134,8 +142,8 @@ func _hello(protocol: String, build: String, display_name: String, key: String) 
 	for state: Dictionary in players.values(): used_slots.append(state["slot"])
 	while slot in used_slots: slot += 1
 	var spawn: Vector3 = server_world.spawn(slot)
-	players[id] = {"id":id,"slot":slot,"name":clean,"position":spawn,"yaw":0.0,"animation":"idle","primary":"","secondary":"","inventory":profile.duplicate(true),"budget":2.0,"last_tick":Time.get_ticks_msec()}
-	_welcome.rpc_id(id,true,"",_public_player(players[id]),resources,Time.get_unix_time_from_system())
+	players[id] = {"id":id,"slot":slot,"name":clean,"position":spawn,"yaw":0.0,"animation":"idle","animation_rate":1.0,"primary":"","secondary":"","inventory":profile.duplicate(true),"budget":2.0,"last_tick":Time.get_ticks_msec(),"health":100,"pvp":false,"next_attack":0,"combat_until":0,"protected_until":0,"attack_until":0}
+	_welcome.rpc_id(id,true,"",_public_player(players[id],true),resources,Time.get_unix_time_from_system())
 	_send_snapshot()
 	print("COOP_JOIN peer=",id," name=",clean," players=",players.size())
 
@@ -151,6 +159,7 @@ func _welcome(ok: bool, message: String, own: Dictionary, resource_state: Dictio
 	assigned_spawn = own["position"]
 	server_offset = server_time-Time.get_unix_time_from_system()
 	resources = resource_state.duplicate(true)
+	players[local_peer_id] = own
 	GameManager.current_character = {"name":own["name"],"body_id":"strongman","current_sector":Vector2i(27,30),"position":assigned_spawn,"model_path":CharacterAnimationRetargeter.DEFAULT_SOURCE_PATH,"animation_source_path":CharacterAnimationRetargeter.DEFAULT_SOURCE_PATH,"visual_scale":1.0,"tutorial_intro_completed":true}
 	GameManager.current_username = own["name"]
 	GameManager.should_play_tutorial_intro = false
@@ -173,6 +182,7 @@ func _process(delta: float) -> void:
 	if connecting and Time.get_ticks_msec() > _deadline: _failed("Tiempo de conexión agotado. Revisa UDP %d y la IP del servidor." % _port)
 	_elapsed += delta
 	if is_dedicated:
+		_resolve_swings()
 		for id in _pending_peers.keys():
 			if Time.get_ticks_msec()-int(_pending_peers[id]) > 12000:
 				(multiplayer.multiplayer_peer as ENetMultiplayerPeer).disconnect_peer(id)
@@ -195,7 +205,7 @@ func _pose(position: Vector3, yaw: float, animation: String) -> void:
 	var state: Dictionary = players[id]
 	var now := Time.get_ticks_msec()
 	var elapsed := maxf((now-int(state["last_tick"]))/1000.0,0)
-	state["budget"] = minf(float(state["budget"])+elapsed*12.0,2.0)
+	state["budget"] = minf(float(state["budget"])+elapsed*7.5,2.0)
 	state["last_tick"] = now
 	var previous: Vector3 = state["position"]
 	var distance := Vector2(position.x-previous.x,position.z-previous.z).length()
@@ -205,7 +215,12 @@ func _pose(position: Vector3, yaw: float, animation: String) -> void:
 	state["budget"] -= distance
 	state["position"] = position
 	state["yaw"] = wrapf(yaw,-PI,PI)
-	state["animation"] = animation if animation in ["idle","walk","run","jump","chop","swim_idle","swim_forward"] else "idle"
+	if now >= int(state.get("attack_until", 0)):
+		state["animation"] = animation if animation in ["idle","walk","run","jump","chop","swim_idle","swim_forward"] else "idle"
+		state["animation_rate"] = 1.0
+		if state["animation"] in ["walk","run"]:
+			var reference := 1.4 if state["animation"] == "walk" else 4.2
+			state["animation_rate"] = clampf(distance/maxf(elapsed,0.001)/reference,0.2,3.0)
 
 @rpc("authority","call_remote","unreliable_ordered",1)
 func _correct(position: Vector3) -> void:
@@ -218,21 +233,45 @@ func _send_snapshot() -> void:
 	_sequence += 1
 	var snapshot := []
 	for state: Dictionary in players.values(): snapshot.append(_public_player(state))
-	for id in players: _snapshot.rpc_id(id,_sequence,snapshot)
+	var chunks: Array = []
+	var batch: Array = []
+	for state: Dictionary in snapshot:
+		var candidate := batch.duplicate()
+		candidate.append(state)
+		# Keep updates below the UDP MTU, including RPC/ENet overhead. Losing
+		# one part preserves the previous complete snapshot until the next tick.
+		if not batch.is_empty() and var_to_bytes(candidate).size() > 900:
+			chunks.append(batch)
+			batch = []
+		batch.append(state)
+	if not batch.is_empty(): chunks.append(batch)
+	for id in players:
+		for part in range(chunks.size()): _snapshot.rpc_id(id,_sequence,part,chunks.size(),chunks[part])
 
-func _public_player(state: Dictionary) -> Dictionary:
+func _public_player(state: Dictionary, include_inventory := false) -> Dictionary:
 	var public := {}
-	for key in ["id","name","position","yaw","animation","primary","secondary","inventory"]: public[key] = state[key]
+	for key in ["id","name","position","yaw","animation","animation_rate","primary","secondary","health","pvp"]: public[key] = state[key]
+	if include_inventory: public["inventory"] = state["inventory"]
 	return public
 
-@rpc("authority","call_remote","unreliable_ordered",2)
-func _snapshot(sequence: int, states: Array) -> void:
+@rpc("authority","call_remote","unreliable",2)
+func _snapshot(sequence: int, part: int, part_count: int, states: Array) -> void:
 	if is_dedicated or sequence <= _received_sequence: return
+	if part < 0 or part >= part_count or part_count > 16: return
+	if sequence < _assembling_sequence: return
+	if sequence > _assembling_sequence:
+		_snapshot_parts.clear()
+		_assembling_sequence = sequence
+	_snapshot_parts[part] = states
+	if _snapshot_parts.size() != part_count: return
+	var complete := []
+	for index in range(part_count): complete.append_array(_snapshot_parts[index])
 	_received_sequence = sequence
 	players.clear()
-	for state: Dictionary in states: players[int(state["id"])] = state
+	for state: Dictionary in complete: players[int(state["id"])] = state
 	_sync_avatars()
 	players_changed.emit()
+	combat_state_changed.emit()
 
 func _sync_avatars() -> void:
 	if not active or not is_instance_valid(_world): return
@@ -266,6 +305,106 @@ func _equipment(primary: String, secondary: String) -> void:
 	if ItemCatalog.get_hand_usage(primary) == "two_hand" and not secondary.is_empty(): return
 	state["primary"] = primary
 	state["secondary"] = secondary
+
+func set_pvp(enabled: bool) -> void:
+	if active: _pvp.rpc_id(1, enabled)
+
+@rpc("any_peer","call_remote","reliable",0)
+func _pvp(enabled: bool) -> void:
+	if not is_dedicated: return
+	var id := multiplayer.get_remote_sender_id()
+	if not players.has(id): return
+	var state: Dictionary = players[id]
+	var now := Time.get_ticks_msec()
+	if not enabled and now < int(state["combat_until"]):
+		_combat_notice.rpc_id(id,"PvP se puede desactivar tras 8 segundos sin combatir.")
+		return
+	state["pvp"] = enabled
+	_send_snapshot()
+
+func request_attack(target_id: int) -> void:
+	if not active or not is_instance_valid(_local_player): return
+	var now := Time.get_ticks_msec()
+	if now < _combat_request_at: return
+	_combat_request_at = now + 200
+	# Facing travels with the reliable intent. Damage never comes from a client.
+	_attack.rpc_id(1,target_id,float((_local_player.get("visual") as Node3D).rotation.y))
+
+@rpc("any_peer","call_remote","reliable",0)
+func _attack(target_id: int, facing: float) -> void:
+	if not is_dedicated: return
+	var id := multiplayer.get_remote_sender_id()
+	var now := Time.get_ticks_msec()
+	var attacker: Dictionary = players.get(id,{})
+	var target: Dictionary = players.get(target_id,{})
+	if attacker.is_empty() or not is_finite(facing): return
+	attacker["yaw"] = wrapf(facing,-PI,PI)
+	var reason := COMBAT.rejection(attacker,target,now)
+	if not reason.is_empty():
+		if players.has(id): _combat_notice.rpc_id(id,reason)
+		return
+	attacker["next_attack"] = now + COMBAT.COOLDOWN_MS
+	attacker["attack_until"] = now + 650
+	attacker["animation"] = "attack"
+	attacker["animation_rate"] = 1.0
+	attacker["combat_until"] = now + COMBAT.COMBAT_LOCK_MS
+	target["combat_until"] = now + COMBAT.COMBAT_LOCK_MS
+	_swings.append({"attacker":id,"target":target_id,"due":now+COMBAT.WINDUP_MS,"weapon":attacker["primary"]})
+	for peer in players: _combat_swing.rpc_id(peer,id)
+
+func _resolve_swings() -> void:
+	var now := Time.get_ticks_msec()
+	for index in range(_swings.size()-1,-1,-1):
+		var swing := _swings[index]
+		if now < int(swing["due"]): continue
+		_swings.remove_at(index)
+		var attacker: Dictionary = players.get(int(swing["attacker"]),{})
+		var target: Dictionary = players.get(int(swing["target"]),{})
+		if not COMBAT.rejection(attacker,target,now,false).is_empty(): continue
+		if attacker["primary"] != swing["weapon"]: continue
+		if not server_world.combat_line_clear(attacker["position"],target["position"],resources): continue
+		var damage := COMBAT.damage_for(str(swing["weapon"]))
+		target["health"] = maxi(0,int(target["health"])-damage)
+		attacker["combat_until"] = now+COMBAT.COMBAT_LOCK_MS
+		target["combat_until"] = now+COMBAT.COMBAT_LOCK_MS
+		var downed := int(target["health"]) == 0
+		for peer in players: _combat_hit.rpc_id(peer,int(attacker["id"]),int(target["id"]),damage,int(target["health"]))
+		if downed:
+			target["position"] = server_world.spawn(int(target["slot"]))
+			target["health"] = COMBAT.MAX_HEALTH
+			target["pvp"] = false
+			target["protected_until"] = now+5000
+			target["budget"] = 2.0
+			target["animation"] = "idle"
+			_respawn.rpc_id(int(target["id"]),target["position"])
+		_send_snapshot()
+
+@rpc("authority","call_remote","reliable",0)
+func _combat_swing(id: int) -> void:
+	if id == local_peer_id and is_instance_valid(_local_player):
+		_local_player.call("_cancel_timed_interaction")
+		_local_player.call("play_character_action",&"attack",0.08)
+
+@rpc("authority","call_remote","reliable",0)
+func _combat_hit(attacker: int,target: int,damage: int,health: int) -> void:
+	if players.has(target): players[target]["health"] = health
+	combat_hit.emit(attacker,target,damage)
+	combat_state_changed.emit()
+	if target == local_peer_id: _set_status("Recibiste %d de daño · Vida %d / 100" % [damage,health])
+
+@rpc("authority","call_remote","reliable",0)
+func _respawn(position: Vector3) -> void:
+	if is_instance_valid(_local_player):
+		_local_player.call("_cancel_timed_interaction")
+		_local_player.global_position = position
+		_local_player.set("last_safe_position",position)
+		_local_player.set("velocity",Vector3.ZERO)
+		_local_player.set("_grounded",true)
+	_set_status("Reapareciste en la costa · PvP desactivado · conservas tus objetos.")
+
+@rpc("authority","call_remote","reliable",0)
+func _combat_notice(message: String) -> void:
+	_set_status(message)
 
 func begin_harvest(id: String) -> void:
 	if active: _begin_harvest.rpc_id(1,id)
@@ -354,6 +493,9 @@ func _peer_left(id: int) -> void:
 	print("COOP_LEAVE peer=",id," players=",players.size())
 
 func leave() -> void:
+	_combat_request_at = 0
+	_snapshot_parts.clear()
+	_assembling_sequence = -1
 	active = false
 	connecting = false
 	for actor in avatars.values():

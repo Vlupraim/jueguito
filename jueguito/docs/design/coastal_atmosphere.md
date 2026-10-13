@@ -12,7 +12,7 @@ agua jugable adicional. La máscara, el vadeo y el bloqueo de mar abierto se
 mantienen dentro de los límites originales. La continuidad de tierras lejanas
 deberá proceder de representaciones simplificadas de los sectores vecinos.
 
-La bruma general comienza a 160 unidades y alcanza su intensidad máxima a 2600.
+La bruma general comienza a 55 unidades y alcanza su intensidad máxima a 360.
 El material del mar añade un velo suave entre 140 y 1050 unidades, con fuerza
 máxima 0.38, atenuando color/reflejos hacia el color de la atmósfera. Conserva
 la niebla del Environment. Escribir FOG en el shader reemplazaría esa niebla,
@@ -40,6 +40,29 @@ El viento todavía no aplica fuerzas, controla velas, cambia el oleaje ni
 simula clima territorial. Su método get_velocity() entrega una velocidad
 mundial común que podrá consultar un controlador de navegación más adelante.
 La niebla volumétrica permanece desactivada en este perfil.
+
+## Fronteras y calidad v2
+
+`sector_mist_material.tres` contiene ruido de 256 px. El shader integra densidad
+sobre el rayo de cámara leyendo la profundidad de la escena. La franja de 85 m
+depende del sector y el ruido/viento suavizan el contorno. La densidad desaparece
+gradualmente entre alturas 42 y 110. Se dibuja después del agua y antes del HUD,
+sin niebla volumétrica ni partículas superpuestas. Respeta la profundidad de
+Forward+/Mobile y Compatibility; se verificó gráficamente con Forward+/D3D12.
+
+Bajo/Medio/Alto usa 6/10/16 muestras, distancias de decorado 380/440/550 m y césped
+45/65/90 m. La cámara tiene 100 m adicionales. La niebla ambiental alcanza antes
+su máximo para cubrir la retirada de decorado. Las fronteras no cambian por calidad.
+
+El terreno ya se importaba a 512 px. Su detalle visible se reduce mediante sesgo
+de mipmap 1.3/0.85/0.35 y profundidad de normales 0.36/0.45/0.6. Medio suaviza el
+grano y Alto recupera la nitidez anterior. Se conservan las imágenes originales;
+esta modificación por sí sola no reduce la memoria de las imágenes importadas.
+
+`coast_quality_smoke.tscn` verifica los perfiles, estamina, velocidad proporcional,
+reproducción de locomoción, aislamiento de acciones, colisión de combate y
+actualizaciones de red divididas. Con GPU captura costa, tierra, barco cercano
+y entrada a la bruma. Los pasos entre regiones son la siguiente etapa.
 
 ## Recursos para editar en Godot
 

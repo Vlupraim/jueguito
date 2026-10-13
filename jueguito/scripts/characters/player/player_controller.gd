@@ -17,8 +17,13 @@ const CHOP_ACTION := &"chop"
 const CHOP_PLAYBACK_SPEED := 1.30
 const CHOP_LOOP_CAPTURE_DURATION := 0.28
 
-@export var walk_speed := 3.85
-@export var sprint_speed := 9.1
+@export var walk_speed := 2.6
+@export var sprint_speed_multiplier := 2.36
+# Foot movement measured from the current Strong Man clips at playback 1.0.
+@export var walk_animation_meters_per_second := 1.4
+@export var run_animation_meters_per_second := 4.2
+var sprint_speed: float:
+	get: return walk_speed * sprint_speed_multiplier
 @export var acceleration := 18.0
 @export var character_turn_response := 14.0
 @export var camera_follow_response := 4.5
@@ -27,7 +32,7 @@ const CHOP_LOOP_CAPTURE_DURATION := 0.28
 @export var gravity := 42.0
 @export var jump_speed := 10.5
 @export var max_stamina := 100.0
-@export var sprint_stamina_drain := 28.0
+@export var sprint_stamina_drain := 7.0
 @export var stamina_recovery := 22.0
 @export var stamina_recovery_delay := 0.8
 @export_range(0.1, 1.0, 0.05) var wade_speed_multiplier := 0.55
@@ -179,8 +184,9 @@ func _physics_process(delta: float) -> void:
 	move_direction = _aligned_movement_direction(move_direction)
 
 	if use_generator_ground_snap and _has_generator_ground_provider():
+		var previous_position := global_position
 		_move_on_generator_ground(move_direction, target_speed, delta)
-		_update_locomotion(move_direction, target_speed)
+		_update_locomotion(move_direction, target_speed, Vector2(global_position.x-previous_position.x,global_position.z-previous_position.z).length()/maxf(delta,0.0001))
 		return
 
 	var target_velocity := move_direction * target_speed
@@ -192,9 +198,10 @@ func _physics_process(delta: float) -> void:
 	elif velocity.y < 0.0:
 		velocity.y = -0.5
 
+	var previous_position := global_position
 	move_and_slide()
 	_grounded = is_on_floor()
-	_update_locomotion(move_direction, target_speed)
+	_update_locomotion(move_direction, target_speed, Vector2(global_position.x-previous_position.x,global_position.z-previous_position.z).length()/maxf(delta,0.0001))
 
 
 
@@ -357,6 +364,14 @@ func _try_interact_from_mouse() -> void:
 	var result := space_state.intersect_ray(query)
 	if not result.is_empty():
 		var collider = result.collider
+		var remote := collider as Node
+		while remote != null and not remote.is_in_group("remote_players"):
+			remote = remote.get_parent()
+		if remote != null and CoopSession.active:
+			_cancel_timed_interaction()
+			face_world_position((remote as Node3D).global_position)
+			CoopSession.request_attack(int(remote.get("peer_id")))
+			return
 		var interactable = collider
 		
 		# Buscamos si el objeto o sus padres tienen método interact
@@ -832,7 +847,7 @@ func _find_animation_player(root: Node) -> AnimationPlayer:
 	return players[0] as AnimationPlayer
 
 
-func _update_locomotion(move_direction: Vector3, target_speed: float) -> void:
+func _update_locomotion(move_direction: Vector3, target_speed: float, actual_speed := -1.0) -> void:
 	if character_animation_player == null:
 		return
 	if character_action_animation == AnimationRetargeter.shared_animation_name(&"jump") \
@@ -842,6 +857,8 @@ func _update_locomotion(move_direction: Vector3, target_speed: float) -> void:
 		return
 	if not character_action_animation.is_empty():
 		return
+	var speed := actual_speed if actual_speed >= 0.0 else Vector2(velocity.x,velocity.z).length()
+	character_animation_player.speed_scale = 1.0
 	if water_state == "swimming" or water_state == "open_water":
 		_play_locomotion(
 			"swim_forward" if move_direction.length_squared() >= 0.001 else "swim_idle"
@@ -850,12 +867,14 @@ func _update_locomotion(move_direction: Vector3, target_speed: float) -> void:
 	if water_state == "wading":
 		_play_locomotion("walk" if move_direction.length_squared() >= 0.001 else "idle")
 		return
-	if move_direction.length_squared() < 0.001:
+	if speed < 0.05:
 		_play_locomotion("idle")
 	elif target_speed > walk_speed * 1.5:
 		_play_locomotion("run")
+		character_animation_player.speed_scale = clampf(speed / maxf(run_animation_meters_per_second*character_visual_scale,0.1),0.2,3.0)
 	else:
 		_play_locomotion("walk")
+		character_animation_player.speed_scale = clampf(speed / maxf(walk_animation_meters_per_second*character_visual_scale,0.1),0.2,3.0)
 
 
 func _play_locomotion(next_state: String) -> void:
@@ -882,6 +901,7 @@ func play_character_action(
 	if is_zero_approx(resolved_speed):
 		resolved_speed = CHOP_PLAYBACK_SPEED if action == CHOP_ACTION else 1.0
 	character_action_animation = animation_name
+	character_animation_player.speed_scale = 1.0
 	character_action_speed = resolved_speed
 	character_animation_player.play(animation_name, blend_time, resolved_speed)
 	return true

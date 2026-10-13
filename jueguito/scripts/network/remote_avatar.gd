@@ -1,6 +1,8 @@
 extends Node3D
 
 var display_name := ""
+var peer_id := 0
+var name_label: Label3D
 var target_position := Vector3.ZERO
 var target_yaw := 0.0
 var initialized := false
@@ -9,6 +11,19 @@ var character_instance: Node3D
 var equipment_signature := ""
 
 func _ready() -> void:
+	add_to_group("remote_players")
+	var hit_area := Area3D.new()
+	hit_area.name = "PlayerTarget"
+	hit_area.collision_layer = 16
+	hit_area.collision_mask = 0
+	var hit_shape := CollisionShape3D.new()
+	var capsule := CapsuleShape3D.new()
+	capsule.radius = 0.5
+	capsule.height = 1.8
+	hit_shape.shape = capsule
+	hit_shape.position.y = 0.15
+	hit_area.add_child(hit_shape)
+	add_child(hit_area)
 	character_instance = load(CharacterAnimationRetargeter.DEFAULT_SOURCE_PATH).instantiate()
 	character_instance.position.y = -0.78
 	character_instance.rotation.y = PI
@@ -16,6 +31,7 @@ func _ready() -> void:
 	animator = character_instance.find_children("*","AnimationPlayer",true,false)[0]
 	CharacterAnimationRetargeter.install_shared_library(character_instance,animator,CharacterAnimationRetargeter.DEFAULT_SOURCE_PATH,true)
 	var label := Label3D.new()
+	name_label = label
 	label.text = display_name
 	label.position.y = 1.35
 	label.font_size = 40
@@ -26,6 +42,9 @@ func _ready() -> void:
 	add_child(label)
 
 func apply_snapshot(state: Dictionary) -> void:
+	peer_id = int(state["id"])
+	name_label.text = "%s · %d / 100%s" % [display_name, int(state.get("health", 100)), " · PvP" if state.get("pvp", false) else ""]
+	name_label.modulate = Color("e8a195") if state.get("pvp", false) else Color("f4e7bf")
 	target_position = state["position"]
 	target_yaw = float(state["yaw"])
 	if not initialized:
@@ -33,6 +52,7 @@ func apply_snapshot(state: Dictionary) -> void:
 		rotation.y = target_yaw
 		initialized = true
 	var animation := "shared/"+str(state.get("animation","idle"))
+	animator.speed_scale = float(state.get("animation_rate",1.0))
 	if animator.has_animation(animation) and (animator.current_animation != animation or not animator.is_playing()):
 		animator.play(animation,0.12)
 	var signature := str(state["primary"])+"|"+str(state["secondary"])

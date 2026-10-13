@@ -1,5 +1,30 @@
 # Costa cooperativa · Windows 64 bits
 
+## Actualización 0.2: bruma, movimiento y PvP
+
+Los nuevos paquetes están en `dist/costa-bruma-pvp/`. Usa cliente y servidor de
+esta versión juntos: el protocolo `coast-coop-v2` rechaza versiones anteriores.
+La carpeta anterior se conserva para no sobrescribir un servidor abierto.
+
+Escape online abre el menú sin pausar ni proteger al personaje. La estamina dura
+cuatro veces lo anterior. Caminar baja a 2.6 m/s; correr mantiene un factor 2.36.
+Las animaciones siguen el desplazamiento real. Vídeo ofrece niveles Bajo/Medio/Alto
+para texturas, césped, bruma y distancia del decorado; Medio es el valor inicial.
+
+Ambos jugadores deben activar PvP en el botón bajo el indicador de conexión.
+Clic izquierdo sobre otro jugador: manos 6, hacha 12, espada 18, alcance 2.8 m.
+El servidor comprueba frecuencia, distancia y colisiones disponibles. No se
+puede desactivar PvP durante ocho segundos después de combatir. Al caer se
+reaparece con vida completa, PvP desactivado y los objetos conservados. El arco
+y el viaje online a otros sectores quedan para una próxima etapa.
+
+Para actualizar, cierra normalmente el servidor anterior y ejecuta el nuevo
+`servidor/IniciarServidor.bat`. Si necesitas conservar el progreso de la carpeta
+anterior, copia su `server_data/state.json` a la nueva carpeta `server_data/`
+después de cerrarlo. Se conserva la clave local al preparar esta actualización.
+Ejecuta el nuevo `AbrirFirewall.bat` como administrador si la regla de Windows
+estaba vinculada al ejecutable de la carpeta anterior. El router sigue usando UDP 7777.
+
 Esta versión permite entrar a la Costa del Naufragio con un amigo. Comparte
 posición, orientación, caminar/correr/saltar/nadar/talar, equipo en las manos
 y estado de los pinos. El servidor concede la madera y guarda inventarios y

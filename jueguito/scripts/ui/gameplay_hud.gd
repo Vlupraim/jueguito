@@ -58,6 +58,8 @@ signal hud_edit_mode_changed(enabled: bool)
 @onready var quit_game_confirmation: ConfirmationDialog = %QuitGameConfirmation
 
 var _owns_tree_pause := false
+var combat_health_bar: ProgressBar
+var status_health_bar: ProgressBar
 var _hud_edit_mode := false
 var timed_action_panel: PanelContainer
 var timed_action_label: Label
@@ -195,8 +197,13 @@ func open_pause_menu() -> void:
 	pause_backdrop.show()
 	pause_menu_panel.show()
 	options_menu.hide()
-	_owns_tree_pause = true
-	get_tree().paused = true
+	_owns_tree_pause = not CoopSession.active
+	get_tree().paused = _owns_tree_pause
+	(pause_menu_panel.get_node("Margin/Content/Title") as Label).text = "Menú" if CoopSession.active else "Pausa"
+	(pause_menu_panel.get_node("Margin/Content/Subtitle") as Label).text = (
+		"En línea: el mundo sigue activo y puedes recibir daño."
+		if CoopSession.active else "Ajusta tu experiencia o vuelve al juego."
+	)
 	continue_button.grab_focus()
 	pause_visibility_changed.emit(true)
 
@@ -247,6 +254,10 @@ func _setup_action_hud_modules() -> void:
 	var legacy_action_bar := action_bar
 	var legacy_slots := legacy_action_bar.find_child("Slots", true, false) as HBoxContainer
 	var health_bar := legacy_action_bar.find_child("CombatHealthBar", true, false) as ProgressBar
+	combat_health_bar = health_bar
+	status_health_bar = character_status.find_child("HealthBar",true,false) as ProgressBar
+	if not CoopSession.combat_state_changed.is_connected(_on_combat_state_changed):
+		CoopSession.combat_state_changed.connect(_on_combat_state_changed)
 	var mana_bar := legacy_action_bar.find_child("CombatManaBar", true, false) as ProgressBar
 	if legacy_slots == null or health_bar == null or mana_bar == null:
 		return
@@ -278,6 +289,21 @@ func _setup_action_hud_modules() -> void:
 	_build_action_wing(action_right_module, right_slots, mana_bar, "MANA")
 	action_bar = action_left_module
 	legacy_action_bar.queue_free()
+	_on_combat_state_changed()
+
+
+func _on_combat_state_changed() -> void:
+	if combat_health_bar == null:
+		return
+	var state: Dictionary = CoopSession.players.get(CoopSession.local_peer_id, {})
+	combat_health_bar.max_value = 100.0
+	combat_health_bar.value = float(state.get("health", 100.0))
+	var caption := combat_health_bar.get_node_or_null("Caption") as Label
+	if caption != null:
+		caption.text = "VIDA  %d / 100" % int(combat_health_bar.value)
+	if status_health_bar != null:
+		status_health_bar.max_value = 100.0
+		status_health_bar.value = combat_health_bar.value
 
 
 func _create_editable_action_module(

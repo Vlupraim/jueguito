@@ -19,6 +19,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var resolution_option: OptionButton = %ResolutionOption
 @onready var vsync_option: OptionButton = %VsyncOption
 @onready var fps_option: OptionButton = %FpsOption
+@onready var world_detail_option: OptionButton = %WorldDetailOption
 @onready var master_slider: HSlider = %MasterSlider
 @onready var music_slider: HSlider = %MusicSlider
 @onready var sfx_slider: HSlider = %SfxSlider
@@ -66,6 +67,7 @@ func _populate_options() -> void:
 		resolution_option.add_item("%d × %d" % [resolution.x, resolution.y])
 	_add_options(vsync_option, ["Desactivado", "Activado", "Adaptativo"])
 	_add_options(fps_option, ["30", "60", "120", "144", "Sin límite"])
+	_add_options(world_detail_option, ["Bajo", "Medio", "Alto"])
 	_add_options(colorblind_option, ["Desactivado", "Protanopia", "Deuteranopia", "Tritanopia"])
 
 
@@ -86,6 +88,7 @@ func _connect_controls() -> void:
 	resolution_option.item_selected.connect(func(index): _write_setting("video", "resolution", RESOLUTIONS[index], false))
 	vsync_option.item_selected.connect(func(index): _write_setting("video", "vsync", index, false))
 	fps_option.item_selected.connect(func(index): _write_setting("video", "max_fps", [30, 60, 120, 144, 0][index], false))
+	world_detail_option.item_selected.connect(func(index): _write_setting("video", "world_detail", index))
 	_bind_slider(master_slider, "audio", "master")
 	_bind_slider(music_slider, "audio", "music")
 	_bind_slider(sfx_slider, "audio", "sfx")
@@ -145,6 +148,7 @@ func _refresh_controls() -> void:
 	_select_resolution(SettingsManager.get_setting("video", "resolution", Vector2i(1920, 1080)))
 	vsync_option.select(int(SettingsManager.get_setting("video", "vsync", 1)))
 	var fps_values := [30, 60, 120, 144, 0]
+	world_detail_option.select(clampi(int(SettingsManager.get_setting("video", "world_detail", 1)), 0, 2))
 	fps_option.select(maxi(0, fps_values.find(int(SettingsManager.get_setting("video", "max_fps", 60)))))
 	master_slider.value = float(SettingsManager.get_setting("audio", "master", 1.0))
 	music_slider.value = float(SettingsManager.get_setting("audio", "music", 0.8))

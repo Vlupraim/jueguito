@@ -2,13 +2,15 @@ param(
     [Parameter(Mandatory=$true)][string]$Engine,
     [string]$Client = "",
     [string]$Server = "",
-    [int]$Port = 17777
+    [int]$Port = 17777,
+    [switch]$CombatOnly
 )
 $ErrorActionPreference = 'Stop'
 $project = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $qa = Join-Path $project '.godot/network_validation'
 New-Item -ItemType Directory -Force $qa | Out-Null
 $tag = if ($Client) { 'release' } else { 'source' }
+if ($CombatOnly) { $tag += '-combat' }
 $state = Join-Path $qa "$tag-state-$([DateTime]::Now.Ticks).json"
 $started = @()
 function Start-Probe([string]$label, [string]$binary, [string[]]$arguments) {
@@ -26,15 +28,18 @@ try {
     if ($hostProcess.HasExited) { throw 'Server exited before clients started' }
     $clientBinary = if ($Client) { $Client } else { $Engine }
     [string[]]$clientArgs = if ($Client) { @('--headless') } else { $projectArgs }
-    $alice = Start-Probe 'alice' $clientBinary ($clientArgs+@('--','--connect=127.0.0.1',"--port=$Port",'--name=Alice','--key=testkey','--network-test=alice'))
+    $aliceRole = if ($CombatOnly) { 'combat_alice' } else { 'alice' }
+    $bobRole = if ($CombatOnly) { 'combat_bob' } else { 'bob' }
+    $alice = Start-Probe 'alice' $clientBinary ($clientArgs+@('--','--connect=127.0.0.1',"--port=$Port",'--name=Alice','--key=testkey',"--network-test=$aliceRole"))
     $started += $alice
-    $bob = Start-Probe 'bob' $clientBinary ($clientArgs+@('--','--connect=127.0.0.1',"--port=$Port",'--name=Bob','--key=testkey','--network-test=bob'))
+    $bob = Start-Probe 'bob' $clientBinary ($clientArgs+@('--','--connect=127.0.0.1',"--port=$Port",'--name=Bob','--key=testkey',"--network-test=$bobRole"))
     $started += $bob
     $deadline = (Get-Date).AddSeconds(55)
     while ((!$alice.HasExited -or !$bob.HasExited) -and (Get-Date) -lt $deadline) { Start-Sleep -Seconds 1 }
     if (!$alice.HasExited -or !$bob.HasExited) { throw 'Client test timed out' }
     Get-Content (Join-Path $qa "$tag-alice.log"),(Join-Path $qa "$tag-alice.err"),(Join-Path $qa "$tag-bob.log"),(Join-Path $qa "$tag-bob.err") -Tail 35
     if ($alice.ExitCode -ne 0 -or $bob.ExitCode -ne 0) { throw 'Client assertion failed' }
+    if ($CombatOnly) { 'COOP_COMBAT_MULTIPROCESS_PASS'; return }
     $rejected = Start-Probe 'reject' $clientBinary ($clientArgs+@('--','--connect=127.0.0.1',"--port=$Port",'--name=WrongKey','--key=incorrect','--network-test=reject'))
     $started += $rejected
     if (!$rejected.WaitForExit(20000) -or $rejected.ExitCode -ne 0) { throw 'Wrong-key assertion failed' }

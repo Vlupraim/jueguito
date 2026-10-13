@@ -195,6 +195,15 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 38)
 layout_mode = 2
 
+[node name="WorldDetailLabel" type="Label" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+layout_mode = 2
+text = "Texturas y detalle del entorno"
+
+[node name="WorldDetailOption" type="OptionButton" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Ajusta la nitidez del terreno, la bruma y la distancia del decorado. La visibilidad de jugadores y las fronteras son iguales para todos."
+
 [node name="ApplyVideoButton" type="Button" parent="Center/SettingsPanel/Margin/Content/SettingsTabs/Video/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 42)
